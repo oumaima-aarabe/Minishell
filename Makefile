@@ -6,11 +6,11 @@
 #    By: azarda <azarda@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/12 18:21:14 by azarda            #+#    #+#              #
-#    Updated: 2023/05/12 18:22:05 by azarda           ###   ########.fr        #
+#    Updated: 2023/05/12 18:30:32 by azarda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-
+NAME = Minishell
 
 INCLUDE = Minishell.h
 
@@ -23,6 +23,7 @@ FLAGS = -Wall -Wextra -Werror -g
 
 
 SRC =	obj/Minishell.c
+	
 		
 OBJ = $(SRC:.c=.o)
 

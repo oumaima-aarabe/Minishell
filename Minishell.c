@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/12 18:29:14 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/12 18:32:47 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,22 @@
 
 int main(int ac, char **av, char  **env)
 {
+    (void)av;
+    (void)env;
+    if(ac != 1)
+    {
+        printf("Minishell ma katakhod waloo al9lawi \n");
+        exit(1);
+    }
     char *str;
     while(1337)
     {
         str = readline("Minishell >>    ");
+        if(!str)
+        {
+            printf("exit\n");
+            exit(0);
+        }
         printf("%s\n", str);
     }
 }
