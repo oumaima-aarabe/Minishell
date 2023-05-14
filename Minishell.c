@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/12 19:03:33 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/14 02:14:45 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void  ctr_c(int sig)
     (void)sig;
     printf("\n");
     rl_on_new_line();
-    // rl_replace_line(" ", 0);
+    rl_replace_line(" ", 0);
 	rl_redisplay();
 		
 }
@@ -29,7 +29,7 @@ int main(int ac, char **av, char  **env)
     (void)env;
     if(ac != 1)
     {
-        printf("Minishell ma katakhod waloo al9lawi \n");
+        printf("Minishell do not take any arguments  \n");
         exit(1);
     }
     char *str;
