@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:50 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/12 18:43:49 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/16 22:35:23 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
 # include <readline/history.h>
 
 
-
+int	ft_strcmp(char	*s1, char	*s2);
+char	*ft_strjoin(char *s1, char *s2); // free 
 
 
 #endif
