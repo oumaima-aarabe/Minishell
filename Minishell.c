@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/16 22:30:24 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/17 01:57:41 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ void  ctr_c(int sig)
 	rl_replace_line(" ", 0);
 	rl_redisplay();
 
+}
+void ft_exut_cd()
+{
+	fork();
+	chdir("/Users/azarda/Desktop/");
+	// sleep(10);
+	// exit(0);
 }
 
 
@@ -36,19 +43,27 @@ int main(int ac, char **av, char  **env)
 	char *str;
 	while(1337)
 	{
-		pwd = ft_strjoin(getcwd(NULL, 0), " -> "); 
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT,  ctr_c);
+		pwd = ft_strjoin(getcwd(NULL, 0), " -> "); // 1bite leaks pwd
 		str = readline(pwd);
 		free(pwd);
 		if(!str)
 		{
 			printf("exit\n");
 			exit(0);
+			free(pwd);
 		}
 		if(!ft_strcmp(str, "pwd"))
 			printf("%s\n", getcwd(NULL, 0));
-
-
+		if(!ft_strcmp(str, "cd"))
+			ft_exut_cd();
+		if(!ft_strcmp(str, "exit"))
+		{
+			free(pwd);
+			exit(0);
+		}
+		add_history(str);
+		free(str);
 	}
 }
