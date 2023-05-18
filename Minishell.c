@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/18 04:14:49 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/18 05:55:44 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,37 @@ void echo(char **tab)
 	
 }
 
+void ft_autre_cmd(char **tab, char **env)
+{
+	execve(tab[0], tab, env);
+}
 
 int main(int ac, char **av, char  **env)
 {
 	(void)av;
-	(void)env;
+	// (void)env;
 	char *pwd;
 	if(ac != 1)
 	{
 		printf("Minishell ma katakhod waloo \n"); // change msg
 		exit(1);
+	}
+	int i = 0;
+	char **tmp = NULL;
+	char **str0 = NULL;
+	// int j = 5;
+	// int x = 0;
+	while(env[i])
+	{
+		if(!strncmp(env[i],"PATH=", 5))
+		{
+			str0 = ft_split(env[i], '=');
+			tmp = ft_split(str0[1], ':');
+			// printf("%s\n", str0);
+			// exit (0);
+		}
+		i++;
+		// printf("%s\n", env[i++]);
 	}
 	char *str;
 	while(1337)
@@ -103,6 +124,7 @@ int main(int ac, char **av, char  **env)
 		}
 		ft_exut_cd(ft_split(str, ' '));
 		echo(ft_split(str, ' '));
+		ft_autre_cmd(ft_split(str, ' '), tmp);
 		add_history(str);
 		free(str);
 	}
