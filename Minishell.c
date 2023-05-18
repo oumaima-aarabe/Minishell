@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/18 04:01:04 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/18 04:14:49 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void ft_exut_cd(char **str)
 			perror(str[1]);
 		}
 	}
-	else
-		return ;
 }
 
 void echo(char **tab)
