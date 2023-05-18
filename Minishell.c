@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/17 01:57:41 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/18 02:23:56 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,36 @@ void  ctr_c(int sig)
 	rl_redisplay();
 
 }
-void ft_exut_cd()
+void ft_exut_cd(char **str)
 {
-	fork();
-	chdir("/Users/azarda/Desktop/");
-	// sleep(10);
-	// exit(0);
+			
+	if(!ft_strcmp(str[0], "cd"))
+	{
+		if(!str[1])
+			chdir(getenv("HOME"));
+		else if(chdir(str[1]) < 0)
+		{
+			ft_putstr_fd("Minishell: cd: ", 2);
+			perror(str[1]);
+		}
+	}
+	else
+		return ;
+}
+
+void echo(char **tab)
+{
+	int i = 0;
+	int j = 0;
+	
+	if(tab[i] && (ft_strcmp(tab[i] , "echo") == 0))
+		i++;
+	if(tab[i] && ft_strcmp(tab[i], "-n"))
+	{
+		while (tab[i][j] == 'n')
+			j++;
+		
+	}
 }
 
 
@@ -56,13 +80,16 @@ int main(int ac, char **av, char  **env)
 		}
 		if(!ft_strcmp(str, "pwd"))
 			printf("%s\n", getcwd(NULL, 0));
-		if(!ft_strcmp(str, "cd"))
-			ft_exut_cd();
+		// if(!ft_strcmp(str, "cd"))
+		// {
+		// }
 		if(!ft_strcmp(str, "exit"))
 		{
 			free(pwd);
 			exit(0);
 		}
+		ft_exut_cd(ft_split(str, ' '));
+		
 		add_history(str);
 		free(str);
 	}

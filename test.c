@@ -1,31 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Minishell.h                                        :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/12 18:19:50 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/18 01:59:19 by azarda           ###   ########.fr       */
+/*   Created: 2023/05/17 22:33:55 by azarda            #+#    #+#             */
+/*   Updated: 2023/05/18 01:49:07 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-
-# include <string.h>
-# include <stdlib.h>
-# include <stdio.h>
+#include "Minishell.h"
 # include <unistd.h>
-# include <signal.h>
-# include <readline/readline.h>
-# include <readline/history.h>
 
 
-int	ft_strcmp(char	*s1, char	*s2);
-char	*ft_strjoin(char *s1, char *s2); // free 
-char	**ft_split(char *st, char c);
-int     ft_strlen(char const *str);
-void	ft_putstr_fd(char *s, int fd);
-
-#endif
+int main(int ac , char **av)
+{
+    // char *str[] = {"/bin/ls", NULL};
+    // char *str2[] = {NULL};
+    // execve("/bin/ls", str, str2);   
+    // exit (0);
+    perror(av[1]);
+}

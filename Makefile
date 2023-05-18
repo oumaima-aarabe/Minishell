@@ -6,7 +6,7 @@
 #    By: azarda <azarda@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/12 18:21:14 by azarda            #+#    #+#              #
-#    Updated: 2023/05/16 21:44:05 by azarda           ###   ########.fr        #
+#    Updated: 2023/05/18 00:25:18 by azarda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,9 @@ INCLUDE = Minishell.h
 
 CC = cc
 
-READLINE = $(shell brew --prefix readline)
+# READLINE = $(shell brew --prefix readline)
 
-FLAGS = -Wall -Werror -Wextra -I$(READLINE)/include
+FLAGS = -Wall -Werror -Wextra #-I$(READLINE)/include
 
 # FLAGS = -Wall -Wextra -Werror -g
 # -fsanitize=address
@@ -39,7 +39,8 @@ dir = obj
 all: $(NAME)
 
 $(NAME): ${dir} $(OBJ)  $(INCLUDE)
-	$(CC) $(FLAGS) $(OBJ) -lreadline -L$(READLINE)/lib -o $(NAME)
+	$(CC) $(FLAGS) $(OBJ) -lreadline -o $(NAME)
+	# -L$(READLINE)/lib 
 
 
 obj/%.o : %.c $(INCLUDE)
