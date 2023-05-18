@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/18 02:23:56 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/18 04:01:04 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,30 @@ void echo(char **tab)
 {
 	int i = 0;
 	int j = 0;
+	int bol = 1;
 	
-	if(tab[i] && (ft_strcmp(tab[i] , "echo") == 0))
-		i++;
-	if(tab[i] && ft_strcmp(tab[i], "-n"))
+	if(!ft_strcmp(tab[i], "echo"))
 	{
-		while (tab[i][j] == 'n')
-			j++;
-		
+		i++;
+		if(tab[i] && tab[i][0] == '-' && tab[i][1] == 'n')
+		{
+			j = 2;
+			while(tab[i][j] && tab[i][j] == 'n')
+				j++;	
+			if(tab[i][j])
+				bol = 1;
+			else
+			{
+				bol = 0;
+				i++;
+			}
+		}
+		while (tab[i])
+			printf("%s ", tab[i++]);
+		if(bol)
+			printf("\n");
 	}
+	
 }
 
 
@@ -85,11 +100,11 @@ int main(int ac, char **av, char  **env)
 		// }
 		if(!ft_strcmp(str, "exit"))
 		{
-			free(pwd);
+			// free(pwd);
 			exit(0);
 		}
 		ft_exut_cd(ft_split(str, ' '));
-		
+		echo(ft_split(str, ' '));
 		add_history(str);
 		free(str);
 	}
