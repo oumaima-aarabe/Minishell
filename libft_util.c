@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:42:52 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/21 17:34:23 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/21 22:54:46 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ static	int	ft_calcul(const char *s, char d)
 	return (cont);
 }
 
-static	void	ft_free_(char **tab)
+void	ft_free_(char **tab)
 {
 	int	i;
 

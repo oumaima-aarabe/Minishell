@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/21 20:26:44 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/21 22:57:12 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,15 +143,14 @@ int main(int ac, char **av, char  **env)
 			ft_exut_cd(ok);
 		else if(!ft_strcmp(ok[0], "echo"))
 			echo(ok);
-		else
-		{
 
 
 //--------------------------------------------------------------------------------
-	i = 0;
+		else
+		{
+			i = 0;
 		while(tmp[i])
 		{
-		// printf("-->%s\n", str);
 			test = ft_strjoin(ft_strdup("/"), ok[0]);
 			ss = ft_strjoin(ft_strdup(tmp[i]), test);
 			free(test);
@@ -173,16 +172,17 @@ int main(int ac, char **av, char  **env)
 			if(!p)
 			{
 				execve(ss, ok, env);
-				// exit(0);
 			}
-			free(ss);
-			ss = NULL;
 		}
 		wait(&p);
+		free(ss);
+		ss = NULL;
 		}
 //--------------------------------------------------------------------------------
 		add_history(str);
 		free(str);
+		ft_free_(ok);
+		ok = NULL;
 		str = NULL;
 	}
 }
