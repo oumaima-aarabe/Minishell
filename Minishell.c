@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/21 19:08:44 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/21 19:24:57 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,25 +126,29 @@ int main(int ac, char **av, char  **env)
 			printf("exit\n");
 			exit(0);
 		}
+		ok = ft_split(str, ' ');
 //--------------------------------------------------------------------------------
 		if(!ft_strcmp(str, "pwd"))
 			printf("%s\n", getcwd(NULL, 0));
 //--------------------------------------------------------------------------------
 
-		if(!ft_strcmp(str, "exit"))
+		else if(!ft_strcmp(str, "exit"))
 		{
 			// free(pwd);
 			exit(0);
 		}
 //--------------------------------------------------------------------------------
 
-		ft_exut_cd(ft_split(str, ' '));
-		echo(ft_split(str, ' '));
+		else if(!ft_strcmp(ok[0], "cd"))
+			ft_exut_cd(ok);
+		else if(!ft_strcmp(ok[0], "echo"))
+			echo(ok);
+		else
+		{
 
 
 //--------------------------------------------------------------------------------
 	i = 0;
-		ok = ft_split(str, ' ');
 		while(tmp[i])
 		{
 		// printf("-->%s\n", str);
@@ -175,6 +179,7 @@ int main(int ac, char **av, char  **env)
 			ss = NULL;
 		}
 		sleep(1);
+		}
 //--------------------------------------------------------------------------------
 		add_history(str);
 		free(str);
