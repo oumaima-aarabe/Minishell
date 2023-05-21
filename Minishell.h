@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:50 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/21 16:37:57 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/21 20:21:32 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 int	ft_strcmp(char	*s1, char	*s2);
 char	*ft_strjoin(char *s1, char *s2); // free
 char	**ft_split(char *st, char c);
-int     ft_strlen(char const *str);
+int		ft_strlen(char const *str);
 void	ft_putstr_fd(char *s, int fd);
 char	*ft_strdup(char *s1);
 #endif

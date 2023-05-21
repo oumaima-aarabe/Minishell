@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/21 19:24:57 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/21 20:26:44 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int main(int ac, char **av, char  **env)
 	(void)av;
 	// (void)env;
 	char *pwd;
-	int p;
 	if(ac != 1)
 	{
 		printf("Minishell ma katakhod waloo \n"); // change msg
@@ -109,6 +108,7 @@ int main(int ac, char **av, char  **env)
 	// }
 
 
+	int p;
 	char *str;
 	char *ss;
 	char *test;
@@ -165,7 +165,7 @@ int main(int ac, char **av, char  **env)
 			i++;
 			}
 			if(!tmp[i])
-				printf("bash: %s: command not found\n", ok[0]);
+				printf("Minishell: %s: command not found\n", ok[0]);
 		}
 		if(ss)
 		{
@@ -173,12 +173,12 @@ int main(int ac, char **av, char  **env)
 			if(!p)
 			{
 				execve(ss, ok, env);
-				exit(0);
+				// exit(0);
 			}
 			free(ss);
 			ss = NULL;
 		}
-		sleep(1);
+		wait(&p);
 		}
 //--------------------------------------------------------------------------------
 		add_history(str);
