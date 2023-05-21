@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/21 23:59:41 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/22 00:22:29 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void ft_exut_cd(char **str)
 	}
 }
 
-void ft_exec(char **ok, char **env)
+void ft_exec(char **tab, char **env)
 {
 	char *test;
 	char **tmp;
@@ -67,17 +67,17 @@ void ft_exec(char **ok, char **env)
 	int p;
 	int i = 0;
 
-	if(!ft_strcmp(ok[0], "pwd"))
+	if(!ft_strcmp(tab[0], "pwd"))
 			printf("%s\n", getcwd(NULL, 0));
-	else if(!ft_strcmp(ok[0], "exit"))
+	else if(!ft_strcmp(tab[0], "exit"))
 	{
 		// free(pwd);
 		exit(0);
 	}
-		else if(!ft_strcmp(ok[0], "cd"))
-			ft_exut_cd(ok);
-		else if(!ft_strcmp(ok[0], "echo"))
-			echo(ok);
+		else if(!ft_strcmp(tab[0], "cd"))
+			ft_exut_cd(tab);
+		else if(!ft_strcmp(tab[0], "echo"))
+			echo(tab);
 		else
 		{
 	while(env[i])
@@ -93,7 +93,7 @@ void ft_exec(char **ok, char **env)
 			i = 0;
 		while(tmp[i])
 		{
-			test = ft_strjoin(ft_strdup("/"), ok[0]);
+			test = ft_strjoin(ft_strdup("/"), tab[0]);
 			ss = ft_strjoin(ft_strdup(tmp[i]), test);
 			free(test);
 			test = NULL;
@@ -106,7 +106,7 @@ void ft_exec(char **ok, char **env)
 			i++;
 			}
 			if(!tmp[i])
-				printf("Minishell: %s: command not found\n", ok[0]);
+				printf("Minishell: %s: command not found\n", tab[0]);
 		}
 		ft_free_(tmp);
 		if(ss)
@@ -114,7 +114,7 @@ void ft_exec(char **ok, char **env)
 			p = fork();
 			if(!p)
 			{
-				execve(ss, ok, env);
+				execve(ss, tab, env);
 			}
 		}
 		wait(&p);

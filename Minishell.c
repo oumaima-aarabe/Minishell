@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/21 23:57:12 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/22 00:12:21 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,6 @@ void  ctr_c(int sig)
 	rl_replace_line(" ", 0);
 	rl_redisplay();
 
-}
-
-
-
-
-
-
-
-void ft_autre_cmd(char **tab, char **env)
-{
-	execve(tab[0], tab, env);
 }
 
 int main(int ac, char **av, char  **env)
