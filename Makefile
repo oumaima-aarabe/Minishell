@@ -6,7 +6,7 @@
 #    By: azarda <azarda@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/12 18:21:14 by azarda            #+#    #+#              #
-#    Updated: 2023/05/18 11:13:33 by azarda           ###   ########.fr        #
+#    Updated: 2023/05/21 23:44:36 by azarda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ FLAGS = -Wall -Werror -Wextra -I$(READLINE)/include
 
 
 SRC =	obj/Minishell.c \
-		obj/libft_util.c
+		obj/libft_util.c \
+		obj/exec.c
 
 
 OBJ = $(SRC:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:50 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/21 22:54:59 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/21 23:44:50 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ int		ft_strlen(char const *str);
 void	ft_putstr_fd(char *s, int fd);
 char	*ft_strdup(char *s1);
 void	ft_free_(char **tab);
+void ft_exec(char **ok, char **env);
 
 #endif
