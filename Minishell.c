@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/18 05:55:44 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/21 19:08:44 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void  ctr_c(int sig)
 }
 void ft_exut_cd(char **str)
 {
-			
+
 	if(!ft_strcmp(str[0], "cd"))
 	{
 		if(!str[1])
@@ -36,12 +36,15 @@ void ft_exut_cd(char **str)
 	}
 }
 
+
+
+
 void echo(char **tab)
 {
 	int i = 0;
 	int j = 0;
 	int bol = 1;
-	
+
 	if(!ft_strcmp(tab[i], "echo"))
 	{
 		i++;
@@ -49,7 +52,7 @@ void echo(char **tab)
 		{
 			j = 2;
 			while(tab[i][j] && tab[i][j] == 'n')
-				j++;	
+				j++;
 			if(tab[i][j])
 				bol = 1;
 			else
@@ -63,7 +66,7 @@ void echo(char **tab)
 		if(bol)
 			printf("\n");
 	}
-	
+
 }
 
 void ft_autre_cmd(char **tab, char **env)
@@ -76,6 +79,7 @@ int main(int ac, char **av, char  **env)
 	(void)av;
 	// (void)env;
 	char *pwd;
+	int p;
 	if(ac != 1)
 	{
 		printf("Minishell ma katakhod waloo \n"); // change msg
@@ -96,9 +100,20 @@ int main(int ac, char **av, char  **env)
 			// exit (0);
 		}
 		i++;
-		// printf("%s\n", env[i++]);
 	}
+	i = 0;
+	// while(tmp[i])
+	// {
+	// 	printf("%s\n", tmp[i++]);
+
+	// }
+
+
 	char *str;
+	char *ss;
+	char *test;
+	char **ok;
+
 	while(1337)
 	{
 		signal(SIGQUIT, SIG_IGN);
@@ -110,22 +125,59 @@ int main(int ac, char **av, char  **env)
 		{
 			printf("exit\n");
 			exit(0);
-			free(pwd);
 		}
+//--------------------------------------------------------------------------------
 		if(!ft_strcmp(str, "pwd"))
 			printf("%s\n", getcwd(NULL, 0));
-		// if(!ft_strcmp(str, "cd"))
-		// {
-		// }
+//--------------------------------------------------------------------------------
+
 		if(!ft_strcmp(str, "exit"))
 		{
 			// free(pwd);
 			exit(0);
 		}
+//--------------------------------------------------------------------------------
+
 		ft_exut_cd(ft_split(str, ' '));
 		echo(ft_split(str, ' '));
-		ft_autre_cmd(ft_split(str, ' '), tmp);
+
+
+//--------------------------------------------------------------------------------
+	i = 0;
+		ok = ft_split(str, ' ');
+		while(tmp[i])
+		{
+		// printf("-->%s\n", str);
+			test = ft_strjoin(ft_strdup("/"), ok[0]);
+			ss = ft_strjoin(ft_strdup(tmp[i]), test);
+			free(test);
+			test = NULL;
+			if(!(access(ss, F_OK)))
+				break;
+			else
+			{
+			free(ss);
+			ss = NULL;
+			i++;
+			}
+			if(!tmp[i])
+				printf("bash: %s: command not found\n", ok[0]);
+		}
+		if(ss)
+		{
+			p = fork();
+			if(!p)
+			{
+				execve(ss, ok, env);
+				exit(0);
+			}
+			free(ss);
+			ss = NULL;
+		}
+		sleep(1);
+//--------------------------------------------------------------------------------
 		add_history(str);
 		free(str);
+		str = NULL;
 	}
 }
