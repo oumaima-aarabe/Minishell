@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/22 00:12:21 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/22 00:57:16 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ void  ctr_c(int sig)
 	rl_replace_line(" ", 0);
 	rl_redisplay();
 
+}
+
+void le()
+{
+	system("leaks Minishell");
 }
 
 int main(int ac, char **av, char  **env)
@@ -43,6 +48,7 @@ int main(int ac, char **av, char  **env)
 		if(!str)
 		{
 			printf("exit\n");
+			// atexit(le);
 			exit(0);
 		}
 		ok = ft_split(str, ' ');
