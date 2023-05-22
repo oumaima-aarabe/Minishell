@@ -1,6 +1,6 @@
 #include "Minishell.h"
 
-Command *createCommandNode() 
+Command *createCommandNode()
 {
     Command *node = (Command*)malloc(sizeof(Command));
     node->command = NULL;
@@ -12,7 +12,7 @@ Command *createCommandNode()
     return node;
 }
 
-void freeCommandNode(Command    *node) 
+void freeCommandNode(Command *node) 
 {
     if (node == NULL)
         return;
@@ -30,7 +30,7 @@ void freeCommandNode(Command    *node)
     free(node);
 }
 
-void freeCommandTable(CommandTable  *table) 
+void freeCommandTable(CommandTable  *table)
 {
     Command *current = table->head;
     while (current != NULL) {
@@ -41,80 +41,27 @@ void freeCommandTable(CommandTable  *table)
     table->head = NULL;
 }
 
-void parsecommand(char  *input, CommandTable *table) 
+void parsecommand(char  *input, CommandTable *table)
 {
     char    *inputCopy = strdup(input);
     char    *commandStr = strtok(inputCopy, "|");
-
+    arg_t  *arg;
     Command *prevCommand = NULL;
 
-    while (commandStr != NULL) {
-        Command *command = createCommandNode();
-        command->pipe = 0;
-
-        char    *argument;
-        int argIndex = 0;
-        int inQuote = 0;
-        int argCount = 0;
-        int argSize = 2;  // Start with space for two arguments (command and NULL terminator)
-
-        command->command = strdup(strtok(commandStr, " \t\r\n"));
-        command->arguments = (char**)malloc(argSize     *sizeof(char*));
-        command->arguments[argIndex] = NULL;
-
-        argument = strtok(NULL, " \t\r\n");
-
-        while (argument != NULL) {
-            if (inQuote) {
-                int len = strlen(command->arguments[argIndex]);
-                command->arguments[argIndex] = realloc(command->arguments[argIndex], len + strlen(argument) + 2);
-                strcat(command->arguments[argIndex], " ");
-                strcat(command->arguments[argIndex], argument);
-
-                if (argument[strlen(argument) - 1] == '\'') {
-                    inQuote = 0;
-                    command->arguments[argIndex][strlen(command->arguments[argIndex]) - 1] = '\0';
-                }
-            } else {
-                if (argument[0] == '\'') {
-                    if (argument[strlen(argument) - 1] == '\'') {
-                        command->arguments[argIndex] = strdup(&argument[1]);
-                        command->arguments[argIndex][strlen(command->arguments[argIndex]) - 1] = '\0';
-                    } else {
-                        inQuote = 1;
-                        command->arguments[argIndex] = strdup(&argument[1]);
-                    }
-                } else {
-                    command->arguments[argIndex] = strdup(argument);
-                }
-            }
-
-            argument = strtok(NULL, " \t\r\n");
-
-            if (argCount + 1 >= argSize) {
-                argSize *= 2;
-                command->arguments = (char**)realloc(command->arguments, argSize    *sizeof(char*));
-                command->arguments[argSize - 1] = NULL;
-            }
-
-            argIndex++;
-            argCount++;
-        }
-
-        if (prevCommand == NULL) {
+    while (commandStr != NULL) 
+    {   
+        Command *command = init_arg(arg, inputCopy, commandStr);
+        while (arg->argument != NULL) 
+            args_parse(arg, command);
+        if (prevCommand == NULL)
             table->head = command;
-        } else {
+        else
             prevCommand->next = command;
-        }
-
         prevCommand = command;
-
         commandStr = strtok(NULL, "|");
-        if (commandStr != NULL) {
+        if (commandStr != NULL)
             command->pipe = 1; // Set pipe flag for commands preceding a pipe symbol
-        }
     }
-
     free(inputCopy);
 }
 
@@ -165,7 +112,6 @@ int main()
 
     return 0;
 }
-
 
 
 

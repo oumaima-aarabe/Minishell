@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:50 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/21 22:54:59 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/22 14:49:17 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,37 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 
-typedef struct Command {
-    char* command;
-    char** arguments;
-    char* infile;
-    char* outfile;
-    int pipe;
-    struct Command* next;
+typedef struct Command_t {
+	char	*command;
+	char	**arguments;
+	char	*infile;
+	char	*outfile;
+	int 	pipe;
+	struct Command_t *next;
 } Command;
 
 typedef struct {
-    Command* head;
+	Command	*head;
 } CommandTable;
 
+typedef struct arg_s {
+    char    *argument;
+	int 	argIndex;
+    int 	inQuote;
+    int 	argCount;
+    int 	argSize;
+}arg_t;
+/************************************************************************************************
+ *                              PARSING                                                         *
+************************************************************************************************/
+Command	*createCommandNode();
+void	freeCommandNode(Command *node);
+void	freeCommandTable(CommandTable  *table);
+void	parsecommand(char  *input, CommandTable *table);
+
+/************************************************************************************************
+ *                              UTILS                                                           *
+************************************************************************************************/
 int	ft_strcmp(char	*s1, char	*s2);
 char	*ft_strjoin(char *s1, char *s2); // free
 char	**ft_split(char *st, char c);
