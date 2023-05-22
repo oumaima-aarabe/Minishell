@@ -74,115 +74,115 @@ void ft_autre_cmd(char **tab, char **env)
 	execve(tab[0], tab, env);
 }
 
-int main(int ac, char **av, char  **env)
-{
-	(void)av;
-	// (void)env;
-	char *pwd;
-	if(ac != 1)
-	{
-		printf("Minishell ma katakhod waloo \n"); // change msg
-		exit(1);
-	}
-	int i = 0;
-	char **tmp = NULL;
-	char **str0 = NULL;
-	// int j = 5;
-	// int x = 0;
-	while(env[i])
-	{
-		if(!strncmp(env[i],"PATH=", 5))
-		{
-			str0 = ft_split(env[i], '=');
-			tmp = ft_split(str0[1], ':');
-			// printf("%s\n", str0);
-			// exit (0);
-		}
-		i++;
-	}
-	i = 0;
-	// while(tmp[i])
-	// {
-	// 	printf("%s\n", tmp[i++]);
+// int main(int ac, char **av, char  **env)
+// {
+// 	(void)av;
+// 	// (void)env;
+// 	char *pwd;
+// 	if(ac != 1)
+// 	{
+// 		printf("Minishell ma katakhod waloo \n"); // change msg
+// 		exit(1);
+// 	}
+// 	int i = 0;
+// 	char **tmp = NULL;
+// 	char **str0 = NULL;
+// 	// int j = 5;
+// 	// int x = 0;
+// 	while(env[i])
+// 	{
+// 		if(!strncmp(env[i],"PATH=", 5))
+// 		{
+// 			str0 = ft_split(env[i], '=');
+// 			tmp = ft_split(str0[1], ':');
+// 			// printf("%s\n", str0);
+// 			// exit (0);
+// 		}
+// 		i++;
+// 	}
+// 	i = 0;
+// 	// while(tmp[i])
+// 	// {
+// 	// 	printf("%s\n", tmp[i++]);
 
-	// }
-
-
-	int p;
-	char *str;
-	char *ss;
-	char *test;
-	char **ok;
-
-	while(1337)
-	{
-		signal(SIGQUIT, SIG_IGN);
-		signal(SIGINT,  ctr_c);
-		pwd = ft_strjoin(getcwd(NULL, 0), " -> "); // 1bite leaks pwd
-		str = readline(pwd);
-		free(pwd);
-		if(!str)
-		{
-			printf("exit\n");
-			exit(0);
-		}
-		ok = ft_split(str, ' ');
-//--------------------------------------------------------------------------------
-		if(!ft_strcmp(str, "pwd"))
-			printf("%s\n", getcwd(NULL, 0));
-//--------------------------------------------------------------------------------
-
-		else if(!ft_strcmp(str, "exit"))
-		{
-			// free(pwd);
-			exit(0);
-		}
-//--------------------------------------------------------------------------------
-
-		else if(!ft_strcmp(ok[0], "cd"))
-			ft_exut_cd(ok);
-		else if(!ft_strcmp(ok[0], "echo"))
-			echo(ok);
+// 	// }
 
 
-//--------------------------------------------------------------------------------
-		else
-		{
-			i = 0;
-		while(tmp[i])
-		{
-			test = ft_strjoin(ft_strdup("/"), ok[0]);
-			ss = ft_strjoin(ft_strdup(tmp[i]), test);
-			free(test);
-			test = NULL;
-			if(!(access(ss, F_OK)))
-				break;
-			else
-			{
-			free(ss);
-			ss = NULL;
-			i++;
-			}
-			if(!tmp[i])
-				printf("Minishell: %s: command not found\n", ok[0]);
-		}
-		if(ss)
-		{
-			p = fork();
-			if(!p)
-			{
-				execve(ss, ok, env);
-			}
-		}
-		wait(&p);
-		free(ss);
-		ss = NULL;
-		}
-//--------------------------------------------------------------------------------
-		add_history(str);
-		free(str);
-		ft_free_(ok);
-		ok = NULL;
-		str = NULL;
-	}
-}
+// 	int p;
+// 	char *str;
+// 	char *ss;
+// 	char *test;
+// 	char **ok;
+
+// 	while(1337)
+// 	{
+// 		signal(SIGQUIT, SIG_IGN);
+// 		signal(SIGINT,  ctr_c);
+// 		pwd = ft_strjoin(getcwd(NULL, 0), " -> ");
+// 		str = readline(pwd);
+// 		free(pwd);
+// 		if(!str)
+// 		{
+// 			printf("exit\n");
+// 			exit(0);
+// 		}
+// 		ok = ft_split(str, ' ');
+// //--------------------------------------------------------------------------------
+// 		if(!ft_strcmp(str, "pwd"))
+// 			printf("%s\n", getcwd(NULL, 0));
+// //--------------------------------------------------------------------------------
+
+// 		else if(!ft_strcmp(str, "exit"))
+// 		{
+// 			// free(pwd);
+// 			exit(0);
+// 		}
+// //--------------------------------------------------------------------------------
+
+// 		else if(!ft_strcmp(ok[0], "cd"))
+// 			ft_exut_cd(ok);
+// 		else if(!ft_strcmp(ok[0], "echo"))
+// 			echo(ok);
+
+
+// //--------------------------------------------------------------------------------
+// 		else
+// 		{
+// 			i = 0;
+// 		while(tmp[i])
+// 		{
+// 			test = ft_strjoin(ft_strdup("/"), ok[0]);
+// 			ss = ft_strjoin(ft_strdup(tmp[i]), test);
+// 			free(test);
+// 			test = NULL;
+// 			if(!(access(ss, F_OK)))
+// 				break;
+// 			else
+// 			{
+// 			free(ss);
+// 			ss = NULL;
+// 			i++;
+// 			}
+// 			if(!tmp[i])
+// 				printf("Minishell: %s: command not found\n", ok[0]);
+// 		}
+// 		if(ss)
+// 		{
+// 			p = fork();
+// 			if(!p)
+// 			{
+// 				execve(ss, ok, env);
+// 			}
+// 		}
+// 		wait(&p);
+// 		free(ss);
+// 		ss = NULL;
+// 		}
+// //--------------------------------------------------------------------------------
+// 		add_history(str);
+// 		free(str);
+// 		ft_free_(ok);
+// 		ok = NULL;
+// 		str = NULL;
+// 	}
+// }

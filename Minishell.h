@@ -20,7 +20,23 @@
 # include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/wait.h>
 
+typedef struct Command {
+    char* command;
+    char** arguments;
+    char* infile;
+    char* outfile;
+    int pipe;
+    struct Command* next;
+} Command;
+
+typedef struct {
+    Command* head;
+} CommandTable;
 
 int	ft_strcmp(char	*s1, char	*s2);
 char	*ft_strjoin(char *s1, char *s2); // free

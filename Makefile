@@ -25,7 +25,8 @@ FLAGS = -Wall -Werror -Wextra -I$(READLINE)/include
 
 
 SRC =	obj/Minishell.c \
-		obj/libft_util.c
+		obj/libft_util.c \
+		obj/testing.c 
 
 
 OBJ = $(SRC:.c=.o)
