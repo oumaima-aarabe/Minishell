@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/22 00:57:37 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/22 01:28:48 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void echo(char **tab)
 	if(!ft_strcmp(tab[i], "echo"))
 	{
 		i++;
-		if(tab[i] && tab[i][0] == '-' && tab[i][1] == 'n')
+		while(tab[i] && (strncmp(tab[i], "-n", 2)) == 0)
 		{
 			j = 2;
 			while(tab[i][j] && tab[i][j] == 'n')
@@ -30,10 +30,8 @@ void echo(char **tab)
 			if(tab[i][j])
 				bol = 1;
 			else
-			{
 				bol = 0;
-				i++;
-			}
+			i++;
 		}
 		while (tab[i])
 			printf("%s ", tab[i++]);
