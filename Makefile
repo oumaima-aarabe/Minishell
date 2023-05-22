@@ -6,7 +6,7 @@
 #    By: azarda <azarda@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/12 18:21:14 by azarda            #+#    #+#              #
-#    Updated: 2023/05/21 23:44:36 by azarda           ###   ########.fr        #
+#    Updated: 2023/05/22 02:20:52 by azarda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,10 @@ INCLUDE = Minishell.h
 
 CC = cc
 
-READLINE = $(shell brew --prefix readline)
+# READLINE = $(shell brew --prefix readline)
 
-FLAGS = -Wall -Werror -Wextra -I$(READLINE)/include
+FLAGS = -Wall -Werror -Wextra 
+# -I$(READLINE)/include
 
 
 
@@ -39,7 +40,8 @@ dir = obj
 all: $(NAME)
 
 $(NAME): ${dir} $(OBJ)  $(INCLUDE)
-	$(CC) $(FLAGS) $(OBJ) -lreadline -o $(NAME)  -L$(READLINE)/lib
+	$(CC) $(FLAGS) $(OBJ) -lreadline -o $(NAME)  
+	# -L$(READLINE)/lib
 
 
 obj/%.o : %.c $(INCLUDE)

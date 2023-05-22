@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/22 01:34:09 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/22 16:25:16 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,20 @@ void ft_exut_cd(char **str)
 	}
 }
 
+void ft_hairdoc(char **tab)
+{
+	char *str;
+	while(1)
+	{
+		str = readline("> ");
+		if(!ft_strcmp(str, tab[1]))
+			break;
+		free(str);
+		str = NULL;
+			
+	}
+}
+
 void lea()
 	{
 		system("leaks Minishell");
@@ -84,6 +98,8 @@ void ft_exec(char **tab, char **env)
 			ft_exut_cd(tab);
 		else if(!ft_strcmp(tab[0], "echo"))
 			echo(tab);
+		else if(!ft_strcmp(tab[0], "<<"))
+			ft_hairdoc(tab);
 		else
 		{
 	while(env[i])
