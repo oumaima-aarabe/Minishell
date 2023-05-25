@@ -3,30 +3,36 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: azarda <azarda@student.42.fr>              +#+  +:+       +#+         #
+#    By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/05/12 18:21:14 by azarda            #+#    #+#              #
-#    Updated: 2023/05/18 11:13:33 by azarda           ###   ########.fr        #
+#    Created: 2023/03/15 15:19:53 by azarda            #+#    #+#              #
+#    Updated: 2023/05/25 01:12:45 by ouaarabe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = Minishell
-
-INCLUDE = Minishell.h
-
+NAME = minishell
 
 CC = cc
 
-READLINE = $(shell brew --prefix readline)
+FLAGS = -Wall -Wextra -Werror -g
+# -fsanitize=address
+INCLUDE = minishell.h
 
-FLAGS = -Wall -Werror -Wextra -I$(READLINE)/include
+READ_LINE = /Users/ouaarabe/.brew/Cellar/readline/8.2.1
+
+LIBRARIES	= -L${READ_LINE}/lib -lreadline -I includes -I ${READ_LINE}/include
+
+INCLUDES	= -I${READ_LINE}/include
 
 
-
-
-SRC =	obj/Minishell.c \
-		obj/libft_util.c \
-		obj/testing.c 
+SRC =	obj/main.c\
+		obj/lexer.c\
+		obj/ft_error.c
+		# obj/my_split.c\
+		# obj/env.c\
+		# obj/libft.c\
+		# obj/parsing.c\
+		# obj/parsing_creat.c\
 
 
 OBJ = $(SRC:.c=.o)
@@ -35,17 +41,18 @@ mkdir = mkdir -p
 
 dir = obj
 
+#  //// should i use object file to compil //*/**/
 
 all: $(NAME)
 
 $(NAME): ${dir} $(OBJ)  $(INCLUDE)
-	$(CC) $(FLAGS) $(OBJ) -lreadline -o $(NAME)  -L$(READLINE)/lib
+	$(CC) $(FLAGS) ${LIBRARIES} $(OBJ) -o $(NAME) 
 
 
 obj/%.o : %.c $(INCLUDE)
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) ${INCLUDES} -c $< -o $@
 
-${dir} :
+${dir} : 
 	@${mkdir} ${dir}
 
 

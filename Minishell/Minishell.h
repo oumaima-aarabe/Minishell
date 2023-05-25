@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:50 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/22 14:49:17 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/05/24 02:54:18 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,28 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 
+typedef struct arg_s {
+	char 	**content;
+	int 	argIndex;
+    int 	inQuote;
+    int 	argCount;
+    int 	argSize;
+}arg_t;
+
 typedef struct Command_t {
 	char	*command;
-	char	**arguments;
-	char	*infile;
-	char	*outfile;
+	arg_t	*arguments;
+	int		fd_infile;
+	int		fd_outfile;
 	int 	pipe;
 	struct Command_t *next;
+	struct Command_t *prev;
 } Command;
 
 typedef struct {
 	Command	*head;
 } CommandTable;
 
-typedef struct arg_s {
-    char    *argument;
-	int 	argIndex;
-    int 	inQuote;
-    int 	argCount;
-    int 	argSize;
-}arg_t;
 /************************************************************************************************
  *                              PARSING                                                         *
 ************************************************************************************************/

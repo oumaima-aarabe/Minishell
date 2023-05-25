@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 14:38:29 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/05/22 15:29:51 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/05/22 15:55:56 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void    args_parse(arg_t *arg, Command *command )
     while (arg->argument != NULL) 
     {
         if (arg->inQuote) {
-            int len = strlen(command->arguments[arg->argIndex]);
+            int len = strlen(command->arguments->content[arg->argIndex]);
             command->arguments[arg->argIndex] = realloc(command->arguments[arg->argIndex], len + strlen(arg->argument) + 2);
             strcat(command->arguments[arg->argIndex], " ");
             strcat(command->arguments[arg->argIndex], arg->argument);
