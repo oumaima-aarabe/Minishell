@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/26 03:59:17 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/05/26 04:17:02 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ t_env *environment(char **env)
 	while(env[i])
 	{
 		tmp = ft_split(env[i], '=');
-		// printf("key ==  %s  valu == %s\n", tmp[0], tmp[1]);
 		ft_lstadd_back(&en, ft_creat(ft_strdup(tmp[0]) ,ft_strdup(tmp[1])));
 		ft_free_(tmp);
 		tmp = NULL;
@@ -110,7 +109,7 @@ int main(int ac, char **av, char  **env)
 	en = environment(env); 
 	if(ac != 1)
 	{
-		printf("Minishell ma katakhod waloo \n"); // change msg
+		printf("Minishell no take arguments\n"); // change msg
 		exit(1);
 	}
 	
@@ -138,7 +137,7 @@ int main(int ac, char **av, char  **env)
 		else if(!(ft_strcmp(ok[0], "export")))
 			ft_export(en); 
 		else
-			ft_exec(ok, env);
+			ft_exec(ok, en, env);
 		ft_free_(ok);
 		ok = NULL;
 	}

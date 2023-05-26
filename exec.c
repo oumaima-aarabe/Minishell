@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/26 02:32:03 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/05/26 04:15:05 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,11 @@ void lea()
 		system("leaks Minishell");
 	}
 
-void ft_exec(char **tab, char **env)
+void ft_exec(char **tab, t_env *env, char **ex)
 {
 	char *test;
 	char **tmp;
-	char **str0;
+	// char **str0;
 	char *ss;
 	int p;
 	int i = 0;
@@ -103,16 +103,23 @@ void ft_exec(char **tab, char **env)
 			ft_hairdoc(tab);
 		else
 		{
-	while(env[i])
+	while(env)
 	{
-		if(!strncmp(env[i],"PATH=", 5))
-		{
-			str0 = ft_split(env[i], '=');
-			tmp = ft_split(str0[1], ':');
-			ft_free_(str0);
-		}
-		i++;
+		if((!ft_strcmp("PATH", env->key)))
+			break;
+		env = env->next;
 	}
+	tmp = ft_split(env->valu, ':');
+	// while(env[i])
+	// {
+	// 	if(!strncmp(env[i],"PATH=", 5))
+	// 	{
+	// 		str0 = ft_split(env[i], '=');
+	// 		tmp = ft_split(str0[1], ':');
+	// 		ft_free_(str0);
+	// 	}
+	// 	i++;
+	// }
 	i = 0;
 	while(tmp[i])
 	{
@@ -137,7 +144,7 @@ void ft_exec(char **tab, char **env)
 		p = fork();
 		if(!p)
 		{
-			execve(ss, tab, env);
+			execve(ss, tab, ex);
 		}
 	}
 	wait(&p);

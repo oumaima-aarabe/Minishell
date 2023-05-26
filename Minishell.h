@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:50 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/26 01:46:43 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/05/26 04:14:55 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		ft_strlen(char const *str);
 void	ft_putstr_fd(char *s, int fd);
 char	*ft_strdup(char *s1);
 void	ft_free_(char **tab);
-void ft_exec(char **ok, char **env);
+void ft_exec(char **ok, t_env *en, char **ex);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 void	ft_lstadd_back(t_env **alst, t_env *new);
 
