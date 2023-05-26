@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/26 02:53:37 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/05/26 03:54:09 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,38 @@ void ft_env(t_env *env)
 	}
 }
 
+int ascending(int a, int b)
+{
+	return (a <= b);
+}
+
+
+void ft_export(t_env *env, int (*ascending)(int, int))
+{
+	char 	*swap;
+
+	t_env *tmp;
+	tmp = env;
+	while(env->next != NULL)
+	{
+		if ((ascending(env->key[0], env->next->key[0])) == 0)
+		{
+			swap = env->key;
+			env->key = env->next->key;
+			env->next->key = swap;
+			env = tmp;
+		}
+		else
+			env = env->next;
+	}
+	env = tmp;
+	while(env)
+	{
+		printf("declare -x %s=%s\n",env->key, env->valu);
+		env = env->next;
+	}
+}
+
 int main(int ac, char **av, char  **env)
 {
 	(void)av;
@@ -103,6 +135,8 @@ int main(int ac, char **av, char  **env)
 		str = NULL;
 		if(!(ft_strcmp(ok[0], "env")))
 			ft_env(en); // he nide SHELV
+		else if(!(ft_strcmp(ok[0], "export")))
+			ft_export(en, ascending); 
 		else
 			ft_exec(ok, env);
 		ft_free_(ok);
