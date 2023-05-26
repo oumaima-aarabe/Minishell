@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:50 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/22 02:21:44 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/26 01:46:43 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@
 # include <sys/wait.h>
 
 
+typedef struct s_env
+{
+    char *key;
+    char *valu;
+    struct s_env *next;
+}   t_env;
+
+
 int	ft_strcmp(char	*s1, char	*s2);
 char	*ft_strjoin(char *s1, char *s2); // free
 char	**ft_split(char *st, char c);
@@ -32,5 +40,7 @@ char	*ft_strdup(char *s1);
 void	ft_free_(char **tab);
 void ft_exec(char **ok, char **env);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
+void	ft_lstadd_back(t_env **alst, t_env *new);
+
 
 #endif

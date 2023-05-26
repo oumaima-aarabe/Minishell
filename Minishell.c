@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/22 01:25:55 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/26 02:18:45 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void  ctr_c(int sig)
 	(void)sig;
 	printf("\n");
 	rl_on_new_line();
-	rl_replace_line(" ", 0);
+	// rl_replace_line(" ", 0);
 	rl_redisplay();
 
 }
@@ -27,17 +27,63 @@ void le()
 	system("leaks Minishell");
 }
 
+t_env *ft_creat(char *key, char *val)
+{
+	t_env	*new;
+
+	new = (t_env *)malloc(sizeof(t_env));
+	if (!new)
+		return (NULL);
+	else
+	{
+		new->key =  key;
+		new->valu = val;
+		new->next = NULL;
+	}
+	return (new);
+}
+t_env *environment(char **env)
+{
+	int i = 0;
+	
+	t_env *en = NULL;
+	char **tmp;
+	while(env[i])
+	{
+		tmp = ft_split(env[i], '=');
+		// printf("key ==  %s  valu == %s\n", tmp[0], tmp[1]);
+		ft_lstadd_back(&en, ft_creat(ft_strdup(tmp[0]) ,ft_strdup(tmp[1])));
+		ft_free_(tmp);
+		tmp = NULL;
+		i++;
+	}
+	return(en);
+}
+void ft_env(t_env *env)
+{
+	while(env)
+	{
+		printf("%s=%s\n", env->key, env->valu);
+		env = env->next;
+	}
+}
+
 int main(int ac, char **av, char  **env)
 {
 	(void)av;
 	char *pwd;
 	char *str;
 	char **ok;
+	t_env *en;
+	en = environment(env); 
 	if(ac != 1)
 	{
 		printf("Minishell ma katakhod waloo \n"); // change msg
 		exit(1);
 	}
+	
+	
+
 	while(1337)
 	{
 		signal(SIGQUIT, SIG_IGN);
@@ -55,7 +101,10 @@ int main(int ac, char **av, char  **env)
 		add_history(str);
 		free(str);
 		str = NULL;
-		ft_exec(ok, env);
+		if(!(ft_strcmp(ok[0], "env")))
+			ft_env(en);
+		else
+			ft_exec(ok, env);
 		ft_free_(ok);
 		ok = NULL;
 	}

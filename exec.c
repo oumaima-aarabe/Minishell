@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/22 16:25:16 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/26 02:32:03 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void ft_exec(char **tab, char **env)
 	{
 		// free(pwd);
 		// atexit(lea);
+		printf("exit\n");
 		exit(0);
 	}
 		else if(!ft_strcmp(tab[0], "cd"))
