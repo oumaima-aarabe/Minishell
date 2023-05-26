@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/26 02:18:45 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/05/26 02:53:37 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int main(int ac, char **av, char  **env)
 		free(str);
 		str = NULL;
 		if(!(ft_strcmp(ok[0], "env")))
-			ft_env(en);
+			ft_env(en); // he nide SHELV
 		else
 			ft_exec(ok, env);
 		ft_free_(ok);
