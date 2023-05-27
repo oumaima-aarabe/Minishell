@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/26 04:15:05 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/05/27 22:59:57 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,35 @@ void echo(char **tab)
 
 }
 
-void ft_exut_cd(char **str)
+void ft_exut_cd(char **str, t_env *env)
 {
-
+	t_env *tmp = env;
+	
+	
+	while(env)
+	{
+		if(!ft_strcmp("HOME", env->key))
+		break;
+		env = env->next;
+	}
 	if(!ft_strcmp(str[0], "cd"))
 	{
 		if(!str[1])
-			chdir(getenv("HOME"));
+			chdir(env->valu);
 		else if(chdir(str[1]) < 0)
 		{
 			ft_putstr_fd("Minishell: cd: ", 2);
 			perror(str[1]);
 		}
+	}
+	while(tmp)
+	{
+		if(!ft_strcmp("PWD", tmp->key))
+		{
+			free(tmp->valu);
+			tmp->valu = getcwd(NULL, 0);
+		}
+		tmp = tmp->next;
 	}
 }
 
@@ -96,7 +113,7 @@ void ft_exec(char **tab, t_env *env, char **ex)
 		exit(0);
 	}
 		else if(!ft_strcmp(tab[0], "cd"))
-			ft_exut_cd(tab);
+			ft_exut_cd(tab, env);
 		else if(!ft_strcmp(tab[0], "echo"))
 			echo(tab);
 		else if(!ft_strcmp(tab[0], "<<"))
@@ -121,6 +138,7 @@ void ft_exec(char **tab, t_env *env, char **ex)
 	// 	i++;
 	// }
 	i = 0;
+	// int fd = open ("test", O_RDWR, 0777);
 	while(tmp[i])
 	{
 		test = ft_strjoin(ft_strdup("/"), tab[0]);
@@ -139,6 +157,7 @@ void ft_exec(char **tab, t_env *env, char **ex)
 			printf("Minishell: %s: command not found\n", tab[0]);
 	}
 	ft_free_(tmp);
+	// dup2(fd, 1);
 	if(ss)
 	{
 		p = fork();
@@ -147,6 +166,7 @@ void ft_exec(char **tab, t_env *env, char **ex)
 			execve(ss, tab, ex);
 		}
 	}
+	
 	wait(&p);
 	free(ss);
 	ss = NULL;

@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:50 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/26 04:14:55 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/05/27 22:40:16 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
+# include <fcntl.h>
 
 
 typedef struct s_env
