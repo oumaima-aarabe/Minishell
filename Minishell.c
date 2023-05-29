@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/26 04:17:02 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/05/28 15:16:30 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_env *ft_creat(char *key, char *val)
 t_env *environment(char **env)
 {
 	int i = 0;
-	
+
 	t_env *en = NULL;
 	char **tmp;
 	while(env[i])
@@ -102,26 +102,26 @@ void ft_export(t_env *env)
 int main(int ac, char **av, char  **env)
 {
 	(void)av;
-	char *pwd;
+	// char *pwd;
 	char *str;
 	char **ok;
 	t_env *en;
-	en = environment(env); 
+	en = environment(env);
 	if(ac != 1)
 	{
 		printf("Minishell no take arguments\n"); // change msg
 		exit(1);
 	}
-	
-	
+
+
 
 	while(1337)
 	{
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT,  ctr_c);
-		pwd = ft_strjoin(getcwd(NULL, 0), " -> "); // 1bite leaks pwd
-		str = readline(pwd);
-		free(pwd);
+		//pwd = ft_strjoin(getcwd(NULL, 0), " -> "); // 1bite leaks pwd
+		str = readline("minishell $ ");
+		// free(pwd);
 		if(!str)
 		{
 			printf("exit\n");
@@ -135,7 +135,7 @@ int main(int ac, char **av, char  **env)
 		if(!(ft_strcmp(ok[0], "env")))
 			ft_env(en); // he nide SHELV
 		else if(!(ft_strcmp(ok[0], "export")))
-			ft_export(en); 
+			ft_export(en);
 		else
 			ft_exec(ok, en, env);
 		ft_free_(ok);
