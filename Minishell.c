@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/28 15:16:30 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/29 20:23:44 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,9 @@ void ft_env(t_env *env)
 
 int compar(int a, int b)
 {
-	return (a <= b);
+	if(a > b)
+		return (0);
+	return(1);
 }
 
 
@@ -86,6 +88,9 @@ void ft_export(t_env *env)
 			swap = env->key;
 			env->key = env->next->key;
 			env->next->key = swap;
+			swap = env->valu;
+			env->valu = env->next->valu;
+			env->next->valu = swap;
 			env = tmp;
 		}
 		else
