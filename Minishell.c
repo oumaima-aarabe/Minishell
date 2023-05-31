@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/31 16:34:11 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/31 17:22:05 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ int main(int ac, char **av, char  **env)
 		str = NULL;
 		if(!(ft_strcmp(ok[0], "env")))
 			ft_env(en); // he nide SHELV
-		else if(!(ft_strcmp(ok[0], "ex")))
+		else if(!(ft_strcmp(ok[0], "export")))
 			ft_export(en);
 		else
 			ft_exec(ok, en, env);
