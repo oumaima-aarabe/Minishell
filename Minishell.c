@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/29 20:23:44 by azarda           ###   ########.fr       */
+/*   Updated: 2023/05/31 16:34:11 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,13 @@ void  ctr_c(int sig)
 
 }
 
+//________________________________________________________________________________
+
 void le()
 {
 	system("leaks Minishell");
 }
+//________________________________________________________________________________
 
 t_env *ft_creat(char *key, char *val)
 {
@@ -42,6 +45,9 @@ t_env *ft_creat(char *key, char *val)
 	}
 	return (new);
 }
+
+//________________________________________________________________________________
+
 t_env *environment(char **env)
 {
 	int i = 0;
@@ -58,6 +64,62 @@ t_env *environment(char **env)
 	}
 	return(en);
 }
+
+//________________________________linked_list________________________________________________
+
+
+t_env *duplicate_linked_list(t_env *last) 
+{
+    t_env *nhead = NULL;
+    t_env *tail = NULL;
+	t_env *nnode = NULL;
+
+	
+    while (last) 
+	{
+        nnode = ft_creat(last->key, last->valu);
+        
+
+        if (nhead == NULL) 
+		{
+            nhead = nnode;
+            tail = nnode;
+        } 
+		else 
+		{
+            tail->next = nnode;
+            tail = nnode;
+        }
+
+        last = last->next;
+    }
+
+    return nhead;
+}
+
+
+
+void	ft_lstclear(t_env **alist)
+{
+	t_env	*nlist;
+	t_env	*clist;
+
+	if (!alist)
+		return ;
+	nlist = *alist;
+	while (nlist)
+	{
+		clist = nlist;
+		free(clist);
+		nlist = nlist->next;
+		
+	}
+	*alist = NULL;
+}
+
+
+//________________________________________________________________________________
+
 void ft_env(t_env *env)
 {
 	while(env)
@@ -67,6 +129,9 @@ void ft_env(t_env *env)
 	}
 }
 
+//________________________________________________________________________________
+ 
+ 
 int compar(int a, int b)
 {
 	if(a > b)
@@ -74,35 +139,48 @@ int compar(int a, int b)
 	return(1);
 }
 
+//________________________________________________________________________________
+
 
 void ft_export(t_env *env)
 {
 	char 	*swap;
 
 	t_env *tmp;
-	tmp = env;
-	while(env->next != NULL)
+	t_env *tmp1;
+
+	
+	tmp = duplicate_linked_list(env);
+	
+	tmp1 = tmp;
+	while(tmp->next != NULL)
 	{
-		if ((compar(env->key[0], env->next->key[0])) == 0)
+		if ((compar(tmp->key[0], tmp->next->key[0])) == 0)
 		{
-			swap = env->key;
-			env->key = env->next->key;
-			env->next->key = swap;
-			swap = env->valu;
-			env->valu = env->next->valu;
-			env->next->valu = swap;
-			env = tmp;
+			swap = tmp->key;
+			tmp->key = tmp->next->key;
+			tmp->next->key = swap;
+			swap = tmp->valu;
+			tmp->valu = tmp->next->valu;
+			tmp->next->valu = swap;
+			tmp = tmp1;
 		}
 		else
-			env = env->next;
+			tmp = tmp->next;
 	}
-	env = tmp;
-	while(env)
+	tmp = tmp1;
+	while(tmp)
 	{
-		printf("declare -x %s=%s\n",env->key, env->valu);
-		env = env->next;
+		printf("declare -x %s=%s\n",tmp->key, tmp->valu);
+		tmp = tmp->next;
 	}
+	ft_lstclear(&tmp1);
 }
+
+
+//________________________________________________________________________________
+//________________________________________________________________________________
+
 
 int main(int ac, char **av, char  **env)
 {
@@ -139,7 +217,7 @@ int main(int ac, char **av, char  **env)
 		str = NULL;
 		if(!(ft_strcmp(ok[0], "env")))
 			ft_env(en); // he nide SHELV
-		else if(!(ft_strcmp(ok[0], "export")))
+		else if(!(ft_strcmp(ok[0], "ex")))
 			ft_export(en);
 		else
 			ft_exec(ok, en, env);

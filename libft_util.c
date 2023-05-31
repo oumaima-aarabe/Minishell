@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:42:52 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/26 01:41:16 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/05/31 15:24:26 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ char	**ft_split(char  *st, char c)
 void	ft_lstadd_back(t_env **alst, t_env *new)
 {
 	t_env	*ptr;
-
+	
 	if (alst)
 	{
 		if (*alst == NULL)
@@ -221,8 +221,12 @@ void	ft_lstadd_back(t_env **alst, t_env *new)
 		{
 			ptr = *alst;
 			while (ptr->next != NULL)
+			{
 				ptr = ptr->next;
+				
+			}
 			ptr->next = new;
 		}
 	}
 }
+
