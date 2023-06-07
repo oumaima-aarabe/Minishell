@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/07 13:20:29 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/07 17:47:40 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,9 @@ void	ft_lstclear(t_env **alist)
 
 void ft_env(t_env *env)
 {
-	while(env)
+	while(env )
 	{
+		if(env->valu)
 		printf("%s=%s\n", env->key, env->valu);
 		env = env->next;
 	}
@@ -154,6 +155,8 @@ int ft_egal(char *st)
 	return 0;
 }
 
+//________________________________________________________________________________
+
 void ft_export(t_env *env, char **cmd)
 {
 	char 	*swap;
@@ -169,6 +172,8 @@ void ft_export(t_env *env, char **cmd)
 			i = ft_egal(cmd[1]);
 			ft_lstadd_back(&env,ft_creat(ft_substr(cmd[1], 0, i), ft_substr(cmd[1], i + 1, ft_strlen(cmd[1]) - i)));
 		}
+		else
+			ft_lstadd_back(&env, ft_creat(ft_strdup(cmd[1]), NULL));
 		return ;
 	}
 	tmp = duplicate_linked_list(env);
@@ -192,11 +197,23 @@ void ft_export(t_env *env, char **cmd)
 	tmp = tmp1;
 	while(tmp)
 	{
-		printf("declare -x %s=%s\n",tmp->key, tmp->valu);
+		if(tmp->valu)
+		printf("declare -x %s=\"%s\"\n",tmp->key, tmp->valu);
+		else
+		printf("declare -x %s\n",tmp->key);
 		tmp = tmp->next;
 	}
 	ft_lstclear(&tmp1);
 }
+
+//________________________________________________________________________________
+
+// void ft_unset(t_env *env, char **cmd)
+// {
+
+// }
+
+//________________________________________________________________________________
 
 
 //________________________________________________________________________________
@@ -240,6 +257,8 @@ int main(int ac, char **av, char  **env)
 			ft_env(en); // he nide SHELV
 		else if(!(ft_strcmp(ok[0], "export")))
 			ft_export(en, ok);
+		// else if(!(ft_strcmp(ok[0], "unset")))
+		// 	ft_unset(en, ok);
 		else
 			ft_exec(ok, en, env);
 		ft_free_(ok);
