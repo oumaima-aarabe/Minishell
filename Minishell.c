@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/31 17:22:05 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/07 13:20:29 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,24 +68,24 @@ t_env *environment(char **env)
 //________________________________linked_list________________________________________________
 
 
-t_env *duplicate_linked_list(t_env *last) 
+t_env *duplicate_linked_list(t_env *last)
 {
     t_env *nhead = NULL;
     t_env *tail = NULL;
 	t_env *nnode = NULL;
 
-	
-    while (last) 
+
+    while (last)
 	{
         nnode = ft_creat(last->key, last->valu);
-        
 
-        if (nhead == NULL) 
+
+        if (nhead == NULL)
 		{
             nhead = nnode;
             tail = nnode;
-        } 
-		else 
+        }
+		else
 		{
             tail->next = nnode;
             tail = nnode;
@@ -112,7 +112,7 @@ void	ft_lstclear(t_env **alist)
 		clist = nlist;
 		free(clist);
 		nlist = nlist->next;
-		
+
 	}
 	*alist = NULL;
 }
@@ -130,8 +130,8 @@ void ft_env(t_env *env)
 }
 
 //________________________________________________________________________________
- 
- 
+
+
 int compar(int a, int b)
 {
 	if(a > b)
@@ -141,17 +141,38 @@ int compar(int a, int b)
 
 //________________________________________________________________________________
 
+int ft_egal(char *st)
+{
+	int i = 0;
 
-void ft_export(t_env *env)
+	while(st[i])
+	{
+		if(st[i] == '=')
+		return (i);
+		i++;
+	}
+	return 0;
+}
+
+void ft_export(t_env *env, char **cmd)
 {
 	char 	*swap;
 
 	t_env *tmp;
 	t_env *tmp1;
+	int i;
 
-	
+	if(cmd[1])
+	{
+		if(ft_egal(cmd[1]))
+		{
+			i = ft_egal(cmd[1]);
+			ft_lstadd_back(&env,ft_creat(ft_substr(cmd[1], 0, i), ft_substr(cmd[1], i + 1, ft_strlen(cmd[1]) - i)));
+		}
+		return ;
+	}
 	tmp = duplicate_linked_list(env);
-	
+
 	tmp1 = tmp;
 	while(tmp->next != NULL)
 	{
@@ -218,7 +239,7 @@ int main(int ac, char **av, char  **env)
 		if(!(ft_strcmp(ok[0], "env")))
 			ft_env(en); // he nide SHELV
 		else if(!(ft_strcmp(ok[0], "export")))
-			ft_export(en);
+			ft_export(en, ok);
 		else
 			ft_exec(ok, en, env);
 		ft_free_(ok);

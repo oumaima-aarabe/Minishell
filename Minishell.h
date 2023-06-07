@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:50 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/27 22:40:16 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/06/07 13:15:52 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	ft_free_(char **tab);
 void ft_exec(char **ok, t_env *en, char **ex);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 void	ft_lstadd_back(t_env **alst, t_env *new);
+char	*ft_substr(char const *s,  int start, int len);
 
 
 #endif
