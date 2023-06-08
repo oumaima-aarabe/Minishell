@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/07 17:47:40 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/08 17:09:14 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,13 +208,95 @@ void ft_export(t_env *env, char **cmd)
 
 //________________________________________________________________________________
 
-// void ft_unset(t_env *env, char **cmd)
-// {
 
-// }
+
+
+void deleteNode(t_env **head, char *key)
+ {
+    t_env *current = *head;
+    t_env *previous = NULL;
+
+    // Vérifier si la valeur à supprimer correspond au premier nœud
+    if (current != NULL && current->key == key)
+	{
+        *head = current->next; // Réattribuer la tête de liste
+        free(current);
+        return;
+    }
+
+    // Parcourir la liste jusqu'à trouver le nœud à supprimer
+    while (current != NULL && current->key != key)
+	{
+        previous = current;
+        current = current->next;
+    }
+
+    // Réattribuer les pointeurs pour contourner le nœud à supprimer
+    previous->next = current->next;
+	// puts("herr");
+    free(current); // Libérer la mémoire
+}
+
+
 
 //________________________________________________________________________________
 
+void ft_unset(t_env *env, char **cmd)
+{
+	deleteNode(&env, cmd[1]);
+}
+
+//________________________________________________________________________________
+
+char *ft_take_key(char *str, t_env *env)
+{
+
+	str++;
+	while(env)
+	{
+		if(!ft_strcmp(str, env->key))
+		return (env->valu);
+		env = env->next;
+	}
+	return NULL;
+}
+
+
+
+
+
+//________________________________________________________________________________
+
+
+char **ft_expend(char **cmd, t_env *en)
+{
+	int i = 0;
+	int j = 0;
+
+	while(cmd[i])
+	{
+		j = 0;
+		while(cmd[i][j])
+		{
+			if(cmd[i][j] ==  '$')
+			{
+				cmd[i] = ft_strdup(ft_take_key(cmd[i], en));
+				// if(!cmd[i])
+					// cmd[i] = ft_strdup("");
+			}
+			j++;
+		}
+		i++;
+	}
+	// i = 0;
+	// j = 0;
+	// while(cmd[i])
+	// {
+	// 	printf("--->>>%s\n", cmd[i]);
+	// 	i++;
+	// }
+	return (cmd);
+}
 
 //________________________________________________________________________________
 //________________________________________________________________________________
@@ -250,6 +332,7 @@ int main(int ac, char **av, char  **env)
 			exit(0);
 		}
 		ok = ft_split(str, ' ');
+		ok = ft_expend(ok,en);
 		add_history(str);
 		free(str);
 		str = NULL;
@@ -257,8 +340,8 @@ int main(int ac, char **av, char  **env)
 			ft_env(en); // he nide SHELV
 		else if(!(ft_strcmp(ok[0], "export")))
 			ft_export(en, ok);
-		// else if(!(ft_strcmp(ok[0], "unset")))
-		// 	ft_unset(en, ok);
+		else if(!(ft_strcmp(ok[0], "unset")))
+			ft_unset(en, ok);
 		else
 			ft_exec(ok, en, env);
 		ft_free_(ok);
