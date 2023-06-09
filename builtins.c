@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/09 22:06:21 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/09 22:27:35 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,14 @@ void ft_execut_cd(char **str, t_env *env)
 
 //____________________________________pwd_________________________________________
 
-void ft_ft_execut_pwd(t_env *env)
+void ft_ft_execut_pwd(char *cmd, t_env *env)
 {
+
+	if(cmd && ft_atoi(cmd) < 0)
+	{
+		printf("Minishell: pwd: %s: invalid option\npwd: usage: pwd [-LP]\n", cmd);
+		return;
+	}
 	while(env)
 	{
 		if(!ft_strcmp("PWD", env->key))
@@ -237,7 +243,7 @@ int ft_execut_bultins(char **cmd, t_env *env)
 
 	else if(!ft_strcmp(cmd[0], "pwd"))
 	{
-		ft_ft_execut_pwd(env);
+		ft_ft_execut_pwd(cmd[1] ,env);
 		return (1);
 	}
 

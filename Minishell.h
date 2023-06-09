@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:50 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/09 19:53:43 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/09 22:21:00 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	ft_strcmp(char	*s1, char	*s2);
 int	ft_strlen(char const *str);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 int	ft_execut_bultins(char **cmd, t_env *env);
+int	ft_atoi(char *str);
 
 
 t_env	*ft_creat(char *key, char *val);

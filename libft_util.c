@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:42:52 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/09 16:54:36 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/09 22:26:08 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,4 +207,31 @@ char	**ft_split(char  *st, char c)
 	return (tab);
 }
 
+
+int	ft_atoi(char *str)
+{
+	int		s;
+	long	d;
+
+	s = 1;
+	d = 0;
+	while ((*str >= 9 && *str <= 13) || *str == ' ')
+		str++;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+					s *= -1;
+					str++;
+	}
+	while (*str >= '0' && *str <= '9')
+	{
+		if (d > d * 10 + *str - '0' && s == -1)
+			return (0);
+		if (d > d * 10 + *str - '0' && s == 1)
+			return (-1);
+			d = d * 10 + *str - '0';
+			str++;
+	}
+	return ((int)(d * s));
+}
 
