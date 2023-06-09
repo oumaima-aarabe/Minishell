@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:42:52 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/31 15:24:26 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/09 16:54:36 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,27 +206,5 @@ char	**ft_split(char  *st, char c)
 	tab = ft_my_split(st, c, i, j);
 	return (tab);
 }
-void	ft_lstadd_back(t_env **alst, t_env *new)
-{
-	t_env	*ptr;
-	
-	if (alst)
-	{
-		if (*alst == NULL)
-		{
-			*alst = new;
-			new = NULL;
-		}
-		else
-		{
-			ptr = *alst;
-			while (ptr->next != NULL)
-			{
-				ptr = ptr->next;
-				
-			}
-			ptr->next = new;
-		}
-	}
-}
+
 

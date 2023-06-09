@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:50 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/07 13:15:52 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/09 17:03:42 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,31 @@
 
 typedef struct s_env
 {
-    char *key;
-    char *valu;
-    struct s_env *next;
+	char *key;
+	char *valu;
+	struct s_env *next;
 }   t_env;
 
 
-int	ft_strcmp(char	*s1, char	*s2);
-char	*ft_strjoin(char *s1, char *s2); // free
-char	**ft_split(char *st, char c);
-int		ft_strlen(char const *str);
-void	ft_putstr_fd(char *s, int fd);
-char	*ft_strdup(char *s1);
-void	ft_free_(char **tab);
-void ft_exec(char **ok, t_env *en, char **ex);
-int	ft_strncmp(const char *s1, const char *s2, size_t n);
 void	ft_lstadd_back(t_env **alst, t_env *new);
-char	*ft_substr(char const *s,  int start, int len);
+void	ft_lstclear(t_env **alist);
+void	ft_putstr_fd(char *s, int fd);
+void	ft_free_(char **tab);
+void	ft_exec(char **ok, t_env *en, char **ex);
 
+
+char	*ft_strjoin(char *s1, char *s2); // free
+char	*ft_strdup(char *s1);
+char	*ft_substr(char const *s,  int start, int len);
+char	**ft_split(char *st, char c);
+
+int	ft_strcmp(char	*s1, char	*s2);
+int	ft_strlen(char const *str);
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
+int	ft_execut_bultins(char **cmd, t_env *env);
+
+
+t_env	*ft_creat(char *key, char *val);
+t_env	*duplicate_linked_list(t_env *last);
 
 #endif

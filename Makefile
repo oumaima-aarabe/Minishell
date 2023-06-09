@@ -6,7 +6,7 @@
 #    By: azarda <azarda@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/12 18:21:14 by azarda            #+#    #+#              #
-#    Updated: 2023/05/31 14:51:39 by azarda           ###   ########.fr        #
+#    Updated: 2023/06/09 16:55:01 by azarda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CC = cc
 
 # READLINE = $(shell brew --prefix readline)
 
-FLAGS = -Wall -Werror -Wextra 
+FLAGS = -Wall -Werror -Wextra
 # -I$(READLINE)/include
 
 
@@ -27,7 +27,9 @@ FLAGS = -Wall -Werror -Wextra
 
 SRC =	obj/Minishell.c \
 		obj/libft_util.c \
-		obj/exec.c
+		obj/exec.c \
+		obj/lst_utils.c \
+		obj/builtins.c
 
 
 OBJ = $(SRC:.c=.o)
@@ -40,7 +42,7 @@ dir = obj
 all: $(NAME)
 
 $(NAME): ${dir} $(OBJ)  $(INCLUDE)
-	$(CC) $(FLAGS) $(OBJ) -lreadline -o $(NAME)  
+	$(CC) $(FLAGS) $(OBJ) -lreadline -o $(NAME)
 	# -L$(READLINE)/lib
 
 
