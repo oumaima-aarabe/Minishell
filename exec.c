@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/03 02:16:17 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/09 16:31:17 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,8 @@ void ft_exec(char **tab, t_env *env, char **ex)
 			p = fork();
 			if(!p)
 			{
-				execve(ss, tab, ex);
+				if(execve(ss, tab, ex) == -1)
+				exit (0);
 			}
 		}
 
