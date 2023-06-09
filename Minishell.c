@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/09 18:31:55 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/09 21:48:43 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ int main(int ac, char **av, char  **env)
 	char *str;
 	char **cmd;
 	t_env *en;
+
 	en = environment(env);
 	if(ac != 1)
 	{
@@ -174,10 +175,9 @@ int main(int ac, char **av, char  **env)
 			ft_free_(cmd);
 			continue;
 		}
-		else
-		{
+
 			ft_exec(cmd, en, env);
 			ft_free_(cmd);
-		}
+
 	}
 }

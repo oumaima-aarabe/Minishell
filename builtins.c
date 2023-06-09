@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/09 18:48:35 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/09 22:06:21 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,28 +48,45 @@ void ft_execut_echo(char **tab)
 	}
 }
 //_____________________________________cd_________________________________________
-
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 void ft_execut_cd(char **str, t_env *env)
 {
+
 	t_env *tmp = env;
 	char *old;
+	char *pwd;
+	char *hom;
 
-	old = getcwd(NULL, 0);
 	while(env)
 	{
 		if(!ft_strcmp("HOME", env->key))
-		break;
+			hom = env->valu;
+		if(!ft_strcmp("PWD", env->key))
+		{
+			old = ft_strdup(env->valu);
+		}
 		env = env->next;
 	}
 	if(!ft_strcmp(str[0], "cd"))
 	{
 		if(!str[1])
-			chdir(env->valu);
+			chdir(hom);
 		else if(chdir(str[1]) < 0)
 		{
 			ft_putstr_fd("Minishell: cd: ", 2);
 			perror(str[1]);
 		}
+		pwd = getcwd(NULL, 0);
+		if(pwd == NULL)
+		{
+			ft_putstr_fd("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n", 2);
+			return ;
+		}
+		free(pwd);
+
+
 	}
 	while(tmp)
 	{
@@ -87,6 +104,20 @@ void ft_execut_cd(char **str, t_env *env)
 	}
 }
 
+//____________________________________pwd_________________________________________
+
+void ft_ft_execut_pwd(t_env *env)
+{
+	while(env)
+	{
+		if(!ft_strcmp("PWD", env->key))
+		{
+			printf("%s\n", env->valu);
+			break;
+		}
+		env = env->next;
+	}
+}
 
 //__________________________________unset_________________________________________
 
@@ -190,7 +221,7 @@ void ft_execut_env(t_env *env)
 
 int ft_execut_bultins(char **cmd, t_env *env)
 {
-	char *pwd;
+	// char *pwd;
 
 	if(!ft_strcmp(cmd[0], "echo"))
 	{
@@ -206,9 +237,7 @@ int ft_execut_bultins(char **cmd, t_env *env)
 
 	else if(!ft_strcmp(cmd[0], "pwd"))
 	{
-		pwd = getcwd(NULL, 0);
-		printf("%s\n", pwd);
-		free(pwd);
+		ft_ft_execut_pwd(env);
 		return (1);
 	}
 

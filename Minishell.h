@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:50 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/09 17:03:42 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/09 19:53:43 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ typedef struct s_env
 	char *valu;
 	struct s_env *next;
 }   t_env;
+
+// typedef struct s_shell
+// {
+// 	char *pwd;
+// } t_shell;
 
 
 void	ft_lstadd_back(t_env **alst, t_env *new);
