@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/09 18:16:18 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/09 18:48:35 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,14 @@ void ft_execut_echo(char **tab)
 			printf("\n");
 	}
 }
+//_____________________________________cd_________________________________________
 
 void ft_execut_cd(char **str, t_env *env)
 {
 	t_env *tmp = env;
+	char *old;
 
-
+	old = getcwd(NULL, 0);
 	while(env)
 	{
 		if(!ft_strcmp("HOME", env->key))
@@ -76,6 +78,11 @@ void ft_execut_cd(char **str, t_env *env)
 			free(tmp->valu);
 			tmp->valu = getcwd(NULL, 0);
 		}
+		if(!ft_strcmp("OLDPWD", tmp->key))
+		{
+			free(tmp->valu);
+			tmp->valu = old;
+		}
 		tmp = tmp->next;
 	}
 }
@@ -85,7 +92,6 @@ void ft_execut_cd(char **str, t_env *env)
 
 
 
-//________________________________________________________________________________
 
 
 //++++++++++++++++++++++++++++++++++++export++++++++++++++++++++++++++++++++++++++
@@ -184,6 +190,8 @@ void ft_execut_env(t_env *env)
 
 int ft_execut_bultins(char **cmd, t_env *env)
 {
+	char *pwd;
+
 	if(!ft_strcmp(cmd[0], "echo"))
 	{
 		ft_execut_echo(cmd);
@@ -198,7 +206,9 @@ int ft_execut_bultins(char **cmd, t_env *env)
 
 	else if(!ft_strcmp(cmd[0], "pwd"))
 	{
-		printf("%s\n", getcwd(NULL, 0));
+		pwd = getcwd(NULL, 0);
+		printf("%s\n", pwd);
+		free(pwd);
 		return (1);
 	}
 
@@ -221,11 +231,12 @@ int ft_execut_bultins(char **cmd, t_env *env)
 	}
 
 	else if(!ft_strcmp(cmd[0], "exit"))
-		{
+	{
 			// free(pwd);
 			// atexit(lea);
 			printf("exit\n");
 			exit(0);
-		}
+	}
+
 	return(0);
 }
