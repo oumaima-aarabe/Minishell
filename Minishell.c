@@ -157,7 +157,7 @@ int main(int ac, char **av, char  **env)
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT,  ctr_c);
 		//pwd = ft_strjoin(getcwd(NULL, 0), " -> "); // 1bite leaks pwd
-		str = readline("minishell $ ");
+		str = readline("Minishell $ ");
 		// free(pwd);
 		if(!str)
 		{

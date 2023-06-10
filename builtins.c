@@ -177,9 +177,7 @@ void ft_execut_export(t_env *env, char **cmd)
 	if(cmd[1] && is_alphabet(cmd[1][0]) && cmd[1][0] != '_')
 	{
 		if(cmd[1][0] == '-')
-		{
 			printf("Minishell: export: %c%c: invalid option\n",cmd[1][0], cmd[1][1]);
-		}
 		else
 			printf("Minishell: export: `%s': not a valid identifier\n", cmd[1]);
 		return;
@@ -197,7 +195,9 @@ void ft_execut_export(t_env *env, char **cmd)
 		if(!ft_strncmp(cmd[1], tmp->key, i))
 		{
 			i = ft_sine(cmd[1], '=');
-			if(i != 0)
+			if(i && cmd[1][i + 1] == '+')
+				tmp->valu =  ft_strjoin(tmp->valu, ft_substr(cmd[1], i + 2, (ft_strlen(cmd[1]) - i)));
+			else if (i)
 			{
 				free(tmp->valu);
 				tmp->valu = ft_substr(cmd[1], i + 1, (ft_strlen(cmd[1]) - i));
@@ -208,7 +208,6 @@ void ft_execut_export(t_env *env, char **cmd)
 	}
 
 	// free(tmp);
-
 	i = 0;
 	if(cmd[1])
 	{
