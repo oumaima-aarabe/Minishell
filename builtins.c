@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/10 16:11:07 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/10 16:30:10 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,9 +172,14 @@ void ft_execut_export(t_env *env, char **cmd)
 
 	tmp = env;
 
-	if(cmd[1] && is_alphabet(cmd[1][0]))
+	if(cmd[1] && is_alphabet(cmd[1][0]) && cmd[1][0] != '_')
 	{
-
+		if(cmd[1][0] == '-')
+		{
+			printf("Minishell: export: %c%c: invalid option\n",cmd[1][0], cmd[1][1]);
+		}
+		else
+			printf("Minishell: export: `%s': not a valid identifier\n", cmd[1]);
 		return;
 	}
 	if(cmd[1])
