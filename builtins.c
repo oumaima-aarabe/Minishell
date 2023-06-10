@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/10 12:54:06 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/10 16:11:07 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void ft_execut_cd(char **str, t_env *env)
 void ft_ft_execut_pwd(char *cmd, t_env *env)
 {
 
-	if(cmd && ft_atoi(cmd) < 0)
+	if(cmd && cmd[0] == '-' && cmd[1])
 	{
 		// dup2(2, 1);
 		printf("Minishell: pwd: %s: invalid option\npwd: usage: pwd [-LP]\n", cmd);
@@ -154,6 +154,14 @@ int ft_sine(char *st, char c)
 	return 0;
 }
 
+int is_alphabet(int c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (0);
+	return (1);
+}
+
+
 void ft_execut_export(t_env *env, char **cmd)
 {
 	char 	*swap;
@@ -164,6 +172,11 @@ void ft_execut_export(t_env *env, char **cmd)
 
 	tmp = env;
 
+	if(cmd[1] && is_alphabet(cmd[1][0]))
+	{
+
+		return;
+	}
 	if(cmd[1])
 	{
 	if (ft_sine(cmd[1], '='))
@@ -175,7 +188,9 @@ void ft_execut_export(t_env *env, char **cmd)
 	while(cmd[1] && tmp)
 	{
 		if(!ft_strncmp(cmd[1], tmp->key, i))
+		{
 			return ;
+		}
 		tmp = tmp->next;
 	}
 
