@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/09 22:27:35 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/10 12:54:06 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,8 @@ void ft_execut_echo(char **tab)
 	}
 }
 //_____________________________________cd_________________________________________
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
+
+
 void ft_execut_cd(char **str, t_env *env)
 {
 
@@ -111,7 +110,9 @@ void ft_ft_execut_pwd(char *cmd, t_env *env)
 
 	if(cmd && ft_atoi(cmd) < 0)
 	{
+		// dup2(2, 1);
 		printf("Minishell: pwd: %s: invalid option\npwd: usage: pwd [-LP]\n", cmd);
+		// dup2(1, 2);
 		return;
 	}
 	while(env)
@@ -125,7 +126,6 @@ void ft_ft_execut_pwd(char *cmd, t_env *env)
 	}
 }
 
-//__________________________________unset_________________________________________
 
 
 
@@ -141,13 +141,13 @@ int compar(int a, int b)
 	return(1);
 }
 
-int ft_egal(char *st)
+int ft_sine(char *st, char c)
 {
 	int i = 0;
 
 	while(st[i])
 	{
-		if(st[i] == '=')
+		if(st[i] == c)
 		return (i);
 		i++;
 	}
@@ -162,17 +162,42 @@ void ft_execut_export(t_env *env, char **cmd)
 	t_env *tmp1;
 	int i;
 
+	tmp = env;
+
 	if(cmd[1])
 	{
-		if(ft_egal(cmd[1]))
+	if (ft_sine(cmd[1], '='))
+		i = ft_sine(cmd[1], '=');
+	else
+		i = ft_strlen(cmd[1]);
+	}
+
+	while(cmd[1] && tmp)
+	{
+		if(!ft_strncmp(cmd[1], tmp->key, i))
+			return ;
+		tmp = tmp->next;
+	}
+
+	// free(tmp);
+
+	i = 0;
+	if(cmd[1])
+	{
+		if(ft_sine(cmd[1], '='))
 		{
-			i = ft_egal(cmd[1]);
+			i = ft_sine(cmd[1], '=');
 			ft_lstadd_back(&env,ft_creat(ft_substr(cmd[1], 0, i), ft_substr(cmd[1], i + 1, ft_strlen(cmd[1]) - i)));
 		}
 		else
+		{
 			ft_lstadd_back(&env, ft_creat(ft_strdup(cmd[1]), NULL));
+		}
 		return ;
 	}
+
+
+
 	tmp = duplicate_linked_list(env);
 
 	tmp1 = tmp;
@@ -204,10 +229,22 @@ void ft_execut_export(t_env *env, char **cmd)
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+//__________________________________unset_________________________________________
+
 // void ft_execut_unset(t_env *env, char **cmd)
 // {
 // 	deleteNode(&env, cmd[1]);
 // }
+
+
+
+
+
+
+
+//___________________________________env__________________________________________
+
 
 void ft_execut_env(t_env *env)
 {
