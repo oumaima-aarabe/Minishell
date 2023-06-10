@@ -185,7 +185,11 @@ void ft_execut_export(t_env *env, char **cmd)
 	if(cmd[1])
 	{
 	if (ft_sine(cmd[1], '='))
+	{
 		i = ft_sine(cmd[1], '=');
+		if(cmd[1][i - 1] == '+')
+		i -= 1;
+	}
 	else
 		i = ft_strlen(cmd[1]);
 	}
@@ -195,7 +199,7 @@ void ft_execut_export(t_env *env, char **cmd)
 		if(!ft_strncmp(cmd[1], tmp->key, i))
 		{
 			i = ft_sine(cmd[1], '=');
-			if(i && cmd[1][i + 1] == '+')
+			if(i && cmd[1][i - 1] == '+')
 				tmp->valu =  ft_strjoin(tmp->valu, ft_substr(cmd[1], i + 2, (ft_strlen(cmd[1]) - i)));
 			else if (i)
 			{
