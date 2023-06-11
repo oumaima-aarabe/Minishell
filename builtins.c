@@ -151,6 +151,53 @@ int is_alphabet(int c)
 	return (1);
 }
 
+int ft_cheak_expor(char *cmd, t_env *tmp)
+{
+	int i = 0;
+
+
+	if(cmd && is_alphabet(cmd[0]) && cmd[0] != '_')
+	{
+		if(cmd[0] == '-')
+			printf("Minishell: export: %c%c: invalid option\n",cmd[0], cmd[1]);
+		else
+			printf("Minishell: export: `%s': not a valid identifier\n", cmd);
+		return 1;
+	}
+	if(cmd)
+	{
+	if (ft_sine(cmd, '='))
+	{
+		i = ft_sine(cmd, '=');
+		if(cmd[i - 1] == '+')
+		i -= 1;
+	}
+	else
+		i = ft_strlen(cmd);
+	}
+	if(cmd && ft_sine(cmd, '+')  && (cmd[ft_sine(cmd, '+') + 1]  != '='))
+	{
+		printf("Minishell: export: `%s': not a valid identifier\n", cmd);
+		return 1;
+	}
+	while(cmd && tmp)
+	{
+		if(!ft_strncmp(cmd, tmp->key, i))
+		{
+			i = ft_sine(cmd, '=');
+			if(i && cmd[i - 1] == '+')
+				tmp->valu =  ft_strjoin(tmp->valu, ft_substr(cmd, i + 1, (ft_strlen(cmd) - i)));
+			else if (i)
+			{
+				free(tmp->valu);
+				tmp->valu = ft_substr(cmd, i + 1, (ft_strlen(cmd) - i));
+			}
+			return 1;
+		}
+		tmp = tmp->next;
+	}
+	return 0;
+}
 
 void ft_execut_export(t_env *env, char **cmd)
 {
@@ -160,48 +207,9 @@ void ft_execut_export(t_env *env, char **cmd)
 	t_env *tmp1;
 	int i;
 
-	tmp = env;
 
-	if(cmd[1] && is_alphabet(cmd[1][0]) && cmd[1][0] != '_')
-	{
-		if(cmd[1][0] == '-')
-			printf("Minishell: export: %c%c: invalid option\n",cmd[1][0], cmd[1][1]);
-		else
-			printf("Minishell: export: `%s': not a valid identifier\n", cmd[1]);
-		return;
-	}
-	if(cmd[1])
-	{
-	if (ft_sine(cmd[1], '='))
-	{
-		i = ft_sine(cmd[1], '=');
-		if(cmd[1][i - 1] == '+')
-		i -= 1;
-	}
-	else
-		i = ft_strlen(cmd[1]);
-	}
-	if(cmd[1] && ft_sine(cmd[1], '+')  && (cmd[1][ft_sine(cmd[1], '+') + 1]  != '='))
-	{
-		printf("Minishell: export: `%s': not a valid identifier\n", cmd[1]);
-		return;
-	}
-	while(cmd[1] && tmp)
-	{
-		if(!ft_strncmp(cmd[1], tmp->key, i))
-		{
-			i = ft_sine(cmd[1], '=');
-			if(i && cmd[1][i - 1] == '+')
-				tmp->valu =  ft_strjoin(tmp->valu, ft_substr(cmd[1], i + 1, (ft_strlen(cmd[1]) - i)));
-			else if (i)
-			{
-				free(tmp->valu);
-				tmp->valu = ft_substr(cmd[1], i + 1, (ft_strlen(cmd[1]) - i));
-			}
-			return ;
-		}
-		tmp = tmp->next;
-	}
+	if(ft_cheak_expor(cmd[1],env))
+		return ;
 
 	// free(tmp);
 	i = 0;
