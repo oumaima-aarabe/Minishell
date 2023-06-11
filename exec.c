@@ -76,10 +76,8 @@ void ft_exec(char **tab, t_env *env, char **ex)
 		{
 		while(tmp[i])
 		{
-			test = ft_strjoin(ft_strdup("/"), tab[0]);
+			test = ft_strjoin(ft_strdup("/"), ft_strdup(tab[0]));
 			ss = ft_strjoin(ft_strdup(tmp[i]), test);
-			free(test);
-			test = NULL;
 			if(!(access(ss, F_OK)))
 				break;
 			else
