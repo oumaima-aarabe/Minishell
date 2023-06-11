@@ -130,7 +130,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		tab[i++] = s2[j++];
 	}
 	free(s1);
-	s1 = NULL;
+	free(s2);
 	return (tab[i] = '\0', tab);
 }
 
