@@ -300,7 +300,7 @@ void ft_execut_export(t_env *env, char **cmd)
 
 void ft_execut_env(t_env *env)
 {
-	while(env )
+	while(env)
 	{
 		if(env->valu)
 		printf("%s=%s\n", env->key, env->valu);
@@ -336,7 +336,7 @@ int ft_execut_bultins(char **cmd, t_env *env)
 		return (1);
 	}
 
-	else if(!(ft_strcmp(cmd[0], "export")))
+	else if(!(ft_strcmp(cmd[0], "export"))) // tesst ""
 	{
 		ft_execut_export(env, cmd);
 		return (1);
@@ -345,7 +345,7 @@ int ft_execut_bultins(char **cmd, t_env *env)
 	// else if(!(ft_strcmp(cmd[0], "unset")))
 	// {
 	// 		ft_execut_unset(env, cmd);
-		// return (1);
+	// 	return (1);
 	// }
 
 	else if(!(ft_strcmp(cmd[0], "env")))
