@@ -143,18 +143,6 @@ int compar(int a, int b)
 	return(1);
 }
 
-int ft_sine(char *st, char c)
-{
-	int i = 0;
-
-	while(st[i])
-	{
-		if(st[i] == c)
-		return (i);
-		i++;
-	}
-	return 0;
-}
 
 int is_alphabet(int c)
 {

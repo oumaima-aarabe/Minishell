@@ -54,6 +54,7 @@ int	ft_strlen(char const *str);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 int	ft_execut_bultins(char **cmd, t_env *env);
 int	ft_atoi(char *str);
+int ft_sine(char *st, char c);
 
 
 t_env	*ft_creat(char *key, char *val);

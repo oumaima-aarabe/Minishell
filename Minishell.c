@@ -34,18 +34,29 @@ void le()
 
 //________________________________________________________________________________
 
-t_env *environment(char **env)
+
+int ft_sine(char *st, char c)
 {
 	int i = 0;
 
+	while(st[i])
+	{
+		if(st[i] == c)
+		return (i);
+		i++;
+	}
+	return 0;
+}
+
+t_env *environment(char **env)
+{
+	int i = 0;
+	int j = 0;
 	t_env *en = NULL;
-	char **tmp;
 	while(env[i])
 	{
-		tmp = ft_split(env[i], '=');
-		ft_lstadd_back(&en, ft_creat(ft_strdup(tmp[0]) ,ft_strdup(tmp[1])));
-		ft_free_(tmp);
-		tmp = NULL;
+		j = ft_sine(env[i], '=');
+		ft_lstadd_back(&en, ft_creat(ft_substr(env[i], 0, j), ft_substr(env[i], j + 1, (ft_strlen(env[i]) - j ))));
 		i++;
 	}
 	return(en);
