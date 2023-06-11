@@ -188,7 +188,7 @@ void ft_execut_export(t_env *env, char **cmd)
 		{
 			i = ft_sine(cmd[1], '=');
 			if(i && cmd[1][i - 1] == '+')
-				tmp->valu =  ft_strjoin(tmp->valu, ft_substr(cmd[1], i + 2, (ft_strlen(cmd[1]) - i)));
+				tmp->valu =  ft_strjoin(tmp->valu, ft_substr(cmd[1], i + 1, (ft_strlen(cmd[1]) - i)));
 			else if (i)
 			{
 				free(tmp->valu);
