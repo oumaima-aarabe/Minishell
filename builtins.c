@@ -199,6 +199,21 @@ int ft_cheak_expor(char *cmd, t_env *tmp)
 	return 0;
 }
 
+int ft_add_export(char *cmd , t_env *env)
+{
+	int j = 0;
+		if(ft_sine(cmd, '='))
+		{
+			j = ft_sine(cmd, '=');
+			ft_lstadd_back(&env,ft_creat(ft_substr(cmd, 0, j), ft_substr(cmd, j + 1, ft_strlen(cmd) - j)));
+		}
+		else
+		{
+			ft_lstadd_back(&env, ft_creat(ft_strdup(cmd), NULL));
+		}
+	return (1);
+}
+
 void ft_execut_export(t_env *env, char **cmd)
 {
 	char 	*swap;
@@ -207,26 +222,32 @@ void ft_execut_export(t_env *env, char **cmd)
 	t_env *tmp1;
 	int i;
 
+	i = 1;
 
-	if(ft_cheak_expor(cmd[1],env))
-		return ;
 
-	// free(tmp);
-	i = 0;
-	if(cmd[1])
+	while(cmd[i])
 	{
-		if(ft_sine(cmd[1], '='))
+
+		if(ft_cheak_expor(cmd[i],env))
 		{
-			i = ft_sine(cmd[1], '=');
-			ft_lstadd_back(&env,ft_creat(ft_substr(cmd[1], 0, i), ft_substr(cmd[1], i + 1, ft_strlen(cmd[1]) - i)));
+			if(cmd[i + 1])
+			{
+				i++;
+				continue;
+			}
+			return ;
 		}
-		else
+		if (ft_add_export(cmd[i] ,env))
 		{
-			ft_lstadd_back(&env, ft_creat(ft_strdup(cmd[1]), NULL));
+		if(cmd[i + 1])
+		{
+			i++;
+			continue;
 		}
 		return ;
+		}
+		i++;
 	}
-
 
 
 	tmp = duplicate_linked_list(env);
