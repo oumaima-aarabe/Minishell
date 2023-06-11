@@ -113,7 +113,7 @@ void ft_ft_execut_pwd(char *cmd, t_env *env)
 	if(cmd && cmd[0] == '-' && cmd[1])
 	{
 		// dup2(2, 1);
-		printf("Minishell: pwd: %s: invalid option\npwd: usage: pwd [-LP]\n", cmd);
+		printf("Minishell: pwd: %s: invalid option\n", cmd);
 		// dup2(1, 2);
 		return;
 	}
