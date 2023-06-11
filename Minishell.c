@@ -65,31 +65,7 @@ t_env *environment(char **env)
 
 
 
-void deleteNode(t_env **head, char *key)
- {
-    t_env *current = *head;
-    t_env *previous = NULL;
 
-    // Vérifier si la valeur à supprimer correspond au premier nœud
-    if (current != NULL && current->key == key)
-	{
-        *head = current->next; // Réattribuer la tête de liste
-        free(current);
-        return;
-    }
-
-    // Parcourir la liste jusqu'à trouver le nœud à supprimer
-    while (current != NULL && current->key != key)
-	{
-        previous = current;
-        current = current->next;
-    }
-
-    // Réattribuer les pointeurs pour contourner le nœud à supprimer
-    previous->next = current->next;
-	// puts("herr");
-    free(current); // Libérer la mémoire
-}
 
 
 

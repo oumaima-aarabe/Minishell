@@ -284,14 +284,70 @@ void ft_execut_export(t_env *env, char **cmd)
 
 //__________________________________unset_________________________________________
 
-// void ft_execut_unset(t_env *env, char **cmd)
-// {
-// 	deleteNode(&env, cmd[1]);
+
+
+// void deleteNode(t_env **head, char *key)
+//  {
+//     t_env *current = *head;
+//     t_env *previous = NULL;
+
+//     // Vérifier si la valeur à supprimer correspond au premier nœud
+//     if (current != NULL && current->key == key)
+// 	{
+//         *head = current->next; // Réattribuer la tête de liste
+//         free(current);
+//         return;
+//     }
+
+//     // Parcourir la liste jusqu'à trouver le nœud à supprimer
+//     while (current != NULL && current->key != key)
+// 	{
+//         previous = current;
+//         current = current->next;
+//     }
+
+//     // Réattribuer les pointeurs pour contourner le nœud à supprimer
+//     previous->next = current->next;
+// 	// puts("herr");
+//     free(current); // Libérer la mémoire
 // }
 
 
 
+void	ft_list_remov(t_env **env, char *cmd)
+{
+	t_env	*tmp_env;
+	t_env	*prev;
 
+	tmp_env = *env;
+	prev = NULL;
+	while (tmp_env)
+	{
+		if (!ft_strcmp(tmp_env->key, cmd))
+		{
+			if (prev)
+				prev->next = tmp_env->next;
+			else
+			{
+				if (tmp_env->next)
+					*env = tmp_env->next;
+				else
+					*env = NULL;
+			}
+			return ;
+		}
+		prev = tmp_env;
+		tmp_env = tmp_env->next;
+	}
+}
+
+
+void ft_execut_unset(t_env *env, char **cmd)
+{
+	if(cmd[1])
+		ft_list_remov(&env, cmd[1]);
+
+}
 
 
 
@@ -342,11 +398,11 @@ int ft_execut_bultins(char **cmd, t_env *env)
 		return (1);
 	}
 
-	// else if(!(ft_strcmp(cmd[0], "unset")))
-	// {
-	// 		ft_execut_unset(env, cmd);
-	// 	return (1);
-	// }
+	else if(!(ft_strcmp(cmd[0], "unset")))
+	{
+			ft_execut_unset(env, cmd);
+		return (1);
+	}
 
 	else if(!(ft_strcmp(cmd[0], "env")))
 	{
