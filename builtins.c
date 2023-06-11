@@ -181,7 +181,11 @@ void ft_execut_export(t_env *env, char **cmd)
 	else
 		i = ft_strlen(cmd[1]);
 	}
-
+	if(cmd[1] && ft_sine(cmd[1], '+')  && (cmd[1][ft_sine(cmd[1], '+') + 1]  != '='))
+	{
+		printf("Minishell: export: `%s': not a valid identifier\n", cmd[1]);
+		return;
+	}
 	while(cmd[1] && tmp)
 	{
 		if(!ft_strncmp(cmd[1], tmp->key, i))
