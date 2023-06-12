@@ -318,39 +318,53 @@ void	ft_list_remov(t_env **env, char *cmd)
 {
 	t_env	*tmp_env;
 	t_env	*prev;
-
+	(void)cmd;
 	tmp_env = *env;
 	prev = NULL;
-	while (tmp_env)
-	{
-		if (!ft_strcmp(tmp_env->key, cmd))
-		{
-			if (prev)
-			{
-				free(tmp_env->key);
-				free(tmp_env->valu);
-				prev->next = tmp_env->next;
-			}
-			else
-			{
-				if (tmp_env->next)
-				{
-					free(tmp_env->key);
-					free(tmp_env->valu);
-					*env = tmp_env->next;
-				}
-				else
-				{
-					free(tmp_env->key);
-					free(tmp_env->valu);
-					*env = NULL;
-				}
-			}
-			return ;
-		}
-		prev = tmp_env;
-		tmp_env = tmp_env->next;
-	}
+	// while (tmp_env)
+	// {
+	// 	if (!ft_strcmp(tmp_env->key, cmd))
+	// 	{
+	// 		if (prev)
+	// 		{
+	// 			prev->next = tmp_env->next;
+	// 			free(tmp_env->key);
+	// 			free(tmp_env->valu);
+
+	// 		}
+	// 		else
+	// 		{
+	// 			if (tmp_env->next)
+	// 			{
+	// 				*env = tmp_env->next;
+	// 				free(tmp_env->key);
+	// 				free(tmp_env->valu);
+
+	// 			}
+	// 			else
+	// 			{
+	// 				*env = NULL;
+	// 				free(tmp_env->key);
+	// 				free(tmp_env->valu);
+	// 				free(tmp_env);
+
+	// 			}
+	// 		}
+	// 		return ;
+	// 	}
+	// 	prev = tmp_env;
+	// 	tmp_env = tmp_env->next;
+	// }
+
+	while (tmp_env->next != NULL) {
+        prev = tmp_env;
+        tmp_env = tmp_env->next;
+    }
+    prev->next = NULL;
+    free(tmp_env->key);
+    free(tmp_env->valu);
+	free(tmp_env);
+
 }
 
 
