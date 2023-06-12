@@ -326,13 +326,25 @@ void	ft_list_remov(t_env **env, char *cmd)
 		if (!ft_strcmp(tmp_env->key, cmd))
 		{
 			if (prev)
+			{
+				free(tmp_env->key);
+				free(tmp_env->valu);
 				prev->next = tmp_env->next;
+			}
 			else
 			{
 				if (tmp_env->next)
+				{
+					free(tmp_env->key);
+					free(tmp_env->valu);
 					*env = tmp_env->next;
+				}
 				else
+				{
+					free(tmp_env->key);
+					free(tmp_env->valu);
 					*env = NULL;
+				}
 			}
 			return ;
 		}
@@ -344,8 +356,12 @@ void	ft_list_remov(t_env **env, char *cmd)
 
 void ft_execut_unset(t_env *env, char **cmd)
 {
-	if(cmd[1])
-		ft_list_remov(&env, cmd[1]);
+	int i = 1;
+	while(cmd[i])
+	{
+		ft_list_remov(&env, cmd[i]);
+		i++;
+	}
 
 }
 
