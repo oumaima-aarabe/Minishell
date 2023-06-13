@@ -122,7 +122,7 @@ void ft_ft_execut_pwd(char *cmd, t_env *env)
 		if(!ft_strcmp("PWD", env->key))
 		{
 			printf("%s\n", env->valu);
-			break;
+			return ;
 		}
 		env = env->next;
 	}
@@ -378,14 +378,27 @@ void	ft_list_remov(t_env **env, char *cmd)
 
 	while(tmp)
 	{
-		if(!ft_strcmp(cmd, tmp->key))
+		if(!ft_strcmp(cmd, tmp->key) && tmp->next != NULL)
+		{
+			free(tmp->key);
+			free(tmp->valu);
+			tmp->key = NULL;
+			tmp->valu = NULL;
+			// tmp->key = NULL;
+			// tmp = tmp->next;
+			// prev = tmp;
+			tmp = tmp->next;
+			return ;
+		}
+		else if(!ft_strcmp(cmd, tmp->key) && tmp->next == NULL)
 		{
 			free(tmp->key);
 			free(tmp->valu);
 			// tmp->key = NULL;
 			// tmp = tmp->next;
 			// prev = tmp;
-			tmp = tmp->next;
+			tmp = NULL;
+			return ;
 		}
 		tmp = tmp->next;
 	}

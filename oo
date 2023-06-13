@@ -1,21 +1,0 @@
-Minishell: pwd: -1: invalid option
-pwd: usage: pwd [-LP]
-[?2004hminishell $ 
-[?2004l[?2004hminishell $ 
-[?2004l[?2004hminishell $ 
-[?2004l[?2004hminishell $ 
-[?2004l[?2004hminishell $ ls 
-[?2004lMakefile
-Minishell
-Minishell.c
-Minishell.h
-builtins.c
-exec.c
-libft_util.c
-lst_utils.c
-obj
-oo
-ook
-test.c
-[?2004hminishell $ [?2004l
-exit

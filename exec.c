@@ -51,10 +51,15 @@ void ft_exec(char **tab, t_env *env, char **ex)
 			{
 		while(env)
 		{
+			// puts("-=--=-=--=-=-=--=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-");
 			if((!ft_strcmp("PATH", env->key)))
+			{
+
 				break;
+			}
 			env = env->next;
 		}
+		if(env->valu)
 		tmp = ft_split(env->valu, ':');
 		// while(env[i])
 		// {
