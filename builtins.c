@@ -314,58 +314,83 @@ void ft_execut_export(t_env *env, char **cmd)
 
 
 
+// void	ft_list_remov(t_env **env, char *cmd)
+// {
+// 	t_env	*tmp_env;
+// 	t_env	*prev;
+// 	(void)cmd;
+// 	tmp_env = *env;
+// 	prev = NULL;
+// 	while (tmp_env)
+// 	{
+// 		if (!ft_strcmp(tmp_env->key, cmd))
+// 		{
+// 	// 		if (prev)
+// 	// 		{
+// 	// 			prev->next = tmp_env->next;
+// 	// 			free(tmp_env->key);
+// 	// 			free(tmp_env->valu);
+
+// 	// 		}
+// 	// 		else
+// 	// 		{
+// 			if (tmp_env->next != NULL)
+// 			{
+//     		    prev = tmp_env;
+//     		    // tmp_env = tmp_env->next;
+//     		}
+//     		prev->next = NULL;
+//     		free(tmp_env->key);
+//     		free(tmp_env->valu);
+// 			free(tmp_env);
+// 			// 			if (tmp_env->next)
+// 	// 			{
+// 	// 				*env = tmp_env->next;
+// 	// 				free(tmp_env->key);
+// 	// 				free(tmp_env->valu);
+
+// 	// 			}
+// 	// 			else
+// 	// 			{
+// 	// 				*env = NULL;
+// 	// 				free(tmp_env->key);
+// 	// 				free(tmp_env->valu);
+// 	// 				free(tmp_env);
+
+// 	// 			}
+// 	// 		}
+// 			return ;
+// 		}
+// 		prev = tmp_env;
+// 		tmp_env = tmp_env->next;
+// 	}
+// }
+
+
+
 void	ft_list_remov(t_env **env, char *cmd)
 {
-	t_env	*tmp_env;
-	t_env	*prev;
-	(void)cmd;
-	tmp_env = *env;
+	t_env *tmp;
+	t_env *prev;
+
+	tmp = *env;
 	prev = NULL;
-	// while (tmp_env)
-	// {
-	// 	if (!ft_strcmp(tmp_env->key, cmd))
-	// 	{
-	// 		if (prev)
-	// 		{
-	// 			prev->next = tmp_env->next;
-	// 			free(tmp_env->key);
-	// 			free(tmp_env->valu);
 
-	// 		}
-	// 		else
-	// 		{
-	// 			if (tmp_env->next)
-	// 			{
-	// 				*env = tmp_env->next;
-	// 				free(tmp_env->key);
-	// 				free(tmp_env->valu);
-
-	// 			}
-	// 			else
-	// 			{
-	// 				*env = NULL;
-	// 				free(tmp_env->key);
-	// 				free(tmp_env->valu);
-	// 				free(tmp_env);
-
-	// 			}
-	// 		}
-	// 		return ;
-	// 	}
-	// 	prev = tmp_env;
-	// 	tmp_env = tmp_env->next;
-	// }
-
-	while (tmp_env->next != NULL) {
-        prev = tmp_env;
-        tmp_env = tmp_env->next;
-    }
-    prev->next = NULL;
-    free(tmp_env->key);
-    free(tmp_env->valu);
-	free(tmp_env);
-
+	while(tmp)
+	{
+		if(!ft_strcmp(cmd, tmp->key))
+		{
+			free(tmp->key);
+			free(tmp->valu);
+			// tmp->key = NULL;
+			// tmp = tmp->next;
+			// prev = tmp;
+			tmp = tmp->next;
+		}
+		tmp = tmp->next;
+	}
 }
+
 
 
 void ft_execut_unset(t_env *env, char **cmd)
