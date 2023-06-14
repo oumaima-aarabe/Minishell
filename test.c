@@ -14,11 +14,14 @@
 # include <unistd.h>
 
 
-int main(int ac , char **av, char **env)
-{
-    char *str[] = {"ls",  NULL};
-    execve("/usr/bin/whereis", str, env);
-    exit (0);
-    perror(av[1]);
-}
+#include <unistd.h>
+#include <sys/wait.h>
 
+int main(int ac, char **av, char **envp)
+{
+    int pid = fork();
+    char *p[2] = {"bash"};
+    if (pid == 0)
+        execve("/bin/bash", p, envp);
+    wait(NULL);
+}

@@ -35,13 +35,15 @@ void lea()
 void ft_exec(char **tab, t_env *env, char **ex)
 {
 	char *test;
-	char **tmp;
+	char **tmp = NULL;
 	// char **str0;
 	char *ss;
 	int p;
 	int i = 0;
 	// (void)ex;
 
+
+	ss = NULL;
 	if(tab[0] != NULL)
 	{
 
@@ -55,12 +57,18 @@ void ft_exec(char **tab, t_env *env, char **ex)
 			if((!ft_strcmp("PATH", env->key)))
 			{
 
+				tmp = ft_split(env->valu, ':');
 				break;
 			}
 			env = env->next;
 		}
-		if(env->valu)
-		tmp = ft_split(env->valu, ':');
+
+
+
+
+
+
+
 		// while(env[i])
 		// {
 		// 	if(!strncmp(env[i],"PATH=", 5))
@@ -72,12 +80,24 @@ void ft_exec(char **tab, t_env *env, char **ex)
 		// 	i++;
 		// }
 		i = 0;
+
 		// int fd = open ("test", O_RDWR, 0777);
+
+
+
+
+
+
+
+
+
+
+
 		if(!(access(tab[0], F_OK)))
 		{
 			ss = ft_strdup(tab[0]);
 		}
-		else
+		else if(tmp)
 		{
 		while(tmp[i])
 		{
@@ -94,8 +114,8 @@ void ft_exec(char **tab, t_env *env, char **ex)
 			if(!tmp[i])
 				printf("Minishell: %s: command not found\n", tab[0]);
 		}
-		}
 		ft_free_(tmp);
+		}
 		// dup2(fd, 1);
 		// printf("--->>%s\n", ss);
 //---------------------------------------------------------------------------------------------------
@@ -108,7 +128,7 @@ void ft_exec(char **tab, t_env *env, char **ex)
 				exit (0);
 			}
 		}
-
+		
 		wait(&p);
 		free(ss);
 		ss = NULL;

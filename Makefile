@@ -19,7 +19,7 @@ CC = cc
 
 READLINE = $(shell brew --prefix readline)
 
-FLAGS = -Wall -Werror -Wextra -I$(READLINE)/include
+FLAGS = -Wall -Werror -Wextra -I$(READLINE)/include #-fsanitize=address
 
 
 
