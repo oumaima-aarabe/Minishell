@@ -130,8 +130,8 @@ int main(int ac, char **av, char  **env)
 	char **cmd;
 	t_env *en;
 
-	if(!env || !(*env))
-		exit(5);
+	// if(!env || !(*env))
+	// 	exit(5);
 	en = environment(env);
 	if(ac != 1)
 	{

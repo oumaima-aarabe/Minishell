@@ -294,124 +294,38 @@ void ft_execut_export(t_env *env, char **cmd)
 //__________________________________unset_________________________________________
 
 
-
-// void deleteNode(t_env **head, char *key)
-//  {
-//     t_env *current = *head;
-//     t_env *previous = NULL;
-
-//     // Vérifier si la valeur à supprimer correspond au premier nœud
-//     if (current != NULL && current->key == key)
-// 	{
-//         *head = current->next; // Réattribuer la tête de liste
-//         free(current);
-//         return;
-//     }
-
-//     // Parcourir la liste jusqu'à trouver le nœud à supprimer
-//     while (current != NULL && current->key != key)
-// 	{
-//         previous = current;
-//         current = current->next;
-//     }
-
-//     // Réattribuer les pointeurs pour contourner le nœud à supprimer
-//     previous->next = current->next;
-// 	// puts("herr");
-//     free(current); // Libérer la mémoire
-// }
-
-
-
-// void	ft_list_remov(t_env **env, char *cmd)
-// {
-// 	t_env	*tmp_env;
-// 	t_env	*prev;
-// 	(void)cmd;
-// 	tmp_env = *env;
-// 	prev = NULL;
-// 	while (tmp_env)
-// 	{
-// 		if (!ft_strcmp(tmp_env->key, cmd))
-// 		{
-// 	// 		if (prev)
-// 	// 		{
-// 	// 			prev->next = tmp_env->next;
-// 	// 			free(tmp_env->key);
-// 	// 			free(tmp_env->valu);
-
-// 	// 		}
-// 	// 		else
-// 	// 		{
-// 			if (tmp_env->next != NULL)
-// 			{
-//     		    prev = tmp_env;
-//     		    // tmp_env = tmp_env->next;
-//     		}
-//     		prev->next = NULL;
-//     		free(tmp_env->key);
-//     		free(tmp_env->valu);
-// 			free(tmp_env);
-// 			// 			if (tmp_env->next)
-// 	// 			{
-// 	// 				*env = tmp_env->next;
-// 	// 				free(tmp_env->key);
-// 	// 				free(tmp_env->valu);
-
-// 	// 			}
-// 	// 			else
-// 	// 			{
-// 	// 				*env = NULL;
-// 	// 				free(tmp_env->key);
-// 	// 				free(tmp_env->valu);
-// 	// 				free(tmp_env);
-
-// 	// 			}
-// 	// 		}
-// 			return ;
-// 		}
-// 		prev = tmp_env;
-// 		tmp_env = tmp_env->next;
-// 	}
-// }
-
-
-
 void	ft_list_remov(t_env **env, char *cmd)
 {
-	t_env *tmp;
-	t_env *prev;
-
-	tmp = *env;
+	t_env	*tmp_env;
+	t_env	*prev;
+	(void)cmd;
+	tmp_env = *env;
 	prev = NULL;
-
-	while(tmp)
+	while (tmp_env)
 	{
-		if(!ft_strcmp(cmd, tmp->key) && tmp->next != NULL)
+		if (!ft_strcmp(tmp_env->key, cmd))
 		{
-			free(tmp->key);
-			free(tmp->valu);
-			tmp->key = NULL;
-			tmp->valu = NULL;
-			// tmp->key = NULL;
-			// tmp = tmp->next;
-			// prev = tmp;
-			tmp = tmp->next;
+			if (!prev)
+			{
+				*env = tmp_env->next;
+				free(tmp_env->key);
+				free(tmp_env->valu);
+				free(tmp_env);
+			}
+			else
+			{
+				prev->next = tmp_env->next;
+				free(tmp_env->key);
+				free(tmp_env->valu);
+				free(tmp_env);
+			}
 			return ;
 		}
-		else if(!ft_strcmp(cmd, tmp->key) && tmp->next == NULL)
-		{
-			free(tmp->key);
-			free(tmp->valu);
-			// tmp->key = NULL;
-			// tmp = tmp->next;
-			// prev = tmp;
-			tmp = NULL;
-			return ;
-		}
-		tmp = tmp->next;
+		prev = tmp_env;
+		tmp_env = tmp_env->next;
 	}
 }
+
 
 
 
