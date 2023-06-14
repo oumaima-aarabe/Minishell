@@ -315,7 +315,7 @@ void	ft_list_remov(t_env **env, char *cmd)
 {
 	t_env	*tmp_env;
 	t_env	*prev;
-	(void)cmd;
+
 	tmp_env = *env;
 	prev = NULL;
 	while (tmp_env)
@@ -348,6 +348,11 @@ void ft_execut_unset(t_env *env, char **cmd)
 	int i = 1;
 	while(cmd[i])
 	{
+		if(ft_invalid_export_unset(cmd[i], "unset"))
+		{
+			i++;
+			continue;
+		}
 		ft_list_remov(&env, cmd[i]);
 		i++;
 	}
