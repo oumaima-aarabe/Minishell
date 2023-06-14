@@ -109,6 +109,7 @@ void ft_execut_cd(char **str, t_env *env)
 
 void ft_ft_execut_pwd(char *cmd, t_env *env)
 {
+	char *pwd;
 
 	if(cmd && cmd[0] == '-' && cmd[1])
 	{
@@ -116,6 +117,13 @@ void ft_ft_execut_pwd(char *cmd, t_env *env)
 		printf("Minishell: pwd: %s: invalid option\n", cmd);
 		// dup2(1, 2);
 		return;
+	}
+	pwd = getcwd(NULL, 0);
+	if(pwd)
+	{
+		printf("%s\n", pwd);
+		free(pwd);
+		return ;
 	}
 	while(env)
 	{
@@ -126,6 +134,7 @@ void ft_ft_execut_pwd(char *cmd, t_env *env)
 		}
 		env = env->next;
 	}
+
 }
 
 

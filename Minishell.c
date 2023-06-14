@@ -130,6 +130,8 @@ int main(int ac, char **av, char  **env)
 	char **cmd;
 	t_env *en;
 
+	if(!env || !(*env))
+		exit(5);
 	en = environment(env);
 	if(ac != 1)
 	{
@@ -138,7 +140,7 @@ int main(int ac, char **av, char  **env)
 	}
 
 
-
+	rl_catch_signals=0;
 	while(1337)
 	{
 		signal(SIGQUIT, SIG_IGN);
