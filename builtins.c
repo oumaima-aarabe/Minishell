@@ -160,19 +160,36 @@ int is_alphabet(int c)
 	return (1);
 }
 
+
+
+
+
+
+int ft_invalid_export_unset(char *cmd, char *bult)
+{
+	if(cmd && is_alphabet(cmd[0]) && cmd[0] != '_')
+	{
+		if(cmd[0] == '-')
+			printf("Minishell: %s: %c%c: invalid option\n",bult,cmd[0], cmd[1]);
+		else
+			printf("Minishell: %s: `%s': not a valid identifier\n", bult ,cmd);
+		return 1;
+	}
+	return (0);
+}
+
+
+
+
+
+
+
 int ft_cheak_expor(char *cmd, t_env *tmp)
 {
 	int i = 0;
 
-
-	if(cmd && is_alphabet(cmd[0]) && cmd[0] != '_')
-	{
-		if(cmd[0] == '-')
-			printf("Minishell: export: %c%c: invalid option\n",cmd[0], cmd[1]);
-		else
-			printf("Minishell: export: `%s': not a valid identifier\n", cmd);
-		return 1;
-	}
+	if(ft_invalid_export_unset(cmd, "export"))
+		return (1);
 	if(cmd)
 	{
 	if (ft_sine(cmd, '='))
@@ -325,9 +342,6 @@ void	ft_list_remov(t_env **env, char *cmd)
 		tmp_env = tmp_env->next;
 	}
 }
-
-
-
 
 void ft_execut_unset(t_env *env, char **cmd)
 {

@@ -113,6 +113,18 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	i = 0;
 	j = 0;
+	if(!s1 && s2)
+	{
+		tab = malloc(ft_strlen(s2) + 1);
+		while(s2[i])
+		{
+			tab[i] = s2[i];
+			i++;
+		}
+		tab[i] = '\0';
+		free(s2);
+		return (tab);
+	}
 	if (!s1 || !s2)
 		return (NULL);
 	len_s1 = ft_strlen(s1);
