@@ -50,10 +50,11 @@ void ft_execut_echo(char **tab)
 //_____________________________________cd_________________________________________
 
 
-void ft_execut_cd(char **str, t_env *env)
+void ft_execut_cd(char *str, t_env *env)
 {
 
 	t_env *tmp = env;
+	t_env *tmp_1 = env;
 	char *old;
 	char *pwd;
 	char *hom;
@@ -68,15 +69,27 @@ void ft_execut_cd(char **str, t_env *env)
 		}
 		env = env->next;
 	}
-	if(!ft_strcmp(str[0], "cd"))
-	{
-		if(!str[1])
+		if(!str)
 			chdir(hom);
-		else if(chdir(str[1]) < 0)
+		else if(str[0] == '-' && str[1] == '\0')
+		{
+			while (tmp_1)
+			{
+				if(!ft_strcmp(tmp_1->key, "OLDPWD"))
+				{
+					printf("%s\n",tmp_1->valu);
+					break;
+				}
+				tmp_1 = tmp_1->next;
+			}
+
+		}
+		else if(chdir(str) < 0)
 		{
 			ft_putstr_fd("Minishell: cd: ", 2);
-			perror(str[1]);
+			perror(str);
 		}
+
 		pwd = getcwd(NULL, 0);
 		if(pwd == NULL)
 		{
@@ -88,7 +101,6 @@ void ft_execut_cd(char **str, t_env *env)
 		free(pwd);
 
 
-	}
 	while(tmp)
 	{
 		if(!ft_strcmp("PWD", tmp->key))
@@ -392,7 +404,7 @@ int ft_execut_bultins(char **cmd, t_env *env)
 
 	else if(!ft_strcmp(cmd[0], "cd"))
 	{
-		ft_execut_cd(cmd, env);
+		ft_execut_cd(cmd[1], env);
 		return (1);
 	}
 
