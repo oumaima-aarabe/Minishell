@@ -71,20 +71,23 @@ void ft_execut_cd(char *str, t_env *env)
 	}
 		if(!str)
 			chdir(hom);
-		else if(str[0] == '-' && str[1] == '\0')
+		if(str[0] == '-' && str[1] == '\0')
 		{
 			while (tmp_1)
 			{
 				if(!ft_strcmp(tmp_1->key, "OLDPWD"))
 				{
 					printf("%s\n",tmp_1->valu);
+					str = tmp_1->valu;
 					break;
 				}
 				tmp_1 = tmp_1->next;
 			}
+			if(!tmp_1)
+			printf("Minishell: cd: OLDPWD not set\n");
 
 		}
-		else if(chdir(str) < 0)
+		if(chdir(str) < 0)
 		{
 			ft_putstr_fd("Minishell: cd: ", 2);
 			perror(str);
