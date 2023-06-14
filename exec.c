@@ -26,11 +26,25 @@ void ft_hairdoc(char **tab)
 
 	}
 }
+int ft_exucve(char *cmd, char **arg, char **env)
+{
+	int pid;
+		{
+			pid = fork();
+			if(!pid)
+			{
+				if(execve(cmd, arg, env) < 0)
+				{
+				ft_putstr_fd("Minishell: \n ", 2);
+				exit (0);
+				return (1);
+				}
+			}
+		}
+	wait(&pid);
+	return 0;
 
-void lea()
-	{
-		system("leaks Minishell");
-	}
+}
 
 void ft_exec(char **tab, t_env *env, char **ex)
 {
@@ -38,7 +52,7 @@ void ft_exec(char **tab, t_env *env, char **ex)
 	char **tmp = NULL;
 	// char **str0;
 	char *ss;
-	int p;
+	// int p;
 	int i = 0;
 	// (void)ex;
 
@@ -119,17 +133,12 @@ void ft_exec(char **tab, t_env *env, char **ex)
 		// dup2(fd, 1);
 		// printf("--->>%s\n", ss);
 //---------------------------------------------------------------------------------------------------
+	fflush(stdout);
 		if(ss)
 		{
-			p = fork();
-			if(!p)
-			{
-				if(execve(ss, tab, ex) == -1)
-				exit (0);
-			}
+			ft_exucve(ss, tab, ex);
 		}
-		
-		wait(&p);
+
 		free(ss);
 		ss = NULL;
 		}
