@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/10 17:20:49 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/15 17:13:13 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,11 @@ void ft_execut_cd(char *str, t_env *env)
 				}
 				tmp_1 = tmp_1->next;
 			}
-			if(!tmp_1)
-			printf("Minishell: cd: OLDPWD not set\n");
 
 		}
-		if(chdir(str) < 0)
+		if(!tmp_1)
+			printf("Minishell: cd: OLDPWD not set\n");
+		else if(chdir(str) < 0)
 		{
 			ft_putstr_fd("Minishell: cd: ", 2);
 			perror(str);
