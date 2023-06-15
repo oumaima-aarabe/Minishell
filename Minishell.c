@@ -48,6 +48,28 @@ int ft_sine(char *st, char c)
 	return 0;
 }
 
+t_env *ft_shelvl(t_env *env)
+{
+	t_env *tmp;
+	static  int i;
+	tmp = env;
+	while(tmp)
+	{
+		if(!ft_strcmp("SHLVL", tmp->key))
+		{
+			i = ft_atoi(tmp->valu);
+			if(i >= 999)
+				i = 0;
+			else
+				i += 1;
+			free(tmp->valu);
+			tmp->valu = ft_itoa(i);
+		}
+		tmp = tmp->next;
+	}
+	return(env);
+}
+
 t_env *environment(char **env)
 {
 	int i = 0;
@@ -59,6 +81,7 @@ t_env *environment(char **env)
 		ft_lstadd_back(&en, ft_creat(ft_substr(env[i], 0, j), ft_substr(env[i], j + 1, (ft_strlen(env[i]) - j ))));
 		i++;
 	}
+	en = ft_shelvl(en);
 	return(en);
 }
 
@@ -118,8 +141,7 @@ char **ft_expend(char **cmd, t_env *en)
 	return (cmd);
 }
 
-//________________________________________________________________________________
-//________________________________________________________________________________
+
 
 
 int main(int ac, char **av, char  **env)
@@ -128,11 +150,16 @@ int main(int ac, char **av, char  **env)
 	// char *pwd;
 	char *str;
 	char **cmd;
+
+
 	t_env *en;
 
 	// if(!env || !(*env))
 	// 	exit(5);
+
 	en = environment(env);
+
+
 	if(ac != 1)
 	{
 		printf("Minishell no take arguments\n"); // change msg
@@ -165,7 +192,7 @@ int main(int ac, char **av, char  **env)
 			continue;
 		}
 
-			ft_exec(cmd, en, env);
+			ft_exec(cmd, en, NULL);
 			ft_free_(cmd);
 
 	}

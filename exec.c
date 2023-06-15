@@ -46,6 +46,38 @@ int ft_exucve(char *cmd, char **arg, char **env)
 
 }
 
+//________________________________________________________________________________
+
+int ft_lstsize(t_env *env)
+{
+	int i = 0;
+
+	while(env)
+	{
+		i++;
+		env = env->next;
+	}
+	return i;
+
+}
+
+char **ft_my_env(t_env *env)
+{
+	char **tab;
+	tab = (char **)malloc(sizeof(char *) * (ft_lstsize(env) + 1));
+	int i = 0;
+	while(env)
+	{
+		tab[i] = ft_strjoin(ft_strdup(env->key), ft_strjoin(ft_strdup("="), ft_strdup(env->valu)));
+		env = env->next;
+		i++;
+	}
+	tab[i] = NULL;
+	return tab;
+}
+
+//________________________________________________________________________________
+
 void ft_exec(char **tab, t_env *env, char **ex)
 {
 	char *test;
@@ -54,10 +86,16 @@ void ft_exec(char **tab, t_env *env, char **ex)
 	char *ss;
 	// int p;
 	int i = 0;
-	// (void)ex;
+	(void)ex;
 
 
 	ss = NULL;
+
+	char **my_env;
+
+
+	my_env = ft_my_env(env);
+
 	if(tab[0] != NULL)
 	{
 
@@ -133,10 +171,10 @@ void ft_exec(char **tab, t_env *env, char **ex)
 		// dup2(fd, 1);
 		// printf("--->>%s\n", ss);
 //---------------------------------------------------------------------------------------------------
-	fflush(stdout);
+
 		if(ss)
 		{
-			ft_exucve(ss, tab, ex);
+			ft_exucve(ss, tab, my_env);
 		}
 
 		free(ss);
