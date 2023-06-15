@@ -83,7 +83,7 @@ void ft_execut_cd(char *str, t_env *env)
 				if(!ft_strcmp(tmp_1->key, "OLDPWD"))
 				{
 					printf("%s\n",tmp_1->valu);
-					str = tmp_1->valu;
+					ft_execut_cd(tmp_1->valu, tmp);
 					break;
 				}
 				tmp_1 = tmp_1->next;
