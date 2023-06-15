@@ -6,12 +6,32 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:29 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/05/25 00:08:32 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/06/06 01:02:08 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+
+int	all_spaces(char *line)
+{
+	int i;
+	int j;
+
+	j = strlen(line);
+	i = 0;
+	while(*line)
+	{
+		if(*line != ' ')
+			break;
+		i++;
+		line++;
+	}
+	if(i == j)
+		return 1;
+	return 0;
+		
+}
 int	lexer(char *line)
 {
 	char	*tmp;
@@ -20,8 +40,6 @@ int	lexer(char *line)
 	size_t	j;
 
 	tmp = line;	
-	if (!line || !(*line))
-		return (0);
 	len = strlen(line);
 	i = 0;
 	j = 0;
@@ -51,5 +69,47 @@ int	lexer(char *line)
 	}
 	if (i % 2 != 0 || j % 2 != 0)
 		return (0);
+	return (1);
+}
+
+int		lexer2(char *line)
+{
+	char	*tmp;
+	size_t	len;
+
+	tmp = line;	
+	len = strlen(line);
+
+	while (*line)
+	{
+		if (*line == '>')
+		{
+			if(*( line + 1 ) == '>')
+				line += 2;
+			else
+				line++;
+			while (*line == ' ')
+				line++;
+			if (*line == '\0')
+				return (0);
+			if (*line == '<' || *line == '>' || *line == '|' )
+				return (0);
+		}
+		else if (*line == '<')
+		{
+			if(*( line + 1 ) == '<')
+				line += 2;
+			else
+				line++;
+			while (*line == ' ')
+				line++;
+			if (*line == '\0')
+				return (0);
+			if (*line == '<' || *line == '>' || *line == '|' )
+				return (0);
+		}
+		line++;
+	
+	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 #    By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 15:19:53 by azarda            #+#    #+#              #
-#    Updated: 2023/05/25 01:12:45 by ouaarabe         ###   ########.fr        #
+#    Updated: 2023/06/14 00:51:05 by ouaarabe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,7 @@ NAME = minishell
 
 CC = cc
 
-FLAGS = -Wall -Wextra -Werror -g
-# -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 INCLUDE = minishell.h
 
 READ_LINE = /Users/ouaarabe/.brew/Cellar/readline/8.2.1
@@ -27,12 +26,11 @@ INCLUDES	= -I${READ_LINE}/include
 
 SRC =	obj/main.c\
 		obj/lexer.c\
-		obj/ft_error.c
-		# obj/my_split.c\
-		# obj/env.c\
-		# obj/libft.c\
-		# obj/parsing.c\
-		# obj/parsing_creat.c\
+		obj/ft_error.c\
+		obj/split_args.c\
+		obj/split_tokens.c\
+		obj/parse.c\
+		# obj/redirections.c
 
 
 OBJ = $(SRC:.c=.o)

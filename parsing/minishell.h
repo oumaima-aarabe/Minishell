@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/05/25 01:13:03 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/06/14 01:54:05 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,6 @@
 #include <fcntl.h>
 #include <sys/wait.h>
 
-int		lexer(char *line);
-void	ft_syntax_err(void);
-char	*ft_strjoin(char *s1, char *s2);
 // void    parse_command(char *prompt);
 // char	**ft_split(char const *s, char c);
 // int		ft_isalnum(int c)''
@@ -47,11 +44,29 @@ typedef enum t_flags
 	ROUT
 }           flag;
 
-typedef struct command_list{
-	char **cmd;
-	struct command_list *next;
-	struct command_list *prev;
-}cmd_l;
+// typedef struct command_list{
+// 	char 	**cmd;
+// 	int		in;
+// 	int		out;
+// 	int		flag;
+// }cmd_l;
+
+// Structure for doubly linked list node
+typedef struct Node {
+    char *data;
+    struct Node *prev;
+    struct Node *next;
+} Node;
+
+typedef struct splitnode {
+    char **splitdata;
+    struct splitnode *prev;
+    struct splitnode *next;
+	int		in;
+	int		out;
+	int		flag;
+} splitnode;
+
 
 typedef struct  t_tokens{
 	int 	flag;
@@ -59,5 +74,20 @@ typedef struct  t_tokens{
 	struct t_tokens *right;
 	struct t_tokens *left;
 }s_tokens;
+
+int		lexer(char *line);
+void	ft_syntax_err(void);
+char	*ft_strjoin(char *s1, char *s2);
+int		lexer2(char *line);
+Node	*splitstring(char *line);
+void 	freelist(Node *head);
+splitnode   *splitdataLinkedList(Node *originalist);
+void printlist(Node *head);
+void    parsing(char *prompt);
+void  hendl_ctr_c(int sig);
+
+
+
+
 
 #endif

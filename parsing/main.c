@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/05/24 22:43:07 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/06/15 16:05:07 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void  hendl_ctr_c(int sig)
 	(void)sig;
 	printf("\n");
 	rl_on_new_line();
-	// rl_replace_line(" ", 0);
+	rl_replace_line(" ", 0);
 	rl_redisplay();
 		
 }
@@ -28,7 +28,8 @@ int main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	(void)env;
+	if (!env[0])
+		ft_syntax_err();
 	while(2307)
 	{
 		signal(SIGINT, hendl_ctr_c);
@@ -40,13 +41,16 @@ int main(int argc, char **argv, char **env)
 			printf("exit \n");
             exit(0);
 		}
-		if (!lexer(prompt))
-			ft_syntax_err();
 		free(pwd);
 		add_history(prompt);
+		if (!lexer(prompt) || !lexer2(prompt))
+		{
+			ft_syntax_err();
+			continue;
+		}
+		parsing(prompt);
 		free(prompt);
 		prompt = NULL;	
 	}
-	
-
 }
+
