@@ -41,7 +41,7 @@ void	ft_lstadd_back(t_env **alst, t_env *new);
 void	ft_lstclear(t_env **alist);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_free_(char **tab);
-void	ft_exec(char **ok, t_env *en, char **ex);
+void	ft_exec(char **ok, t_env *en);
 
 
 char	*ft_strjoin(char *s1, char *s2); // free

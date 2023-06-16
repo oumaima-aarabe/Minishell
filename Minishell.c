@@ -192,7 +192,9 @@ int main(int ac, char **av, char  **env)
 			continue;
 		}
 
-			ft_exec(cmd, en, NULL);
+
+			ft_exec(cmd, en);
+
 			ft_free_(cmd);
 
 	}
