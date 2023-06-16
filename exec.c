@@ -92,7 +92,7 @@ char **ft_my_env(t_env *en)
 		valu = ft_strjoin(key ,ft_strdup(env->valu));
 		tab[i] = valu;
 		free(valu);
-		// free(env);
+		free(env);
 		env = env->next;
 		i++;
 	}
@@ -207,7 +207,7 @@ void ft_exec(char **tab, t_env *env)
 			ft_exucve(ss, tab, my_env);
 		}
 
-		ft_free_(my_env);
+		// ft_free_(my_env);
 
 		free(ss);
 		ss = NULL;
