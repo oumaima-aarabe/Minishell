@@ -397,35 +397,53 @@ void ft_execut_env(t_env *env)
 //___________________________________exit_________________________________________
 
 
-int ft_isdigit(char *str)
+int	ft_isdigit(int c)
 {
-	int i = 0;
-	while(str[i])
+	if (c >= '0' && c <= '9')
 	{
-		if(str[i] >= '9' && str[i] <= '0')
-			return 1;
-		i++;
+		return (1);
 	}
-	return 0;
+	return (0);
 }
 
 int ft_execut_exit(char **cmd)
 {
 	int nb;
 
+
+	// if(cmd[1])
+	// printf("%s\n", cmd[1]);
+	nb = 0;
+	int i = 0;
 	printf("exit\n");
-	if(cmd[2])
+	if(cmd[1])
 	{
-		ft_putstr_fd("Minishell: exit: too many arguments\n", 2);
-		return(1);
+		if(cmd[1][i] && !cmd[2])
+		{
+			nb = ft_atoi(cmd[1]);
+			while(cmd[1][i])
+			{
+				if(!ft_isdigit(cmd[1][i]))
+				{
+					printf("Minishell: exit: %s: numeric argument required\n", cmd[1]);
+					nb = 255;
+					break;
+				}
+				i++;
+			}
+		}
+		else if(cmd[1] && cmd[2])
+		{
+			ft_putstr_fd("Minishell: exit: too many arguments\n", 2);
+			return(1);
+		}
+		// else
 	}
-	if(ft_isdigit(cmd[1]))
-	{
-		printf("lool \n");
-		nb = 255;
-	}
-	else
-	nb = ft_atoi(cmd[1]);
+	// if(nb > 255)
+	// {
+	// 	nb -= 256;
+	// }
+	printf("%d\n", nb);
 	exit(nb);
 }
 
