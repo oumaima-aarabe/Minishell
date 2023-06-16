@@ -397,6 +397,38 @@ void ft_execut_env(t_env *env)
 //___________________________________exit_________________________________________
 
 
+int ft_isdigit(char *str)
+{
+	int i = 0;
+	while(str[i])
+	{
+		if(str[i] >= '9' && str[i] <= '0')
+			return 1;
+		i++;
+	}
+	return 0;
+}
+
+int ft_execut_exit(char **cmd)
+{
+	int nb;
+
+	printf("exit\n");
+	if(cmd[2])
+	{
+		ft_putstr_fd("Minishell: exit: too many arguments\n", 2);
+		return(1);
+	}
+	if(ft_isdigit(cmd[1]))
+	{
+		printf("lool \n");
+		nb = 255;
+	}
+	else
+	nb = ft_atoi(cmd[1]);
+	exit(nb);
+}
+
 
 //________________________________________________________________________________
 
@@ -442,10 +474,8 @@ int ft_execut_bultins(char **cmd, t_env *env)
 
 	else if(!ft_strcmp(cmd[0], "exit"))
 	{
-			// free(pwd);
-			// atexit(lea);
-			printf("exit\n");
-			exit(0);
+		if(ft_execut_exit(cmd))
+			return (1);
 	}
 
 	return(0);
