@@ -35,7 +35,7 @@ int ft_exucve(char *cmd, char **arg, char **env)
 			{
 				if(execve(cmd, arg, env) < 0)
 				{
-				ft_putstr_fd("Minishell: \n ", 2);
+				ft_putstr_fd("exeve faill \n ", 2);
 				exit (0);
 				return (1);
 				}
