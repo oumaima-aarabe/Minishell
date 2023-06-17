@@ -98,14 +98,14 @@ t_env *environment(char **env)
 
 //________________________________________________________________________________
 
-char *ft_take_key(char *str, t_env *env)
+char *ft_take_key(char *str, t_env *env, int j)
 {
 
-	str++;
+	str += j;
 	while(env)
 	{
 		if(!ft_strcmp(str, env->key))
-		return (env->valu);
+		return (ft_strdup(env->valu));
 		env = env->next;
 	}
 	return (ft_strdup(""));
@@ -115,7 +115,8 @@ char **ft_expend(char **cmd, t_env *en)
 {
 	int i = 0;
 	int j = 0;
-
+	char *tmp;
+	char *new;
 
 	while(cmd[i])
 	{
@@ -124,21 +125,15 @@ char **ft_expend(char **cmd, t_env *en)
 		{
 			if(cmd[i][j] ==  '$')
 			{
-				cmd[i] = ft_strdup(ft_take_key(cmd[i], en));
-				// if(!cmd[i])
-					// cmd[i] = ft_strdup("");
+				tmp = ft_substr(cmd[i], 0, j);
+				free(cmd[i]);
+				new = ft_take_key(cmd[i], en, j + 1);
+				cmd[i] = ft_strjoin(tmp , new);
 			}
 			j++;
 		}
 		i++;
 	}
-	// i = 0;
-	// j = 0;
-	// while(cmd[i])
-	// {
-	// 	printf("--->>>%s\n", cmd[i]);
-	// 	i++;
-	// }
 	return (cmd);
 }
 
