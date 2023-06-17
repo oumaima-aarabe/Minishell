@@ -15,10 +15,13 @@
 void  ctr_c(int sig)
 {
 	(void)sig;
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line(" ", 0);
-	rl_redisplay();
+	if (waitpid(0, NULL, WNOHANG))
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line(" ", 0);
+		rl_redisplay();
+	}
 
 }
 
