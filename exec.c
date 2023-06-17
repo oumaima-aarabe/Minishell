@@ -91,7 +91,6 @@ char **ft_my_env(t_env *en)
 		key = ft_strjoin(ft_strdup(env->key), ft_strdup("="));
 		valu = ft_strjoin(key ,ft_strdup(env->valu));
 		tab[i] = valu;
-		free(valu);
 		free(env);
 		env = env->next;
 		i++;

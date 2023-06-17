@@ -410,9 +410,6 @@ int ft_execut_exit(char **cmd)
 {
 	int nb;
 
-
-	// if(cmd[1])
-	// printf("%s\n", cmd[1]);
 	nb = 0;
 	int i = 0;
 	printf("exit\n");
