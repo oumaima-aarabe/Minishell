@@ -95,7 +95,7 @@ char **ft_my_env(t_env *en)
 		i++;
 	}
 	// free(env);
-	// ft_lstclear(&env);
+	ft_lstclear(&env);
 	tab[i] = NULL;
 	return tab;
 }
@@ -144,6 +144,7 @@ void ft_exec(char **tab, t_env *env)
 
 		if(!(access(tab[0], F_OK)))
 		{
+			ft_free_(tmp);
 			ss = ft_strdup(tab[0]);
 		}
 		else if(tmp)
@@ -180,5 +181,5 @@ void ft_exec(char **tab, t_env *env)
 		ss = NULL;
 		}
 	}
-	// printf("ss = %p\t my_env = %p, tab = %p \n" , ss, my_env, tab);
+
 }
