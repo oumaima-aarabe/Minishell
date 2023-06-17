@@ -206,11 +206,11 @@ void ft_exec(char **tab, t_env *env)
 			ft_exucve(ss, tab, my_env);
 		}
 
-		// ft_free_(my_env);
+		ft_free_(my_env);
 
 		free(ss);
 		ss = NULL;
 		}
 	}
-
+	// printf("ss = %p\t my_env = %p, tab = %p \n" , ss, my_env, tab);
 }
