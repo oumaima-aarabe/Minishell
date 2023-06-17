@@ -162,7 +162,7 @@ int main(int ac, char **av, char  **env)
 		exit(1);
 	}
 
-
+	// atexit(le);
 	rl_catch_signals=0;
 	while(1337)
 	{
@@ -174,7 +174,6 @@ int main(int ac, char **av, char  **env)
 		if(!str)
 		{
 			printf("exit\n");
-			// atexit(le);
 			exit(0);
 		}
 		cmd = ft_split(str, ' ');
@@ -188,8 +187,8 @@ int main(int ac, char **av, char  **env)
 			continue;
 		}
 
-
 			ft_exec(cmd, en);
+
 
 			ft_free_(cmd);
 

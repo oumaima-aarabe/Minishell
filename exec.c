@@ -26,24 +26,23 @@ void ft_hairdoc(char **tab)
 
 	}
 }
-int ft_exucve(char *cmd, char **arg, char **env)
+void ft_exucve(char *cmd, char **arg, char **env)
 {
 	int pid;
-		{
 			pid = fork();
 			if(!pid)
 			{
-				if(execve(cmd, arg, env) < 0)
+				if(execve(cmd, arg, env) == -1)
 				{
+				free(cmd);
+				ft_free_(arg);
+				ft_free_(env);
 				ft_putstr_fd("exeve faill \n ", 2);
 				exit (0);
-				return (1);
 				}
 			// ft_free_(env);
 			}
-		}
 	wait(&pid);
-	return 0;
 
 }
 
@@ -169,6 +168,7 @@ void ft_exec(char **tab, t_env *env)
 		// dup2(fd, 1);
 		// printf("--->>%s\n", ss);
 //---------------------------------------------------------------------------------------------------
+
 		if(ss)
 		{
 			ft_exucve(ss, tab, my_env);
