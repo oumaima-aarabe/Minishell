@@ -108,13 +108,14 @@ char *ft_take_key(char *str, t_env *env)
 		return (env->valu);
 		env = env->next;
 	}
-	return NULL;
+	return (ft_strdup(""));
 }
 
 char **ft_expend(char **cmd, t_env *en)
 {
 	int i = 0;
 	int j = 0;
+
 
 	while(cmd[i])
 	{

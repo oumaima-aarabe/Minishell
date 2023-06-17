@@ -95,7 +95,7 @@ char **ft_my_env(t_env *en)
 		env = env->next;
 		i++;
 	}
-	free(env);
+	// free(env);
 	// ft_lstclear(&env);
 	tab[i] = NULL;
 	return tab;
@@ -123,7 +123,6 @@ void ft_exec(char **tab, t_env *env)
 
 	my_env = ft_my_env(env);
 
-	// ft_free_(my_env);
 
 
 	if(tab[0] != NULL)
@@ -135,7 +134,6 @@ void ft_exec(char **tab, t_env *env)
 			{
 		while(env)
 		{
-			// puts("-=--=-=--=-=-=--=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-");
 			if((!ft_strcmp("PATH", env->key)))
 			{
 
@@ -144,36 +142,6 @@ void ft_exec(char **tab, t_env *env)
 			}
 			env = env->next;
 		}
-
-
-
-
-
-
-
-		// while(env[i])
-		// {
-		// 	if(!strncmp(env[i],"PATH=", 5))
-		// 	{
-		// 		str0 = ft_split(env[i], '=');
-		// 		tmp = ft_split(str0[1], ':');
-		// 		ft_free_(str0);
-		// 	}
-		// 	i++;
-		// }
-		i = 0;
-
-		// int fd = open ("test", O_RDWR, 0777);
-
-
-
-
-
-
-
-
-
-
 
 		if(!(access(tab[0], F_OK)))
 		{
