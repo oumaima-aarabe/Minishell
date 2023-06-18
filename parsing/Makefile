@@ -24,14 +24,17 @@ LIBRARIES	= -L${READ_LINE}/lib -lreadline -I includes -I #${READ_LINE}/include
 INCLUDES	= -I${READ_LINE}/include
 
 
-SRC =	obj/main.c\
-		obj/lexer.c\
-		obj/ft_error.c\
+SRC =	obj/ft_error.c\
 		obj/split_args.c\
 		obj/split_tokens.c\
 		obj/parse.c\
 		obj/utils1.c\
-		# obj/redirections.c
+		obj/quotes.c\
+		obj/utils2.c\
+		obj/main.c\
+		obj/lexer.c\
+		obj/ft_error.c\
+		# obj/redirections.c\
 
 
 OBJ = $(SRC:.c=.o)

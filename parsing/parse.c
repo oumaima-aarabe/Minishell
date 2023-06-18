@@ -21,6 +21,7 @@ void    parsing(char *prompt)
     splitnode   *tokens;
     tokens = splitdataLinkedList(node);
     freelist(node);
+    // checkquotes(tokens);
     splitnode *current = tokens;
     while (current != NULL)
      {
@@ -51,11 +52,11 @@ void    parsing(char *prompt)
     
 }
 
-int main()
-{
+// int main()
+// {
 	
-	parsing("ls -la | fghj | expand      \"     \'this\'    |    \"dsfghjfghjk   dfgh");
-}
+// 	parsing("ls -la | fghj | expand      \"     \'this\'    |    \"dsfghjfghjk   \'dfgh\'");
+// }
 // s_tokens    *new_node(char  *cmd)
 // {
 //     s_token *node = (s_token *)malloc(sizeof(s_token));

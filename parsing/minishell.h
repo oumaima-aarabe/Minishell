@@ -77,6 +77,7 @@ typedef struct  t_tokens{
 }s_tokens;
 
 int		lexer(char *line);
+int		lexer2(char *line);
 void	ft_syntax_err(void);
 char	*ft_strjoin(char *s1, char *s2);
 int		lexer2(char *line);
@@ -88,7 +89,9 @@ void    parsing(char *prompt);
 void  hendl_ctr_c(int sig);
 void	*my_realloc(void *ptr, size_t new_size);
 void	*ft_calloc(size_t count, size_t size);
-
+void checkquotes(splitnode *list);
+char	*ft_strtrim(char *s1, char *set);
+char    *ft_strcat(char *destination, const char    *source);
 
 
 
