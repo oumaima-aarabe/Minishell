@@ -32,12 +32,12 @@ void ft_exucve(char *cmd, char **arg, char **env)
 			pid = fork();
 			if(!pid)
 			{
-				if(execve(cmd, arg, env) == -1)
+				if(execve(cmd, arg, env) < 0)
 				{
+				ft_print_err(cmd , " : No such file or directory\n");
 				free(cmd);
 				ft_free_(arg);
 				ft_free_(env);
-				ft_putstr_fd("exeve faill \n ", 2);
 				exit (0);
 				}
 			// ft_free_(env);
@@ -142,7 +142,7 @@ void ft_exec(char **tab, t_env *env)
 			env = env->next;
 		}
 
-		if(!(access(tab[0], F_OK)))
+		if(tab[0][0] == '.' || tab[0][0] == '/')
 		{
 			ft_free_(tmp);
 			ss = ft_strdup(tab[0]);
@@ -163,7 +163,7 @@ void ft_exec(char **tab, t_env *env)
 			}
 			if(!tmp[i])
 			{
-				printf("Minishell: %s: command not found\n", tab[0]);
+				ft_print_err(tab[0], ": command not found\n");
 				ex_s = 127;
 			}
 		}

@@ -138,13 +138,14 @@ void ft_execut_cd(char *str, t_env *env)
 void ft_ft_execut_pwd(char *cmd, t_env *env)
 {
 	char *pwd;
+	(void)cmd;
 
-	if(cmd && cmd[0] == '-' && cmd[1])
-	{
-		ft_print_err("Minishell: pwd:" ,cmd,  ": invalid option\n");
-		ex_s = 1;
-		return;
-	}
+	// if(cmd && cmd[0] == '-' && cmd[1])
+	// {
+	// 	ft_print_err("Minishell: pwd:" ,cmd,  ": invalid option\n");
+	// 	ex_s = 1;
+	// 	return;
+	// }
 	pwd = getcwd(NULL, 0);
 	if(pwd)
 	{

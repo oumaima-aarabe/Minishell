@@ -15,9 +15,9 @@
 
 
 
-void ft_print_err(char *str, char *cmd, char *st)
+void ft_print_err(char *cmd, char *st)
 {
-	ft_putstr_fd(str, 2);
+	ft_putstr_fd("Minishell: ", 2);
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(st, 2);
 }
