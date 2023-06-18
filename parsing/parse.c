@@ -26,30 +26,31 @@ void    parsing(char *prompt)
     while (current != NULL)
      {
         
+        splitnode *next = current;
         // Print the split data
-        int i = 0;
-        while (current->splitdata[i]) 
-        {
-            // printf("{{{%d}}", j++);
-            // fflush(stdout);
-            printf("Token %d: %s\n", i + 1, current->splitdata[i]);
-            i++;
-        }
+        // int i = 0;
+        // while (current->splitdata[i]) 
+        // {
+        //     // printf("{{{%d}}", j++);
+        //     // fflush(stdout);
+        //     printf("Token %d: %s\n", i + 1, current->splitdata[i]);
+        //     i++;
+        // }
         
 
         // Free the memory allocated for split data
-        i = 0;
-        while (current->splitdata[i] != NULL)
+        int i = 0;
+        while (next->splitdata[i] != NULL)
          {
-            free(current->splitdata[i]);
+            free(next->splitdata[i]);
             i++;
         }
-        free(current->splitdata);
+        free(next->splitdata);
         
-        current = current->next;
+        current = next->next;
+        free (next);
             // exit(1);
     }
-    
 }
 
 // int main()

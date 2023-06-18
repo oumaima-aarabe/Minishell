@@ -25,6 +25,7 @@ int main(int argc, char **argv, char **env)
 {
 	char *pwd;
 	char *prompt;
+	char *path;
 
 	(void)argc;
 	(void)argv;
@@ -34,11 +35,14 @@ int main(int argc, char **argv, char **env)
 	{
 		signal(SIGINT, hendl_ctr_c);
 		signal(SIGQUIT, SIG_IGN);
-		pwd = ft_strcat(getcwd(NULL, 0), " -> ");
+		path = getcwd(NULL, 0);
+		pwd = ft_strcat(path, " -> ");
+		free (path);
 		prompt = readline(pwd);		
 		if (!prompt)
 		{
 			printf("exit \n");
+			free (pwd);
             exit(0);
 		}
 		free(pwd);

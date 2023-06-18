@@ -174,11 +174,11 @@ splitnode *splitdataLinkedList(Node *originalList)
         splitdata = split_tokens(data, counttokens);
         splitnode *newnode = createsplitnode(splitdata);
         
-        current = current->next;
         if (newnode == NULL)
              free_splitnode(newnode);
         else 
             addToSplitList(&head, &tail, newnode);
+        current = current->next;
     }
     
     return head;
