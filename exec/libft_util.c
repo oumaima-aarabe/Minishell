@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Minishell.h"
+#include "minishell.h"
 
 void	ft_putstr_fd(char *s, int fd)
 {

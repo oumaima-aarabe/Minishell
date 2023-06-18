@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Minishell.h"
+#include "minishell.h"
 
 
 
@@ -37,7 +37,7 @@ void ft_exucve(char *cmd, char **arg, char **env)
 
 // void le ()
 // {
-// 	system("leaks Minishell");
+// 	system("leaks minishell");
 // }
 //________________________________________________________________________________
 

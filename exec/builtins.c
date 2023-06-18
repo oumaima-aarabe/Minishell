@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Minishell.h"
+#include "minishell.h"
 
 
 //________________________________echo____________________________________________
@@ -75,7 +75,7 @@ void ft_execut_cd(char *str, t_env *env)
 		{
 			if(!hom)
 			{
-				ft_putstr_fd("Minishell: cd: HOME not set\n", 2);
+				ft_putstr_fd("minishell: cd: HOME not set\n", 2);
 				ex_s = 1;
  			}
 			chdir(hom);
@@ -94,14 +94,14 @@ void ft_execut_cd(char *str, t_env *env)
 			}
 			if(!tmp_1)
 			{
-				ft_putstr_fd("Minishell: cd: OLDPWD not set\n", 2);
+				ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
 				ex_s = 1;
 			}
 
 		}
 		else if(chdir(str) < 0)
 		{
-			ft_putstr_fd("Minishell: cd: ", 2);
+			ft_putstr_fd("minishell: cd: ", 2);
 			perror(str);
 			ex_s = 1;
 		}
@@ -142,7 +142,7 @@ void ft_ft_execut_pwd(char *cmd, t_env *env)
 
 	// if(cmd && cmd[0] == '-' && cmd[1])
 	// {
-	// 	ft_print_err("Minishell: pwd:" ,cmd,  ": invalid option\n");
+	// 	ft_print_err("minishell: pwd:" ,cmd,  ": invalid option\n");
 	// 	ex_s = 1;
 	// 	return;
 	// }
@@ -203,10 +203,10 @@ int ft_invalid_export_unset(char *cmd, char *bult)
 		// dup2(2,1);
 		if(cmd[0] == '-')
 		{
-			printf("Minishell: %s: %c%c: invalid option\n",bult, cmd[0], cmd[1]);
+			printf("minishell: %s: %c%c: invalid option\n",bult, cmd[0], cmd[1]);
 		}
 		else
-			printf("Minishell: %s: `%s': not a valid identifier\n", bult ,cmd);
+			printf("minishell: %s: `%s': not a valid identifier\n", bult ,cmd);
 		// dup2(1,2);
 		return 1;
 	}
@@ -238,7 +238,7 @@ int ft_cheak_expor(char *cmd, t_env *tmp)
 	}
 	if(cmd && ft_sine(cmd, '+')  && (cmd[ft_sine(cmd, '+') + 1]  != '='))
 	{
-		printf("Minishell: export: `%s': not a valid identifier\n", cmd);
+		printf("minishell: export: `%s': not a valid identifier\n", cmd);
 		return 1;
 	}
 	while(cmd && tmp)
@@ -437,7 +437,7 @@ int ft_execut_exit(char **cmd)
 			{
 				if(!ft_isdigit(cmd[1][i]) && cmd[1][i] != '-')
 				{
-					printf("Minishell: exit: %s: numeric argument required\n", cmd[1]);
+					printf("minishell: exit: %s: numeric argument required\n", cmd[1]);
 					nb = 255;
 					break;
 				}
@@ -446,7 +446,7 @@ int ft_execut_exit(char **cmd)
 		}
 		else if(cmd[1] && cmd[2])
 		{
-			ft_putstr_fd("Minishell: exit: too many arguments\n", 2);
+			ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 			return(1);
 		}
 		// else
@@ -483,57 +483,59 @@ void ft_hairdoc(char **tab)
 
 //________________________________________________________________________________
 
-int ft_execut_bultins(char **cmd, t_env *env)
+int ft_execut_bultins(splitnode *ptr, t_env *env)
 {
-	// char *pwd;
-
-	if(!ft_strcmp(cmd[0], "echo"))
+	while(ptr)
 	{
-		ft_execut_echo(cmd);
+
+	if(!ft_strcmp(ptr->splitdata[0], "echo"))
+	{
+		ft_execut_echo(ptr->splitdata);
 		return (1);
 	}
 
-	else if(!ft_strcmp(cmd[0], "cd"))
+	else if(!ft_strcmp(ptr->splitdata[0], "cd"))
 	{
-		ft_execut_cd(cmd[1], env);
+		ft_execut_cd(ptr->splitdata[1], env);
 		return (1);
 	}
 
-	else if(!ft_strcmp(cmd[0], "pwd"))
+	else if(!ft_strcmp(ptr->splitdata[0], "pwd"))
 	{
-		ft_ft_execut_pwd(cmd[1] ,env);
+		ft_ft_execut_pwd(ptr->splitdata[1] ,env);
 		return (1);
 	}
 
-	else if(!(ft_strcmp(cmd[0], "export"))) // tesst ""
+	else if(!(ft_strcmp(ptr->splitdata[0], "export")))
 	{
-		ft_execut_export(env, cmd);
+		ft_execut_export(env, ptr->splitdata);
 		return (1);
 	}
 
-	else if(!(ft_strcmp(cmd[0], "unset")))
+	else if(!(ft_strcmp(ptr->splitdata[0], "unset")))
 	{
-			ft_execut_unset(env, cmd);
+			ft_execut_unset(env, ptr->splitdata);
 		return (1);
 	}
 
-	else if(!(ft_strcmp(cmd[0], "env")))
+	else if(!(ft_strcmp(ptr->splitdata[0], "env")))
 	{
 			ft_execut_env(env); // he nide SHELV
 			return(1);
 	}
 
-	else if(!ft_strcmp(cmd[0], "exit"))
+	else if(!ft_strcmp(ptr->splitdata[0], "exit"))
 	{
-		if(ft_execut_exit(cmd))
+		if(ft_execut_exit(ptr->splitdata))
 			return (1);
 	}
-	else if(!ft_strcmp(cmd[0], "<<"))
+	else if(!ft_strcmp(ptr->splitdata[0], "<<"))
 	{
-		ft_hairdoc(cmd);
+		ft_hairdoc(ptr->splitdata);
 		return(1);
 
 	}
-
+	ptr = ptr->next;
+	}
 	return(0);
 }
