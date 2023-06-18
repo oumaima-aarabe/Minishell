@@ -37,7 +37,7 @@ typedef struct s_env
 // } t_shell;
 
 
-int ex_s;
+ int ex_s;
 
 void	ft_lstadd_back(t_env **alst, t_env *new);
 void	ft_lstclear(t_env **alist);

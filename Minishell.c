@@ -148,8 +148,8 @@ char **ft_expend(char **cmd, t_env *en)
 			if(cmd[i][j] ==  '$')
 			{
 				tmp = ft_substr(cmd[i], 0, j);
-				free(cmd[i]);
 				new = ft_take_key(cmd[i], en, j + 1);
+				free(cmd[i]);
 				cmd[i] = ft_strjoin(tmp , new);
 
 			}
