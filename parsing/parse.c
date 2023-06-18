@@ -15,7 +15,7 @@
 void    parsing(char *prompt)
 {
     Node    *node;
-    int j = 1;
+    // int j = 1;
     node = splitstring(prompt);
     // printlist(node);
     splitnode   *tokens;
@@ -29,21 +29,21 @@ void    parsing(char *prompt)
         int i = 0;
         while (current->splitdata[i]) 
         {
-            printf("{{{%d}}", j++);
-            fflush(stdout);
+            // printf("{{{%d}}", j++);
+            // fflush(stdout);
             printf("Token %d: %s\n", i + 1, current->splitdata[i]);
-            fflush(stdout);
             i++;
         }
         
+
         // Free the memory allocated for split data
         i = 0;
-        // while (current->splitdata[i] != NULL)
-        //  {
-        //     free(current->splitdata[i]);
-        //     i++;
-        // }
-        // free(current->splitdata);
+        while (current->splitdata[i] != NULL)
+         {
+            free(current->splitdata[i]);
+            i++;
+        }
+        free(current->splitdata);
         
         current = current->next;
             // exit(1);
@@ -51,11 +51,11 @@ void    parsing(char *prompt)
     
 }
 
-// int main()
-// {
+int main()
+{
 	
-// 	parsing("ls -la |expand \"this | \"dsfghjfghjk");
-// }
+	parsing("ls -la | fghj | expand      \"     \'this\'    |    \"dsfghjfghjk   dfgh");
+}
 // s_tokens    *new_node(char  *cmd)
 // {
 //     s_token *node = (s_token *)malloc(sizeof(s_token));

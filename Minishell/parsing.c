@@ -39,7 +39,7 @@ void    args_parse(arg_t *arg, Command *command )
     {
         if (arg->inQuote) {
             int len = strlen(command->arguments->content[arg->argIndex]);
-            command->arguments[arg->argIndex] = realloc(command->arguments[arg->argIndex], len + strlen(arg->argument) + 2);
+            command->arguments[arg->argIndex] = my_realloc(command->arguments[arg->argIndex], len + strlen(arg->argument) + 2);
             strcat(command->arguments[arg->argIndex], " ");
             strcat(command->arguments[arg->argIndex], arg->argument);
 
@@ -71,7 +71,7 @@ void    args_parse(arg_t *arg, Command *command )
 
         if (arg->argCount + 1 >= arg->argSize) {
             arg->argSize *= 2;
-            command->arguments = (char**)realloc(command->arguments, arg->argSize    *sizeof(char*));
+            command->arguments = (char**)my_realloc(command->arguments, arg->argSize    *sizeof(char*));
             command->arguments[arg->argSize - 1] = NULL;
         }
 

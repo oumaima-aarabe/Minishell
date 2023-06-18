@@ -34,13 +34,9 @@ int	all_spaces(char *line)
 }
 int	lexer(char *line)
 {
-	char	*tmp;
-	size_t	len;
 	size_t	i;
 	size_t	j;
 
-	tmp = line;	
-	len = strlen(line);
 	i = 0;
 	j = 0;
 	if(*line == '|')
@@ -74,11 +70,6 @@ int	lexer(char *line)
 
 int		lexer2(char *line)
 {
-	char	*tmp;
-	size_t	len;
-
-	tmp = line;	
-	len = strlen(line);
 
 	while (*line)
 	{

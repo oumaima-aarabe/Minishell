@@ -25,6 +25,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <sys/wait.h>
+#include <stdint.h>
 
 // void    parse_command(char *prompt);
 // char	**ft_split(char const *s, char c);
@@ -85,6 +86,8 @@ splitnode   *splitdataLinkedList(Node *originalist);
 void printlist(Node *head);
 void    parsing(char *prompt);
 void  hendl_ctr_c(int sig);
+void	*my_realloc(void *ptr, size_t new_size);
+void	*ft_calloc(size_t count, size_t size);
 
 
 
