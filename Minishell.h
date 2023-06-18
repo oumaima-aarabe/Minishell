@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:50 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/09 22:21:00 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/18 03:23:31 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 
-
 typedef struct s_env
 {
 	char *key;
@@ -36,6 +35,8 @@ typedef struct s_env
 // 	char *pwd;
 // } t_shell;
 
+
+extern int ex;
 
 void	ft_lstadd_back(t_env **alst, t_env *new);
 void	ft_lstclear(t_env **alist);

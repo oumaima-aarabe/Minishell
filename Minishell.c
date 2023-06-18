@@ -6,11 +6,13 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 18:19:44 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/09 21:48:43 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/18 03:25:15 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
+
+int ex;
 
 void  ctr_c(int sig)
 {
@@ -126,12 +128,21 @@ char **ft_expend(char **cmd, t_env *en)
 		j = 0;
 		while(cmd[i][j])
 		{
+			if(cmd[i][j] ==  '$' && cmd[i][j + 1] ==  '?')
+			{
+				tmp = ft_substr(cmd[i], 0, j);
+				new = ft_substr(cmd[i], j + 2, ft_strlen(cmd[i]) - j);
+				free(cmd[i]);
+				cmd[i] = ft_strjoin(tmp, ft_strjoin(ft_itoa(ex), new));
+				
+			}
 			if(cmd[i][j] ==  '$')
 			{
 				tmp = ft_substr(cmd[i], 0, j);
 				free(cmd[i]);
 				new = ft_take_key(cmd[i], en, j + 1);
 				cmd[i] = ft_strjoin(tmp , new);
+				
 			}
 			j++;
 		}
@@ -184,6 +195,7 @@ int main(int ac, char **av, char  **env)
 		add_history(str);
 		free(str);
 		str = NULL;
+		ex = 0;
 		if(ft_execut_bultins(cmd, en))
 		{
 			ft_free_(cmd);
