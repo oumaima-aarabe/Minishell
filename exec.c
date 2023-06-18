@@ -58,6 +58,7 @@ char **ft_my_env(t_env *en)
 {
 	char **tab;
 	t_env *env = duplicate_linked_list(en);
+	t_env *tmp;
 
 	// while(env)
 	// {
@@ -72,17 +73,18 @@ char **ft_my_env(t_env *en)
 	int i = 0;
 	char *key;
 	char *valu;
+	tmp = NULL;
 
 	while(env)
 	{
-		key = ft_strjoin(ft_strdup(env->key), ft_strdup("="));
-		valu = ft_strjoin(key ,ft_strdup(env->valu));
+		tmp = env;
+		key = ft_strjoin(ft_strdup(tmp->key), ft_strdup("="));
+		valu = ft_strjoin(key ,ft_strdup(tmp->valu));
 		tab[i] = valu;
-		free(env);
-		env = env->next;
+		env = tmp->next;
 		i++;
+		free(tmp);
 	}
-	// free(env);
 	ft_lstclear(&env);
 	tab[i] = NULL;
 	return tab;
