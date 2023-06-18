@@ -12,7 +12,7 @@
 
 #include "Minishell.h"
 
-int ex;
+
 
 void  ctr_c(int sig)
 {
@@ -133,8 +133,8 @@ char **ft_expend(char **cmd, t_env *en)
 				tmp = ft_substr(cmd[i], 0, j);
 				new = ft_substr(cmd[i], j + 2, ft_strlen(cmd[i]) - j);
 				free(cmd[i]);
-				cmd[i] = ft_strjoin(tmp, ft_strjoin(ft_itoa(ex), new));
-				
+				cmd[i] = ft_strjoin(tmp, ft_strjoin(ft_itoa(ex_s), new));
+
 			}
 			if(cmd[i][j] ==  '$')
 			{
@@ -142,7 +142,7 @@ char **ft_expend(char **cmd, t_env *en)
 				free(cmd[i]);
 				new = ft_take_key(cmd[i], en, j + 1);
 				cmd[i] = ft_strjoin(tmp , new);
-				
+
 			}
 			j++;
 		}
@@ -183,6 +183,7 @@ int main(int ac, char **av, char  **env)
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT,  ctr_c);
 		//pwd = ft_strjoin(getcwd(NULL, 0), " -> "); // 1bite leaks pwd
+		ex_s = 0;
 		str = readline("Minishell $ ");
 		// free(pwd);
 		if(!str)
@@ -195,16 +196,12 @@ int main(int ac, char **av, char  **env)
 		add_history(str);
 		free(str);
 		str = NULL;
-		ex = 0;
 		if(ft_execut_bultins(cmd, en))
 		{
 			ft_free_(cmd);
 			continue;
 		}
-
 			ft_exec(cmd, en);
-
-
 			ft_free_(cmd);
 
 	}
