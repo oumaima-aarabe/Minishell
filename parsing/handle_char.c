@@ -1,24 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   handle_char.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/17 22:33:55 by azarda            #+#    #+#             */
-/*   Updated: 2023/05/21 15:45:52 by azarda           ###   ########.fr       */
+/*   Created: 2023/05/23 21:14:53 by ouaarabe          #+#    #+#             */
+/*   Updated: 2023/05/23 21:14:54 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "Minishell.h"
-# include <unistd.h>
-
-
-int main(int ac , char **av, char **env)
-{
-    char *str[] = {"ls",  NULL};
-    execve("/usr/bin/whereis", str, env);
-    exit (0);
-    perror(av[1]);
-}
 
