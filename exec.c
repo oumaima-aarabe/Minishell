@@ -116,11 +116,6 @@ void ft_exec(char **tab, t_env *env)
 	{
 
 
-
-		if(tab[0][0] == '.' || tab[0][0] == '/')
-			ss = ft_strdup(tab[0]);
-		else if(env)
-		{
 		while(env)
 		{
 			if((!ft_strcmp("PATH", env->key)))
@@ -131,6 +126,17 @@ void ft_exec(char **tab, t_env *env)
 			}
 			env = env->next;
 		}
+		if(!env)
+			ss = ft_strdup(tab[0]);
+		if(tab[0][0] == '.' || tab[0][0] == '/')
+		{
+			free(ss);
+			if(tmp)
+				ft_free_(tmp);
+			ss = ft_strdup(tab[0]);
+		}
+		else if(tmp)
+		{
 		while(tmp[i])
 		{
 			test = ft_strjoin(ft_strdup("/"), ft_strdup(tab[0]));
