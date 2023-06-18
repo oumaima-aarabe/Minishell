@@ -462,6 +462,27 @@ int ft_execut_exit(char **cmd)
 
 //________________________________________________________________________________
 
+
+
+void ft_hairdoc(char **tab)
+{
+	char *str;
+	while(1)
+	{
+		str = readline("> ");
+		if(!ft_strcmp(str, tab[1]))
+			break;
+		free(str);
+		str = NULL;
+	}
+
+}
+
+
+
+
+//________________________________________________________________________________
+
 int ft_execut_bultins(char **cmd, t_env *env)
 {
 	// char *pwd;
@@ -506,6 +527,12 @@ int ft_execut_bultins(char **cmd, t_env *env)
 	{
 		if(ft_execut_exit(cmd))
 			return (1);
+	}
+	else if(!ft_strcmp(cmd[0], "<<"))
+	{
+		ft_hairdoc(cmd);
+		return(1);
+
 	}
 
 	return(0);

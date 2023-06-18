@@ -13,19 +13,7 @@
 #include "Minishell.h"
 
 
-void ft_hairdoc(char **tab)
-{
-	char *str;
-	while(1)
-	{
-		str = readline("> ");
-		if(!ft_strcmp(str, tab[1]))
-			break;
-		free(str);
-		str = NULL;
 
-	}
-}
 void ft_exucve(char *cmd, char **arg, char **env)
 {
 	int pid;
@@ -127,10 +115,12 @@ void ft_exec(char **tab, t_env *env)
 	if(tab[0] != NULL)
 	{
 
-		if(!ft_strcmp(tab[0], "<<"))
-				ft_hairdoc(tab);
-			else
-			{
+
+
+		if(tab[0][0] == '.' || tab[0][0] == '/')
+			ss = ft_strdup(tab[0]);
+		else if(env)
+		{
 		while(env)
 		{
 			if((!ft_strcmp("PATH", env->key)))
@@ -141,14 +131,6 @@ void ft_exec(char **tab, t_env *env)
 			}
 			env = env->next;
 		}
-
-		if(tab[0][0] == '.' || tab[0][0] == '/')
-		{
-			ft_free_(tmp);
-			ss = ft_strdup(tab[0]);
-		}
-		else if(tmp)
-		{
 		while(tmp[i])
 		{
 			test = ft_strjoin(ft_strdup("/"), ft_strdup(tab[0]));
@@ -169,8 +151,8 @@ void ft_exec(char **tab, t_env *env)
 		}
 		ft_free_(tmp);
 		}
-		// dup2(fd, 1);
-		// printf("--->>%s\n", ss);
+
+
 //---------------------------------------------------------------------------------------------------
 
 		if(ss)
@@ -184,5 +166,3 @@ void ft_exec(char **tab, t_env *env)
 		ss = NULL;
 		}
 	}
-
-}
