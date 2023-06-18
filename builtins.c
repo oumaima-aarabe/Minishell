@@ -74,7 +74,10 @@ void ft_execut_cd(char *str, t_env *env)
 		if(!str)
 		{
 			if(!hom)
+			{
 				ft_putstr_fd("Minishell: cd: HOME not set\n", 2);
+				ex_s = 1;
+ 			}
 			chdir(hom);
 		}
 		else if(str[0] == '-' && str[1] == '\0')
@@ -90,13 +93,17 @@ void ft_execut_cd(char *str, t_env *env)
 				tmp_1 = tmp_1->next;
 			}
 			if(!tmp_1)
-				printf("Minishell: cd: OLDPWD not set\n");
+			{
+				ft_putstr_fd("Minishell: cd: OLDPWD not set\n", 2);
+				ex_s = 1;
+			}
 
 		}
 		else if(chdir(str) < 0)
 		{
 			ft_putstr_fd("Minishell: cd: ", 2);
 			perror(str);
+			ex_s = 1;
 		}
 
 		pwd = getcwd(NULL, 0);
@@ -134,9 +141,8 @@ void ft_ft_execut_pwd(char *cmd, t_env *env)
 
 	if(cmd && cmd[0] == '-' && cmd[1])
 	{
-		// dup2(2, 1);
-		printf("Minishell: pwd: %s: invalid option\n", cmd);
-		// dup2(1, 2);
+		ft_print_err("Minishell: pwd:" ,cmd,  ": invalid option\n");
+		ex_s = 1;
 		return;
 	}
 	pwd = getcwd(NULL, 0);
@@ -188,12 +194,19 @@ int is_alphabet(int c)
 
 int ft_invalid_export_unset(char *cmd, char *bult)
 {
+
+
+
 	if(cmd && is_alphabet(cmd[0]) && cmd[0] != '_')
 	{
+		// dup2(2,1);
 		if(cmd[0] == '-')
-			printf("Minishell: %s: %c%c: invalid option\n",bult,cmd[0], cmd[1]);
+		{
+			printf("Minishell: %s: %c%c: invalid option\n",bult, cmd[0], cmd[1]);
+		}
 		else
 			printf("Minishell: %s: `%s': not a valid identifier\n", bult ,cmd);
+		// dup2(1,2);
 		return 1;
 	}
 	return (0);
@@ -421,7 +434,7 @@ int ft_execut_exit(char **cmd)
 			nb = ft_atoi(cmd[1]);
 			while(cmd[1][i])
 			{
-				if(!ft_isdigit(cmd[1][i]))
+				if(!ft_isdigit(cmd[1][i]) && cmd[1][i] != '-')
 				{
 					printf("Minishell: exit: %s: numeric argument required\n", cmd[1]);
 					nb = 255;

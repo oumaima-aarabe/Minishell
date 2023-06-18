@@ -43,6 +43,7 @@ void	ft_lstclear(t_env **alist);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_free_(char **tab);
 void	ft_exec(char **ok, t_env *en);
+void	ft_print_err(char *str, char *cmd, char *st);
 
 
 char	*ft_strjoin(char *s1, char *s2); // free

@@ -162,7 +162,10 @@ void ft_exec(char **tab, t_env *env)
 				i++;
 			}
 			if(!tmp[i])
+			{
 				printf("Minishell: %s: command not found\n", tab[0]);
+				ex_s = 127;
+			}
 		}
 		ft_free_(tmp);
 		}

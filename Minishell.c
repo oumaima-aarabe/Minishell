@@ -14,6 +14,15 @@
 
 
 
+
+void ft_print_err(char *str, char *cmd, char *st)
+{
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(st, 2);
+}
+
+
 void  ctr_c(int sig)
 {
 	(void)sig;
@@ -134,7 +143,7 @@ char **ft_expend(char **cmd, t_env *en)
 				new = ft_substr(cmd[i], j + 2, ft_strlen(cmd[i]) - j);
 				free(cmd[i]);
 				cmd[i] = ft_strjoin(tmp, ft_strjoin(ft_itoa(ex_s), new));
-
+				ex_s = 0;
 			}
 			if(cmd[i][j] ==  '$')
 			{
@@ -183,7 +192,7 @@ int main(int ac, char **av, char  **env)
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT,  ctr_c);
 		//pwd = ft_strjoin(getcwd(NULL, 0), " -> "); // 1bite leaks pwd
-		ex_s = 0;
+
 		str = readline("Minishell $ ");
 		// free(pwd);
 		if(!str)
