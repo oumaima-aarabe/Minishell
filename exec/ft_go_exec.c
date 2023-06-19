@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/19 15:25:00 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/19 15:26:45 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,7 @@ int ft_execut_cmd(splitnode *cmd, t_env *env)
 		ft_exec(cmd , env);
 		return (1);
 	}
+	else
+		printf("asbr azabi \n");
 	return 0;
 }

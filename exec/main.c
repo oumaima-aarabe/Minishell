@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/06/19 15:23:40 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/19 15:46:46 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,8 +174,7 @@ int main(int argc, char **argv, char **env)
 		tokens = parsing(prompt);
 		free(prompt);
 		prompt = NULL;
-		if(ft_execut_cmd(tokens, en))
-			continue;
+		ft_execut_cmd(tokens, en);
 	}
 }
 
