@@ -139,32 +139,32 @@ char **ft_expend(char **cmd, t_env *en)
 
 int main(int argc, char **argv, char **env)
 {
-	char *pwd;
+	// char *pwd;
 	char *prompt;
-	char *path;
+	// char *path;
 	t_env *en;
 	splitnode *tokens = NULL;
 
 	(void)argc;
 	(void)argv;
-	if (!env[0])
-		ft_syntax_err();
+	// if (!env[0])
+	// 	ft_syntax_err();
 	en = environment(env);
 	while(2307)
 	{
 		signal(SIGINT, hendl_ctr_c);
 		signal(SIGQUIT, SIG_IGN);
-		path = getcwd(NULL, 0);
-		pwd = ft_strcat(path, " -> ");
-		free (path);
-		prompt = readline(pwd);
+		// path = getcwd(NULL, 0);
+		// pwd = ft_strcat(path, " -> ");
+		// free (path);
+		prompt = readline("Minishell -> ");
 		if (!prompt)
 		{
 			printf("exit \n");
-			free (pwd);
+			// free (pwd);
             exit(0);
 		}
-		free(pwd);
+		// free(pwd);
 		add_history(prompt);
 		if (!lexer(prompt) || !lexer2(prompt))
 		{
@@ -174,7 +174,9 @@ int main(int argc, char **argv, char **env)
 		tokens = parsing(prompt);
 		free(prompt);
 		prompt = NULL;
-		ft_execut_bultins(tokens, en);
+		if(ft_execut_bultins(tokens, en))
+			continue;
+		ft_exec(tokens, en);
 	}
 }
 

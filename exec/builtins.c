@@ -310,7 +310,6 @@ void ft_execut_export(t_env *env, char **cmd)
 		i++;
 	}
 
-
 	tmp = duplicate_linked_list(env);
 
 	tmp1 = tmp;
@@ -338,7 +337,7 @@ void ft_execut_export(t_env *env, char **cmd)
 		printf("declare -x %s\n",tmp->key);
 		tmp = tmp->next;
 	}
-	ft_lstclear(&tmp1);
+	// ft_lstclear(&tmp1);
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

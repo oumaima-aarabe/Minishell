@@ -95,7 +95,7 @@ char **ft_my_env(t_env *en)
 //________________________________________________________________________________
 
 
-void ft_exec(char **tab, t_env *env)
+void ft_exec(splitnode *ptr, t_env *env)
 {
 	char *test = NULL;
 	char **tmp = NULL;
@@ -113,8 +113,10 @@ void ft_exec(char **tab, t_env *env)
 	my_env = ft_my_env(env);
 
 
+	while (ptr)
+	{
 
-	if(tab[0] != NULL)
+	if(ptr->splitdata[0] != NULL)
 	{
 
 
@@ -129,19 +131,19 @@ void ft_exec(char **tab, t_env *env)
 			env = env->next;
 		}
 		if(!env)
-			ss = ft_strdup(tab[0]);
-		if(tab[0][0] == '.' || tab[0][0] == '/')
+			ss = ft_strdup(ptr->splitdata[0]);
+		if(ptr->splitdata[0][0] == '.' || ptr->splitdata[0][0] == '/')
 		{
 			free(ss);
 			if(tmp)
 				ft_free_(tmp);
-			ss = ft_strdup(tab[0]);
+			ss = ft_strdup(ptr->splitdata[0]);
 		}
 		else if(tmp)
 		{
 		while(tmp[i])
 		{
-			test = ft_strjoin(ft_strdup("/"), ft_strdup(tab[0]));
+			test = ft_strjoin(ft_strdup("/"), ft_strdup(ptr->splitdata[0]));
 			ss = ft_strjoin(ft_strdup(tmp[i]), test);
 			if(!(access(ss, F_OK)))
 				break;
@@ -153,7 +155,7 @@ void ft_exec(char **tab, t_env *env)
 			}
 			if(!tmp[i])
 			{
-				ft_print_err(tab[0], ": command not found\n");
+				ft_print_err(ptr->splitdata[0], ": command not found\n");
 				ex_s = 127;
 			}
 		}
@@ -165,7 +167,7 @@ void ft_exec(char **tab, t_env *env)
 
 		if(ss)
 		{
-			ft_exucve(ss, tab, my_env);
+			ft_exucve(ss, ptr->splitdata, my_env);
 		}
 
 		ft_free_(my_env);
@@ -173,4 +175,6 @@ void ft_exec(char **tab, t_env *env)
 		free(ss);
 		ss = NULL;
 		}
+		ptr = ptr->next;
+	}
 	}

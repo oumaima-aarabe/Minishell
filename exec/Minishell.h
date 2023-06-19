@@ -111,7 +111,7 @@ void	ft_lstadd_back(t_env **alst, t_env *new);
 void	ft_lstclear(t_env **alist);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_free_(char **tab);
-void	ft_exec(char **ok, t_env *en);
+void	ft_exec(splitnode *cmd, t_env *en);
 void	ft_print_err(char *cmd, char *st);
 
 
@@ -120,6 +120,8 @@ char	*ft_strdup(char *s1);
 char	*ft_substr(char const *s,  int start, int len);
 char	**ft_split(char *st, char c);
 char	*ft_itoa(int n);
+
+
 
 int	ft_strcmp(char	*s1, char	*s2);
 int	ft_strlen(char const *str);
