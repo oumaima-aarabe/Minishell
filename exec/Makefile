@@ -6,22 +6,21 @@
 #    By: azarda <azarda@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 15:19:53 by azarda            #+#    #+#              #
-#    Updated: 2023/06/19 15:24:50 by azarda           ###   ########.fr        #
+#    Updated: 2023/06/20 00:02:04 by azarda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-CC = cc
-
-FLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 INCLUDE = Minishell.h
 
-READ_LINE = /Users/azarda/.brew/Cellar/readline/8.2.1
 
-LIBRARIES	= -L${READ_LINE}/lib -lreadline -I includes -I ${READ_LINE}/include
+CC = cc
 
-INCLUDES	= -I${READ_LINE}/include
+READLINE = $(shell brew --prefix readline)
+
+FLAGS = -Wall -Werror -Wextra -I$(READLINE)/include #-g -fsanitize=address
+
 
 
 SRC =	obj/ft_error.c\
@@ -37,7 +36,9 @@ SRC =	obj/ft_error.c\
 		obj/exec.c \
 		obj/lst_utils.c \
 		obj/builtins.c \
-		obj/ft_go_exec.c 
+		obj/ft_go_exec.c
+
+
 
 OBJ = $(SRC:.c=.o)
 
@@ -49,11 +50,11 @@ dir = obj
 all: $(NAME)
 
 $(NAME): ${dir} $(OBJ)  $(INCLUDE)
-	$(CC) $(FLAGS) ${LIBRARIES} $(OBJ) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJ) -lreadline -o $(NAME) -L$(READLINE)/lib
 
 
 obj/%.o : %.c $(INCLUDE)
-	$(CC) $(FLAGS) ${INCLUDES} -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@
 
 ${dir} :
 	@${mkdir} ${dir}

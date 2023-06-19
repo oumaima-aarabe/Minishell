@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:46:07 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/06/15 16:05:19 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/06/19 20:52:09 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,35 +21,34 @@ splitnode    *parsing(char *prompt)
     splitnode   *tokens;
     tokens = splitdataLinkedList(node);
     freelist(node);
-    // checkquotes(tokens);
+    // // checkquotes(tokens);
     // splitnode *current = tokens;
     // while (current != NULL)
     //  {
 
     //     splitnode *next = current;
-        // Print the split data
-        // int i = 0;
-        // while (current->splitdata[i])
-        // {
-        //     // printf("{{{%d}}", j++);
-        //     // fflush(stdout);
-        //     printf("Token %d: %s\n", i + 1, current->splitdata[i]);
-        //     i++;
-        // }
+    //    // Print the split data
+    //     int i = 0;
+    //     while (current->splitdata[i])
+    //     {
+    //         // printf("{{{%d}}", j++);
+    //         // fflush(stdout);
+    //         printf("Token %d: %s\n", i + 1, current->splitdata[i]);
+    //         i++;
+    //     }
 
 
-        // Free the memory allocated for split data
-        // int i = 0;
-        // while (next->splitdata[i] != NULL)
-        //  {
-        //     free(next->splitdata[i]);
-        //     i++;
-        // }
-        // free(next->splitdata);
+    //     // Free the memory allocated for split data
+    //     i = 0;
+    //     while (next->splitdata[i] != NULL)
+    //      {
+    //         free(next->splitdata[i]);
+    //         i++;
+    //     }
+    //     free(next->splitdata);
 
-        // current = next->next;
-        // free (next);
-            // exit(1);
+    //     current = next->next;
+    //     free (next);
     // }
     return (tokens);
 }
