@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "Minishell.h"
 
 void  hendl_ctr_c(int sig)
 {
@@ -19,7 +19,7 @@ void  hendl_ctr_c(int sig)
 	rl_on_new_line();
 	rl_replace_line(" ", 0);
 	rl_redisplay();
-		
+
 }
 int main(int argc, char **argv, char **env)
 {
@@ -38,7 +38,7 @@ int main(int argc, char **argv, char **env)
 		path = getcwd(NULL, 0);
 		pwd = ft_strcat(path, " -> ");
 		free (path);
-		prompt = readline(pwd);		
+		prompt = readline(pwd);
 		if (!prompt)
 		{
 			printf("exit \n");
@@ -54,7 +54,7 @@ int main(int argc, char **argv, char **env)
 		}
 		parsing(prompt);
 		free(prompt);
-		prompt = NULL;	
+		prompt = NULL;
 	}
 }
 

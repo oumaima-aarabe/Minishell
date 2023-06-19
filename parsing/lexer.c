@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "Minishell.h"
 
 
 int	all_spaces(char *line)
@@ -30,7 +30,7 @@ int	all_spaces(char *line)
 	if(i == j)
 		return 1;
 	return 0;
-		
+
 }
 int	lexer(char *line)
 {
@@ -100,7 +100,7 @@ int		lexer2(char *line)
 				return (0);
 		}
 		line++;
-	
+
 	}
 	return (1);
 }

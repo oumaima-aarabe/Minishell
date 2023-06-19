@@ -1,11 +1,11 @@
-#include "minishell.h"
+#include "Minishell.h"
 
 
 
 #include <stdlib.h>
 #include <string.h>
 
-int count_tokens(char *data) 
+int count_tokens(char *data)
 {
     int len = strlen(data);
     int i = 0;
@@ -14,7 +14,7 @@ int count_tokens(char *data)
 
     while (i < len)
     {
-        if (data[i] == '\'' || data[i] == '\"') 
+        if (data[i] == '\'' || data[i] == '\"')
         {
             char quote = data[i];
             i++;
@@ -22,7 +22,7 @@ int count_tokens(char *data)
                 i++;
             counttokens++;
         }
-        if (data[i] == ' ') 
+        if (data[i] == ' ')
         {
             if (tokenlength > 0)
             {
@@ -39,7 +39,7 @@ int count_tokens(char *data)
     return counttokens;
 }
 
-char **split_tokens(char *data, int counttokens) 
+char **split_tokens(char *data, int counttokens)
 {
     int len = strlen(data);
     int i = 0;
@@ -47,17 +47,17 @@ char **split_tokens(char *data, int counttokens)
     int tokenlength = 0;
     char *token = NULL;
     char **splitdata = ft_calloc((counttokens + 1), sizeof(char *));
-    
-while (i < len) 
+
+while (i < len)
 {
-    if (data[i] == '\'' || data[i] == '\"') 
+    if (data[i] == '\'' || data[i] == '\"')
     {
         char quote = data[i];
         tokenlength++;
         token = ft_calloc((tokenlength + 1), sizeof(char));
         token[tokenlength - 1] = data[i];
         i++;
-        while (i < len && data[i] != quote) 
+        while (i < len && data[i] != quote)
         {
             tokenlength++;
             char* new_token = ft_calloc((tokenlength + 1), sizeof(char));
@@ -68,7 +68,7 @@ while (i < len)
             i++;
         }
     }
-    if (data[i] == ' ' || data[i] == '\t') 
+    if (data[i] == ' ' || data[i] == '\t')
     {
         if (tokenlength > 0)
         {
@@ -79,7 +79,7 @@ while (i < len)
             token = NULL;
         }
     }
-    else 
+    else
     {
         tokenlength++;
         char* new_token = ft_calloc((tokenlength + 1), sizeof(char));
@@ -91,40 +91,40 @@ while (i < len)
     i++;
 }
 
-    
-    if (tokenlength > 0) 
+
+    if (tokenlength > 0)
     {
         token[tokenlength] = '\0';
         splitdata[tokenindex] = token;
     }
     else
         splitdata[tokenindex] = NULL;
-    
+
     return splitdata;
 }
 
-splitnode *createsplitnode(char **splitdata) 
+splitnode *createsplitnode(char **splitdata)
 {
     splitnode *newnode = (splitnode *)malloc(sizeof(splitnode));
     // if (splitdata == NULL)
     //     return NULL;
 
     newnode->splitdata = splitdata;
-    
+
     newnode->prev = NULL;
     newnode->next = NULL;
 
     return newnode;
 }
 
-void addToSplitList(splitnode **head, splitnode **tail, splitnode *newnode) 
+void addToSplitList(splitnode **head, splitnode **tail, splitnode *newnode)
 {
-    if (*tail == NULL) 
+    if (*tail == NULL)
     {
         *head = newnode;
         *tail = newnode;
     }
-    else 
+    else
     {
         (*tail)->next = newnode;
         newnode->prev = *tail;
@@ -152,35 +152,35 @@ void free_splitnode(splitnode *node)
     free(node);
 }
 
-splitnode *splitdataLinkedList(Node *originalList) 
+splitnode *splitdataLinkedList(Node *originalList)
 {
     splitnode *head = NULL;
     splitnode *tail = NULL;
     Node *current = originalList;
     char **splitdata = NULL;
-    
-    while (current != NULL) 
+
+    while (current != NULL)
     {
-        if (current->data == NULL) 
+        if (current->data == NULL)
         {
             if (current->next)
                 current = current->next;
             else
                 return head;
         }
-        
+
         char *data = current->data;
         int counttokens = count_tokens(data);
         splitdata = split_tokens(data, counttokens);
         splitnode *newnode = createsplitnode(splitdata);
-        
+
         if (newnode == NULL)
              free_splitnode(newnode);
-        else 
+        else
             addToSplitList(&head, &tail, newnode);
         current = current->next;
     }
-    
+
     return head;
 }
 
@@ -190,19 +190,19 @@ splitnode *splitdataLinkedList(Node *originalList)
 
 //     Node *head = splitString("ls -la | cut -ghj | oumiooo");
 //     splitnode *splitList = splitdataLinkedList(head);
-    
+
 
 //     splitnode *current = splitList;
 //     while (current != NULL) {
 //         char **splitdata = current->splitdata;
-        
+
 //         // Print the split data
 //         int i = 0;
 //         while (splitdata[i] != NULL) {
 //             printf("Token %d: %s\n", i + 1, splitdata[i]);
 //             i++;
 //         }
-        
+
 //         // Free the memory allocated for split data
 //         i = 0;
 //         while (splitdata[i] != NULL) {
@@ -210,8 +210,8 @@ splitnode *splitdataLinkedList(Node *originalList)
 //             i++;
 //         }
 //         free(splitdata);
-        
+
 //         current = current->next;
 //     }
-    
+
 // }

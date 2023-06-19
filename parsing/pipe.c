@@ -10,15 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "Minishell.h"
 
 void    handle_pipe(s_tokens *tokens, char *prompt, int *i)
 {
     int j;
     char    *cmd;
-    
+
     j = -1;
-    cmd = malloc(i + 1); 
+    cmd = malloc(i + 1);
     while (++j < i)
         cmd[j] = *prompt++;
     cmd[j] = '\0';

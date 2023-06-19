@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "Minishell.h"
 
 char* get_redfilen(char* command_line, char* redirection_symbol)
 {
@@ -62,7 +62,7 @@ void    red_output(splitnode *node, int *i, int *j, char **cmdl)
 {
     char *outfile = get_redfilen(cmdl[*i], ">");
     node->out = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-    
+
 }
 //----------------------------------------------------------------//
 //later for heredoc

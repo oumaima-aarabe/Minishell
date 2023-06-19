@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "Minishell.h"
 
 // Function to split the line by the separator '|'
 Node    *splitstring(char *line)

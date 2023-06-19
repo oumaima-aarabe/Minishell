@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "Minishell.h"
 
 
 size_t	ft_strlen(const	char *s)
@@ -24,7 +24,7 @@ size_t	ft_strlen(const	char *s)
 }
 
 char	*ft_strchr(char *s, int c)
-{		
+{
 	size_t	i;
 
 	i = 0;
@@ -122,11 +122,11 @@ char    *ft_strcat(char *destination, const char    *source)
     int j = -1;
     // Move the pointer to the end of the destination string
     result = malloc(strlen(destination) + strlen(source) + 1);
-    while (destination[++i] != '\0') 
+    while (destination[++i] != '\0')
         result[i] = destination[i];
 
     // Copy the characters from the source string to the destination
-    while (source[++j] != '\0') 
+    while (source[++j] != '\0')
         result[i++] = source[j];
     // Append a null character at the end of the concatenated string
     result[i] = '\0';

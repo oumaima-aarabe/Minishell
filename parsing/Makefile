@@ -15,7 +15,7 @@ NAME = minishell
 CC = cc
 
 FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
-INCLUDE = minishell.h
+INCLUDE = Minishell.h
 
 # READ_LINE = /Users/ouaarabe/.brew/Cellar/readline/8.2.1
 
@@ -48,13 +48,13 @@ dir = obj
 all: $(NAME)
 
 $(NAME): ${dir} $(OBJ)  $(INCLUDE)
-	$(CC) $(FLAGS) ${LIBRARIES} $(OBJ) -o $(NAME) 
+	$(CC) $(FLAGS) ${LIBRARIES} $(OBJ) -o $(NAME)
 
 
 obj/%.o : %.c $(INCLUDE)
 	$(CC) $(FLAGS) ${INCLUDES} -c $< -o $@
 
-${dir} : 
+${dir} :
 	@${mkdir} ${dir}
 
 

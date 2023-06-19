@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "Minishell.h"
 
 // Function to split the line by the separator '|'
 Node    *splitstring(char *line)
@@ -8,14 +8,14 @@ Node    *splitstring(char *line)
 	int len = strlen(line);
 	int i = 0;
 
-	while (i < len) 
+	while (i < len)
 	{
-		if (line[i] == '\'' || line[i] == '\"') 
+		if (line[i] == '\'' || line[i] == '\"')
 		{
 			char quote = line[i];
 			// i++;
 			int j = i;
-			while ((j + 1) < len && line[j + 1] != quote) 
+			while ((j + 1) < len && line[j + 1] != quote)
 				j++;
 			int substringlength = j - i + 1;
 			char *substring = (char *)malloc((substringlength + 2) * sizeof(char));
@@ -28,18 +28,18 @@ Node    *splitstring(char *line)
 			newnode->prev = NULL;
 			newnode->next = NULL;
 
-			if (tail == NULL) 
+			if (tail == NULL)
 			{
 				head = newnode;
 				tail = newnode;
-			} 
-			else 
+			}
+			else
 			{
 				tail->next = newnode;
 				newnode->prev = tail;
 				tail = newnode;
 			}
-		} 
+		}
 		else if (line[i] == '|')
 		{
 			i++;
@@ -49,22 +49,22 @@ Node    *splitstring(char *line)
 			newnode->prev = NULL;
 			newnode->next = NULL;
 
-			if (tail == NULL) 
+			if (tail == NULL)
 			{
 				head = newnode;
 				tail = newnode;
 			}
-			else 
+			else
 			{
 				tail->next = newnode;
 				newnode->prev = tail;
 				tail = newnode;
 			}
-		} 
+		}
 		else
 		{
 			int j = i;
-			while (j < len && line[j] != '|' && line[j] != '\'' && line[j] != '\"') 
+			while (j < len && line[j] != '|' && line[j] != '\'' && line[j] != '\"')
 				j++;
 			int substringlength = j - i;
 			char *substring = (char *)malloc((substringlength + 1) * sizeof(char));
@@ -77,12 +77,12 @@ Node    *splitstring(char *line)
 			newnode->prev = NULL;
 			newnode->next = NULL;
 
-			if (tail == NULL) 
+			if (tail == NULL)
 			{
 				head = newnode;
 				tail = newnode;
-			} 
-			else 
+			}
+			else
 			{
 				tail->next = newnode;
 				newnode->prev = tail;
@@ -95,10 +95,10 @@ Node    *splitstring(char *line)
 }
 
 // Function to free the doubly linked list memory
-void freelist(Node *head) 
+void freelist(Node *head)
 {
 	Node *current = head;
-	while (current != NULL) 
+	while (current != NULL)
 	{
 		Node *temp = current;
 		current = current->next;
@@ -123,4 +123,3 @@ void printlist(Node *head)
 	}
 }
 
-				

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "Minishell.h"
 
 void    parsing(char *prompt)
 {
@@ -25,18 +25,18 @@ void    parsing(char *prompt)
     splitnode *current = tokens;
     while (current != NULL)
      {
-        
+
         splitnode *next = current;
         // Print the split data
         // int i = 0;
-        // while (current->splitdata[i]) 
+        // while (current->splitdata[i])
         // {
         //     // printf("{{{%d}}", j++);
         //     // fflush(stdout);
         //     printf("Token %d: %s\n", i + 1, current->splitdata[i]);
         //     i++;
         // }
-        
+
 
         // Free the memory allocated for split data
         int i = 0;
@@ -46,7 +46,7 @@ void    parsing(char *prompt)
             i++;
         }
         free(next->splitdata);
-        
+
         current = next->next;
         free (next);
             // exit(1);
@@ -55,13 +55,13 @@ void    parsing(char *prompt)
 
 // int main()
 // {
-	
+
 // 	parsing("ls -la | fghj | expand      \"     \'this\'    |    \"dsfghjfghjk   \'dfgh\'");
 // }
 // s_tokens    *new_node(char  *cmd)
 // {
 //     s_token *node = (s_token *)malloc(sizeof(s_token));
- 
+
 //     node->cmd = NULL;
 //     node->left = NULL;
 //     node->right = NULL;
@@ -77,7 +77,7 @@ void    parsing(char *prompt)
 //     s_tokens    *cmd_list;
 //     char    *tmp;
 //     size_t i;
-    
+
 //     tmp = prompt;
 //     i = 0;
 //     cmd_list = NULL;
@@ -98,7 +98,7 @@ void    parsing(char *prompt)
 //         else if (*tmp == '<' *(tmp + 1) == '<')
 //             red_token(cmd_list, prompt, &i, HEREDOC);
 //         else if (*tmp == '>')
-//             red_token(cmd_list, prompt, &i, ROUT)      
+//             red_token(cmd_list, prompt, &i, ROUT)
 //         else if (*tmp == '<')
 //             red_token(cmd_list, prompt, &i, RIN);
 //         *tmp += i;

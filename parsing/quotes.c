@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "Minishell.h"
 
-int which_quotes(char *array) 
+int which_quotes(char *array)
 {
     if (array[0] == '\'')
         return 1;
@@ -25,16 +25,16 @@ void checkquotes(splitnode *list)
 {
     splitnode *current = list;
 
-    while (current != NULL) 
+    while (current != NULL)
     {
         char **splitdata = current->splitdata;
 
         int i = 0;
-        while (splitdata[i] != NULL) 
+        while (splitdata[i] != NULL)
         {
             int quoteType = which_quotes(splitdata[i]);
 
-            if (quoteType == 1) 
+            if (quoteType == 1)
             {
                 splitdata[i] = ft_strtrim(splitdata[i], "\'");
             }

@@ -15,7 +15,7 @@ NAME = minishell
 CC = cc
 
 FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
-INCLUDE = minishell.h
+INCLUDE = Minishell.h
 
 READ_LINE = /Users/azarda/.brew/Cellar/readline/8.2.1
 
