@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:51:59 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/09 16:54:42 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/19 15:18:05 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,18 @@ void	ft_lstclear(t_env **alist)
 
 	}
 	*alist = NULL;
+}
+
+
+int ft_lstsize(t_env *env)
+{
+	int i = 0;
+
+	while(env)
+	{
+		i++;
+		env = env->next;
+	}
+	return i;
+
 }

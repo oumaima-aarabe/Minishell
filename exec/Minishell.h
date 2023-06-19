@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/06/14 01:54:05 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/06/19 15:22:22 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,11 @@ void checkquotes(splitnode *list);
 char	*ft_strtrim(char *s1, char *set);
 char    *ft_strcat(char *destination, const char    *source);
 
+
+
+//--------------------------------------------------------------------------------------------------------
+
+
 void	ft_lstadd_back(t_env **alst, t_env *new);
 void	ft_lstclear(t_env **alist);
 void	ft_putstr_fd(char *s, int fd);
@@ -122,7 +127,8 @@ char	**ft_split(char *st, char c);
 char	*ft_itoa(int n);
 
 
-
+int ft_execut_cmd(splitnode *cmd, t_env *env);
+int ft_lstsize(t_env *env);
 int	ft_strcmp(char	*s1, char	*s2);
 int	ft_strlen(char const *str);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);

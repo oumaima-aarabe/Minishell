@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+         #
+#    By: azarda <azarda@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 15:19:53 by azarda            #+#    #+#              #
-#    Updated: 2023/06/14 00:51:05 by ouaarabe         ###   ########.fr        #
+#    Updated: 2023/06/19 15:24:50 by azarda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 CC = cc
 
-FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 INCLUDE = Minishell.h
 
 READ_LINE = /Users/azarda/.brew/Cellar/readline/8.2.1
@@ -36,7 +36,8 @@ SRC =	obj/ft_error.c\
 		obj/libft_util.c \
 		obj/exec.c \
 		obj/lst_utils.c \
-		obj/builtins.c
+		obj/builtins.c \
+		obj/ft_go_exec.c 
 
 OBJ = $(SRC:.c=.o)
 

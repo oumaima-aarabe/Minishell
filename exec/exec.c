@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/09 17:04:11 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/19 15:13:19 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,7 @@ void ft_exucve(char *cmd, char **arg, char **env)
 // }
 //________________________________________________________________________________
 
-int ft_lstsize(t_env *env)
-{
-	int i = 0;
 
-	while(env)
-	{
-		i++;
-		env = env->next;
-	}
-	return i;
-
-}
 
 char **ft_my_env(t_env *en)
 {
