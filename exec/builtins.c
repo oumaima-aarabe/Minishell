@@ -312,8 +312,9 @@ void ft_execut_export(t_env *env, char **cmd)
 
 	tmp = duplicate_linked_list(env);
 
+	
 	tmp1 = tmp;
-	while(tmp->next != NULL)
+	while(tmp && tmp->next != NULL)
 	{
 		if ((compar(tmp->key[0], tmp->next->key[0])) == 0)
 		{

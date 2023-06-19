@@ -58,6 +58,9 @@ t_env *duplicate_linked_list(t_env *last)
     t_env *tail = NULL;
 	t_env *nnode = NULL;
 
+	if(!last)
+		return (NULL);
+
 
     while (last)
 	{
