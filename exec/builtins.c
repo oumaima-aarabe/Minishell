@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/18 03:10:41 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/19 19:35:35 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,7 +312,7 @@ void ft_execut_export(t_env *env, char **cmd)
 
 	tmp = duplicate_linked_list(env);
 
-	
+
 	tmp1 = tmp;
 	while(tmp && tmp->next != NULL)
 	{
@@ -485,8 +485,6 @@ void ft_hairdoc(char **tab)
 
 int ft_execut_bultins(splitnode *ptr, t_env *env)
 {
-	while(ptr)
-	{
 
 	if(!ft_strcmp(ptr->splitdata[0], "echo"))
 	{
@@ -534,8 +532,6 @@ int ft_execut_bultins(splitnode *ptr, t_env *env)
 		ft_hairdoc(ptr->splitdata);
 		return(1);
 
-	}
-	ptr = ptr->next;
 	}
 	return(0);
 }

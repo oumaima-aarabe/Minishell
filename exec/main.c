@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/06/19 15:46:46 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/19 19:43:06 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,10 +150,12 @@ int main(int argc, char **argv, char **env)
 	// if (!env[0])
 	// 	ft_syntax_err();
 	en = environment(env);
+	rl_catch_signals = 0;
 	while(2307)
 	{
 		signal(SIGINT, hendl_ctr_c);
 		signal(SIGQUIT, SIG_IGN);
+
 		// path = getcwd(NULL, 0);
 		// pwd = ft_strcat(path, " -> ");
 		// free (path);
