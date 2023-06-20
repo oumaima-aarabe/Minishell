@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/19 19:35:35 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/20 17:36:35 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 //________________________________echo____________________________________________
 
-void ft_execut_echo(char **tab)
+void ft_execut_echo(char **tab, int outfile)
 {
 	int i = 0;
 	int j = 0;
@@ -39,13 +39,13 @@ void ft_execut_echo(char **tab)
 		}
 		while (tab[i])
 		{
-			printf("%s", tab[i]);
+			write(outfile, tab[i], ft_strlen(tab[i]));
 			i++;
 			if(tab[i] != NULL)
 				printf(" ");
 		}
 		if(bol)
-			printf("\n");
+			write(outfile, "\n", 1);
 	}
 }
 //_____________________________________cd_________________________________________
@@ -135,7 +135,7 @@ void ft_execut_cd(char *str, t_env *env)
 
 //____________________________________pwd_________________________________________
 
-void ft_ft_execut_pwd(char *cmd, t_env *env)
+void ft_ft_execut_pwd(char *cmd, t_env *env, int outfile)
 {
 	char *pwd;
 	(void)cmd;
@@ -149,7 +149,8 @@ void ft_ft_execut_pwd(char *cmd, t_env *env)
 	pwd = getcwd(NULL, 0);
 	if(pwd)
 	{
-		printf("%s\n", pwd);
+		// printf("%s\n", pwd);
+		write(outfile, pwd, ft_strlen(pwd));
 		free(pwd);
 		return ;
 	}
@@ -157,7 +158,8 @@ void ft_ft_execut_pwd(char *cmd, t_env *env)
 	{
 		if(!ft_strcmp("PWD", env->key))
 		{
-			printf("%s\n", env->valu);
+			write(outfile, env->valu, ft_strlen(env->valu));
+			// printf("%s\n", env->valu);
 			return ;
 		}
 		env = env->next;
@@ -488,7 +490,7 @@ int ft_execut_bultins(splitnode *ptr, t_env *env)
 
 	if(!ft_strcmp(ptr->splitdata[0], "echo"))
 	{
-		ft_execut_echo(ptr->splitdata);
+		ft_execut_echo(ptr->splitdata, ptr->out);
 		return (1);
 	}
 
@@ -500,7 +502,7 @@ int ft_execut_bultins(splitnode *ptr, t_env *env)
 
 	else if(!ft_strcmp(ptr->splitdata[0], "pwd"))
 	{
-		ft_ft_execut_pwd(ptr->splitdata[1] ,env);
+		ft_ft_execut_pwd(ptr->splitdata[1] ,env, ptr->out);
 		return (1);
 	}
 
