@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/20 17:36:35 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/20 21:22:33 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void ft_execut_cd(char *str, t_env *env)
 	char *pwd;
 	char *hom;
 
+	old = NULL;
 	hom = NULL;
 	while(env)
 	{
@@ -111,7 +112,7 @@ void ft_execut_cd(char *str, t_env *env)
 		{
 			ft_putstr_fd("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n", 2);
 			free(pwd);
-			free(old);
+			// free(old);
 			return ;
 		}
 		free(pwd);
@@ -126,8 +127,16 @@ void ft_execut_cd(char *str, t_env *env)
 		}
 		if(!ft_strcmp("OLDPWD", tmp->key))
 		{
+			if(old)
+			{
 			free(tmp->valu);
 			tmp->valu = old;
+			}
+			else
+			{
+			free(tmp->valu);
+			tmp->valu = ft_strdup("");
+			}
 		}
 		tmp = tmp->next;
 	}
@@ -146,6 +155,7 @@ void ft_ft_execut_pwd(char *cmd, t_env *env, int outfile)
 	// 	ex_s = 1;
 	// 	return;
 	// }
+	puts("hgfd");
 	pwd = getcwd(NULL, 0);
 	if(pwd)
 	{
