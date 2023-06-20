@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/19 16:46:13 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/20 22:07:33 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,6 @@ void ft_exec(splitnode *ptr, t_env *env)
 	my_env = ft_my_env(env);
 
 
-	while (ptr)
-	{
 
 	if(ptr->splitdata[0] != NULL)
 	{
@@ -164,6 +162,4 @@ void ft_exec(splitnode *ptr, t_env *env)
 		free(ss);
 		ss = NULL;
 		}
-		ptr = ptr->next;
-	}
 	}
