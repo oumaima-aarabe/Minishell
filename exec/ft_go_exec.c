@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/21 23:40:39 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/22 00:22:47 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 int ft_execut_cmd(splitnode *cmd, t_env *env)
 {
+
+
 	if(ft_execut_bultins(cmd->splitdata, env, 0))
 		return 1;
 	ft_exec(cmd->splitdata , env);

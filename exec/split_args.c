@@ -6,6 +6,8 @@ Node    *splitstring(char *line)
 	Node *head = NULL;
 	Node *tail = NULL;
 	int len = strlen(line);
+	if(!len)
+		return (NULL);
 	int i = 0;
 
 	while (i < len)

@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:46:07 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/06/19 20:52:09 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/22 00:20:47 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ splitnode    *parsing(char *prompt)
     Node    *node;
     // int j = 1;
     node = splitstring(prompt);
+    if(!node)
+        return(NULL);
     // printlist(node);
     splitnode   *tokens;
     tokens = splitdataLinkedList(node);
