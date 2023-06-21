@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/20 21:22:33 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/21 21:04:14 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,14 @@ void ft_execut_cd(char *str, t_env *env)
 			{
 				if(!ft_strcmp(tmp_1->key, "OLDPWD"))
 				{
+					if(chdir(tmp_1->valu) < 0)
+					{
+						ft_putstr_fd("minishell: cd: ", 2);
+						perror(str);
+						ex_s = 1;
+						break;
+					}
 					printf("%s\n",tmp_1->valu);
-					ft_execut_cd(tmp_1->valu, tmp);
 					break;
 				}
 				tmp_1 = tmp_1->next;
@@ -148,6 +154,7 @@ void ft_ft_execut_pwd(char *cmd, t_env *env, int outfile)
 {
 	char *pwd;
 	(void)cmd;
+	(void)outfile;
 
 	// if(cmd && cmd[0] == '-' && cmd[1])
 	// {
@@ -155,12 +162,12 @@ void ft_ft_execut_pwd(char *cmd, t_env *env, int outfile)
 	// 	ex_s = 1;
 	// 	return;
 	// }
-	puts("hgfd");
+	// puts("hgfd");
 	pwd = getcwd(NULL, 0);
 	if(pwd)
 	{
-		// printf("%s\n", pwd);
-		write(outfile, pwd, ft_strlen(pwd));
+		printf("%s\n", pwd);
+		// write(outfile, pwd, ft_strlen(pwd));
 		free(pwd);
 		return ;
 	}
@@ -168,8 +175,8 @@ void ft_ft_execut_pwd(char *cmd, t_env *env, int outfile)
 	{
 		if(!ft_strcmp("PWD", env->key))
 		{
-			write(outfile, env->valu, ft_strlen(env->valu));
-			// printf("%s\n", env->valu);
+			// write(outfile, env->valu, ft_strlen(env->valu));
+			printf("%s\n", env->valu);
 			return ;
 		}
 		env = env->next;

@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/21 15:13:15 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/21 20:58:07 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,25 @@
 
 
 
-void ft_exucve(char *cmd, char **arg, char **env)
+int ft_exucve(char *cmd, char **arg, char **env)
 {
 	int pid;
-			pid = fork();
-			if(!pid)
-			{
-				if(execve(cmd, arg, env) < 0)
-				{
-				// ft_print_err(cmd , " : No such file or directory\n");
-				free(cmd);
-				ft_free_(arg);
-				ft_free_(env);
-				perror("minishell     :");
-				exit (errno);
-				}
-			// ft_free_(env);
-			}
-	wait(&pid);
 
+	pid = fork();
+	if(pid == 0)
+	{
+		if(execve(cmd, arg, env) < 0)
+		{
+		// ft_print_err(cmd , " : No such file or directory\n");
+		free(cmd);
+		ft_free_(arg);
+		ft_free_(env);
+		perror("minishell     :");
+		exit (errno);
+		}
+	// ft_free_(env);
+	}
+	return (pid);
 }
 
 
@@ -152,11 +152,19 @@ void ft_exec(splitnode *ptr, t_env *env)
 
 
 //---------------------------------------------------------------------------------------------------
+		int pid = 0;
+		int status;
 
 		if(ss)
 		{
-			ft_exucve(ss, ptr->splitdata, my_env);
+			pid = ft_exucve(ss, ptr->splitdata, my_env);
 		}
+
+
+		waitpid(pid, &status, 0);
+		while (wait(NULL) != -1)
+			;
+		// $? = extract_status(status);
 
 		ft_free_(my_env);
 

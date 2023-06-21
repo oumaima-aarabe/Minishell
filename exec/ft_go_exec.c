@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/21 14:59:59 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/21 20:59:24 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,14 @@ typedef struct s_fds
 
 int ft_execut_cmd(splitnode *cmd, t_env *env)
 {
-	// unsigned int i = 0;
 	// int fd[2];
+	// if (cmd->out == -1)
+	// 	cmd->out = fd[1];
+	// if (cmd->in == -1)
+	// 	cmd->in = fd[0];
+
+	
+	// unsigned int i = 0;
 	// int id;
 	// if(cmd && cmd->next)
 	// {
