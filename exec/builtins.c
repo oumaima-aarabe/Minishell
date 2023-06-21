@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/21 21:04:14 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/21 23:35:18 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -502,53 +502,54 @@ void ft_hairdoc(char **tab)
 
 //________________________________________________________________________________
 
-int ft_execut_bultins(splitnode *ptr, t_env *env)
+int ft_execut_bultins(char **cmd, t_env *env, int inp)
 {
 
-	if(!ft_strcmp(ptr->splitdata[0], "echo"))
+
+	if(!ft_strcmp(cmd[0], "echo"))
 	{
-		ft_execut_echo(ptr->splitdata, ptr->out);
+		ft_execut_echo(cmd, inp);
 		return (1);
 	}
 
-	else if(!ft_strcmp(ptr->splitdata[0], "cd"))
+	else if(!ft_strcmp(cmd[0], "cd"))
 	{
-		ft_execut_cd(ptr->splitdata[1], env);
+		ft_execut_cd(cmd[1], env);
 		return (1);
 	}
 
-	else if(!ft_strcmp(ptr->splitdata[0], "pwd"))
+	else if(!ft_strcmp(cmd[0], "pwd"))
 	{
-		ft_ft_execut_pwd(ptr->splitdata[1] ,env, ptr->out);
+		ft_ft_execut_pwd(cmd[1] ,env, inp);
 		return (1);
 	}
 
-	else if(!(ft_strcmp(ptr->splitdata[0], "export")))
+	else if(!(ft_strcmp(cmd[0], "export")))
 	{
-		ft_execut_export(env, ptr->splitdata);
+		ft_execut_export(env, cmd);
 		return (1);
 	}
 
-	else if(!(ft_strcmp(ptr->splitdata[0], "unset")))
+	else if(!(ft_strcmp(cmd[0], "unset")))
 	{
-			ft_execut_unset(env, ptr->splitdata);
+			ft_execut_unset(env, cmd);
 		return (1);
 	}
 
-	else if(!(ft_strcmp(ptr->splitdata[0], "env")))
+	else if(!(ft_strcmp(cmd[0], "env")))
 	{
 			ft_execut_env(env); // he nide SHELV
 			return(1);
 	}
 
-	else if(!ft_strcmp(ptr->splitdata[0], "exit"))
+	else if(!ft_strcmp(cmd[0], "exit"))
 	{
-		if(ft_execut_exit(ptr->splitdata))
+		if(ft_execut_exit(cmd))
 			return (1);
 	}
-	else if(!ft_strcmp(ptr->splitdata[0], "<<"))
+	else if(!ft_strcmp(cmd[0], "<<"))
 	{
-		ft_hairdoc(ptr->splitdata);
+		ft_hairdoc(cmd);
 		return(1);
 
 	}

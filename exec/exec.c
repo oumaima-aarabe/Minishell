@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/21 20:58:07 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/21 23:39:16 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ int ft_exucve(char *cmd, char **arg, char **env)
 // 	system("leaks minishell");
 // }
 //________________________________________________________________________________
+
+int ft_extract_status_execve(int stat)
+{
+	printf("--> %d\n", stat);
+	return (0);
+}
 
 
 
@@ -85,7 +91,7 @@ char **ft_my_env(t_env *en)
 //________________________________________________________________________________
 
 
-void ft_exec(splitnode *ptr, t_env *env)
+void ft_exec(char **cmd, t_env *env)
 {
 	char *test = NULL;
 	char **tmp = NULL;
@@ -104,7 +110,7 @@ void ft_exec(splitnode *ptr, t_env *env)
 
 
 
-	if(ptr->splitdata[0] != NULL)
+	if(cmd[0] != NULL)
 	{
 
 
@@ -119,19 +125,19 @@ void ft_exec(splitnode *ptr, t_env *env)
 			env = env->next;
 		}
 		if(!env)
-			ss = ft_strdup(ptr->splitdata[0]);
-		if(ptr->splitdata[0][0] == '.' || ptr->splitdata[0][0] == '/')
+			ss = ft_strdup(cmd[0]);
+		if(cmd[0][0] == '.' || cmd[0][0] == '/')
 		{
 			free(ss);
 			if(tmp)
 				ft_free_(tmp);
-			ss = ft_strdup(ptr->splitdata[0]);
+			ss = ft_strdup(cmd[0]);
 		}
 		else if(tmp)
 		{
 		while(tmp[i])
 		{
-			test = ft_strjoin(ft_strdup("/"), ft_strdup(ptr->splitdata[0]));
+			test = ft_strjoin(ft_strdup("/"), ft_strdup(cmd[0]));
 			ss = ft_strjoin(ft_strdup(tmp[i]), test);
 			if(!(access(ss, F_OK)))
 				break;
@@ -143,7 +149,7 @@ void ft_exec(splitnode *ptr, t_env *env)
 			}
 			if(!tmp[i])
 			{
-				ft_print_err(ptr->splitdata[0], ": command not found\n");
+				ft_print_err(cmd[0], ": command not found\n");
 				ex_s = 127;
 			}
 		}
@@ -157,14 +163,15 @@ void ft_exec(splitnode *ptr, t_env *env)
 
 		if(ss)
 		{
-			pid = ft_exucve(ss, ptr->splitdata, my_env);
+			pid = ft_exucve(ss, cmd, my_env);
 		}
 
 
 		waitpid(pid, &status, 0);
+
 		while (wait(NULL) != -1)
 			;
-		// $? = extract_status(status);
+		ex_s = ft_extract_status_execve(status);
 
 		ft_free_(my_env);
 

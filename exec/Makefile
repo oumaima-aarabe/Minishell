@@ -6,7 +6,7 @@
 #    By: azarda <azarda@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 15:19:53 by azarda            #+#    #+#              #
-#    Updated: 2023/06/20 00:02:04 by azarda           ###   ########.fr        #
+#    Updated: 2023/06/21 22:33:54 by azarda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CC = cc
 
 READLINE = $(shell brew --prefix readline)
 
-FLAGS = -Wall -Werror -Wextra -I$(READLINE)/include #-g -fsanitize=address
+FLAGS = -Wall -Werror -Wextra -I$(READLINE)/include # -g -fsanitize=address
 
 
 

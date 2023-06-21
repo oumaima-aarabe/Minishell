@@ -108,7 +108,10 @@ splitnode *createsplitnode(char **splitdata)
     splitnode *newnode = (splitnode *)malloc(sizeof(splitnode));
     // if (splitdata == NULL)
     //     return NULL;
-
+    // if(!splitdata)
+    //     newnode->splitdata = NULL;
+    // else
+    // printf("--->>%s", newnode->splitdata[0]);
     newnode->splitdata = splitdata;
     newnode->in = -1;
     newnode->out = -1;

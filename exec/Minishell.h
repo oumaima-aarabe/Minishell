@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/06/20 17:15:09 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/21 23:39:28 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	ft_lstadd_back(t_env **alst, t_env *new);
 void	ft_lstclear(t_env **alist);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_free_(char **tab);
-void	ft_exec(splitnode *cmd, t_env *en);
+void	ft_exec(char **cm, t_env *en);
 void	ft_print_err(char *cmd, char *st);
 
 
@@ -132,7 +132,7 @@ int ft_lstsize(t_env *env);
 int	ft_strcmp(char	*s1, char	*s2);
 int	ft_strlen(char const *str);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
-int	ft_execut_bultins(splitnode *cmd, t_env *env);
+int	ft_execut_bultins(char **cmd, t_env *env, int in);
 int	ft_atoi(char *str);
 int ft_sine(char *st, char c);
 
