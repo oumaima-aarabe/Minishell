@@ -110,7 +110,8 @@ splitnode *createsplitnode(char **splitdata)
     //     return NULL;
 
     newnode->splitdata = splitdata;
-
+    newnode->in = -1;
+    newnode->out = -1;
     newnode->prev = NULL;
     newnode->next = NULL;
 

@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/20 22:09:05 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/21 15:13:15 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@ void ft_exucve(char *cmd, char **arg, char **env)
 			{
 				if(execve(cmd, arg, env) < 0)
 				{
-				ft_print_err(cmd , " : No such file or directory\n");
+				// ft_print_err(cmd , " : No such file or directory\n");
 				free(cmd);
 				ft_free_(arg);
 				ft_free_(env);
-				exit (0);
+				perror("minishell     :");
+				exit (errno);
 				}
 			// ft_free_(env);
 			}
