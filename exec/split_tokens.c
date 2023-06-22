@@ -113,8 +113,8 @@ splitnode *createsplitnode(char **splitdata)
     // else
     // printf("--->>%s", newnode->splitdata[0]);
     newnode->splitdata = splitdata;
-    newnode->in = -1;
-    newnode->out = -1;
+    newnode->in = 0;
+    newnode->out = 1;
     newnode->prev = NULL;
     newnode->next = NULL;
 

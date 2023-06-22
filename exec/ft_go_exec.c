@@ -6,21 +6,128 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/22 00:22:47 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/22 22:52:19 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
 
+int exec(char **cmd, t_env *env)
+{
+	if(ft_execut_bultins(cmd, env, 0))
+		return (exit(1), 1);
+	ft_exec(cmd , env);
+		return (1);
+}
+
+typedef struct s_fds
+{
+	int in;
+	int out;
+	int fd_in;
+	int fd_out;
+}	t_fds;
+
+int fork_execut(splitnode *ptr, t_fds pipe, t_env *env)
+{
+	int pid;
+
+	// if(ptr->in != 0)
+	// 	inp = ptr->in;
+	// if(ptr->out != 1)
+	// 	out = ptr->out;
+	pid = fork();
+	if(pid == -1)
+		return(perror("Eroor"), exit (1), 1);
+	if(pid == 0)
+	{
+		if (pipe.in != 0)
+		{
+			dup2(pipe.in, 0);
+			if (pipe.in != pipe.fd_in)
+				close(pipe.in);
+		}
+		if (pipe.out != 1)
+		{
+			dup2(pipe.out, 1);
+			if (pipe.out != pipe.fd_out)
+				close(pipe.out);
+		}
+		if (pipe.fd_in != -1)
+		close(pipe.fd_in);
+		if (pipe.fd_out != -1)
+		close(pipe.fd_out);
+		exec(ptr->splitdata, env);
+	}
+	return(pid);
+}
+
+int ft_one_cmd(splitnode *cmd, t_env *env)
+{
+	int pid;
+	pid = 0;
+	if(ft_execut_bultins(cmd->splitdata, env, 0))
+		return (-1);
+	pid = fork();
+	if(pid == -1)
+		return(perror("Minishell: "), -1);
+	if(pid == 0)
+		ft_exec(cmd->splitdata , env);
+	return (pid);
+}
+
+
 int ft_execut_cmd(splitnode *cmd, t_env *env)
 {
+	int fd[2];
+	int dexieme_fd[2];
+	int pid = 0;
+	int status;
+
+	if(!cmd->next)
+	{
+		pid = ft_one_cmd(cmd, env);
+		if (pid != -1)
+			return (waitpid(pid, &status, 0), status);
+	}
+	else if (cmd->next)
+	{
+	pipe(fd);
+	pid =  fork_execut(cmd, (t_fds){0, fd[1], fd[0], fd[1]}, env);
+	close(fd[1]);
+	while(cmd->next->next != NULL)
+	{
+		pipe(dexieme_fd);
+		pid =  fork_execut(cmd, (t_fds){fd[0], dexieme_fd[1], fd[0], -1}, env);
+		close(fd[0]);
+		fd[0] = dexieme_fd[0];
+		// fd[1] = dexieme_fd[1];
+		close(dexieme_fd[1]);
+		cmd = cmd->next;
+	}
+	cmd = cmd->next;
+	pid = fork_execut(cmd, (t_fds){fd[0], 1, fd[0], -1}, env);
+	close(fd[0]);
+	// waitpid(pid, &status, 0);
+	while(wait(NULL) != -1)
+		;
+
+	}
 
 
-	if(ft_execut_bultins(cmd->splitdata, env, 0))
-		return 1;
-	ft_exec(cmd->splitdata , env);
-	return (1);
+	// pid =  fork_execut(cmd, 0, 1, env);
+	// dup2(fd[0], 0);
+	// char buf[100];
+	// read(0, buf, 100);
+	// printf("->%s\n", buf);
+//_________________________________________________________________________________________________________
+//_________________________________________________________________________________________________________
+
+
+return (1);
+
+
 }
 
 

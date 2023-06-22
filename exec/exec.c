@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/22 00:03:19 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/22 16:33:29 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 
 
-int ft_exucve(char *cmd, char **arg, char **env)
+void ft_exucve(char *cmd, char **arg, char **env)
 {
-	int pid;
+	// int pid;
 
-	pid = fork();
-	if(pid == 0)
+	// pid = fork();
+	// if(pid == 0)
 	{
 		if(execve(cmd, arg, env) < 0)
 		{
@@ -32,7 +32,7 @@ int ft_exucve(char *cmd, char **arg, char **env)
 		}
 	// ft_free_(env);
 	}
-	return (pid);
+	// return (pid);
 }
 
 
@@ -42,11 +42,11 @@ int ft_exucve(char *cmd, char **arg, char **env)
 // }
 //________________________________________________________________________________
 
-int ft_extract_status_execve(int stat)
-{
-	printf("--> %d\n", stat);
-	return (0);
-}
+// int ft_extract_status_execve(int stat)
+// {
+// 	// printf("--> %d\n", stat);
+// 	return (0);
+// }
 
 
 
@@ -149,8 +149,10 @@ void ft_exec(char **cmd, t_env *env)
 			}
 			if(!tmp[i])
 			{
-				ft_print_err(cmd[0], ": command not found\n");
+				ft_print_err(cmd[0], ": combjmand not found\n");
+				exit(1);
 				ex_s = 127;
+				return ;
 			}
 		}
 		ft_free_(tmp);
@@ -158,20 +160,18 @@ void ft_exec(char **cmd, t_env *env)
 
 
 //---------------------------------------------------------------------------------------------------
-		int pid = 0;
-		int status;
+		// int pid = 0;
+		// int status;
 
 		if(ss)
 		{
-			pid = ft_exucve(ss, cmd, my_env);
+			ft_exucve(ss, cmd, my_env);
 		}
+		// waitpid(pid, &status, 0);
 
-
-		waitpid(pid, &status, 0);
-
-		while (wait(NULL) != -1)
-			;
-		ex_s = ft_extract_status_execve(status);
+		// while (wait(NULL) != -1)
+		// 	;
+		// ex_s = ft_extract_status_execve(status);
 
 		ft_free_(my_env);
 
