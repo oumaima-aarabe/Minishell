@@ -12,83 +12,75 @@
 
 #include "minishell.h"
 
-char    *get_redfilen(char **command_line, char *redirection_symbol)
+char    *get_redfilen(int i, int j, char    **cmd_l, char   *which_red) 
 {
-    char    *symbol_position = strstr(command_line, redirection_symbol);
-    if (symbol_position == NULL)
-        return NULL;
-        // Redirection symbol not found
-
-    // Calculate the start position of the file name
-    char    *file_start = symbol_position + strlen(redirection_symbol);
-    while (*file_start != '\0' && (*file_start == ' ' || *file_start == '\t'))
-        file_start++; // Skip leading whitespace
-
-    // Find the end position of the file name
-    char    *file_end = file_start;
-    while (*file_end != '\0' && *file_end != ' ' && *file_end != '\t' && *file_end != '\n')
-        file_end++;
-
-    // Calculate the length of the file name
-    size_t file_length = file_end - file_start;
-
-    // Allocate memory for the file name and copy it
-    char    *file_name = (char*)malloc((file_length + 1) * sizeof(char));
-    strncpy(file_name, file_start, file_length);
-    file_name[file_length] = '\0';
-
+    char    *file_name = NULL;
+    if (cmd_l[i][j] && cmd_l[i][j + 1] && strcmp(&cmd_l[i][j], which_red) == 0) 
+    {
+        if (cmd_l[i][j + 2])
+            file_name = strdup(&cmd_l[i][j + 2]);
+        else if (cmd_l[i + 1])
+            file_name = strdup(cmd_l[i + 1]);
+    }
     return file_name;
 }
 
-void    red_append(splitnode *node, int *i, int *j, char **cmdl)
-{
-    char *appfile = get_redfilen(cmdl[*i], ">>");
-    node->out = open(appfile, O_WRONLY | O_CREAT | O_APPEND, 0666);
+void red_append(splitnode   *node, int i, int j, char **cmdl)
+ {
+    char    *appfile = get_redfilen(i, j, cmdl, ">>");
+    if (appfile)
+     {
+        if (node->out != -1)
+            close(node->out);
+        node->out = open(appfile, O_WRONLY | O_CREAT | O_APPEND, 0666);
+        free(appfile);
+    }
 }
 
-void    red_input(splitnode *node, int *i, int *j, char **cmdl)
-{
-    char *infile = get_redfilen(cmdl[*i], "<");
-    node->in = open(infile, O_RDONLY);
+void red_input(splitnode    *node, int i, int j, char  **cmdl) {
+    char    *infile = get_redfilen(i, j, cmdl, "<");
+    if (infile)
+    {
+        if (node->in != -1)
+            close(node->in);
+        node->in = open(infile, O_RDONLY);
+        free(infile);
+    }
 }
 
-void    red_output(splitnode *node, int *i, int *j, char **cmdl)
-{
-    char *outfile = get_redfilen(cmdl[*i], ">");
-    node->out = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-    
+void red_output(splitnode   *node, int i, int j, char **cmdl) {
+    char    *outfile = get_redfilen(i, j, cmdl, ">");
+    if (outfile) 
+    {
+        if (node->out != -1)
+            close(node->out);
+        node->out = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+        free(outfile);
+    }
 }
-//----------------------------------------------------------------//
-//later for heredoc
-void later()
-{
 
-}
-////////////////////////////////////////////////////////////////
-void    handle_redirections(splitnode *node)
-{
-    char **cmdl;
+void handle_redirections(splitnode  *node) {
+    char    **cmdl;
     int i = 0;
     int j;
 
-    while(node)
+    while (node) 
     {
-        initial(node);
         cmdl = node->splitdata;
         i = 0;
-        while (cmdl[i])
+        while (cmdl[i]) 
         {
             j = 0;
-            while(cmdl[i][j])
-            {
-                if (cmdl[i][j] == '<' && cmdl[i][j + 1] != '<')
-                    red_input(node, &i, &j, cmdl);
-                else if (cmdl[i][j] == '<' && cmdl[i][j + 1] == '<')
+            while (cmdl[i][j])
+             {
+                if (cmdl[i] && cmdl[i][j] && cmdl[i][j] == '<' && cmdl[i][j + 1] != '<')
+                    red_input(node, i, j, cmdl);
+                else if (cmdl[i] && cmdl[i][j] && cmdl[i][j] == '<' && cmdl[i][j + 1] == '<')
                     later();
-                else if (cmdl[i][j] == '>' && cmdl[i][j + 1] != '>')
-                    red_output(node, &i, &j, cmdl);
-                else if (cmdl[i][j] == '>' && cmdl[i][j + 1] == '>')
-                    red_append(node, &i, &j, cmdl);
+                else if (cmdl[i] && cmdl[i][j] && cmdl[i][j] == '>' && cmdl[i][j + 1] != '>')
+                    red_output(node, i, j, cmdl);
+                else if (cmdl[i] && cmdl[i][j] && cmdl[i][j] == '>' && cmdl[i][j + 1] == '>')
+                    red_append(node, i, j, cmdl);
                 else
                     j++;
             }
