@@ -89,13 +89,19 @@ void 	freenodes(Node *head);
 Node* 	createnode(char* data);
 int 	check_for_quotes(char* line, int index);
 ////////////////////////////////////////////////////////////////
-/////////////////SPLIT USING SPACES///////////////////////////
+/////////////////SPLIT USING SPACES/////////////////////////////
 splitnode   *splitdatalinkedlist(Node *originalist);
 void free_split_nodes(splitnode* head);
 splitnode* create_split_node(char** splitdata, int word_count);
 char** split_string(char* str, int* word_count);
 int count_words(char* str);
 int is_inside_quotes(char* str);
+
+////////////////////////////////////////////////////////////////
+/////////////////HANDLE REDIRECTIONS////////////////////////////
+splitnode  *handle_redirections(splitnode  *node);
+
+
 
 // void printlist(Node *head);
 void    parsing(char *prompt);

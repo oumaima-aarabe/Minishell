@@ -34,7 +34,7 @@ SRC =	obj/ft_error.c\
 		obj/main.c\
 		obj/lexer.c\
 		obj/ft_error.c\
-		# obj/redirections.c\
+		obj/redirections.c\
 
 
 OBJ = $(SRC:.c=.o)
