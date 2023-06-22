@@ -96,6 +96,25 @@ int	ft_isalnum(int c)
 //     }
 // }
 
+void	*ft_realloc(void *ptr, size_t newsize)
+{
+	void	*newptr;
+	size_t	cursize;
+
+	if (ptr == NULL)
+		return (ft_calloc(1, newsize));
+			// Use calloc to allocate and initialize the memory
+	cursize =  strlen(ptr);
+	if (newsize <= cursize)
+		return (ptr);
+	newptr = ft_calloc(1, newsize);
+		// Use calloc to allocate and initialize the new memory block
+	memcpy(newptr, ptr, cursize);
+	free(ptr);
+	return (newptr);
+}
+
+
 void	*ft_memset(void *b, int c, size_t len)
 {
 	unsigned char	*s;

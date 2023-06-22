@@ -15,31 +15,28 @@
 void    parsing(char *prompt)
 {
     Node    *node;
-    // int j = 1;
     node = splitstring(prompt);
+
     // printlist(node);
     splitnode   *tokens;
-    tokens = splitdataLinkedList(node);
-    freelist(node);
+    tokens = splitdatalinkedlist(node);
+    freenodes(node);
     // checkquotes(tokens);
     splitnode *current = tokens;
     while (current != NULL)
      {
-        
         splitnode *next = current;
         // Print the split data
-        // int i = 0;
-        // while (current->splitdata[i]) 
-        // {
-        //     // printf("{{{%d}}", j++);
-        //     // fflush(stdout);
-        //     printf("Token %d: %s\n", i + 1, current->splitdata[i]);
-        //     i++;
-        // }
-        
-
-        // Free the memory allocated for split data
         int i = 0;
+        while (current->splitdata[i]) 
+        {
+            // fflush(stdout);
+            printf("Token %d: %s\n", i + 1, current->splitdata[i]);
+            i++;
+        }
+        // Free the memory allocated for split data
+            // exit(1);
+        i = 0;
         while (next->splitdata[i] != NULL)
          {
             free(next->splitdata[i]);
@@ -48,9 +45,11 @@ void    parsing(char *prompt)
         free(next->splitdata);
         
         current = next->next;
+        // current = current->next;
         free (next);
-            // exit(1);
-    }
+        }
+    //         // exit(1);
+    // }
 }
 
 // int main()

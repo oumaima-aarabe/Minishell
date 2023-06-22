@@ -29,8 +29,7 @@ int main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	if (!env[0])
-		ft_syntax_err();
+	(void)env;
 	while(2307)
 	{
 		signal(SIGINT, hendl_ctr_c);

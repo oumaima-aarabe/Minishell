@@ -13,7 +13,7 @@
 #include "minishell.h"
 
 
-size_t	ft_strlen(const	char *s)
+size_t	strlen(const	char *s)
 {
 	const char	*c;
 
@@ -29,7 +29,7 @@ char	*ft_strchr(char *s, int c)
 
 	i = 0;
 	if (c == '\0')
-		return ((char *)&s[ft_strlen(s)]);
+		return ((char *)&s[strlen(s)]);
 	while (s[i])
 	{
 		if (s[i] == (char)c)
@@ -46,7 +46,7 @@ char	*ft_strdup( char *s1)
 	char	*assl;
 	size_t	i;
 
-	len = ft_strlen(s1);
+	len = strlen(s1);
 	assl = (char *)s1;
 	i = 0;
 	dupl = (char *)malloc(sizeof(*s1) * (len + 1));
@@ -65,7 +65,7 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
 	size_t	c;
 
-	c = ft_strlen(src);
+	c = strlen(src);
 	if (size == 0)
 		return (c);
 	while (*src && --size)
@@ -82,10 +82,10 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 
 	if (!s)
 		return (NULL);
-	if (start >= ft_strlen(s))
-		start = ft_strlen(s);
-	if (ft_strlen(s + start) < len)
-		len = ft_strlen(s + start);
+	if (start >= strlen(s))
+		start = strlen(s);
+	if (strlen(s + start) < len)
+		len = strlen(s + start);
 	sub = (char *)malloc(sizeof(*s) * (len + 1));
 	if (!sub)
 		return (NULL);
@@ -107,7 +107,7 @@ char	*ft_strtrim(char *s1, char *set)
 	i = 0;
 	while (ft_strchr(set, s1[i]) && s1[i] != '\0')
 		i++;
-	j = ft_strlen(s1) - 1;
+	j = strlen(s1) - 1;
 	while (ft_strchr(set, s1[j]) && j != 0 && j >= i)
 		j--;
 	len = j - i + 1;

@@ -12,20 +12,20 @@
 
 #include "minishell.h"
 
-char* get_redfilen(char* command_line, char* redirection_symbol)
+char    *get_redfilen(char **command_line, char *redirection_symbol)
 {
-    char* symbol_position = strstr(command_line, redirection_symbol);
+    char    *symbol_position = strstr(command_line, redirection_symbol);
     if (symbol_position == NULL)
         return NULL;
         // Redirection symbol not found
 
     // Calculate the start position of the file name
-    char* file_start = symbol_position + strlen(redirection_symbol);
+    char    *file_start = symbol_position + strlen(redirection_symbol);
     while (*file_start != '\0' && (*file_start == ' ' || *file_start == '\t'))
         file_start++; // Skip leading whitespace
 
     // Find the end position of the file name
-    char* file_end = file_start;
+    char    *file_end = file_start;
     while (*file_end != '\0' && *file_end != ' ' && *file_end != '\t' && *file_end != '\n')
         file_end++;
 
@@ -33,17 +33,11 @@ char* get_redfilen(char* command_line, char* redirection_symbol)
     size_t file_length = file_end - file_start;
 
     // Allocate memory for the file name and copy it
-    char* file_name = (char*)malloc((file_length + 1) * sizeof(char));
+    char    *file_name = (char*)malloc((file_length + 1) * sizeof(char));
     strncpy(file_name, file_start, file_length);
     file_name[file_length] = '\0';
 
     return file_name;
-}
-
-void    initial(splitnode *node)
-{
-    node->in = 0;
-    node->out = 1;
 }
 
 void    red_append(splitnode *node, int *i, int *j, char **cmdl)
@@ -102,5 +96,4 @@ void    handle_redirections(splitnode *node)
         }
         node = node->next;
     }
-
 }
