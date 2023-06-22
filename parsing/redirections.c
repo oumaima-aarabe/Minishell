@@ -108,7 +108,8 @@ splitnode   *handle_redirections(splitnode *node)
     int i = 0;
     int j;
 
-    while (node) {
+    while (node)
+    {
         cmdl = node->splitdata;
         i = 0;
 
@@ -135,6 +136,12 @@ splitnode   *handle_redirections(splitnode *node)
                     inside_quotes = !inside_quotes;  // Toggle the inside quotes flag
                 j++;
             }
+            i++;
+        }
+        int i = 0;
+        while (node->splitdata[i]) 
+        {
+            printf("Token %d: %s\n", i + 1, node->splitdata[i]);
             i++;
         }
         node = node->next;
