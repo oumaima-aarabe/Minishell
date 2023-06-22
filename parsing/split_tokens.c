@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int is_inside_quotes(char* str) 
+int is_inside_quotes(char   *str) 
 {
     int length = strlen(str);
     int in_quotes = 0;
@@ -15,7 +15,7 @@ int is_inside_quotes(char* str)
     return in_quotes;
 }
 
-int count_words(char* str) 
+int count_words(char    *str) 
 {
     int length = strlen(str);
     int count = 0;
@@ -47,12 +47,11 @@ int count_words(char* str)
     return count;
 }
 
-char** split_string(char* str, int* word_count) 
+char    **split_string(char *str, int    *word_count) 
 {
-    
     int length = strlen(str);
     int count = count_words(str);
-    char** words = calloc(count + 1 , sizeof(char*));
+    char    **words = calloc(count + 1 , sizeof(char*));
 
     int word_index = 0;
     int start_index = 0;
@@ -60,23 +59,43 @@ char** split_string(char* str, int* word_count)
     int in_quotes = 0;
     int i = 0;
 
+    while (i < length && (str[i] == ' ' || str[i] == '\t'))
+        i++;
+
+    start_index = i;
+
     while (i < length) 
     {
-        if (str[i] == ' ' && !in_word && !in_quotes) 
+        if ((str[i] == ' ' || str[i] == '\t') && !in_word && !in_quotes) 
         {
             i++;
             continue;
         }
+        
         if (str[i] == '"' || str[i] == '\'')
             in_quotes = !in_quotes;
-        else if (str[i] == ' ' && !in_quotes)
+        
+        if ((str[i] == ' ' || str[i] == '\t') && !in_quotes)
         {
             in_word = 0;
+            
+            while (i < length && str[i] == ' ')
+                i++;
+            
             words[word_index] = calloc((i - start_index + 1) + 1 , sizeof(char));
             strncpy(words[word_index], &str[start_index], i - start_index);
             words[word_index][i - start_index] = '\0';
+            
+            char    *word = words[word_index];
+            char    *dest = word;
+            for (char   *src = word; *src != '\0'; ++src) {
+                if (*src != ' ')
+                    *dest++ = *src;
+            }
+            *dest = '\0';
+            
             word_index++;
-            start_index = i + 1;
+            start_index = i;
         } else
             in_word = 1;
         i++;
@@ -94,10 +113,10 @@ char** split_string(char* str, int* word_count)
     return words;
 }
 
-splitnode* create_split_node(char** splitdata, int word_count) 
+splitnode   *create_split_node(char   **splitdata, int word_count) 
 {
     (void)  word_count;
-    splitnode* new_split_node = calloc(1, sizeof(splitnode));
+    splitnode   *new_split_node = calloc(1, sizeof(splitnode));
     new_split_node->splitdata = splitdata;
     new_split_node->prev = NULL;
     new_split_node->next = NULL;
@@ -106,17 +125,17 @@ splitnode* create_split_node(char** splitdata, int word_count)
     return new_split_node;
 }
 
-splitnode* splitdatalinkedlist(Node* original_list) 
+splitnode   *splitdatalinkedlist(Node  *original_list) 
 {
-    splitnode* head = NULL;
-    splitnode* tail = NULL;
+    splitnode   *head = NULL;
+    splitnode   *tail = NULL;
 
-    Node* current = original_list;
+    Node    *current = original_list;
     while (current != NULL) 
     {
         int word_count = 0;
-        char** splitdata = split_string(current->data, &word_count);
-        splitnode* new_node = create_split_node(splitdata, word_count);
+        char    **splitdata = split_string(current->data, &word_count);
+        splitnode   *new_node = create_split_node(splitdata, word_count);
 
         if (head == NULL) 
         {
@@ -133,11 +152,11 @@ splitnode* splitdatalinkedlist(Node* original_list)
     return head;
 }
 
-void free_split_nodes(splitnode* head)
+void free_split_nodes(splitnode *head)
 {
     while (head != NULL) 
     {
-        splitnode* current = head;
+        splitnode   *current = head;
         head = head->next;
 
         int i = 0;
