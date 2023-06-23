@@ -37,7 +37,6 @@
 
 typedef enum t_flags
 {
-	PIPE = 15,
 	DQ,
 	SQ,
 	WORD,

@@ -42,17 +42,68 @@ void red_input(splitnode    *node, int i, int j, char  **cmdl)
     }
 }
 
-void red_output(splitnode   *node, int i, int j, char **cmdl) 
+void red_output(splitnode *node, int i, int j, char **cmdl) 
 {
-    char    *outfile = get_redfilen(i, j, cmdl, ">");
+    char *outfile = get_redfilen(i, j, cmdl, ">");
     if (outfile) 
     {
         if (node->out != -1)
             close(node->out);
+
         node->out = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
         free(outfile);
     }
 }
+
+
+
+
+void later() 
+{
+    return;
+}
+
+splitnode *handle_redirections(splitnode *node) 
+{
+    splitnode *current = node;
+
+    while (current != NULL) 
+    {
+        char **cmdl = current->splitdata;
+        int i = 0;
+        
+        while (cmdl[i]) 
+        {
+            int j = 0;
+            bool inside_quotes = false;
+            
+            while (cmdl[i][j]) 
+            {
+                if (!inside_quotes && !is_quote(cmdl[i][j])) 
+                {
+                    if (cmdl[i][j] == '<' && cmdl[i][j + 1] != '<')
+                        red_input(current, i, j, cmdl);
+                    else if (cmdl[i][j] == '<' && cmdl[i][j + 1] == '<')
+                        later();
+                    else if (cmdl[i][j] == '>' && cmdl[i][j + 1] != '>')
+                        red_output(current, i, j, cmdl);
+                    else if (cmdl[i][j] == '>' && cmdl[i][j + 1] == '>')
+                        red_append(current, i, j, cmdl);
+                }
+
+                if (is_quote(cmdl[i][j]))
+                    inside_quotes = !inside_quotes;
+                j++;
+            }
+            i++;
+        }
+        current = current->next;
+    }
+
+    return node;
+}
+
+
 
 void remove_redirections(splitnode  *node) 
 {
@@ -95,59 +146,3 @@ void remove_redirections(splitnode  *node)
         node = node->prev;  // Move to the previous node in the linked list
     }
 }
-
-
-void later() 
-{
-    return;
-}
-
-splitnode   *handle_redirections(splitnode *node) 
-{
-    char    **cmdl;
-    int i = 0;
-    int j;
-
-    while (node)
-    {
-        cmdl = node->splitdata;
-        i = 0;
-
-        while (cmdl[i]) 
-        {
-            j = 0;
-            bool inside_quotes = false;  // Flag to track if inside quotes or double quotes
-
-            while (cmdl[i][j]) 
-            {
-                if (!inside_quotes && !is_quote(cmdl[i][j])) 
-                {
-                    if (cmdl[i] && cmdl[i][j] && cmdl[i][j] == '<' && cmdl[i][j + 1] != '<')
-                        red_input(node, i, j, cmdl);
-                    else if (cmdl[i] && cmdl[i][j] && cmdl[i][j] == '<' && cmdl[i][j + 1] == '<')
-                        later();
-                    else if (cmdl[i] && cmdl[i][j] && cmdl[i][j] == '>' && cmdl[i][j + 1] != '>')
-                        red_output(node, i, j, cmdl);
-                    else if (cmdl[i] && cmdl[i][j] && cmdl[i][j] == '>' && cmdl[i][j + 1] == '>')
-                        red_append(node, i, j, cmdl);
-                }
-
-                if (is_quote(cmdl[i][j]))
-                    inside_quotes = !inside_quotes;  // Toggle the inside quotes flag
-                j++;
-            }
-            i++;
-        }
-        int i = 0;
-        while (node->splitdata[i]) 
-        {
-            printf("Token %d: %s\n", i + 1, node->splitdata[i]);
-            i++;
-        }
-        node = node->next;
-    }
-        // remove_redirections(node);
-    return node;
-}
-
-

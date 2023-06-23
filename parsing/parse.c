@@ -6,7 +6,7 @@ void parsing(char* prompt)
     splitnode* tokens = splitdatalinkedlist(node);
     freenodes(node);
 
-//    tokens = handle_redirections(tokens);
+    tokens = handle_redirections(tokens);
     splitnode *current = tokens;
     while (current != NULL) 
     {

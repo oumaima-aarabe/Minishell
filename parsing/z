@@ -1,13 +1,16 @@
-boho
 do_not_bother.c
 free_memory.c
 ft_error.c
 handle_char.c
+l
+la
 lexer.c
 main.c
 Makefile
+minishell
 minishell.h
 my_split.c
+obj
 parse.c
 pipe.c
 quotes.c
@@ -18,3 +21,4 @@ split_tokens.c
 syntax_errors.c
 utils1.c
 utils2.c
+z
