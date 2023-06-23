@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/23 02:31:52 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/23 23:31:39 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int exec(char **cmd, t_env *env)
 {
-	if(ft_execut_bultins(cmd, env, 0))
+	if(ft_execut_bultins(cmd, 0))
 		return (exit(1), 1);
 	ft_exec(cmd , env);
 		return (1);
@@ -65,7 +65,7 @@ int ft_one_cmd(splitnode *cmd, t_env *env)
 {
 	int pid;
 	pid = 0;
-	if(ft_execut_bultins(cmd->splitdata, env, 0))
+	if(ft_execut_bultins(cmd->splitdata, 0))
 		return (-1);
 	pid = fork();
 	if(pid == -1)
@@ -77,7 +77,7 @@ int ft_one_cmd(splitnode *cmd, t_env *env)
 
 #include <time.h>
 
-int ft_execut_cmd(splitnode *cmd, t_env *env)
+int ft_execut_cmd(splitnode *cmd)
 {
 	int fd[2];
 	int dexieme_fd[2];
@@ -86,7 +86,7 @@ int ft_execut_cmd(splitnode *cmd, t_env *env)
 
 	if(!cmd->next)
 	{
-		pid = ft_one_cmd(cmd, env);
+		pid = ft_one_cmd(cmd, g_v.env);
 		if (pid != -1)
 			return (waitpid(pid, &status, 0), status);
 	}
@@ -95,19 +95,19 @@ int ft_execut_cmd(splitnode *cmd, t_env *env)
 		clock_t start, end;
 		start = clock();
 		pipe(fd);
-		pid =  fork_execut(cmd, (t_fds){cmd->in, fd[1], fd[0], -1}, env);
+		pid =  fork_execut(cmd, (t_fds){cmd->in, fd[1], fd[0], -1}, g_v.env);
 		close(fd[1]);
 		while(cmd->next->next != NULL)
 		{
 			pipe(dexieme_fd);
-			pid =  fork_execut(cmd, (t_fds){fd[0], dexieme_fd[1], dexieme_fd[0], -1}, env);
+			pid =  fork_execut(cmd, (t_fds){fd[0], dexieme_fd[1], dexieme_fd[0], -1}, g_v.env);
 			close(fd[0]);
 			fd[0] = dexieme_fd[0];
 			close(dexieme_fd[1]);
 			cmd = cmd->next;
 		}
 		cmd = cmd->next;
-		pid = fork_execut(cmd, (t_fds){fd[0], cmd->out, -1, -1}, env);
+		pid = fork_execut(cmd, (t_fds){fd[0], cmd->out, -1, -1}, g_v.env);
 		close(fd[0]);
 		// waitpid(pid, &status, 0);
 		while(wait(NULL) != -1)

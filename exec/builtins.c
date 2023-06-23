@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/21 23:35:18 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/23 23:34:30 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void ft_execut_cd(char *str, t_env *env)
 			if(!hom)
 			{
 				ft_putstr_fd("minishell: cd: HOME not set\n", 2);
-				ex_s = 1;
+				// ex_s = 1;
  			}
 			chdir(hom);
 		}
@@ -91,7 +91,7 @@ void ft_execut_cd(char *str, t_env *env)
 					{
 						ft_putstr_fd("minishell: cd: ", 2);
 						perror(str);
-						ex_s = 1;
+						// ex_s = 1;
 						break;
 					}
 					printf("%s\n",tmp_1->valu);
@@ -102,7 +102,7 @@ void ft_execut_cd(char *str, t_env *env)
 			if(!tmp_1)
 			{
 				ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
-				ex_s = 1;
+				// ex_s = 1;
 			}
 
 		}
@@ -110,7 +110,7 @@ void ft_execut_cd(char *str, t_env *env)
 		{
 			ft_putstr_fd("minishell: cd: ", 2);
 			perror(str);
-			ex_s = 1;
+			// ex_s = 1;
 		}
 
 		pwd = getcwd(NULL, 0);
@@ -365,12 +365,12 @@ void ft_execut_export(t_env *env, char **cmd)
 //__________________________________unset_________________________________________
 
 
-void	ft_list_remov(t_env **env, char *cmd)
+void	ft_list_remov( char *cmd)
 {
 	t_env	*tmp_env;
 	t_env	*prev;
 
-	tmp_env = *env;
+	tmp_env = g_v.env;
 	prev = NULL;
 	while (tmp_env)
 	{
@@ -378,14 +378,24 @@ void	ft_list_remov(t_env **env, char *cmd)
 		{
 			if (!prev)
 			{
-				*env = tmp_env->next;
+				prev = tmp_env->next;
+				g_v.env = prev;
+				// printf("deleted: %s head %s", tmp_env->key , prev->key);
+				// fflush(stdout);
 				free(tmp_env->key);
 				free(tmp_env->valu);
 				free(tmp_env);
+				// while(*env)
+				// {
+				// 	printf("key == %s vall == %s \n", (*env)->key, (*env)->valu);
+				// 	(*env) = (*env)->next;
+				// }
+				// exit(0);
 			}
 			else
 			{
 				prev->next = tmp_env->next;
+				// g_v.env =
 				free(tmp_env->key);
 				free(tmp_env->valu);
 				free(tmp_env);
@@ -397,7 +407,7 @@ void	ft_list_remov(t_env **env, char *cmd)
 	}
 }
 
-void ft_execut_unset(t_env *env, char **cmd)
+void ft_execut_unset(char **cmd)
 {
 	int i = 1;
 	while(cmd[i])
@@ -407,7 +417,7 @@ void ft_execut_unset(t_env *env, char **cmd)
 			i++;
 			continue;
 		}
-		ft_list_remov(&env, cmd[i]);
+		ft_list_remov(cmd[i]);
 		i++;
 	}
 
@@ -502,7 +512,7 @@ void ft_hairdoc(char **tab)
 
 //________________________________________________________________________________
 
-int ft_execut_bultins(char **cmd, t_env *env, int inp)
+int ft_execut_bultins(char **cmd, int inp)
 {
 
 
@@ -514,31 +524,31 @@ int ft_execut_bultins(char **cmd, t_env *env, int inp)
 
 	else if(!ft_strcmp(cmd[0], "cd"))
 	{
-		ft_execut_cd(cmd[1], env);
+		ft_execut_cd(cmd[1], g_v.env);
 		return (1);
 	}
 
 	else if(!ft_strcmp(cmd[0], "pwd"))
 	{
-		ft_ft_execut_pwd(cmd[1] ,env, inp);
+		ft_ft_execut_pwd(cmd[1] ,g_v.env, inp);
 		return (1);
 	}
 
 	else if(!(ft_strcmp(cmd[0], "export")))
 	{
-		ft_execut_export(env, cmd);
+		ft_execut_export(g_v.env, cmd);
 		return (1);
 	}
 
 	else if(!(ft_strcmp(cmd[0], "unset")))
 	{
-			ft_execut_unset(env, cmd);
+			ft_execut_unset(cmd);
 		return (1);
 	}
 
 	else if(!(ft_strcmp(cmd[0], "env")))
 	{
-			ft_execut_env(env); // he nide SHELV
+			ft_execut_env(g_v.env); // he nide SHELV
 			return(1);
 	}
 

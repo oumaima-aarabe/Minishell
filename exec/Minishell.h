@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/06/21 23:39:28 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/23 23:30:35 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,13 @@ typedef struct  t_tokens{
 	struct t_tokens *left;
 }s_tokens;
 
-int ex_s;
+
+typedef struct  s_gs{
+	t_env *env;
+	int ex_s;
+}	t_gs;
+
+t_gs	g_v;
 
 int		lexer(char *line);
 int		lexer2(char *line);
@@ -127,12 +133,12 @@ char	**ft_split(char *st, char c);
 char	*ft_itoa(int n);
 
 
-int ft_execut_cmd(splitnode *cmd, t_env *env);
+int ft_execut_cmd(splitnode *cmd);
 int ft_lstsize(t_env *env);
 int	ft_strcmp(char	*s1, char	*s2);
 int	ft_strlen(char const *str);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
-int	ft_execut_bultins(char **cmd, t_env *env, int in);
+int	ft_execut_bultins(char **cmd, int in);
 int	ft_atoi(char *str);
 int ft_sine(char *st, char c);
 

@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/22 16:33:29 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/23 23:31:01 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ void ft_exec(char **cmd, t_env *env)
 			{
 				ft_print_err(cmd[0], ": combjmand not found\n");
 				exit(1);
-				ex_s = 127;
+				// ex_s = 127;
 				return ;
 			}
 		}
