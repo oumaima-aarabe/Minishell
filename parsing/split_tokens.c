@@ -47,71 +47,78 @@ int count_words(char    *str)
     return count;
 }
 
-char    **split_string(char *str, int    *word_count) 
-{
-    int length = strlen(str);
-    int count = count_words(str);
-    char    **words = calloc(count + 1 , sizeof(char*));
 
-    int word_index = 0;
-    int start_index = 0;
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char **split_string(char *str, int *word_count) {
+    int length = strlen(str);
+    int count = 0;
     int in_word = 0;
     int in_quotes = 0;
     int i = 0;
 
+    // Count the number of words
+    while (i < length) {
+        if ((str[i] == ' ' || str[i] == '\t') && !in_quotes) {
+            if (in_word) {
+                count++;
+                in_word = 0;
+            }
+        } else if (str[i] == '"' || str[i] == '\'') {
+            in_quotes = !in_quotes;
+            in_word = 1;
+        } else {
+            in_word = 1;
+        }
+
+        i++;
+    }
+
+    if (in_word)
+        count++;
+
+    // Allocate memory for the words array
+    char **words = (char **)malloc((count + 1) * sizeof(char *));
+    int word_index = 0;
+    int start_index = 0;
+    in_word = 0;
+    in_quotes = 0;
+    i = 0;
+
+    // Skip leading whitespace
     while (i < length && (str[i] == ' ' || str[i] == '\t'))
         i++;
 
     start_index = i;
 
-    while (i < length) 
-    {
-        if ((str[i] == ' ' || str[i] == '\t') && !in_word && !in_quotes) 
-        {
-            i++;
-            continue;
-        }
-        
-        if (str[i] == '"' || str[i] == '\'')
-            in_quotes = !in_quotes;
-        
-        if ((str[i] == ' ' || str[i] == '\t') && !in_quotes)
-        {
-            in_word = 0;
-            
-            while (i < length && str[i] == ' ')
-                i++;
-            
-            words[word_index] = calloc((i - start_index + 1) + 1 , sizeof(char));
-            strncpy(words[word_index], &str[start_index], i - start_index);
-            words[word_index][i - start_index] = '\0';
-            
-            char    *word = words[word_index];
-            char    *dest = word;
-            for (char   *src = word; *src != '\0'; ++src) {
-                if (*src != ' ')
-                    *dest++ = *src;
+    while (i <= length) {
+        if ((str[i] == ' ' || str[i] == '\t' || str[i] == '\0') && !in_quotes) {
+            if (in_word) {
+                words[word_index] = (char *)malloc((i - start_index + 1) * sizeof(char));
+                strncpy(words[word_index], &str[start_index], i - start_index);
+                words[word_index][i - start_index] = '\0';
+                word_index++;
+                in_word = 0;
             }
-            *dest = '\0';
-            
-            word_index++;
-            start_index = i;
-        } else
+            start_index = i + 1;
+        } else if (str[i] == '"' || str[i] == '\'') {
+            in_quotes = !in_quotes;
             in_word = 1;
+        } else {
+            in_word = 1;
+        }
+
         i++;
     }
 
-    if (in_word) 
-    {
-        words[word_index] = calloc((length - start_index + 1) + 1 , sizeof(char));
-        strncpy(words[word_index], &str[start_index], length - start_index);
-        words[word_index][length - start_index] = '\0';
-        word_index++;
-    }
-
+    words[word_index] = NULL;
     *word_count = count;
     return words;
 }
+
+
 
 splitnode   *create_split_node(char   **splitdata, int word_count) 
 {

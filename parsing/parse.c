@@ -16,7 +16,7 @@ void parsing(char* prompt)
         int i = 0;
         while (current->splitdata[i]) 
         {
-            printf("Token %d: %s\n", i + 1, current->splitdata[i]);
+            printf("Token %d: .%s.\n", i + 1, current->splitdata[i]);
             i++;
         }
 
