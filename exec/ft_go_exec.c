@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/22 22:52:19 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/23 02:31:52 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,25 +39,23 @@ int fork_execut(splitnode *ptr, t_fds pipe, t_env *env)
 	// 	out = ptr->out;
 	pid = fork();
 	if(pid == -1)
-		return(perror("Eroor"), exit (1), 1);
+		return(perror("Eroor"), 1);
 	if(pid == 0)
 	{
 		if (pipe.in != 0)
 		{
 			dup2(pipe.in, 0);
-			if (pipe.in != pipe.fd_in)
-				close(pipe.in);
+			close(pipe.in);
 		}
 		if (pipe.out != 1)
 		{
 			dup2(pipe.out, 1);
-			if (pipe.out != pipe.fd_out)
-				close(pipe.out);
+			close(pipe.out);
 		}
 		if (pipe.fd_in != -1)
-		close(pipe.fd_in);
+			close(pipe.fd_in);
 		if (pipe.fd_out != -1)
-		close(pipe.fd_out);
+			close(pipe.fd_out);
 		exec(ptr->splitdata, env);
 	}
 	return(pid);
@@ -77,6 +75,7 @@ int ft_one_cmd(splitnode *cmd, t_env *env)
 	return (pid);
 }
 
+#include <time.h>
 
 int ft_execut_cmd(splitnode *cmd, t_env *env)
 {
@@ -93,25 +92,28 @@ int ft_execut_cmd(splitnode *cmd, t_env *env)
 	}
 	else if (cmd->next)
 	{
-	pipe(fd);
-	pid =  fork_execut(cmd, (t_fds){0, fd[1], fd[0], fd[1]}, env);
-	close(fd[1]);
-	while(cmd->next->next != NULL)
-	{
-		pipe(dexieme_fd);
-		pid =  fork_execut(cmd, (t_fds){fd[0], dexieme_fd[1], fd[0], -1}, env);
-		close(fd[0]);
-		fd[0] = dexieme_fd[0];
-		// fd[1] = dexieme_fd[1];
-		close(dexieme_fd[1]);
+		clock_t start, end;
+		start = clock();
+		pipe(fd);
+		pid =  fork_execut(cmd, (t_fds){cmd->in, fd[1], fd[0], -1}, env);
+		close(fd[1]);
+		while(cmd->next->next != NULL)
+		{
+			pipe(dexieme_fd);
+			pid =  fork_execut(cmd, (t_fds){fd[0], dexieme_fd[1], dexieme_fd[0], -1}, env);
+			close(fd[0]);
+			fd[0] = dexieme_fd[0];
+			close(dexieme_fd[1]);
+			cmd = cmd->next;
+		}
 		cmd = cmd->next;
-	}
-	cmd = cmd->next;
-	pid = fork_execut(cmd, (t_fds){fd[0], 1, fd[0], -1}, env);
-	close(fd[0]);
-	// waitpid(pid, &status, 0);
-	while(wait(NULL) != -1)
-		;
+		pid = fork_execut(cmd, (t_fds){fd[0], cmd->out, -1, -1}, env);
+		close(fd[0]);
+		// waitpid(pid, &status, 0);
+		while(wait(NULL) != -1)
+			;
+			end = clock();
+		printf("%f\n", ((double)end - (double)start) / CLOCKS_PER_SEC);
 
 	}
 
