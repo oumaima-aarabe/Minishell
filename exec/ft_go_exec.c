@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/24 00:52:43 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/24 00:56:48 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int fork_execut(splitnode *ptr, t_fds pipe, t_env *env)
 	// 	out = ptr->out;
 	pid = fork();
 	if(pid == -1)
-		return(perror("Minishell : "), -1);
+		return(perror("Minishell "), -1);
 	if(pid == 0)
 	{
 		if (pipe.in != 0)
