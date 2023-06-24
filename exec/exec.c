@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/23 23:31:01 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/24 16:37:52 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,20 @@
 
 void ft_exucve(char *cmd, char **arg, char **env)
 {
-	// int pid;
 
-	// pid = fork();
-	// if(pid == 0)
+	if(execve(cmd, arg, env) < 0)
 	{
-		if(execve(cmd, arg, env) < 0)
-		{
-		// ft_print_err(cmd , " : No such file or directory\n");
 		free(cmd);
 		ft_free_(arg);
 		ft_free_(env);
-		perror("minishell     :");
+		perror("minishell   exeve faill   :"); // change msg err
 		exit (errno);
-		}
-	// ft_free_(env);
 	}
-	// return (pid);
+
 }
 
 
-// void le ()
-// {
-// 	system("leaks minishell");
-// }
+
 //________________________________________________________________________________
 
 // int ft_extract_status_execve(int stat)
@@ -56,12 +46,6 @@ char **ft_my_env(t_env *en)
 	t_env *env = duplicate_linked_list(en);
 	t_env *tmp;
 
-	// while(env)
-	// {
-	// 	printf("key is  %s valu is %s\n" ,env->key, env->valu);
-	// 	env = env->next;
-	// }
-	// exit(8);
 
 
 

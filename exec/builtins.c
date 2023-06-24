@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/23 23:34:30 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/24 16:32:17 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -319,12 +319,12 @@ void ft_execut_export(t_env *env, char **cmd)
 		}
 		if (ft_add_export(cmd[i] ,env))
 		{
-		if(cmd[i + 1])
-		{
-			i++;
-			continue;
-		}
-		return ;
+			if(cmd[i + 1])
+			{
+				i++;
+				continue;
+			}
+			return ;
 		}
 		i++;
 	}
@@ -357,7 +357,7 @@ void ft_execut_export(t_env *env, char **cmd)
 		printf("declare -x %s\n",tmp->key);
 		tmp = tmp->next;
 	}
-	// ft_lstclear(&tmp1);
+	ft_lstclear(&tmp1);
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
