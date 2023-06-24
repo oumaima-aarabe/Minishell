@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/24 16:32:17 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/24 17:47:29 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 //________________________________echo____________________________________________
 
-void ft_execut_echo(char **tab, int outfile)
+void ft_execut_echo(char **tab)
 {
 	int i = 0;
 	int j = 0;
@@ -39,13 +39,13 @@ void ft_execut_echo(char **tab, int outfile)
 		}
 		while (tab[i])
 		{
-			write(outfile, tab[i], ft_strlen(tab[i]));
+			printf("%s", tab[i]);
 			i++;
 			if(tab[i] != NULL)
 				printf(" ");
 		}
 		if(bol)
-			write(outfile, "\n", 1);
+			printf("\n");
 	}
 }
 //_____________________________________cd_________________________________________
@@ -150,11 +150,11 @@ void ft_execut_cd(char *str, t_env *env)
 
 //____________________________________pwd_________________________________________
 
-void ft_ft_execut_pwd(char *cmd, t_env *env, int outfile)
+void ft_ft_execut_pwd(char *cmd, t_env *env)
 {
 	char *pwd;
 	(void)cmd;
-	(void)outfile;
+	// (void)outfile;
 
 	// if(cmd && cmd[0] == '-' && cmd[1])
 	// {
@@ -512,13 +512,13 @@ void ft_hairdoc(char **tab)
 
 //________________________________________________________________________________
 
-int ft_execut_bultins(char **cmd, int inp)
+int ft_execut_bultins(char **cmd)
 {
 
 
 	if(!ft_strcmp(cmd[0], "echo"))
 	{
-		ft_execut_echo(cmd, inp);
+		ft_execut_echo(cmd);
 		return (1);
 	}
 
@@ -530,7 +530,7 @@ int ft_execut_bultins(char **cmd, int inp)
 
 	else if(!ft_strcmp(cmd[0], "pwd"))
 	{
-		ft_ft_execut_pwd(cmd[1] ,g_v.env, inp);
+		ft_ft_execut_pwd(cmd[1] ,g_v.env);
 		return (1);
 	}
 

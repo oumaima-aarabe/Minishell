@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/06/23 23:30:35 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/24 17:47:43 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int ft_lstsize(t_env *env);
 int	ft_strcmp(char	*s1, char	*s2);
 int	ft_strlen(char const *str);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
-int	ft_execut_bultins(char **cmd, int in);
+int	ft_execut_bultins(char **cmd);
 int	ft_atoi(char *str);
 int ft_sine(char *st, char c);
 
