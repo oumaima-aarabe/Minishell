@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 21:42:52 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/15 15:02:35 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/24 21:16:39 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*ft_substr(char const *s,  int start, int len)
 	if (!s)
 		return (NULL);
 	if (start > ft_strlen(s))
-		return (ft_strdup(""));
+		return (NULL);  // modiff ft_strdup("") poure export 
 	if (len > ft_strlen(s) - start + 1)
 		len = ft_strlen(s) - start + 1;
 	str = malloc(sizeof(char) * (len + 1));

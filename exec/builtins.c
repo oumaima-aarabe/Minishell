@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/24 18:08:16 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/24 21:15:37 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,10 +255,16 @@ int ft_cheak_expor(char *cmd, t_env *tmp)
 	else
 		i = ft_strlen(cmd);
 	}
-	if(cmd && ft_sine(cmd, '+')  && (cmd[ft_sine(cmd, '+') + 1]  != '='))
+	if(cmd && ft_sine(cmd, '='))
 	{
-		printf("minishell: export: `%s': not a valid identifier\n", cmd);
-		return 1;
+		char *tmp = ft_substr(cmd , 0, ft_sine(cmd, '='));
+		if(ft_sine(tmp, '+') && cmd[ft_sine(cmd , '+') + 1] != '=')
+		{
+			free(tmp);
+			printf("minishell: export: `%s': not a valid identifier\n", cmd);
+			return 1;
+		}
+		free(tmp);
 	}
 	while(cmd && tmp)
 	{
@@ -286,9 +292,9 @@ int ft_add_export(char *cmd , t_env *env)
 		{
 			j = ft_sine(cmd, '=');
 			if(cmd[j - 1] == '+')
-			ft_lstadd_back(&env,ft_creat(ft_substr(cmd, 0, j - 1), ft_substr(cmd, j + 2, ft_strlen(cmd) - j)));
+				ft_lstadd_back(&env,ft_creat(ft_substr(cmd, 0, j - 1), ft_substr(cmd, j + 2, ft_strlen(cmd) - j)));
 			else
-			ft_lstadd_back(&env,ft_creat(ft_substr(cmd, 0, j), ft_substr(cmd, j, ft_strlen(cmd) - j)));
+				ft_lstadd_back(&env,ft_creat(ft_substr(cmd, 0, j), ft_substr(cmd, j + 1, ft_strlen(cmd) - j)));
 		}
 		else
 		{
