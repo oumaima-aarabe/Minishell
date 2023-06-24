@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/24 17:47:29 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/24 18:08:16 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,10 +282,13 @@ int ft_cheak_expor(char *cmd, t_env *tmp)
 int ft_add_export(char *cmd , t_env *env)
 {
 	int j = 0;
-		if(ft_sine(cmd, '='))
+		if(ft_sine(cmd, '=') )
 		{
 			j = ft_sine(cmd, '=');
-			ft_lstadd_back(&env,ft_creat(ft_substr(cmd, 0, j), ft_substr(cmd, j + 1, ft_strlen(cmd) - j)));
+			if(cmd[j - 1] == '+')
+			ft_lstadd_back(&env,ft_creat(ft_substr(cmd, 0, j - 1), ft_substr(cmd, j + 2, ft_strlen(cmd) - j)));
+			else
+			ft_lstadd_back(&env,ft_creat(ft_substr(cmd, 0, j), ft_substr(cmd, j, ft_strlen(cmd) - j)));
 		}
 		else
 		{
