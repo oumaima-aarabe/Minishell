@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/25 14:19:26 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/25 16:25:41 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int ft_one_cmd(splitnode *cmd, t_env *env)
 	if(ft_execut_bultins(cmd->splitdata))
 		return (-1);
 	pid = fork();
+
 	if(pid == -1)
 		return(perror("Minishell: "), -1);
 	if(pid == 0)
@@ -84,7 +85,8 @@ int ft_execut_cmd(splitnode *cmd)
 	int dexieme_fd[2];
 	int pid = 0;
 	int status;
-
+	
+	
 	if(!cmd->next)
 	{
 		return (ft_one_cmd(cmd, g_v.env));
@@ -95,7 +97,8 @@ int ft_execut_cmd(splitnode *cmd)
 	}
 	else if (cmd->next)
 	{
-
+		// signal(SIGINT, SIG_DFL);
+		// signal(SIGQUIT, SIG_DFL);
 		pipe(fd);
 		pid =  fork_execut(cmd, (t_fds){cmd->in, fd[1], fd[0], -1}, g_v.env);
 		close(fd[1]);
@@ -126,9 +129,8 @@ int ft_execut_cmd(splitnode *cmd)
 int phandle(int status)
 {
     int new = WTERMSIG(status);
-
-    if (new == SIGINT)
-        printf("Minishell : SIG : %s\n", "interrupt");
+    if (new == SIGSEGV)
+        ft_putstr_fd("yaha  segv ", 2);
 
     return (WTERMSIG(status) + 128);
 }
@@ -148,6 +150,7 @@ int ft_exit_status(int	statu)
 void execution(splitnode *cmd)
 {
 	int statu;
+	
 
 	statu = ft_execut_cmd(cmd);
 	printf("%d\n", statu);

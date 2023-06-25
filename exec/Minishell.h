@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/06/25 00:16:43 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/25 15:30:08 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ typedef struct  s_gs{
 	int ex_s;
 }	t_gs;
 
-t_gs	g_v;
+extern t_gs	g_v;
 
 int		lexer(char *line);
 int		lexer2(char *line);

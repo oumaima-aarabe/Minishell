@@ -6,11 +6,13 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/06/25 14:10:29 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/25 15:52:14 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
+
+t_gs	g_v;
 
 void  hendl_ctr_c(int sig)
 {
@@ -131,14 +133,14 @@ char **ft_expend(char **cmd, t_env *en)
 		j = 0;
 		while(cmd[i][j])
 		{
-			// if(cmd[i][j] ==  '$' && cmd[i][j + 1] ==  '?')
-			// {
-			// 	tmp = ft_substr(cmd[i], 0, j);
-			// 	new = ft_substr(cmd[i], j + 2, ft_strlen(cmd[i]) - j);
-			// 	free(cmd[i]);
-			// 	// cmd[i] = ft_strjoin(tmp, ft_strjoin(ft_itoa(ex_s), new));
-			// 	// ex_s = 0;
-			// }
+			if(cmd[i][j] ==  '$' && cmd[i][j + 1] ==  '?')
+			{
+				tmp = ft_substr(cmd[i], 0, j);
+				new = ft_substr(cmd[i], j + 2, ft_strlen(cmd[i]) - j);
+				free(cmd[i]);
+				cmd[i] = ft_strjoin(tmp, ft_strjoin(ft_itoa(g_v.ex_s), new));
+				g_v.ex_s = 0;
+			}
 			if(cmd[i][j] ==  '$')
 			{
 				tmp = ft_substr(cmd[i], 0, j);

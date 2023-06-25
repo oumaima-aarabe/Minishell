@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/25 14:06:17 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/25 16:24:05 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 
 void ft_exucve(char *cmd, char **arg, char **env)
 {
-
+	// signal(SIGINT, SIG_DFL);
+	// signal(SIGQUIT, SIG_DFL);
 	if(execve(cmd, arg, env) < 0)
 	{
 		free(cmd);
@@ -92,8 +93,9 @@ void ft_exec(char **cmd, t_env *env)
 
 	my_env = ft_my_env(env);
 
-
-
+		signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	
 	if(cmd[0] != NULL)
 	{
 
