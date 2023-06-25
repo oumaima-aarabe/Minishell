@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/06/24 17:47:43 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/25 00:16:43 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ char    *ft_strcat(char *destination, const char    *source);
 //--------------------------------------------------------------------------------------------------------
 
 
+void	execution(splitnode *cmd);
 void	ft_lstadd_back(t_env **alst, t_env *new);
 void	ft_lstclear(t_env **alist);
 void	ft_putstr_fd(char *s, int fd);

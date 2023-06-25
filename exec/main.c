@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/06/23 23:47:32 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/25 01:14:55 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,9 @@ int main(int argc, char **argv, char **env)
 			continue;
 		free(prompt);
 		prompt = NULL;
-		ft_execut_cmd(tokens);
+		execution(tokens);
+		write(2, ft_itoa(g_v.ex_s), ft_strlen(ft_itoa(g_v.ex_s)));
+		puts("");
 		free_split_nodes(tokens);
 
 	}

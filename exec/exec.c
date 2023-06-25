@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/24 16:37:52 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/25 01:21:38 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,21 @@ void ft_exec(char **cmd, t_env *env)
 		if(cmd[0][0] == '.' || cmd[0][0] == '/')
 		{
 			free(ss);
+			ss = ft_strdup(cmd[0]);
+			if(cmd[0][0] == '/' && access(ss, F_OK) == -1)
+			{
+				perror("minishell : ");
+				exit(127);
+			}
+			if(cmd[0][0] == '.' &&access(ss, X_OK) == -1)
+			{
+
+				perror("minishell : ");
+				exit(126);
+			}
 			if(tmp)
 				ft_free_(tmp);
-			ss = ft_strdup(cmd[0]);
-		}
+			}
 		else if(tmp)
 		{
 		while(tmp[i])
@@ -133,9 +144,9 @@ void ft_exec(char **cmd, t_env *env)
 			}
 			if(!tmp[i])
 			{
+
 				ft_print_err(cmd[0], ": combjmand not found\n");
-				exit(1);
-				// ex_s = 127;
+				exit(127);
 				return ;
 			}
 		}

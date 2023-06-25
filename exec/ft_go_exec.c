@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/24 17:48:01 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/25 01:22:42 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int ft_one_cmd(splitnode *cmd, t_env *env)
 	return (pid);
 }
 
-#include <time.h>
 
 int ft_execut_cmd(splitnode *cmd)
 {
@@ -87,13 +86,13 @@ int ft_execut_cmd(splitnode *cmd)
 	if(!cmd->next)
 	{
 		pid = ft_one_cmd(cmd, g_v.env);
-		if (pid != -1)
-			return (waitpid(pid, &status, 0), status);
+		if (pid == -1)
+			return(-1);
+		return (waitpid(pid, &status, 0), status);
 	}
 	else if (cmd->next)
 	{
-		clock_t start, end;
-		start = clock();
+
 		pipe(fd);
 		pid =  fork_execut(cmd, (t_fds){cmd->in, fd[1], fd[0], -1}, g_v.env);
 		close(fd[1]);
@@ -102,7 +101,7 @@ int ft_execut_cmd(splitnode *cmd)
 			pipe(dexieme_fd);
 			pid =  fork_execut(cmd, (t_fds){fd[0], dexieme_fd[1], dexieme_fd[0], -1}, g_v.env);
 			if(pid == -1)
-				return (0);
+				return (-1);
 			close(fd[0]);
 			fd[0] = dexieme_fd[0];
 			close(dexieme_fd[1]);
@@ -111,13 +110,56 @@ int ft_execut_cmd(splitnode *cmd)
 		cmd = cmd->next;
 		pid = fork_execut(cmd, (t_fds){fd[0], cmd->out, -1, -1}, g_v.env);
 		close(fd[0]);
-		// waitpid(pid, &status, 0);
+		waitpid(pid, &status, 0);
 		while(wait(NULL) != -1)
 			;
-			end = clock();
-		printf("%f\n", ((double)end - (double)start) / CLOCKS_PER_SEC);
-
+	return (status);
 	}
+	return (0x5ABA); //
+}
+
+
+
+int phandle(int status)
+{
+    int new = WTERMSIG(status);
+
+    if (new == SIGINT)
+        printf("Minishell : SIG : %s\n", "interrupt");
+
+    return (WTERMSIG(status) + 128);
+}
+
+
+
+int ft_exit_status(int	statu)
+{
+	// (void)statu;
+	if (WIFEXITED(statu))
+        return (g_v.ex_s = (WTERMSIG(statu)), 1);
+	else if (WIFSIGNALED(statu))
+        return (phandle(statu));
+	return (0);
+}
+
+void execution(splitnode *cmd)
+{
+	int statu;
+
+	statu = ft_execut_cmd(cmd);
+	// 	// if(statu == -1)
+	// 	// {
+
+	// 	// 	return ;
+	// 	// }
+	// 	// if (statu != 0x5ABA)
+	ft_exit_status(statu);
+
+}
+
+
+
+
 
 
 	// pid =  fork_execut(cmd, 0, 1, env);
@@ -129,10 +171,8 @@ int ft_execut_cmd(splitnode *cmd)
 //_________________________________________________________________________________________________________
 
 
-return (1);
 
 
-}
 
 
 	// if (cmd && cmd->next)
