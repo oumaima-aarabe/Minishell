@@ -1,52 +1,99 @@
 #include "minishell.h"
 
-bool is_quote(char c) {
+bool is_quote(char c) 
+{
     return (c == '\'' || c == '\"');
 }
 
+
+int get_fl(const char *str) 
+{
+    int length = 0;
+    bool inside_quotes = false;
+    char quote_type = '\0';
+
+    while (str[length] != '\0') {
+        if (str[length] == '\'' || str[length] == '\"') 
+        {
+            if (inside_quotes && quote_type == str[length]) 
+            {
+                inside_quotes = false;
+                quote_type = '\0';
+            } 
+            else if (!inside_quotes) 
+            {
+                inside_quotes = true;
+                quote_type = str[length];
+            }
+        }
+        else if (!inside_quotes && (str[length] == '<' || str[length] == '>'))
+            break; // Stop at red operator
+
+        length++;
+    }
+
+    return length;
+}
 char *get_redfilen(int *i, int *j, char **cmd_l, char *which_red) 
 {
     char *file_name = NULL;
+    int file_len = 0;
 
     if (strcmp(which_red, ">>") == 0) 
     {
         if (cmd_l[*i][*j + 2]) 
-        {
-            file_name = strdup(&cmd_l[*i][*j + 2]);
-            *j += 2;
+        {   
+            file_len = get_fl(&cmd_l[*i][*j + 2]);
+            file_name = strndup(&cmd_l[*i][*j + 2], file_len);
+            *j += file_len;
         } 
         else if (cmd_l[*i + 1] && strlen(cmd_l[*i + 1]) > 0) 
         {
-            file_name = strdup(cmd_l[*i + 1]);
+            *j = 0;
+            file_len = get_fl(cmd_l[*i + 1]);
+            file_name = strndup(cmd_l[*i + 1], file_len);
             *i += 1;
+            *j += file_len;
+            int d = *i;
+            int z = *j;
+            printf("in file( %d): (%d)\n", d, z);
         }
     } 
     else if (strcmp(which_red, ">") == 0) 
     {
         if (cmd_l[*i][*j + 1]) 
         {
-            file_name = strdup(&cmd_l[*i][*j + 1]);
-            *j += 1;
+            file_len = get_fl(&cmd_l[*i][*j + 1]);
+            file_name = strndup(&cmd_l[*i][*j + 1], file_len);
+            *j += file_len;
         }
          else if (cmd_l[*i + 1] && strlen(cmd_l[*i + 1]) > 0) 
          {
-            file_name = strdup(cmd_l[*i + 1]);
+             *j = 0;
+            file_len = get_fl(cmd_l[*i + 1]);
+            file_name = strndup(cmd_l[*i + 1], file_len);
             *i += 1;
+            *j += file_len;
         }
     }
      else if (strcmp(which_red, "<") == 0) 
      {
-        if (cmd_l[*i][*j + 1]) {
-            file_name = strdup(&cmd_l[*i][*j + 1]);
-            *j += 1;
+        if (cmd_l[*i][*j + 1])
+        {
+            file_len = get_fl(&cmd_l[*i][*j + 1]);
+            file_name = strndup(&cmd_l[*i][*j + 1], file_len);
+            *j += file_len;
         } 
         else if (cmd_l[*i + 1] && strlen(cmd_l[*i + 1]) > 0) 
         {
-            file_name = strdup(cmd_l[*i + 1]);
+             *j = 0;
+            file_len = get_fl(cmd_l[*i + 1]);
+            file_name = strndup(cmd_l[*i + 1], file_len);
             *i += 1;
+            *j += file_len;
         }
     }
-
+    printf("fl:%s:\n", file_name);
     return file_name;
 }
 
@@ -136,10 +183,12 @@ splitnode *handle_redirections(splitnode *node)
                     else if (cmdl[i][j] == '<' && cmdl[i][j + 1] == '<')
                         later();
                 }
-
+                
                 if (is_quote(cmdl[i][j]))
                     inside_quotes = !inside_quotes;
-                j++;
+
+                if (cmdl[i][j])
+                    j++;
             }
             i++;
         }

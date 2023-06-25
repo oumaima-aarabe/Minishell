@@ -80,7 +80,7 @@ char **split_string(char *str, int *word_count) {
         count++;
 
     // Allocate memory for the words array
-    char **words = (char **)malloc((count + 1) * sizeof(char *));
+    char **words = (char **)calloc((count + 1) , sizeof(char *));
     int word_index = 0;
     int start_index = 0;
     in_word = 0;
@@ -96,7 +96,7 @@ char **split_string(char *str, int *word_count) {
     while (i <= length) {
         if ((str[i] == ' ' || str[i] == '\t' || str[i] == '\0') && !in_quotes) {
             if (in_word) {
-                words[word_index] = (char *)malloc((i - start_index + 1) * sizeof(char));
+                words[word_index] = (char *)calloc((i - start_index + 1) , sizeof(char));
                 strncpy(words[word_index], &str[start_index], i - start_index);
                 words[word_index][i - start_index] = '\0';
                 word_index++;
