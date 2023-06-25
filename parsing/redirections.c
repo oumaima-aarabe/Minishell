@@ -19,7 +19,7 @@ int get_fl(const char *str)
             {
                 inside_quotes = false;
                 quote_type = '\0';
-            } 
+            }
             else if (!inside_quotes) 
             {
                 inside_quotes = true;
@@ -159,7 +159,8 @@ void later()
 splitnode *handle_redirections(splitnode *node) 
 {
     splitnode *current = node;
-
+    // splitnode *new_head = NULL;
+    // splitnode *new_tail = NULL;
     while (current != NULL) 
     {
         char **cmdl = current->splitdata;
@@ -199,49 +200,35 @@ splitnode *handle_redirections(splitnode *node)
     return node;
 }
 
+splitnode* remove_redirections(splitnode* node)
+{
+    splitnode* new_list = NULL;
+    splitnode* current = node;
+
+    splitnode   *head = NULL;
+    splitnode   *tail = NULL;
+
+    while (current != NULL) 
+    {
+        int word_count = 0;
+        char    **splitdata = split_string(current->splitdata, &word_count);
+        splitnode   *new_node = create_split_node(splitdata, word_count);
+
+        if (head == NULL) 
+        {
+            head = new_node;
+            tail = head;
+        } else 
+        {
+            tail->next = new_node;
+            new_node->prev = tail;
+            tail = new_node;
+        }
+        current = current->next;
+    }
+
+    return head;
+}
 
 
 
-
-
-// void remove_redirections(splitnode  *node) 
-// {
-//     while (node) 
-//     {
-//         char    **cmdl = node->splitdata;
-//         int i = 0;
-
-//         while (cmdl[i]) 
-//         {
-//             char    *cmd = cmdl[i];
-//             int j = 0;
-//             int k = 0;
-//             bool inside_quotes = false;  // Flag to track if inside quotes or double quotes
-
-//             while (cmd[j]) 
-//             {
-//                 if (!inside_quotes && (cmd[j] == '<' || cmd[j] == '>')) 
-//                 {
-//                     j++;
-//                     if (cmd[j] == '>')
-//                         j++;
-//                     char    *file_name = get_redfilen(i, j, cmdl, "");
-//                     if (file_name) 
-//                     {
-//                         j += strlen(file_name);
-//                         free(file_name);
-//                     }
-//                 } 
-//                 else 
-//                 {
-//                     cmd[k++] = cmd[j++];
-//                     if (is_quote(cmd[j - 1]))
-//                         inside_quotes = !inside_quotes;  // Toggle the inside quotes flag
-//                 }
-//             }
-//             cmd[k] = '\0';
-//             i++;
-//         }
-//         node = node->prev;  // Move to the previous node in the linked list
-//     }
-// }

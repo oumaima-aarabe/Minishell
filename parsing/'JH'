@@ -1,3 +1,5 @@
+$USE
+$USER
 a
 b
 do_not_bother.c
@@ -5,6 +7,7 @@ free_memory.c
 ft_error.c
 handle_char.c
 j
+'JH'
 la
 lexer.c
 lll
@@ -17,6 +20,7 @@ my_split.c
 obj
 ok
 ook
+ouaarab
 parse.c
 pipe.c
 quotes.c

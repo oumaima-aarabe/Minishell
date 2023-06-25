@@ -1,3 +1,5 @@
+$USE
+$USER
 a
 b
 do_not_bother.c
@@ -17,6 +19,7 @@ my_split.c
 obj
 ok
 ook
+ouaarab
 parse.c
 pipe.c
 quotes.c
