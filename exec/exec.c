@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/25 01:21:38 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/25 14:06:17 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void ft_exec(char **cmd, t_env *env)
 				perror("minishell : ");
 				exit(127);
 			}
-			if(cmd[0][0] == '.' &&access(ss, X_OK) == -1)
+			if(cmd[0][0] == '.' && access(ss, X_OK) == -1)
 			{
 
 				perror("minishell : ");

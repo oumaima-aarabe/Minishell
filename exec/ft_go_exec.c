@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/25 01:22:42 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/25 14:19:26 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int fork_execut(splitnode *ptr, t_fds pipe, t_env *env)
 
 int ft_one_cmd(splitnode *cmd, t_env *env)
 {
+	int status;
 	int pid;
 	pid = 0;
 	if(ft_execut_bultins(cmd->splitdata))
@@ -72,7 +73,8 @@ int ft_one_cmd(splitnode *cmd, t_env *env)
 		return(perror("Minishell: "), -1);
 	if(pid == 0)
 		ft_exec(cmd->splitdata , env);
-	return (pid);
+	waitpid(pid, &status, 0);
+	return (status);
 }
 
 
@@ -85,10 +87,11 @@ int ft_execut_cmd(splitnode *cmd)
 
 	if(!cmd->next)
 	{
-		pid = ft_one_cmd(cmd, g_v.env);
-		if (pid == -1)
-			return(-1);
-		return (waitpid(pid, &status, 0), status);
+		return (ft_one_cmd(cmd, g_v.env));
+
+		// if (pid == -1)
+			// return(-1);
+		// return (waitpid(pid, &status, 0), status);
 	}
 	else if (cmd->next)
 	{
@@ -115,7 +118,7 @@ int ft_execut_cmd(splitnode *cmd)
 			;
 	return (status);
 	}
-	return (0x5ABA); //
+	return (-1); //
 }
 
 
@@ -136,7 +139,7 @@ int ft_exit_status(int	statu)
 {
 	// (void)statu;
 	if (WIFEXITED(statu))
-        return (g_v.ex_s = (WTERMSIG(statu)), 1);
+        return (g_v.ex_s = (WEXITSTATUS(statu)), 1);
 	else if (WIFSIGNALED(statu))
         return (phandle(statu));
 	return (0);
@@ -147,13 +150,15 @@ void execution(splitnode *cmd)
 	int statu;
 
 	statu = ft_execut_cmd(cmd);
+	printf("%d\n", statu);
 	// 	// if(statu == -1)
 	// 	// {
 
 	// 	// 	return ;
 	// 	// }
-	// 	// if (statu != 0x5ABA)
-	ft_exit_status(statu);
+	if (statu != -1)
+		ft_exit_status(statu);
+	write(2, ft_itoa(g_v.ex_s), ft_strlen(ft_itoa(g_v.ex_s)));
 
 }
 
