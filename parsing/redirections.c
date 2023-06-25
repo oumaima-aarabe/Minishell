@@ -159,10 +159,8 @@ void later()
 splitnode *handle_redirections(splitnode *node) 
 {
     splitnode *current = node;
-    // splitnode *new_head = NULL;
-    // splitnode *new_tail = NULL;
     while (current != NULL) 
-    {
+    {   
         char **cmdl = current->splitdata;
         int i = 0;
 
@@ -211,8 +209,8 @@ splitnode* remove_redirections(splitnode* node)
     while (current != NULL) 
     {
         int word_count = 0;
-        char    **splitdata = split_string(current->splitdata, &word_count);
-        splitnode   *new_node = create_split_node(splitdata, word_count);
+        char    **splitdata = new_string(current->splitdata);
+        splitnode   *new_node = create_new_node(splitdata, current->in, current->out);
 
         if (head == NULL) 
         {
@@ -227,8 +225,63 @@ splitnode* remove_redirections(splitnode* node)
         current = current->next;
     }
 
+    
     return head;
 }
 
+splitnode   *create_new_node(char   **splitdata, int in, int out) 
+{
+    splitnode   *new_split_node = calloc(1, sizeof(splitnode));
+    new_split_node->splitdata = splitdata;
+    new_split_node->prev = NULL;
+    new_split_node->next = NULL;
+    new_split_node->in = in;
+    new_split_node->out = out;
+    return new_split_node;
+}
 
+char **new_string(char **cmdl)
+{
+        int i = 0;
+        char *file_name = NULL;
+        int wc = 0;
+        int t = 0;
 
+        while (cmdl[i]) 
+        {
+            int j = 0;
+            bool inside_quotes = false;
+
+            while (cmdl[i][j]) 
+            {
+                t = wc;
+                if (!inside_quotes && !is_quote(cmdl[i][j])) 
+                {
+                    if (cmdl[i][j] == '<' && cmdl[i][j + 1] != '<')
+                    {
+                        if (cmdl[i][j + 1])
+                        {
+                            
+                        }
+                    }
+                    else if (cmdl[i][j] == '>' && cmdl[i][j + 1] != '>')
+                    {
+
+                        file_name = get_redfilen(&i, &j, cmdl, ">");
+                    }
+                    else if (cmdl[i][j] == '>' && cmdl[i][j + 1] == '>')
+                    {
+
+                        file_name = get_redfilen(&i, &j, cmdl, ">>");
+                    }
+                }
+                
+                if (is_quote(cmdl[i][j]))
+                    inside_quotes = !inside_quotes;
+
+                if (cmdl[i][j])
+                    j++;
+            }
+            i++;
+        }
+}
