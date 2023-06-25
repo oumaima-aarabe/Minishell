@@ -10,6 +10,10 @@ la
 la"oumi"
 laoumi
 lexer.c
+lz
+lz>a
+lz>a                                           |n
+lz>a                                           n
 main.c
 Makefile
 minishell
@@ -26,3 +30,4 @@ split_tokens.c
 syntax_errors.c
 utils1.c
 utils2.c
+'xz'

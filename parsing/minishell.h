@@ -40,10 +40,7 @@ typedef enum t_flags
 	DQ,
 	SQ,
 	WORD,
-	HEREDOC,
-	APPEND,
-	RIN,
-	ROUT,
+	RED,
 	SPC,
 	CMD,
 	VAR

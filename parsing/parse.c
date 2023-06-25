@@ -19,7 +19,7 @@ void parsing(char* prompt)
             printf("Token %d: .%s.\n", i + 1, current->splitdata[i]);
             i++;
         }
-
+        printf("red : %d||%d\n", current->in, current->out);
         // Free the split data
         i = 0;
         while (current->splitdata[i] != NULL) 

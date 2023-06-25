@@ -10,12 +10,17 @@ la
 la"oumi"
 laoumi
 lexer.c
+lz
+lz>a
+lz>a                                           |n
+lz>a                                           n
 main.c
 Makefile
 minishell
 minishell.h
 my_split.c
 obj
+ouaarab
 parse.c
 pipe.c
 quotes.c
@@ -26,3 +31,4 @@ split_tokens.c
 syntax_errors.c
 utils1.c
 utils2.c
+'xz'

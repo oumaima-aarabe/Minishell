@@ -1,10 +1,16 @@
+a
+a>a
+a>a>a
 do_not_bother.c
 free_memory.c
 ft_error.c
 handle_char.c
-l
+ka
 la
+la"oumi"
+laoumi
 lexer.c
+lz
 main.c
 Makefile
 minishell
@@ -21,4 +27,3 @@ split_tokens.c
 syntax_errors.c
 utils1.c
 utils2.c
-z

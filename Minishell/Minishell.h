@@ -61,7 +61,7 @@ void	parsecommand(char  *input, CommandTable *table);
 int	ft_strcmp(char	*s1, char	*s2);
 char	*ft_strjoin(char *s1, char *s2); // free
 char	**ft_split(char *st, char c);
-int		ft_strlen(char const *str);
+int		strlen(char const *str);
 void	ft_putstr_fd(char *s, int fd);
 char	*ft_strdup(char *s1);
 void	ft_free_(char **tab);

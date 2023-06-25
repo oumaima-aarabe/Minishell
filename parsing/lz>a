@@ -10,6 +10,8 @@ la
 la"oumi"
 laoumi
 lexer.c
+lz
+lz>a
 main.c
 Makefile
 minishell
