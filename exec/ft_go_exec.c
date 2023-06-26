@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/25 16:25:41 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/25 23:55:18 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,24 @@ int exec(char **cmd, t_env *env)
 		return (1);
 }
 
-typedef struct s_fds
+int ft_one_cmd(splitnode *cmd, t_env *env)
 {
-	int in;
-	int out;
-	int fd_in;
-	int fd_out;
-}	t_fds;
+	int status;
+	int pid;
+	pid = 0;
+	if(ft_execut_bultins(cmd->splitdata))
+		return (-1);
+	pid = fork();
+
+	if(pid == -1)
+		return(perror("Minishell: "), -1);
+	if(pid == 0)
+		ft_exec(cmd->splitdata , env);
+	waitpid(pid, &status, 0);
+	return (status);
+}
+
+
 
 int fork_execut(splitnode *ptr, t_fds pipe, t_env *env)
 {
@@ -61,22 +72,6 @@ int fork_execut(splitnode *ptr, t_fds pipe, t_env *env)
 	return(pid);
 }
 
-int ft_one_cmd(splitnode *cmd, t_env *env)
-{
-	int status;
-	int pid;
-	pid = 0;
-	if(ft_execut_bultins(cmd->splitdata))
-		return (-1);
-	pid = fork();
-
-	if(pid == -1)
-		return(perror("Minishell: "), -1);
-	if(pid == 0)
-		ft_exec(cmd->splitdata , env);
-	waitpid(pid, &status, 0);
-	return (status);
-}
 
 
 int ft_execut_cmd(splitnode *cmd)
@@ -85,8 +80,8 @@ int ft_execut_cmd(splitnode *cmd)
 	int dexieme_fd[2];
 	int pid = 0;
 	int status;
-	
-	
+
+
 	if(!cmd->next)
 	{
 		return (ft_one_cmd(cmd, g_v.env));
@@ -143,17 +138,17 @@ int ft_exit_status(int	statu)
 	if (WIFEXITED(statu))
         return (g_v.ex_s = (WEXITSTATUS(statu)), 1);
 	else if (WIFSIGNALED(statu))
-        return (phandle(statu));
+        return (g_v.ex_s = phandle(statu));
 	return (0);
 }
 
 void execution(splitnode *cmd)
 {
 	int statu;
-	
+
 
 	statu = ft_execut_cmd(cmd);
-	printf("%d\n", statu);
+	// printf("%d\n", statu);
 	// 	// if(statu == -1)
 	// 	// {
 

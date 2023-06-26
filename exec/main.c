@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/06/25 15:52:14 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/26 01:05:59 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int ft_sine(char *st, char c)
 	while(st[i])
 	{
 		if(st[i] == c)
-		return (i);
+			return (i);
 		i++;
 	}
 	return 0;

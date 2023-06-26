@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/06/25 15:30:08 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/25 23:55:55 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,22 @@ typedef struct s_env
 }   t_env;
 
 
+typedef struct s_fds
+{
+	int in;
+	int out;
+	int fd_in;
+	int fd_out;
+}	t_fds;
+
+
+
+typedef struct  s_gs{
+	t_env *env;
+	int ex_s;
+}	t_gs;
+
+extern t_gs	g_v;
 
 /////////////////////////////////////////////////////////////////////
 typedef enum t_flags
@@ -89,12 +105,6 @@ typedef struct  t_tokens{
 }s_tokens;
 
 
-typedef struct  s_gs{
-	t_env *env;
-	int ex_s;
-}	t_gs;
-
-extern t_gs	g_v;
 
 int		lexer(char *line);
 int		lexer2(char *line);

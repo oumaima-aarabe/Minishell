@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/25 16:24:05 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/26 01:13:31 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 
 void ft_exucve(char *cmd, char **arg, char **env)
 {
-	// signal(SIGINT, SIG_DFL);
-	// signal(SIGQUIT, SIG_DFL);
 	if(execve(cmd, arg, env) < 0)
 	{
 		free(cmd);
@@ -26,18 +24,13 @@ void ft_exucve(char *cmd, char **arg, char **env)
 		perror("minishell   exeve faill   :"); // change msg err
 		exit (errno);
 	}
-
 }
 
 
 
-//________________________________________________________________________________
 
-// int ft_extract_status_execve(int stat)
-// {
-// 	// printf("--> %d\n", stat);
-// 	return (0);
-// }
+
+
 
 
 
@@ -46,9 +39,6 @@ char **ft_my_env(t_env *en)
 	char **tab;
 	t_env *env = duplicate_linked_list(en);
 	t_env *tmp;
-
-
-
 
 	tab = (char **)malloc(sizeof(char *) * (ft_lstsize(env) + 1));
 	int i = 0;
@@ -71,7 +61,56 @@ char **ft_my_env(t_env *en)
 	return tab;
 }
 
+char **ft_get_path(t_env *env)
+{
+	char **path;
+	path = NULL;
+	while(env)
+	{
+		if((!ft_strcmp("PATH", env->key)))
+		{
+			path = ft_split(env->valu, ':');
+			return (path);
+		}
+		env = env->next;
+	}
+	return (path);
+}
 
+int ft_is_path(char *str)
+{
+	int i = 0 ;
+	while(str[i])
+	{
+		if(str[i] == '/')
+			return(1);
+		i++;
+	}
+	return (0);
+}
+
+char *is_path_exec(char *cmd)
+{
+	char *ss = NULL;
+		if(ft_is_path(cmd) ||  (cmd[0] == '.' && cmd[1] == '/'))
+		{
+			ss = ft_strdup(cmd);
+			if(ft_is_path(cmd) && access(ss, F_OK) == -1)
+			{
+				ft_putstr_fd("minishell: ", 2);
+				perror(ss);
+				exit(127);
+			}
+			if((cmd[0] == '.' && cmd[1] == '/') && access(ss, X_OK) == -1)
+			{
+				ft_putstr_fd("minishell: zab hada ", 2);
+				perror(ss);
+				exit(126);
+			}
+			return (ss);
+		}
+	return (NULL);
+}
 
 //________________________________________________________________________________
 
@@ -79,12 +118,9 @@ char **ft_my_env(t_env *en)
 void ft_exec(char **cmd, t_env *env)
 {
 	char *test = NULL;
-	char **tmp = NULL;
-	// char **str0;
+	char **path = NULL;
 	char *ss;
-	// int p;
 	int i = 0;
-
 
 	ss = NULL;
 
@@ -93,49 +129,28 @@ void ft_exec(char **cmd, t_env *env)
 
 	my_env = ft_my_env(env);
 
-		signal(SIGINT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	
+
 	if(cmd[0] != NULL)
 	{
+		path = ft_get_path(g_v.env);
+		if(!path) // if path unsett
+			ss = ft_strdup(cmd[0]);
 
-
-		while(env)
+		printf(" -- == -- >> %s\n", is_path_exec(cmd[0]));
+		if(is_path_exec(cmd[0]))
 		{
-			if((!ft_strcmp("PATH", env->key)))
-			{
-
-				tmp = ft_split(env->valu, ':');
-				break;
-			}
-			env = env->next;
+			ss = is_path_exec(cmd[0]);
+			if(path)
+				ft_free_(path);
 		}
-		if(!env)
-			ss = ft_strdup(cmd[0]);
-		if(cmd[0][0] == '.' || cmd[0][0] == '/')
+		else if(path)
 		{
-			free(ss);
-			ss = ft_strdup(cmd[0]);
-			if(cmd[0][0] == '/' && access(ss, F_OK) == -1)
-			{
-				perror("minishell : ");
-				exit(127);
-			}
-			if(cmd[0][0] == '.' && access(ss, X_OK) == -1)
-			{
-
-				perror("minishell : ");
-				exit(126);
-			}
-			if(tmp)
-				ft_free_(tmp);
-			}
-		else if(tmp)
-		{
-		while(tmp[i])
+		while(path[i])
 		{
 			test = ft_strjoin(ft_strdup("/"), ft_strdup(cmd[0]));
-			ss = ft_strjoin(ft_strdup(tmp[i]), test);
+			ss = ft_strjoin(ft_strdup(path[i]), test);
 			if(!(access(ss, F_OK)))
 				break;
 			else
@@ -144,34 +159,20 @@ void ft_exec(char **cmd, t_env *env)
 				ss = NULL;
 				i++;
 			}
-			if(!tmp[i])
+			if(!path[i])
 			{
 
-				ft_print_err(cmd[0], ": combjmand not found\n");
+				ft_print_err(cmd[0], ": command not found\n");
 				exit(127);
 				return ;
 			}
 		}
-		ft_free_(tmp);
+		ft_free_(path);
 		}
-
-
 //---------------------------------------------------------------------------------------------------
-		// int pid = 0;
-		// int status;
-
 		if(ss)
-		{
 			ft_exucve(ss, cmd, my_env);
-		}
-		// waitpid(pid, &status, 0);
-
-		// while (wait(NULL) != -1)
-		// 	;
-		// ex_s = ft_extract_status_execve(status);
-
 		ft_free_(my_env);
-
 		free(ss);
 		ss = NULL;
 		}
