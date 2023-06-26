@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/26 01:13:31 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/26 17:28:12 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ char *is_path_exec(char *cmd)
 			}
 			if((cmd[0] == '.' && cmd[1] == '/') && access(ss, X_OK) == -1)
 			{
-				ft_putstr_fd("minishell: zab hada ", 2);
+				ft_putstr_fd("minishell: ", 2);
 				perror(ss);
 				exit(126);
 			}
@@ -112,15 +112,42 @@ char *is_path_exec(char *cmd)
 	return (NULL);
 }
 
+
+char *is_valid_cmd(char **path, char *cmd)
+{
+	int i = 0;
+	char *test;
+	char *ss;
+	while(path[i])
+	{
+		test = ft_strjoin(ft_strdup("/"), ft_strdup(cmd));
+		ss = ft_strjoin(ft_strdup(path[i]), test);
+		if(!(access(ss, F_OK)))
+			return (ss);
+		else
+		{
+			free(ss);
+			ss = NULL;
+			i++;
+		}
+		if(!path[i])
+		{
+			ft_print_err(cmd, ": command not found\n");
+			exit(127);
+			return (NULL);
+		}
+	}
+	ft_free_(path);
+	return (NULL); // ai3adat nadar
+}
+
 //________________________________________________________________________________
 
 
 void ft_exec(char **cmd, t_env *env)
 {
-	char *test = NULL;
 	char **path = NULL;
 	char *ss;
-	int i = 0;
 
 	ss = NULL;
 
@@ -137,39 +164,15 @@ void ft_exec(char **cmd, t_env *env)
 		path = ft_get_path(g_v.env);
 		if(!path) // if path unsett
 			ss = ft_strdup(cmd[0]);
-
-		printf(" -- == -- >> %s\n", is_path_exec(cmd[0]));
 		if(is_path_exec(cmd[0]))
 		{
+			free(ss);
 			ss = is_path_exec(cmd[0]);
 			if(path)
 				ft_free_(path);
 		}
 		else if(path)
-		{
-		while(path[i])
-		{
-			test = ft_strjoin(ft_strdup("/"), ft_strdup(cmd[0]));
-			ss = ft_strjoin(ft_strdup(path[i]), test);
-			if(!(access(ss, F_OK)))
-				break;
-			else
-			{
-				free(ss);
-				ss = NULL;
-				i++;
-			}
-			if(!path[i])
-			{
-
-				ft_print_err(cmd[0], ": command not found\n");
-				exit(127);
-				return ;
-			}
-		}
-		ft_free_(path);
-		}
-//---------------------------------------------------------------------------------------------------
+			ss = is_valid_cmd(path, cmd[0]);
 		if(ss)
 			ft_exucve(ss, cmd, my_env);
 		ft_free_(my_env);
