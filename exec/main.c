@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/06/26 20:00:54 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/26 22:30:35 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ char **ft_expend(char **cmd, t_env *en)
 				cmd[i] = ft_strjoin(tmp, ft_strjoin(ft_itoa(g_v.ex_s), new));
 				g_v.ex_s = 0;
 			}
-			if(cmd[i][j] ==  '$')
+			else if(cmd[i][j] ==  '$')
 			{
 				tmp = ft_substr(cmd[i], 0, j);
 				new = ft_take_key(cmd[i], en, j + 1);
