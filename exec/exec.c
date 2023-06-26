@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/26 19:58:49 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/26 20:09:22 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,6 @@ char *ft_prepar_path(char *cmd)
 			ss = ft_strdup(cmd);
 		if(is_path_exec(cmd))
 		{
-			free(ss);
 			if(path)
 				ft_free_(path);
 			return(is_path_exec(cmd));
