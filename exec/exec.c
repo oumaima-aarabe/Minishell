@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/26 17:28:12 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/26 19:58:49 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,6 @@ void ft_exucve(char *cmd, char **arg, char **env)
 		exit (errno);
 	}
 }
-
-
-
-
-
-
-
-
 
 char **ft_my_env(t_env *en)
 {
@@ -142,15 +134,31 @@ char *is_valid_cmd(char **path, char *cmd)
 }
 
 //________________________________________________________________________________
+char *ft_prepar_path(char *cmd)
+{
 
+	char **path;
+	char *ss;
+
+		path = ft_get_path(g_v.env);
+		if(!path) // if path unsett
+			ss = ft_strdup(cmd);
+		if(is_path_exec(cmd))
+		{
+			free(ss);
+			if(path)
+				ft_free_(path);
+			return(is_path_exec(cmd));
+		}
+		else if(path)
+			return (is_valid_cmd(path, cmd));
+		return (NULL);
+}
 
 void ft_exec(char **cmd, t_env *env)
 {
-	char **path = NULL;
 	char *ss;
-
 	ss = NULL;
-
 	char **my_env = NULL;
 
 
@@ -161,22 +169,11 @@ void ft_exec(char **cmd, t_env *env)
 
 	if(cmd[0] != NULL)
 	{
-		path = ft_get_path(g_v.env);
-		if(!path) // if path unsett
-			ss = ft_strdup(cmd[0]);
-		if(is_path_exec(cmd[0]))
-		{
-			free(ss);
-			ss = is_path_exec(cmd[0]);
-			if(path)
-				ft_free_(path);
-		}
-		else if(path)
-			ss = is_valid_cmd(path, cmd[0]);
+		ss = ft_prepar_path(cmd[0]);
 		if(ss)
 			ft_exucve(ss, cmd, my_env);
-		ft_free_(my_env);
 		free(ss);
 		ss = NULL;
-		}
+	}
+	ft_free_(my_env);
 }

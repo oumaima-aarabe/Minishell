@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/25 23:55:18 by azarda           ###   ########.fr       */
+/*   Updated: 2023/06/26 20:00:43 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void execution(splitnode *cmd)
 	// 	// }
 	if (statu != -1)
 		ft_exit_status(statu);
-	write(2, ft_itoa(g_v.ex_s), ft_strlen(ft_itoa(g_v.ex_s)));
+	printf("%d\n", g_v.ex_s);
 
 }
 
