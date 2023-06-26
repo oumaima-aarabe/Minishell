@@ -96,10 +96,10 @@ int is_inside_quotes(char* str);
 ////////////////////////////////////////////////////////////////
 /////////////////HANDLE REDIRECTIONS////////////////////////////
 splitnode  *handle_redirections(splitnode  *node);
+splitnode   *create_new_node(char   **splitdata, int in, int out);
+int 		word_count(char **cmdl);
 
 
-
-// void printlist(Node *head);
 void    parsing(char *prompt);
 void  hendl_ctr_c(int sig);
 void	*my_realloc(void *ptr, size_t new_size);

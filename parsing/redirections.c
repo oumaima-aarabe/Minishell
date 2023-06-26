@@ -182,7 +182,6 @@ splitnode *handle_redirections(splitnode *node)
                     else if (cmdl[i][j] == '<' && cmdl[i][j + 1] == '<')
                         later();
                 }
-                
                 if (is_quote(cmdl[i][j]))
                     inside_quotes = !inside_quotes;
 
@@ -202,14 +201,14 @@ splitnode* remove_redirections(splitnode* node)
 {
     splitnode* new_list = NULL;
     splitnode* current = node;
+    char **splitdata = NULL;
 
     splitnode   *head = NULL;
     splitnode   *tail = NULL;
 
     while (current != NULL) 
     {
-        int word_count = 0;
-        char    **splitdata = new_string(current->splitdata);
+        **splitdata = new_string(current->splitdata, word_count(current->splitdata));
         splitnode   *new_node = create_new_node(splitdata, current->in, current->out);
 
         if (head == NULL) 
@@ -240,40 +239,50 @@ splitnode   *create_new_node(char   **splitdata, int in, int out)
     return new_split_node;
 }
 
-char **new_string(char **cmdl)
+int word_count(char **cmdl)
 {
         int i = 0;
-        char *file_name = NULL;
         int wc = 0;
-        int t = 0;
+        bool print = false;
 
         while (cmdl[i]) 
         {
             int j = 0;
             bool inside_quotes = false;
-
+            if (print)
+            {
+                wc++;
+                print = false;
+            }
             while (cmdl[i][j]) 
             {
-                t = wc;
                 if (!inside_quotes && !is_quote(cmdl[i][j])) 
                 {
                     if (cmdl[i][j] == '<' && cmdl[i][j + 1] != '<')
                     {
                         if (cmdl[i][j + 1])
-                        {
-                            
-                        }
+                        j +=   get_fl(&cmdl[i][j]);
+                        else if (cmdl[i + 1])
+                        j = get_fl(cmdl[i++]);
                     }
                     else if (cmdl[i][j] == '>' && cmdl[i][j + 1] != '>')
                     {
-
-                        file_name = get_redfilen(&i, &j, cmdl, ">");
+                        if (cmdl[i][j + 1])
+                        j +=   get_fl(&cmdl[i][j]);
+                        else if (cmdl[i + 1])
+                        j = get_fl(cmdl[i++]);
                     }
                     else if (cmdl[i][j] == '>' && cmdl[i][j + 1] == '>')
                     {
-
-                        file_name = get_redfilen(&i, &j, cmdl, ">>");
+                        if (cmdl[i][j + 2])
+                        j +=   get_fl(&cmdl[i][j]);
+                        else if (cmdl[i + 1])
+                        j = get_fl(cmdl[i++]);
                     }
+                    else if (cmdl[i][j] == '<' && cmdl[i][j + 1] == '<')
+                        later();
+                    else
+                        print = true;
                 }
                 
                 if (is_quote(cmdl[i][j]))
@@ -284,4 +293,13 @@ char **new_string(char **cmdl)
             }
             i++;
         }
+        return (wc);
+}
+
+char **newstring(char **str, int wc)
+{
+    char **new_s;
+
+    new_s = (char **)ft_calloc((wc + 1) , sizeof(char *));
+    
 }
