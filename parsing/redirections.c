@@ -12,7 +12,9 @@ int get_fl(const char *str)
     bool inside_quotes = false;
     char quote_type = '\0';
 
-    while (str[length] != '\0') {
+    while (str[length] != '\0')
+    {
+        
         if (str[length] == '\'' || str[length] == '\"') 
         {
             if (inside_quotes && quote_type == str[length]) 
@@ -191,42 +193,44 @@ splitnode *handle_redirections(splitnode *node)
             i++;
         }
 
+        int wc = word_count(current->splitdata);
+        printf("((wc : %d))", wc);
         current = current->next;
     }
 
     return node;
 }
 
-splitnode* remove_redirections(splitnode* node)
-{
-    splitnode* new_list = NULL;
-    splitnode* current = node;
-    char **splitdata = NULL;
+// splitnode* remove_redirections(splitnode* node)
+// {
+    // splitnode* new_list = NULL;
+    // splitnode* current = node;
+    // char **splitdata = NULL;
 
-    splitnode   *head = NULL;
-    splitnode   *tail = NULL;
+    // splitnode   *head = NULL;
+    // splitnode   *tail = NULL;
 
-    while (current != NULL) 
-    {
-        **splitdata = new_string(current->splitdata, word_count(current->splitdata));
-        splitnode   *new_node = create_new_node(splitdata, current->in, current->out);
+    // while (current != NULL) 
+    // {
+    //     **splitdata = new_string(current->splitdata, word_count(current->splitdata));
+    //     splitnode   *new_node = create_new_node(splitdata, current->in, current->out);
 
-        if (head == NULL) 
-        {
-            head = new_node;
-            tail = head;
-        } else 
-        {
-            tail->next = new_node;
-            new_node->prev = tail;
-            tail = new_node;
-        }
-        current = current->next;
-    }
+    //     if (head == NULL) 
+    //     {
+    //         head = new_node;
+    //         tail = head;
+    //     } else 
+    //     {
+    //         tail->next = new_node;
+    //         new_node->prev = tail;
+    //         tail = new_node;
+    //     }
+    //     current = current->next;
+    // }
 
     
-    return head;
-}
+    // return head;
+// }
 
 splitnode   *create_new_node(char   **splitdata, int in, int out) 
 {
@@ -249,11 +253,6 @@ int word_count(char **cmdl)
         {
             int j = 0;
             bool inside_quotes = false;
-            if (print)
-            {
-                wc++;
-                print = false;
-            }
             while (cmdl[i][j]) 
             {
                 if (!inside_quotes && !is_quote(cmdl[i][j])) 
@@ -268,9 +267,11 @@ int word_count(char **cmdl)
                     else if (cmdl[i][j] == '>' && cmdl[i][j + 1] != '>')
                     {
                         if (cmdl[i][j + 1])
-                        j +=   get_fl(&cmdl[i][j]);
+                        j +=   get_fl(&cmdl[i][j]) + 1;
                         else if (cmdl[i + 1])
                         j = get_fl(cmdl[i++]);
+
+                        printf("file lenght : %d \n", j);
                     }
                     else if (cmdl[i][j] == '>' && cmdl[i][j + 1] == '>')
                     {
@@ -282,7 +283,10 @@ int word_count(char **cmdl)
                     else if (cmdl[i][j] == '<' && cmdl[i][j + 1] == '<')
                         later();
                     else
+                    {
+                        printf("char : {{%c}}\n", cmdl[i][j]);
                         print = true;
+                    }
                 }
                 
                 if (is_quote(cmdl[i][j]))
@@ -291,15 +295,20 @@ int word_count(char **cmdl)
                 if (cmdl[i][j])
                     j++;
             }
+            if (print)
+            {
+                wc++;
+                print = false;
+            }
             i++;
         }
         return (wc);
 }
 
-char **newstring(char **str, int wc)
-{
-    char **new_s;
+// char **newstring(char **str, int wc)
+// {
+//     char **new_s;
 
-    new_s = (char **)ft_calloc((wc + 1) , sizeof(char *));
+//     new_s = (char **)ft_calloc((wc + 1) , sizeof(char *));
     
-}
+// }
