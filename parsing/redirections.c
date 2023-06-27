@@ -14,7 +14,7 @@ int get_fl(const char *str)
 
     while (str[length] != '\0')
     {
-        
+
         if (str[length] == '\'' || str[length] == '\"') 
         {
             if (inside_quotes && quote_type == str[length]) 
@@ -33,7 +33,6 @@ int get_fl(const char *str)
 
         length++;
     }
-
     return length;
 }
 char *get_redfilen(int *i, int *j, char **cmd_l, char *which_red) 
@@ -56,9 +55,6 @@ char *get_redfilen(int *i, int *j, char **cmd_l, char *which_red)
             file_name = strndup(cmd_l[*i + 1], file_len);
             *i += 1;
             *j += file_len;
-            int d = *i;
-            int z = *j;
-            printf("in file( %d): (%d)\n", d, z);
         }
     } 
     else if (strcmp(which_red, ">") == 0) 
@@ -95,7 +91,6 @@ char *get_redfilen(int *i, int *j, char **cmd_l, char *which_red)
             *j += file_len;
         }
     }
-    printf("fl:%s:\n", file_name);
     return file_name;
 }
 
@@ -194,7 +189,7 @@ splitnode *handle_redirections(splitnode *node)
         }
 
         int wc = word_count(current->splitdata);
-        printf("((wc : %d))", wc);
+        printf("((wc : %d))\n", wc);
         current = current->next;
     }
 
@@ -260,33 +255,28 @@ int word_count(char **cmdl)
                     if (cmdl[i][j] == '<' && cmdl[i][j + 1] != '<')
                     {
                         if (cmdl[i][j + 1])
-                        j +=   get_fl(&cmdl[i][j]);
+                        j +=   get_fl(&cmdl[i][j + 1]) + 1;
                         else if (cmdl[i + 1])
                         j = get_fl(cmdl[i++]);
                     }
                     else if (cmdl[i][j] == '>' && cmdl[i][j + 1] != '>')
                     {
                         if (cmdl[i][j + 1])
-                        j +=   get_fl(&cmdl[i][j]) + 1;
+                        j +=   get_fl(&cmdl[i][j + 1]) + 1;
                         else if (cmdl[i + 1])
                         j = get_fl(cmdl[i++]);
-
-                        printf("file lenght : %d \n", j);
                     }
                     else if (cmdl[i][j] == '>' && cmdl[i][j + 1] == '>')
                     {
                         if (cmdl[i][j + 2])
-                        j +=   get_fl(&cmdl[i][j]);
+                        j +=   get_fl(&cmdl[i][j + 2]) + 2;
                         else if (cmdl[i + 1])
                         j = get_fl(cmdl[i++]);
                     }
                     else if (cmdl[i][j] == '<' && cmdl[i][j + 1] == '<')
                         later();
                     else
-                    {
-                        printf("char : {{%c}}\n", cmdl[i][j]);
                         print = true;
-                    }
                 }
                 
                 if (is_quote(cmdl[i][j]))
