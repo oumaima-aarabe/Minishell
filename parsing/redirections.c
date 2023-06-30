@@ -341,9 +341,12 @@ char **newstring(char **cmdl, int wc)
                         count++;
                     }
                 }
-                if (is_quote(cmdl[i][j]))
-                    inside_quotes = !inside_quotes;
-                j++;
+                if (cmdl[i][j])
+                {
+                    if (is_quote(cmdl[i][j]))
+                        inside_quotes = !inside_quotes;
+                    j++;
+                }
             }
             if (print)
             {
@@ -355,6 +358,7 @@ char **newstring(char **cmdl, int wc)
                     j++;
                     puts("i am here");
                 }
+                new_s[k][j] = '\0';
                 k++;
                 print = false;
                 count = 0;
