@@ -98,6 +98,8 @@ int is_inside_quotes(char* str);
 splitnode  *handle_redirections(splitnode  *node);
 splitnode   *create_new_node(char   **splitdata, int in, int out);
 int 		word_count(char **cmdl);
+char 		**newstring(char **cmdl, int wc);
+splitnode* remove_redirections(splitnode* node);
 
 
 void    parsing(char *prompt);

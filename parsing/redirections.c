@@ -156,6 +156,7 @@ void later()
 splitnode *handle_redirections(splitnode *node) 
 {
     splitnode *current = node;
+    splitnode *trimmed;
     while (current != NULL) 
     {   
         char **cmdl = current->splitdata;
@@ -187,45 +188,41 @@ splitnode *handle_redirections(splitnode *node)
             }
             i++;
         }
+        current = current->next;
+    }
+    trimmed = remove_redirections(node);
+    return trimmed;
+}
 
-        int wc = word_count(current->splitdata);
-        printf("((wc : %d))\n", wc);
+splitnode   *remove_redirections(splitnode  *node)
+{
+    splitnode* current = node;
+    char **splitdata = NULL;
+
+    splitnode   *head = NULL;
+    splitnode   *tail = NULL;
+
+    while (current != NULL) 
+    {
+        splitdata = newstring(current->splitdata, word_count(current->splitdata));
+        splitnode   *new_node = create_new_node(splitdata, current->in, current->out);
+
+        if (head == NULL) 
+        {
+            head = new_node;
+            tail = head;
+        } else 
+        {
+            tail->next = new_node;
+            new_node->prev = tail;
+            tail = new_node;
+        }
         current = current->next;
     }
 
-    return node;
-}
-
-// splitnode* remove_redirections(splitnode* node)
-// {
-    // splitnode* new_list = NULL;
-    // splitnode* current = node;
-    // char **splitdata = NULL;
-
-    // splitnode   *head = NULL;
-    // splitnode   *tail = NULL;
-
-    // while (current != NULL) 
-    // {
-    //     **splitdata = new_string(current->splitdata, word_count(current->splitdata));
-    //     splitnode   *new_node = create_new_node(splitdata, current->in, current->out);
-
-    //     if (head == NULL) 
-    //     {
-    //         head = new_node;
-    //         tail = head;
-    //     } else 
-    //     {
-    //         tail->next = new_node;
-    //         new_node->prev = tail;
-    //         tail = new_node;
-    //     }
-    //     current = current->next;
-    // }
-
     
-    // return head;
-// }
+    return head;
+}
 
 splitnode   *create_new_node(char   **splitdata, int in, int out) 
 {
@@ -258,7 +255,6 @@ int word_count(char **cmdl)
                         j +=   get_fl(&cmdl[i][j + 1]);
                         else if (cmdl[i + 1])
                         j = get_fl(cmdl[++i]);
-                        printf("i am here < // i : %s, j : %c\n", cmdl[i], cmdl[i][j]);
                     }
                     else if (cmdl[i][j] == '>' && cmdl[i][j + 1] != '>')
                     {
@@ -266,7 +262,6 @@ int word_count(char **cmdl)
                         j +=   get_fl(&cmdl[i][j + 1]);
                         else if (cmdl[i + 1])
                         j = get_fl(cmdl[++i]);
-                        printf("i am here > // i : %s, j : %c\n", cmdl[i], cmdl[i][j]);
                     }
                     else if (cmdl[i][j] == '>' && cmdl[i][j + 1] == '>')
                     {
@@ -274,7 +269,6 @@ int word_count(char **cmdl)
                         j +=   get_fl(&cmdl[i][j + 2]) + 1;
                         else if (cmdl[i + 1])
                         j = get_fl(cmdl[++i]);
-                        printf("i am here >> i : %s, j : %c\n", cmdl[i], cmdl[i][j]);
                     }
                     else if (cmdl[i][j] == '<' && cmdl[i][j + 1] == '<')
                         later();
@@ -284,12 +278,8 @@ int word_count(char **cmdl)
                 
                 if (is_quote(cmdl[i][j]))
                     inside_quotes = !inside_quotes;
-
                 if (cmdl[i][j])
-                {
-                    if(cmdl[i][j] != '>' || cmdl[i][j] != '<')
-                        j++;
-                }
+                    j++;
             }
             if (print)
             {
@@ -301,10 +291,74 @@ int word_count(char **cmdl)
         return (wc);
 }
 
-// char **newstring(char **str, int wc)
-// {
-//     char **new_s;
+char **newstring(char **cmdl, int wc)
+{
+    char **new_s;
+    int i = 0;
+    int j;
+    int count = 0;
+    bool print = false;
+    int k = 0;
+    int z;
 
-//     new_s = (char **)ft_calloc((wc + 1) , sizeof(char *));
-    
-// }
+
+    new_s = (char **)ft_calloc((wc + 1) , sizeof(char *));
+    new_s[wc + 1] = NULL;
+     while (cmdl[i]) 
+        {
+            j = 0;
+            bool inside_quotes = false;
+            while (cmdl[i][j]) 
+            {
+                if (!inside_quotes && !is_quote(cmdl[i][j])) 
+                {
+                    if (cmdl[i][j] == '<' && cmdl[i][j + 1] != '<')
+                    {
+                        if (cmdl[i][j + 1])
+                        j +=   get_fl(&cmdl[i][j + 1]);
+                        else if (cmdl[i + 1])
+                        j = get_fl(cmdl[++i]);
+                    }
+                    else if (cmdl[i][j] == '>' && cmdl[i][j + 1] != '>')
+                    {
+                        if (cmdl[i][j + 1])
+                        j +=   get_fl(&cmdl[i][j + 1]);
+                        else if (cmdl[i + 1])
+                        j = get_fl(cmdl[++i]);
+                    }
+                    else if (cmdl[i][j] == '>' && cmdl[i][j + 1] == '>')
+                    {
+                        if (cmdl[i][j + 2])
+                        j +=   get_fl(&cmdl[i][j + 2]) + 1;
+                        else if (cmdl[i + 1])
+                        j = get_fl(cmdl[++i]);
+                    }
+                    else if (cmdl[i][j] == '<' && cmdl[i][j + 1] == '<')
+                        later();
+                    else
+                    {
+                        print = true;
+                        z = i;
+                        count++;
+                    }
+                }
+                if (is_quote(cmdl[i][j]))
+                    inside_quotes = !inside_quotes;
+                j++;
+            }
+            if (print)
+            {
+                new_s[k++] = (char *)ft_calloc((count + 1) , sizeof(char ));
+                j = 0;
+                while (j <= count)
+                {
+                    new_s[k][j] = cmdl[z][j];
+                    j++;
+                }
+                new_s[k][j] = '\0';
+                print = false;
+            }
+            i++;
+        }
+        return new_s;
+}
