@@ -15,10 +15,10 @@
 void  hendl_ctr_c(int sig)
 {
 	(void)sig;
-	// printf("\n");
-	// rl_on_new_line();
-	// rl_replace_line(" ", 0);
-	// rl_redisplay();
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line(" ", 0);
+	rl_redisplay();
 		
 }
 int main(int argc, char **argv, char **env)

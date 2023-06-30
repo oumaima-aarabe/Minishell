@@ -255,23 +255,26 @@ int word_count(char **cmdl)
                     if (cmdl[i][j] == '<' && cmdl[i][j + 1] != '<')
                     {
                         if (cmdl[i][j + 1])
-                        j +=   get_fl(&cmdl[i][j + 1]) + 1;
+                        j +=   get_fl(&cmdl[i][j + 1]);
                         else if (cmdl[i + 1])
-                        j = get_fl(cmdl[i++]);
+                        j = get_fl(cmdl[++i]);
+                        printf("i am here < // i : %s, j : %c\n", cmdl[i], cmdl[i][j]);
                     }
                     else if (cmdl[i][j] == '>' && cmdl[i][j + 1] != '>')
                     {
                         if (cmdl[i][j + 1])
-                        j +=   get_fl(&cmdl[i][j + 1]) + 1;
+                        j +=   get_fl(&cmdl[i][j + 1]);
                         else if (cmdl[i + 1])
-                        j = get_fl(cmdl[i++]);
+                        j = get_fl(cmdl[++i]);
+                        printf("i am here > // i : %s, j : %c\n", cmdl[i], cmdl[i][j]);
                     }
                     else if (cmdl[i][j] == '>' && cmdl[i][j + 1] == '>')
                     {
                         if (cmdl[i][j + 2])
-                        j +=   get_fl(&cmdl[i][j + 2]) + 2;
+                        j +=   get_fl(&cmdl[i][j + 2]) + 1;
                         else if (cmdl[i + 1])
-                        j = get_fl(cmdl[i++]);
+                        j = get_fl(cmdl[++i]);
+                        printf("i am here >> i : %s, j : %c\n", cmdl[i], cmdl[i][j]);
                     }
                     else if (cmdl[i][j] == '<' && cmdl[i][j + 1] == '<')
                         later();
@@ -283,7 +286,10 @@ int word_count(char **cmdl)
                     inside_quotes = !inside_quotes;
 
                 if (cmdl[i][j])
-                    j++;
+                {
+                    if(cmdl[i][j] != '>' || cmdl[i][j] != '<')
+                        j++;
+                }
             }
             if (print)
             {

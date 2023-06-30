@@ -17,9 +17,9 @@ CC = cc
 FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 INCLUDE = minishell.h
 
-# READ_LINE = /Users/ouaarabe/.brew/Cellar/readline/8.2.1
+READ_LINE = /Users/ouaarabe/.brew/Cellar/readline/8.2.1
 
-LIBRARIES	= -L${READ_LINE}/lib -lreadline -I includes -I #${READ_LINE}/include
+LIBRARIES	= -L${READ_LINE}/lib -lreadline -I includes -I ${READ_LINE}/include
 
 INCLUDES	= -I${READ_LINE}/include
 
@@ -33,8 +33,8 @@ SRC =	obj/ft_error.c\
 		obj/utils2.c\
 		obj/main.c\
 		obj/lexer.c\
-		obj/ft_error.c\
 		obj/redirections.c\
+		# obj/ft_error.c\
 
 
 OBJ = $(SRC:.c=.o)
