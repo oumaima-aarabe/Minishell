@@ -303,7 +303,6 @@ char **newstring(char **cmdl, int wc)
 
 
     new_s = (char **)ft_calloc((wc + 1) , sizeof(char *));
-    new_s[wc + 1] = NULL;
      while (cmdl[i]) 
         {
             j = 0;
@@ -348,17 +347,20 @@ char **newstring(char **cmdl, int wc)
             }
             if (print)
             {
-                new_s[k++] = (char *)ft_calloc((count + 1) , sizeof(char ));
+                new_s[k] = (char *)ft_calloc((count + 1) , sizeof(char ));
                 j = 0;
-                while (j <= count)
+                while (j < count)
                 {
                     new_s[k][j] = cmdl[z][j];
                     j++;
+                    puts("i am here");
                 }
-                new_s[k][j] = '\0';
+                k++;
                 print = false;
+                count = 0;
             }
             i++;
         }
+            puts("i am out");
         return new_s;
 }
