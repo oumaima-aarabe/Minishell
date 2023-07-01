@@ -6,7 +6,7 @@
 #    By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 15:19:53 by azarda            #+#    #+#              #
-#    Updated: 2023/06/14 00:51:05 by ouaarabe         ###   ########.fr        #
+#    Updated: 2023/07/01 00:24:09 by ouaarabe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRC =	obj/ft_error.c\
 		obj/main.c\
 		obj/lexer.c\
 		obj/redirections.c\
+		obj/rm.c\
 		# obj/ft_error.c\
 
 

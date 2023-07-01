@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split_tokens.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/01 00:19:18 by ouaarabe          #+#    #+#             */
+/*   Updated: 2023/07/01 00:23:36 by ouaarabe         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int is_inside_quotes(char   *str) 
@@ -167,7 +179,7 @@ void free_split_nodes(splitnode *head)
         head = head->next;
 
         int i = 0;
-        while (i < current->flag) 
+        while (current->splitdata[i]) 
         {
             free(current->splitdata[i]);
             i++;

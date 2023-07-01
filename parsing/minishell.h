@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/06/14 01:54:05 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/01 00:25:16 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ typedef struct splitnode {
     struct splitnode *next;
 	int		in;
 	int		out;
-	int		flag;
 } splitnode;
 
 
@@ -100,7 +99,9 @@ splitnode   *create_new_node(char   **splitdata, int in, int out);
 int 		word_count(char **cmdl);
 char 		**newstring(char **cmdl, int wc);
 splitnode* remove_redirections(splitnode* node);
-
+bool is_quote(char c);
+int get_fl(const char *str);
+void later();
 
 void    parsing(char *prompt);
 void  hendl_ctr_c(int sig);
