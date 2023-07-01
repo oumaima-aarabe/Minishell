@@ -54,7 +54,7 @@ char	*ft_strdup(char *s1)
 	return (sr);
 }
 
-char	*ft_substr(char const *s,  int start, int len)
+char	*ft_substr(char *s,  int start, int len)
 {
 	int	i;
 	int	j;
@@ -176,7 +176,7 @@ void	ft_free_(char **tab)
 	free(tab);
 }
 
-static	char	**ft_my_split(char const *str, char d, int i, int j)
+static	char	**ft_my_split(char  *str, char d, int i, int j)
 {
 	char	**tab;
 	int		debut;

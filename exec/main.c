@@ -19,10 +19,10 @@ void  hendl_ctr_c(int sig)
 	(void)sig;
 	if (waitpid(0, NULL, WNOHANG))
 	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line(" ", 0);
-		rl_redisplay();
+		// printf("\n");
+		// rl_on_new_line();
+		// rl_replace_line(" ", 0);
+		// rl_redisplay();
 	}
 
 
@@ -121,39 +121,48 @@ char *ft_take_key(char *str, t_env *env, int j)
 	return (ft_strdup(""));
 }
 
-char **ft_expend(char **cmd, t_env *en)
+char *ft_expand(char *cmd, t_env *en)
 {
-	int i = 0;
 	int j = 0;
 	char *tmp;
 	char *new;
+	int in_single_quotes = 0;
+	int in_double_quotes = 0;
 
-	while(cmd[i])
-	{
-		j = 0;
-		while(cmd[i][j])
+		while (cmd[j])
 		{
-			if(cmd[i][j] ==  '$' && cmd[i][j + 1] ==  '?')
+			if (cmd[j] == '\'')
 			{
-				tmp = ft_substr(cmd[i], 0, j);
-				new = ft_substr(cmd[i], j + 2, ft_strlen(cmd[i]) - j);
-				free(cmd[i]);
-				cmd[i] = ft_strjoin(tmp, ft_strjoin(ft_itoa(g_v.ex_s), new));
+				if (!in_double_quotes)
+					in_single_quotes = !in_single_quotes;
+			}
+			else if (cmd[j] == '\"')
+			{
+				if (!in_single_quotes)
+					in_double_quotes = !in_double_quotes;
+			}
+
+			if (!in_single_quotes && (cmd[j] == '$' && cmd[j + 1] == '?'))
+			{
+				// Variable expansion for $?
+				tmp = ft_substr(cmd, 0, j);
+				new = ft_substr(cmd, j + 2, ft_strlen(cmd) - j);
+				free(cmd);
+				cmd = ft_strjoin(tmp, ft_strjoin(ft_itoa(g_v.ex_s), new));
 				g_v.ex_s = 0;
 			}
-			else if(cmd[i][j] ==  '$')
+			else if (!in_single_quotes && cmd[j] == '$')
 			{
-				tmp = ft_substr(cmd[i], 0, j);
-				new = ft_take_key(cmd[i], en, j + 1);
-				free(cmd[i]);
-				cmd[i] = ft_strjoin(tmp , new);
-
+				// Variable expansion for other variables
+				tmp = ft_substr(cmd, 0, j);
+				new = ft_take_key(cmd, en, j + 1);
+				free(cmd);
+				cmd = ft_strjoin(tmp, new);
 			}
+
 			j++;
 		}
-		i++;
-	}
-	return (cmd);
+	return cmd;
 }
 
 int main(int argc, char **argv, char **env)
@@ -168,7 +177,7 @@ int main(int argc, char **argv, char **env)
 	// if (!env[0])
 	// 	ft_syntax_err();
 	g_v.env = environment(env);
-	rl_catch_signals = 0;
+	// rl_catch_signals = 0;
 	while(2307)
 	{
 		signal(SIGINT, hendl_ctr_c);
@@ -191,7 +200,7 @@ int main(int argc, char **argv, char **env)
 			ft_syntax_err();
 			continue;
 		}
-		tokens = parsing(prompt);
+		tokens = parsing(prompt, g_v.env);
 		if(!tokens)
 			continue;
 		free(prompt);

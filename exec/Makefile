@@ -36,7 +36,10 @@ SRC =	obj/ft_error.c\
 		obj/exec.c \
 		obj/lst_utils.c \
 		obj/builtins.c \
-		obj/ft_go_exec.c
+		obj/ft_go_exec.c\
+		obj/redirections.c\
+		obj/quotes.c\
+		obj/rm.c
 
 
 
