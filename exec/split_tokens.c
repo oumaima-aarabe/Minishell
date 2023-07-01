@@ -1,221 +1,180 @@
 #include "Minishell.h"
 
+int is_inside_quotes(char   *str) 
+{
+    int length = ft_strlen(str);
+    int in_quotes = 0;
+    int i = 0;
+
+    while (i < length) 
+    {
+        if (str[i] == '"' || str[i] == '\'')
+            in_quotes = !in_quotes;
+        i++;
+    }
+    return in_quotes;
+}
+
+int count_words(char    *str) 
+{
+    int length = ft_strlen(str);
+    int count = 0;
+    int in_word = 0;
+    int in_quotes = 0;
+    int i = 0;
+
+    while (i < length) 
+    {
+        if (str[i] == ' ' && !in_word && !in_quotes) 
+        {
+            i++;
+            continue;
+        }
+
+        if (str[i] == '"' || str[i] == '\'')
+            in_quotes = !in_quotes;
+        else if (str[i] == ' ' && !in_quotes)
+        {
+            in_word = 0;
+            count++;
+        } else
+            in_word = 1;
+        i++;
+    }
+
+    if (in_word)
+        count++;
+    return count;
+}
 
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-int count_tokens(char *data)
-{
-    int len = strlen(data);
+char **split_string(char *str, int *word_count) {
+    int length = ft_strlen(str);
+    int count = 0;
+    int in_word = 0;
+    int in_quotes = 0;
     int i = 0;
-    int counttokens = 0;
-    int tokenlength = 0;
 
-    while (i < len)
-    {
-        if (data[i] == '\'' || data[i] == '\"')
-        {
-            char quote = data[i];
-            i++;
-            while (i < len && data[i] != quote)
-                i++;
-            counttokens++;
-        }
-        if (data[i] == ' ')
-        {
-            if (tokenlength > 0)
-            {
-                counttokens++;
-                tokenlength = 0;
+    // Count the number of words
+    while (i < length) {
+        if ((str[i] == ' ' || str[i] == '\t') && !in_quotes) {
+            if (in_word) {
+                count++;
+                in_word = 0;
             }
+        } else if (str[i] == '"' || str[i] == '\'') {
+            in_quotes = !in_quotes;
+            in_word = 1;
+        } else {
+            in_word = 1;
         }
-        else
-            tokenlength++;
+
         i++;
     }
-    if (tokenlength > 0)
-        counttokens++;
-    return counttokens;
-}
 
-char **split_tokens(char *data, int counttokens)
-{
-    int len = strlen(data);
-    int i = 0;
-    int tokenindex = 0;
-    int tokenlength = 0;
-    char *token = NULL;
-    char **splitdata = ft_calloc((counttokens + 1), sizeof(char *));
+    if (in_word)
+        count++;
 
-while (i < len)
-{
-    if (data[i] == '\'' || data[i] == '\"')
-    {
-        char quote = data[i];
-        tokenlength++;
-        token = ft_calloc((tokenlength + 1), sizeof(char));
-        token[tokenlength - 1] = data[i];
+    // Allocate memory for the words array
+    char **words = (char **)calloc((count + 1) , sizeof(char *));
+    int word_index = 0;
+    int start_index = 0;
+    in_word = 0;
+    in_quotes = 0;
+    i = 0;
+
+    // Skip leading whitespace
+    while (i < length && (str[i] == ' ' || str[i] == '\t'))
         i++;
-        while (i < len && data[i] != quote)
-        {
-            tokenlength++;
-            char* new_token = ft_calloc((tokenlength + 1), sizeof(char));
-            memcpy(new_token, token, tokenlength - 1);
-            new_token[tokenlength - 1] = data[i];
-            free(token);
-            token = new_token;
-            i++;
-        }
-    }
-    if (data[i] == ' ' || data[i] == '\t')
-    {
-        if (tokenlength > 0)
-        {
-            token[tokenlength] = '\0';
-            splitdata[tokenindex] = token;
-            tokenindex++;
-            tokenlength = 0;
-            token = NULL;
-        }
-    }
-    else
-    {
-        tokenlength++;
-        char* new_token = ft_calloc((tokenlength + 1), sizeof(char));
-        memcpy(new_token, token, tokenlength - 1);
-        new_token[tokenlength - 1] = data[i];
-        free(token);
-        token = new_token;
-    }
-    i++;
-}
 
+    start_index = i;
 
-    if (tokenlength > 0)
-    {
-        token[tokenlength] = '\0';
-        splitdata[tokenindex] = token;
-    }
-    else
-        splitdata[tokenindex] = NULL;
-
-    return splitdata;
-}
-
-splitnode *createsplitnode(char **splitdata)
-{
-    splitnode *newnode = (splitnode *)malloc(sizeof(splitnode));
-    // if (splitdata == NULL)
-    //     return NULL;
-    // if(!splitdata)
-    //     newnode->splitdata = NULL;
-    // else
-    // printf("--->>%s", newnode->splitdata[0]);
-    newnode->splitdata = splitdata;
-    newnode->in = 0;
-    newnode->out = 1;
-    newnode->prev = NULL;
-    newnode->next = NULL;
-
-    return newnode;
-}
-
-void addToSplitList(splitnode **head, splitnode **tail, splitnode *newnode)
-{
-    if (*tail == NULL)
-    {
-        *head = newnode;
-        *tail = newnode;
-    }
-    else
-    {
-        (*tail)->next = newnode;
-        newnode->prev = *tail;
-        *tail = newnode;
-    }
-}
-
-void free_splitnode(splitnode *node)
-{
-    if (node == NULL)
-        return;
-
-    char **splitdata = node->splitdata;
-    if (splitdata != NULL)
-    {
-        int i = 0;
-        while (splitdata[i] != NULL)
-        {
-            free(splitdata[i]);
-            i++;
-        }
-        free(splitdata);
-    }
-
-    free(node);
-}
-
-splitnode *splitdataLinkedList(Node *originalList)
-{
-    splitnode *head = NULL;
-    splitnode *tail = NULL;
-    Node *current = originalList;
-    char **splitdata = NULL;
-
-    while (current != NULL)
-    {
-        if (current->data == NULL)
-        {
-            if (current->next)
-                current = current->next;
-            else
-                return head;
+    while (i <= length) {
+        if ((str[i] == ' ' || str[i] == '\t' || str[i] == '\0') && !in_quotes) {
+            if (in_word) {
+                words[word_index] = (char *)calloc((i - start_index + 1) , sizeof(char));
+                strncpy(words[word_index], &str[start_index], i - start_index);
+                words[word_index][i - start_index] = '\0';
+                word_index++;
+                in_word = 0;
+            }
+            start_index = i + 1;
+        } else if (str[i] == '"' || str[i] == '\'') {
+            in_quotes = !in_quotes;
+            in_word = 1;
+        } else {
+            in_word = 1;
         }
 
-        char *data = current->data;
-        int counttokens = count_tokens(data);
-        splitdata = split_tokens(data, counttokens);
-        splitnode *newnode = createsplitnode(splitdata);
+        i++;
+    }
 
-        if (newnode == NULL)
-             free_splitnode(newnode);
-        else
-            addToSplitList(&head, &tail, newnode);
+    words[word_index] = NULL;
+    *word_count = count;
+    return words;
+}
+
+
+
+splitnode   *create_split_node(char   **splitdata, int word_count) 
+{
+    (void)  word_count;
+    splitnode   *new_split_node = calloc(1, sizeof(splitnode));
+    new_split_node->splitdata = splitdata;
+    new_split_node->prev = NULL;
+    new_split_node->next = NULL;
+    new_split_node->in = -1;
+    new_split_node->out = -1;
+    return new_split_node;
+}
+
+splitnode   *splitdatalinkedlist(Node  *original_list) 
+{
+    splitnode   *head = NULL;
+    splitnode   *tail = NULL;
+
+    Node    *current = original_list;
+    while (current != NULL) 
+    {
+        int word_count = 0;
+        char    **splitdata = split_string(current->data, &word_count);
+        splitnode   *new_node = create_split_node(splitdata, word_count);
+
+        if (head == NULL) 
+        {
+            head = new_node;
+            tail = head;
+        } else 
+        {
+            tail->next = new_node;
+            new_node->prev = tail;
+            tail = new_node;
+        }
         current = current->next;
     }
-
     return head;
 }
 
+// void free_split_nodes(splitnode *head)
+// {
+//     while (head != NULL) 
+//     {
+//         splitnode   *current = head;
+//         head = head->next;
 
-
-// int main() {
-
-//     Node *head = splitString("ls -la | cut -ghj | oumiooo");
-//     splitnode *splitList = splitdataLinkedList(head);
-
-
-//     splitnode *current = splitList;
-//     while (current != NULL) {
-//         char **splitdata = current->splitdata;
-
-//         // Print the split data
 //         int i = 0;
-//         while (splitdata[i] != NULL) {
-//             printf("Token %d: %s\n", i + 1, splitdata[i]);
+//         while (current->splitdata[i]) 
+//         {
+//             free(current->splitdata[i]);
 //             i++;
 //         }
-
-//         // Free the memory allocated for split data
-//         i = 0;
-//         while (splitdata[i] != NULL) {
-//             free(splitdata[i]);
-//             i++;
-//         }
-//         free(splitdata);
-
-//         current = current->next;
+//         free(current->splitdata);
+//         free(current);
 //     }
-
 // }
+
+
