@@ -6,46 +6,115 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:43 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/05/23 21:14:44 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/01 04:56:28 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int which_quotes(char *array) 
+t_gs	g_v;
+
+// int which_quotes(char c) 
+// {
+// 	if (c == '\'')
+// 		return 1;
+// 	else if (c == '\"')
+// 		return 2;
+// 	return 0;
+// }
+
+// char  **checkquotes(char **splitdata, t_env *en)
+// {
+// 	char **new2_0 = NULL;
+// 	int start_index;
+// 	int i;
+// 	int j;
+	
+// 	i = 0;
+// 	while (splitdata[i]) 
+// 	{
+// 		j = 0;
+// 		while(splitdata[i][j])
+// 		{
+			
+// 			int quoteType = which_quotes(splitdata[i][j]);
+
+// 			if (quoteType == 1)
+// 			{
+// 				start_index = ++j;
+// 				while (splitdata[i][j] && quoteType != which_quotes(splitdata[i][j]))
+// 					j++;
+				
+// 			}
+// 			else if (quoteType == 2)
+// 			{
+// 				start_index = j;
+// 				while(splitdata[i][j] && quoteType != which_quotes(splitdata[i][j]))
+// 					j++;
+// 			}
+// 			if (splitdata[i][j])
+// 				j++;
+// 		}
+// 		i++;
+// 	}
+// 	return (new2_0);
+// }
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char *removequotes(char *input)
 {
-    if (array[0] == '\'')
-        return 1;
-    else if (array[0] == '\"')
-        return 2;
-    return 0;
+	int length = strlen(input);
+	int count = 0;
+	int insinglequotes = 0;
+	int indoublequotes = 0;
+
+	// Count the number of characters without quotes
+	int i = 0;
+	while (i < length)
+	{
+		if (input[i] == '\'' && !indoublequotes)
+			insinglequotes = !insinglequotes;
+		else if (input[i] == '"' && !insinglequotes)
+			indoublequotes = !indoublequotes;
+		else
+			count++;
+		i++;
+	}
+
+	char *output = calloc(count + 1, sizeof(char));
+
+	int j = 0;
+	insinglequotes = 0;
+	indoublequotes = 0;
+
+	// Copy characters without quotes to the output array
+	i = 0;
+	while (i < length)
+	{
+		if (input[i] == '\'' && !indoublequotes)
+			insinglequotes = !insinglequotes;
+		else if (input[i] == '"' && !insinglequotes)
+			indoublequotes = !indoublequotes;
+		else
+		{
+			output[j] = input[i];
+			j++;
+		}
+		i++;
+	}
+	return output;
 }
 
-void checkquotes(splitnode *list)
-{
-    splitnode *current = list;
+// int main()
+// {
+// 	char input[] = "Hello 'World'! \"How are you?\"";
+// 	char *result = removequotes(input);
+// 	printf("Result: %s\n", result);
+// 	free(result);
 
-    while (current != NULL) 
-    {
-        char **splitdata = current->splitdata;
-
-        int i = 0;
-        while (splitdata[i] != NULL) 
-        {
-            int quoteType = which_quotes(splitdata[i]);
-
-            if (quoteType == 1) 
-            {
-                splitdata[i] = ft_strtrim(splitdata[i], "\'");
-            }
-            else if (quoteType == 2)
-            {
-                splitdata[i] = ft_strtrim(splitdata[i], "\"");
-            }
-            i++;
-        }
-
-        current = current->next;
-    }
-}
+// 	return 0;
+// }
 

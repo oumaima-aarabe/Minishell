@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 00:19:18 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/01 00:23:36 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/01 02:21:31 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int is_inside_quotes(char   *str) 
 {
-    int length = strlen(str);
+    int length = ft_strlen(str);
     int in_quotes = 0;
     int i = 0;
 
@@ -29,7 +29,7 @@ int is_inside_quotes(char   *str)
 
 int count_words(char    *str) 
 {
-    int length = strlen(str);
+    int length = ft_strlen(str);
     int count = 0;
     int in_word = 0;
     int in_quotes = 0;
@@ -65,7 +65,7 @@ int count_words(char    *str)
 #include <string.h>
 
 char **split_string(char *str, int *word_count) {
-    int length = strlen(str);
+    int length = ft_strlen(str);
     int count = 0;
     int in_word = 0;
     int in_quotes = 0;

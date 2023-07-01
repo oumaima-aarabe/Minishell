@@ -27,7 +27,7 @@ Node* splitstring(char* line)
 {
     Node* head = NULL;
     Node* tail = NULL;
-    int length = strlen(line);
+    int length = ft_strlen(line);
     int i = 0;
     int start = 0;
 

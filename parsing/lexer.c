@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:29 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/06/06 01:02:08 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/01 02:21:31 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	all_spaces(char *line)
 	int i;
 	int j;
 
-	j = strlen(line);
+	j = ft_strlen(line);
 	i = 0;
 	while(*line)
 	{

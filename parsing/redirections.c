@@ -6,11 +6,13 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 00:19:11 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/01 00:25:10 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/01 04:52:42 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_gs	g_v;
 
 bool is_quote(char c)
 {
@@ -47,9 +49,10 @@ int get_fl(const char *str)
     }
     return length;
 }
-char *get_redfilen(int *i, int *j, char **cmd_l, char *which_red) 
+char *get_redfilen(int *i, int *j, char **cmd_l, char *which_red, t_env *env)
 {
     char *file_name = NULL;
+    char *true_face = NULL;
     int file_len = 0;
 
     if (strcmp(which_red, ">>") == 0) 
@@ -60,7 +63,7 @@ char *get_redfilen(int *i, int *j, char **cmd_l, char *which_red)
             file_name = strndup(&cmd_l[*i][*j + 2], file_len);
             *j += file_len;
         } 
-        else if (cmd_l[*i + 1] && strlen(cmd_l[*i + 1]) > 0) 
+        else if (cmd_l[*i + 1] && ft_strlen(cmd_l[*i + 1]) > 0) 
         {
             *j = 0;
             file_len = get_fl(cmd_l[*i + 1]);
@@ -77,7 +80,7 @@ char *get_redfilen(int *i, int *j, char **cmd_l, char *which_red)
             file_name = strndup(&cmd_l[*i][*j + 1], file_len);
             *j += file_len;
         }
-         else if (cmd_l[*i + 1] && strlen(cmd_l[*i + 1]) > 0) 
+         else if (cmd_l[*i + 1] && ft_strlen(cmd_l[*i + 1]) > 0) 
          {
              *j = 0;
             file_len = get_fl(cmd_l[*i + 1]);
@@ -94,7 +97,7 @@ char *get_redfilen(int *i, int *j, char **cmd_l, char *which_red)
             file_name = strndup(&cmd_l[*i][*j + 1], file_len);
             *j += file_len;
         } 
-        else if (cmd_l[*i + 1] && strlen(cmd_l[*i + 1]) > 0) 
+        else if (cmd_l[*i + 1] && ft_strlen(cmd_l[*i + 1]) > 0) 
         {
              *j = 0;
             file_len = get_fl(cmd_l[*i + 1]);
@@ -103,12 +106,18 @@ char *get_redfilen(int *i, int *j, char **cmd_l, char *which_red)
             *j += file_len;
         }
     }
+    
+    printf("fl : %s vs ", file_name);
+    // file_name = ft_expand(file_name, env);
+    true_face = removequotes(ft_expand(file_name, env));
+    printf(" %s \n", true_face);
+    // return true_face;
     return file_name;
 }
 
-void red_append(splitnode **node, int *i, int *j, char **cmdl) 
+void red_append(splitnode **node, int *i, int *j, char **cmdl, t_env *env) 
 {
-    char *appfile = get_redfilen(i, j, cmdl, ">>");
+    char *appfile = get_redfilen(i, j, cmdl, ">>", env);
     if (appfile) 
     {
         int fd = open(appfile, O_WRONLY | O_CREAT | O_APPEND, 0666);
@@ -124,9 +133,9 @@ void red_append(splitnode **node, int *i, int *j, char **cmdl)
     }
 }
 
-void red_input(splitnode **node, int *i, int *j, char **cmdl) 
+void red_input(splitnode **node, int *i, int *j, char **cmdl, t_env *env) 
 {
-    char *infile = get_redfilen(i, j, cmdl, "<");
+    char *infile = get_redfilen(i, j, cmdl, "<", env);
     if (infile) 
     {
         int fd = open(infile, O_RDONLY);
@@ -142,9 +151,9 @@ void red_input(splitnode **node, int *i, int *j, char **cmdl)
     }
 }
 
-void red_output(splitnode **node, int *i, int *j, char **cmdl) 
+void red_output(splitnode **node, int *i, int *j, char **cmdl, t_env *env) 
 {
-    char *outfile = get_redfilen(i, j, cmdl, ">");
+    char *outfile = get_redfilen(i, j, cmdl, ">", env);
     if (outfile) 
     {
         int fd = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -165,7 +174,7 @@ void later()
     return;
 }
 
-splitnode *handle_redirections(splitnode *node) 
+splitnode *handle_redirections(splitnode *node, t_env *env) 
 {
     splitnode *current = node;
     splitnode *trimmed;
@@ -184,11 +193,11 @@ splitnode *handle_redirections(splitnode *node)
                 if (!inside_quotes && !is_quote(cmdl[i][j])) 
                 {
                     if (cmdl[i][j] == '<' && cmdl[i][j + 1] != '<')
-                        red_input(&current, &i, &j, cmdl);
+                        red_input(&current, &i, &j, cmdl, env);
                     else if (cmdl[i][j] == '>' && cmdl[i][j + 1] != '>')
-                        red_output(&current, &i, &j, cmdl);
+                        red_output(&current, &i, &j, cmdl, env);
                     else if (cmdl[i][j] == '>' && cmdl[i][j + 1] == '>')
-                        red_append(&current, &i, &j, cmdl);
+                        red_append(&current, &i, &j, cmdl, env);
                     else if (cmdl[i][j] == '<' && cmdl[i][j + 1] == '<')
                         later();
                 }

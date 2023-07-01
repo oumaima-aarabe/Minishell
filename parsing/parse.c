@@ -6,19 +6,21 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 00:19:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/01 00:19:53 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/01 04:14:57 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void parsing(char* prompt) 
+t_gs	g_v;
+
+void parsing(char* prompt, t_env *env) 
 {
     Node* node = splitstring(prompt);
     splitnode* tokens = splitdatalinkedlist(node);
     freenodes(node);
 
-    tokens = handle_redirections(tokens);
+    tokens = handle_redirections(tokens, env);
     splitnode *current = tokens;
     while (current != NULL) 
     {

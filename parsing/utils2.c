@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   white_space.c                                      :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/05/25 00:10:14 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/01 02:34:43 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-size_t	strlen(const	char *s)
+int	ft_strlen(const	char *s)
 {
 	const char	*c;
 
@@ -46,7 +46,7 @@ char	*ft_strdup( char *s1)
 	char	*assl;
 	size_t	i;
 
-	len = strlen(s1);
+	len = ft_strlen(s1);
 	assl = (char *)s1;
 	i = 0;
 	dupl = (char *)malloc(sizeof(*s1) * (len + 1));
@@ -65,7 +65,7 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 {
 	size_t	c;
 
-	c = strlen(src);
+	c = ft_strlen(src);
 	if (size == 0)
 		return (c);
 	while (*src && --size)
@@ -76,23 +76,23 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 	return (c);
 }
 
-char	*ft_substr(char *s, unsigned int start, size_t len)
-{
-	char	*sub;
+// char	*ft_substr(char *s,  int start, int len)
+// {
+// 	char	*sub;
 
-	if (!s)
-		return (NULL);
-	if (start >= strlen(s))
-		start = strlen(s);
-	if (strlen(s + start) < len)
-		len = strlen(s + start);
-	sub = (char *)malloc(sizeof(*s) * (len + 1));
-	if (!sub)
-		return (NULL);
-	ft_strlcpy(sub, s + start, len + 1);
-    free(s);
-	return (sub);
-}
+// 	if (!s)
+// 		return (NULL);
+// 	if (start >= ft_strlen(s))
+// 		start = ft_strlen(s);
+// 	if (ft_strlen(s + start) < len)
+// 		len = ft_strlen(s + start);
+// 	sub = (char *)malloc(sizeof(*s) * (len + 1));
+// 	if (!sub)
+// 		return (NULL);
+// 	ft_strlcpy(sub, s + start, len + 1);
+//     free(s);
+// 	return (sub);
+// }
 
 char	*ft_strtrim(char *s1, char *set)
 {
@@ -107,7 +107,7 @@ char	*ft_strtrim(char *s1, char *set)
 	i = 0;
 	while (ft_strchr(set, s1[i]) && s1[i] != '\0')
 		i++;
-	j = strlen(s1) - 1;
+	j = ft_strlen(s1) - 1;
 	while (ft_strchr(set, s1[j]) && j != 0 && j >= i)
 		j--;
 	len = j - i + 1;
@@ -121,7 +121,7 @@ char    *ft_strcat(char *destination, const char    *source)
     int i = -1;
     int j = -1;
     // Move the pointer to the end of the destination string
-    result = malloc(strlen(destination) + strlen(source) + 1);
+    result = malloc(strlen(destination) + ft_strlen(source) + 1);
     while (destination[++i] != '\0') 
         result[i] = destination[i];
 

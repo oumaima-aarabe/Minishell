@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/01 00:25:16 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/01 04:18:42 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,7 @@
 # include "readline/history.h"
 # include "readline/readline.h"
 
-// void    parse_command(char *prompt);
-// char	**ft_split(char const *s, char c);
-// int		ft_isalnum(int c)''
 
-
-typedef enum t_flags
-{
-	DQ,
-	SQ,
-	WORD,
-	RED,
-	SPC,
-	CMD,
-	VAR
-
-}           flag;
 
 // Structure for doubly linked list node
 typedef struct Node {
@@ -63,12 +48,20 @@ typedef struct splitnode {
 } splitnode;
 
 
-typedef struct  t_tokens{
-	int 	flag;
-	char	*cmd;
-	struct t_tokens *right;
-	struct t_tokens *left;
-}s_tokens;
+typedef struct s_env
+{
+	char *key;
+	char *valu;
+	struct s_env *next;
+}   t_env;
+
+
+typedef struct  s_gs{
+	t_env *env;
+	int ex_s;
+}	t_gs;
+
+extern t_gs	g_v;
 
 int		lexer(char *line);
 int		lexer2(char *line);
@@ -94,7 +87,7 @@ int is_inside_quotes(char* str);
 
 ////////////////////////////////////////////////////////////////
 /////////////////HANDLE REDIRECTIONS////////////////////////////
-splitnode  *handle_redirections(splitnode  *node);
+splitnode  *handle_redirections(splitnode  *node, t_env *env);
 splitnode   *create_new_node(char   **splitdata, int in, int out);
 int 		word_count(char **cmdl);
 char 		**newstring(char **cmdl, int wc);
@@ -103,16 +96,44 @@ bool is_quote(char c);
 int get_fl(const char *str);
 void later();
 
-void    parsing(char *prompt);
+void    parsing(char *prompt, t_env *env);
 void  hendl_ctr_c(int sig);
 void	*my_realloc(void *ptr, size_t new_size);
 void	*ft_calloc(size_t count, size_t size);
-void checkquotes(splitnode *list);
+char 	**checkquotes(char **list, t_env *env);
 char	*ft_strtrim(char *s1, char *set);
 char    *ft_strcat(char *destination, const char    *source);
 int check_char(char c);
+char *get_redfilen(int *i, int *j, char **cmd_l, char *which_red, t_env *env);
 
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
 
+char **ft_expend(char **cmd, t_env *en);
+int ft_strlen(char const *str);
+char	*ft_substr(char *s,  int start, int len);
+void	ft_putstr_fd(char *s, int fd);
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
+char	*ft_strdup( char *s1);
+int	ft_strcmp(char	*s1, char	*s2);
+void	ft_free_(char **tab);
+char	**ft_split(char  *st, char c);
+int	ft_atoi(char *str);
+char	*ft_itoa(int n);
 
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
+t_env *ft_creat(char *key, char *val);
+void	ft_lstadd_back(t_env **alst, t_env *new);
+t_env *duplicate_linked_list(t_env *last);
+void	ft_lstclear(t_env **alist);
+int ft_lstsize(t_env *env);
+
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
+char	*removequotes(char	*input);
+char *ft_expand(char *cmd, t_env *en);
 
 #endif

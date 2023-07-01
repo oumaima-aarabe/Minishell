@@ -6,7 +6,7 @@
 #    By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 15:19:53 by azarda            #+#    #+#              #
-#    Updated: 2023/07/01 00:24:09 by ouaarabe         ###   ########.fr        #
+#    Updated: 2023/07/01 04:22:42 by ouaarabe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 CC = cc
 
-FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+# FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 INCLUDE = minishell.h
 
 READ_LINE = /Users/ouaarabe/.brew/Cellar/readline/8.2.1
@@ -35,6 +35,8 @@ SRC =	obj/ft_error.c\
 		obj/lexer.c\
 		obj/redirections.c\
 		obj/rm.c\
+		obj/libft_azarda.c\
+		obj/lst_azarda.c\
 		# obj/ft_error.c\
 
 
