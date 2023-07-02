@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 00:19:11 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/01 04:52:42 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/02 01:19:44 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,10 @@ char *get_redfilen(int *i, int *j, char **cmd_l, char *which_red, t_env *env)
         }
     }
     
-    printf("fl : %s vs ", file_name);
-    // file_name = ft_expand(file_name, env);
-    true_face = removequotes(ft_expand(file_name, env));
-    printf(" %s \n", true_face);
+    // printf("fl : %s ", file_name);
+    file_name = ft_expand(file_name, env);
+    // true_face = removequotes(ft_expand(file_name, env));
+    printf("expanded :%s\n", file_name);
     // return true_face;
     return file_name;
 }
@@ -129,7 +129,7 @@ void red_append(splitnode **node, int *i, int *j, char **cmdl, t_env *env)
                 close((*node)->out);
             (*node)->out = fd;
         }
-        free(appfile);
+        // free(appfile);
     }
 }
 
@@ -147,7 +147,7 @@ void red_input(splitnode **node, int *i, int *j, char **cmdl, t_env *env)
                 close((*node)->in);
             (*node)->in = fd;
         }
-        free(infile);
+        // free(infile);
     }
 }
 
@@ -165,7 +165,7 @@ void red_output(splitnode **node, int *i, int *j, char **cmdl, t_env *env)
                 close((*node)->out);
             (*node)->out = fd;
         }
-        free(outfile);
+        // free(outfile);
     }
 }
 

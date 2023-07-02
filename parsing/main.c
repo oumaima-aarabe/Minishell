@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/01 04:16:18 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/02 03:46:55 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,62 +78,89 @@ t_env *environment(char **env)
 	return(en);
 }
 
-char *ft_take_key(char *str, t_env *env, int j)
+char *ft_take_key(char *str, t_env *env, int j, int *pos)
 {
+    str += j;
+    if (*str == '?')
+    {   
+        int ex_s = g_v.ex_s;
+        g_v.ex_s = 0;
+        if (*(str + 1))
+        {
+            *pos = j + 1;
+            return ft_itoa(ex_s);
+        }
+        else
+        {
+            *pos = j;
+            return ft_itoa(ex_s);
+        }
+    }
+    else
+    {
+        // Find the end of the key by checking for non-alphanumeric characters
+        int key_len = 0;
+        while (*(str + key_len)  && (*(str + key_len) != '$' || *(str + key_len) != '\'' || *(str + key_len) != '\"' || *(str + key_len) != '+'))
+            key_len++;
+        
+        char *key = ft_substr(str, 0, key_len);
+		// *pos = key_len;
+        while (env)
+        {
+            if (!ft_strcmp(key, env->key))
+            {
+                char *value = ft_strdup(env->valu);
+                free(key);
+                return value;
+            }
+            env = env->next;
+        }
 
-	str += j;
-	while(env)
-	{
-		if(!ft_strcmp(str, env->key))
-		return (ft_strdup(env->valu));
-		env = env->next;
-	}
-	return (ft_strdup(""));
+        free(key);
+    }
+
+    return ft_strdup("");
 }
+
+
 
 char *ft_expand(char *cmd, t_env *en)
 {
-	int j = 0;
-	char *tmp;
-	char *new;
-	int in_single_quotes = 0;
-	int in_double_quotes = 0;
+    int j = 0;
+    char *tmp;
+    char *new;
+    int in_single_quotes = 0;
+    int in_double_quotes = 0;
 
-		while (cmd[j])
-		{
-			if (cmd[j] == '\'')
-			{
-				if (!in_double_quotes)
-					in_single_quotes = !in_single_quotes;
-			}
-			else if (cmd[j] == '\"')
-			{
-				if (!in_single_quotes)
-					in_double_quotes = !in_double_quotes;
-			}
+    while (cmd[j])
+    {
+        if (cmd[j] == '\'')
+        {
+            if (!in_double_quotes)
+                in_single_quotes = !in_single_quotes;
+        }
+        else if (cmd[j] == '\"')
+        {
+            if (!in_single_quotes)
+                in_double_quotes = !in_double_quotes;
+        }
 
-			if (!in_single_quotes && (cmd[j] == '$' && cmd[j + 1] == '?'))
-			{
-				// Variable expansion for $?
-				tmp = ft_substr(cmd, 0, j);
-				new = ft_substr(cmd, j + 2, ft_strlen(cmd) - j);
-				free(cmd);
-				cmd = ft_strjoin(tmp, ft_strjoin(ft_itoa(g_v.ex_s), new));
-				g_v.ex_s = 0;
-			}
-			else if (!in_single_quotes && cmd[j] == '$')
-			{
-				// Variable expansion for other variables
-				tmp = ft_substr(cmd, 0, j);
-				new = ft_take_key(cmd, en, j + 1);
-				free(cmd);
-				cmd = ft_strjoin(tmp, new);
-			}
+        if (!in_single_quotes && cmd[j] == '$')
+        {
+            // Variable expansion for other variables
+            tmp = ft_substr(cmd, 0, j);
+            new = ft_take_key(&cmd[j + 1], en, 0, &j);
+            free(cmd);
+            cmd = ft_strjoin(tmp, new);
+        }
 
-			j++;
-		}
-	return cmd;
+        j++;
+    }
+
+    return cmd;
 }
+
+
 
 
 int main(int argc, char **argv, char **env)
