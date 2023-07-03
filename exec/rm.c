@@ -1,4 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rm.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/03 08:19:19 by ouaarabe          #+#    #+#             */
+/*   Updated: 2023/07/03 08:20:46 by ouaarabe         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Minishell.h"
+
+bool is_redirection(char ch) 
+{
+    return (ch == '<' || ch == '>');
+}
 
 splitnode   *remove_redirections(splitnode  *node)
 {
@@ -53,6 +70,8 @@ int word_count(char **cmdl)
             bool inside_quotes = false;
             while (cmdl[i][j]) 
             {
+                if (!is_redirection(cmdl[i][j]))
+                    print = true;
                 if (!inside_quotes && !is_quote(cmdl[i][j])) 
                 {
                     if (cmdl[i][j] == '<' && cmdl[i][j + 1] != '<')
@@ -78,8 +97,6 @@ int word_count(char **cmdl)
                     }
                     else if (cmdl[i][j] == '<' && cmdl[i][j + 1] == '<')
                         later();
-                    else
-                        print = true;
                 }
                 
                 if (is_quote(cmdl[i][j]))
@@ -107,68 +124,68 @@ char **newstring(char **cmdl, int wc)
     int k = 0;
     int z;
 
-
+    
     new_s = (char **)ft_calloc((wc + 1) , sizeof(char *));
-     while (cmdl[i]) 
+     while (cmdl[i] && i < wc) 
+    {
+        j = 0;
+        bool inside_quotes = false;
+        while (cmdl[i][j]) 
         {
-            j = 0;
-            bool inside_quotes = false;
-            while (cmdl[i][j]) 
+            if (inside_quotes || !is_redirection(cmdl[i][j]))
             {
-                if (!inside_quotes && !is_quote(cmdl[i][j])) 
-                {
-                    if (cmdl[i][j] == '<' && cmdl[i][j + 1] != '<')
-                    {
-                        if (cmdl[i][j + 1])
-                        j +=   get_fl(&cmdl[i][j + 1]);
-                        else if (cmdl[i + 1])
-                        j = get_fl(cmdl[++i]);
-                    }
-                    else if (cmdl[i][j] == '>' && cmdl[i][j + 1] != '>')
-                    {
-                        if (cmdl[i][j + 1])
-                        j +=   get_fl(&cmdl[i][j + 1]);
-                        else if (cmdl[i + 1])
-                        j = get_fl(cmdl[++i]);
-                    }
-                    else if (cmdl[i][j] == '>' && cmdl[i][j + 1] == '>')
-                    {
-                        if (cmdl[i][j + 2])
-                        j +=   get_fl(&cmdl[i][j + 2]) + 1;
-                        else if (cmdl[i + 1])
-                        j = get_fl(cmdl[++i]);
-                    }
-                    else if (cmdl[i][j] == '<' && cmdl[i][j + 1] == '<')
-                        later();
-                    else
-                    {
-                        print = true;
-                        z = i;
-                        count++;
-                    }
-                }
-                if (cmdl[i][j])
-                {
-                    if (is_quote(cmdl[i][j]))
-                        inside_quotes = !inside_quotes;
-                    j++;
-                }
+                print = true;
+                z = i;
+                count++;
             }
-            if (print)
+            if (!inside_quotes && !is_quote(cmdl[i][j])) 
             {
-                new_s[k] = (char *)ft_calloc((count + 1) , sizeof(char ));
-                j = 0;
-                while (j < count)
+                if (cmdl[i][j] == '<' && cmdl[i][j + 1] != '<')
                 {
-                    new_s[k][j] = cmdl[z][j];
-                    j++;
+                    if (cmdl[i][j + 1])
+                    j +=   get_fl(&cmdl[i][j + 1]);
+                    else if (cmdl[i + 1])
+                    j = get_fl(cmdl[++i]);
                 }
-                new_s[k][j] = '\0';
-                k++;
-                print = false;
-                count = 0;
+                else if (cmdl[i][j] == '>' && cmdl[i][j + 1] != '>')
+                {
+                    if (cmdl[i][j + 1])
+                    j +=   get_fl(&cmdl[i][j + 1]);
+                    else if (cmdl[i + 1])
+                    j = get_fl(cmdl[++i]);
+                }
+                else if (cmdl[i][j] == '>' && cmdl[i][j + 1] == '>')
+                {
+                    if (cmdl[i][j + 2])
+                    j +=   get_fl(&cmdl[i][j + 2]) + 1;
+                    else if (cmdl[i + 1])
+                    j = get_fl(cmdl[++i]);
+                }
+                else if (cmdl[i][j] == '<' && cmdl[i][j + 1] == '<')
+                    later();
             }
-            i++;
+            if (cmdl[i][j])
+            {
+                if (is_quote(cmdl[i][j]))
+                    inside_quotes = !inside_quotes;
+                j++;
+            }
         }
+        if (print)
+        {
+            new_s[k] = (char *)ft_calloc((count + 1) , sizeof(char ));
+            j = 0;
+            while (j < count)
+            {
+                new_s[k][j] = cmdl[z][j];
+                j++;
+            }
+            new_s[k][j] = '\0';
+            k++;
+            print = false;
+            count = 0;
+        }
+        i++;
+    }
         return new_s;
 }
