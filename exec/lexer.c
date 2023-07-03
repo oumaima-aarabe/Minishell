@@ -6,32 +6,12 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:29 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/06/06 01:02:08 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/03 08:33:23 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-
-int	all_spaces(char *line)
-{
-	int i;
-	int j;
-
-	j = strlen(line);
-	i = 0;
-	while(*line)
-	{
-		if(*line != ' ')
-			break;
-		i++;
-		line++;
-	}
-	if(i == j)
-		return 1;
-	return 0;
-
-}
 int	lexer(char *line)
 {
 	size_t	i;
@@ -39,21 +19,21 @@ int	lexer(char *line)
 
 	i = 0;
 	j = 0;
-	if(*line == '|')
+	if (*line == '|')
 		return (0);
-	while(*line)
+	while (*line)
 	{
-		if(*line == '\"')
+		if (*line == '\"')
 			i++;
-		else if(*line == '\'')
+		else if (*line == '\'')
 			j++;
 		else if (*line == '|')
 		{
-			if( !*(line + 1) || *(line + 1) == '|')
+			if (!*(line + 1) || *(line + 1) == '|')
 				return (0);
 			else if (*(line + 1) == ' ')
 			{
-				while(*(++line) == ' ')
+				while (*(++line) == ' ')
 				{
 					if (!*(line + 1) || *(line + 1) == '|')
 						return (0);
@@ -63,14 +43,11 @@ int	lexer(char *line)
 		}
 		line++;
 	}
-	if (i % 2 != 0 || j % 2 != 0)
-		return (0);
-	return (1);
+	return (i % 2 == 0 || j % 2 == 0);
 }
 
 int		lexer2(char *line)
 {
-
 	while (*line)
 	{
 		if (*line == '>')

@@ -2,53 +2,6 @@
 
 t_gs	g_v;
 
-// int which_quotes(char c) 
-// {
-// 	if (c == '\'')
-// 		return 1;
-// 	else if (c == '\"')
-// 		return 2;
-// 	return 0;
-// }
-
-// char  **checkquotes(char **splitdata, t_env *en)
-// {
-// 	char **new2_0 = NULL;
-// 	int start_index;
-// 	int i;
-// 	int j;
-	
-// 	i = 0;
-// 	while (splitdata[i]) 
-// 	{
-// 		j = 0;
-// 		while(splitdata[i][j])
-// 		{
-			
-// 			int quoteType = which_quotes(splitdata[i][j]);
-
-// 			if (quoteType == 1)
-// 			{
-// 				start_index = ++j;
-// 				while (splitdata[i][j] && quoteType != which_quotes(splitdata[i][j]))
-// 					j++;
-				
-// 			}
-// 			else if (quoteType == 2)
-// 			{
-// 				start_index = j;
-// 				while(splitdata[i][j] && quoteType != which_quotes(splitdata[i][j]))
-// 					j++;
-// 			}
-// 			if (splitdata[i][j])
-// 				j++;
-// 		}
-// 		i++;
-// 	}
-// 	return (new2_0);
-// }
-
-
 char *removequotes(char *input)
 {
 	int length = strlen(input);
@@ -92,14 +45,3 @@ char *removequotes(char *input)
 	}
 	return output;
 }
-
-// int main()
-// {
-// 	char input[] = "Hello 'World'! \"How are you?\"";
-// 	char *result = removequotes(input);
-// 	printf("Result: %s\n", result);
-// 	free(result);
-
-// 	return 0;
-// }
-

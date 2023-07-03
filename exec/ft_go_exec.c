@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_go_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/26 22:32:39 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/03 09:04:38 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int exec(char **cmd, t_env *env)
 		return (1);
 }
 
-int ft_one_cmd(splitnode *cmd, t_env *env)
+int ft_one_cmd(t_splitnode *cmd, t_env *env)
 {
 	int status;
 	int pid;
@@ -40,7 +40,7 @@ int ft_one_cmd(splitnode *cmd, t_env *env)
 
 
 
-int fork_execut(splitnode *ptr, t_fds pipe, t_env *env)
+int fork_execut(t_splitnode *ptr, t_fds pipe, t_env *env)
 {
 	int pid;
 
@@ -74,7 +74,7 @@ int fork_execut(splitnode *ptr, t_fds pipe, t_env *env)
 
 
 
-int ft_execut_cmd(splitnode *cmd)
+int ft_execut_cmd(t_splitnode *cmd)
 {
 	int fd[2];
 	int dexieme_fd[2];
@@ -134,7 +134,7 @@ int ft_exit_status(int	statu)
 	return (0);
 }
 
-void execution(splitnode *cmd)
+void execution(t_splitnode *cmd)
 {
 	int statu;
 
