@@ -104,7 +104,7 @@ char *get_redfilen(int *i, int *j, char **cmd_l, char *which_red, t_env *env)
     // return file_name;
 }
 
-void red_append(splitnode **node, int *i, int *j, char **cmdl, t_env *env) 
+void red_append(t_splitnode **node, int *i, int *j, char **cmdl, t_env *env) 
 {
     char *appfile = get_redfilen(i, j, cmdl, ">>", env);
     if (appfile) 
@@ -122,7 +122,7 @@ void red_append(splitnode **node, int *i, int *j, char **cmdl, t_env *env)
     }
 }
 
-void red_input(splitnode **node, int *i, int *j, char **cmdl, t_env *env) 
+void red_input(t_splitnode **node, int *i, int *j, char **cmdl, t_env *env) 
 {
     char *infile = get_redfilen(i, j, cmdl, "<", env);
     if (infile) 
@@ -140,7 +140,7 @@ void red_input(splitnode **node, int *i, int *j, char **cmdl, t_env *env)
     }
 }
 
-void red_output(splitnode **node, int *i, int *j, char **cmdl, t_env *env) 
+void red_output(t_splitnode **node, int *i, int *j, char **cmdl, t_env *env) 
 {
     char *outfile = get_redfilen(i, j, cmdl, ">", env);
     if (outfile) 
@@ -163,10 +163,10 @@ void later()
     return;
 }
 
-splitnode *handle_redirections(splitnode *node, t_env *env) 
+t_splitnode *handle_redirections(t_splitnode *node, t_env *env) 
 {
-    splitnode *current = node;
-    splitnode *trimmed;
+    t_splitnode *current = node;
+    t_splitnode *trimmed;
     while (current != NULL) 
     {   
         char **cmdl = current->splitdata;

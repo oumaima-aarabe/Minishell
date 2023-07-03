@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: azarda <azarda@student.42.fr>              +#+  +:+       +#+         #
+#    By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 15:19:53 by azarda            #+#    #+#              #
-#    Updated: 2023/06/22 23:39:18 by azarda           ###   ########.fr        #
+#    Updated: 2023/07/03 09:46:34 by ouaarabe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,9 +29,9 @@ SRC =	obj/ft_error.c\
 		obj/parse.c\
 		obj/utils1.c\
 		obj/utils2.c\
+		obj/utils3.c\
 		obj/main.c\
 		obj/lexer.c\
-		obj/Minishell.c \
 		obj/libft_util.c \
 		obj/exec.c \
 		obj/lst_utils.c \
@@ -39,6 +39,7 @@ SRC =	obj/ft_error.c\
 		obj/ft_go_exec.c\
 		obj/redirections.c\
 		obj/quotes.c\
+		obj/free.c\
 		obj/rm.c
 
 

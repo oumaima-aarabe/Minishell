@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 08:19:19 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/03 08:20:46 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/03 09:02:14 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,18 @@ bool is_redirection(char ch)
     return (ch == '<' || ch == '>');
 }
 
-splitnode   *remove_redirections(splitnode  *node)
+t_splitnode   *remove_redirections(t_splitnode  *node)
 {
-    splitnode* current = node;
+    t_splitnode *current = node;
     char **splitdata = NULL;
 
-    splitnode   *head = NULL;
-    splitnode   *tail = NULL;
+    t_splitnode   *head = NULL;
+    t_splitnode   *tail = NULL;
 
     while (current != NULL) 
     {
         splitdata = newstring(current->splitdata, word_count(current->splitdata));
-        splitnode   *new_node = create_new_node(splitdata, current->in, current->out);
+        t_splitnode   *new_node = create_new_node(splitdata, current->in, current->out);
 
         if (head == NULL) 
         {
@@ -47,9 +47,9 @@ splitnode   *remove_redirections(splitnode  *node)
     return head;
 }
 
-splitnode   *create_new_node(char   **splitdata, int in, int out) 
+t_splitnode   *create_new_node(char   **splitdata, int in, int out) 
 {
-    splitnode   *new_split_node = calloc(1, sizeof(splitnode));
+    t_splitnode   *new_split_node = calloc(1, sizeof(t_splitnode));
     new_split_node->splitdata = splitdata;
     new_split_node->prev = NULL;
     new_split_node->next = NULL;

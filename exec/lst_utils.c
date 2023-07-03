@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lst_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:51:59 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/19 15:18:05 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/03 08:46:58 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-t_env *ft_creat(char *key, char *val)
+t_env	*ft_creat(char *key, char *val)
 {
 	t_env	*new;
 
@@ -21,7 +21,7 @@ t_env *ft_creat(char *key, char *val)
 		return (NULL);
 	else
 	{
-		new->key =  key;
+		new->key = key;
 		new->valu = val;
 		new->next = NULL;
 	}
@@ -45,43 +45,39 @@ void	ft_lstadd_back(t_env **alst, t_env *new)
 			while (ptr->next != NULL)
 			{
 				ptr = ptr->next;
-
 			}
 			ptr->next = new;
 		}
 	}
 }
 
-t_env *duplicate_linked_list(t_env *last)
+t_env	*duplicate_linked_list(t_env *last)
 {
-    t_env *nhead = NULL;
-    t_env *tail = NULL;
-	t_env *nnode = NULL;
+	t_env	*nhead;
+	t_env	*tail;
+	t_env	*nnode;
 
-	if(!last)
+	nhead = NULL;
+	tail = NULL;
+	nnode = NULL;
+	if (!last)
 		return (NULL);
-
-
-    while (last)
+	while (last)
 	{
-        nnode = ft_creat(last->key, last->valu);
-
-
-        if (nhead == NULL)
+		nnode = ft_creat(last->key, last->valu);
+		if (nhead == NULL)
 		{
-            nhead = nnode;
-            tail = nnode;
-        }
+			nhead = nnode;
+			tail = nnode;
+		}
 		else
 		{
-            tail->next = nnode;
-            tail = nnode;
-        }
-
-        last = last->next;
-    }
-
-    return nhead;
+			tail->next = nnode;
+			tail = nnode;
+		}
+		last = last->next;
+	}
+	return (nhead);
 }
 
 void	ft_lstclear(t_env **alist)
@@ -97,21 +93,19 @@ void	ft_lstclear(t_env **alist)
 		clist = nlist;
 		free(clist);
 		nlist = nlist->next;
-
 	}
 	*alist = NULL;
 }
 
-
-int ft_lstsize(t_env *env)
+int	ft_lstsize(t_env *env)
 {
-	int i = 0;
+	int	i;
 
-	while(env)
+	i = 0;
+	while (env)
 	{
 		i++;
 		env = env->next;
 	}
-	return i;
-
+	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/03 08:18:50 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/03 10:03:20 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,11 @@ void  hendl_ctr_c(int sig)
 	(void)sig;
 	if (waitpid(0, NULL, WNOHANG))
 	{
-		// printf("\n");
-		// rl_on_new_line();
-		// rl_replace_line(" ", 0);
-		// rl_redisplay();
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line(" ", 0);
+		rl_redisplay();
 	}
-
-
 }
 
 int ft_sine(char *st, char c)
@@ -87,11 +85,11 @@ t_env *environment(char **env)
 
 //________________________________________________________________________________
 
-void free_split_nodes(splitnode *head)
+void free_split_nodes(t_splitnode *head)
 {
     while (head != NULL)
     {
-        splitnode   *current = head;
+        t_splitnode   *current = head;
         head = head->next;
 
         int i = 0;
@@ -191,7 +189,7 @@ int main(int argc, char **argv, char **env)
 	// char *pwd;
 	char *prompt;
 	// char *path;
-	splitnode *tokens = NULL;
+	t_splitnode *tokens = NULL;
 
 	(void)argc;
 	(void)argv;

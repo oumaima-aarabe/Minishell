@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   white_space.c                                      :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/05/25 00:10:14 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/03 09:45:03 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
+int	ft_strlen(char *s)
+{
+	const char	*c;
 
-// size_t	ft_strlen(const	char *s)
-// {
-// 	const char	*c;
-
-// 	c = s;
-// 	while (*c)
-// 		c++;
-// 	return ((size_t)(c - s));
-// }
+	c = s;
+	while (*c)
+		c++;
+	return ((size_t)(c - s));
+}
 
 char	*ft_strchr(char *s, int c)
 {
@@ -39,29 +38,7 @@ char	*ft_strchr(char *s, int c)
 	return (NULL);
 }
 
-// char	*ft_strdup( char *s1)
-// {
-// 	size_t	len;
-// 	char	*dupl;
-// 	char	*assl;
-// 	size_t	i;
-
-// 	len = ft_strlen(s1);
-// 	assl = (char *)s1;
-// 	i = 0;
-// 	dupl = (char *)malloc(sizeof(*s1) * (len + 1));
-// 	if (!dupl)
-// 		return (NULL);
-// 	while (i < len)
-// 	{
-// 		dupl[i] = assl[i];
-// 		i++;
-// 	}
-// 	dupl[i] = '\0';
-// 	return (dupl);
-// }
-
-size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+size_t	ft_strlcpy(char *dest, char *src, size_t size)
 {
 	size_t	c;
 
@@ -75,24 +52,6 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 		*dest = '\0';
 	return (c);
 }
-
-// char	*ft_substr(char *s, unsigned int start, size_t len)
-// {
-// 	char	*sub;
-
-// 	if (!s)
-// 		return (NULL);
-// 	if (start >= ft_strlen(s))
-// 		start = ft_strlen(s);
-// 	if (ft_strlen(s + start) < len)
-// 		len = ft_strlen(s + start);
-// 	sub = (char *)malloc(sizeof(*s) * (len + 1));
-// 	if (!sub)
-// 		return (NULL);
-// 	ft_strlcpy(sub, s + start, len + 1);
-//     free(s);
-// 	return (sub);
-// }
 
 char	*ft_strtrim(char *s1, char *set)
 {
@@ -114,23 +73,45 @@ char	*ft_strtrim(char *s1, char *set)
 	return (ft_substr(s1, i, len));
 }
 
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*tab;
+	int		len_s1;
+	int		len_s2;
+	int		i;
+	int		j;
 
-char    *ft_strcat(char *destination, const char    *source)
- {
-    char    *result = NULL;
-    int i = -1;
-    int j = -1;
-    // Move the pointer to the end of the destination string
-    result = malloc(strlen(destination) + strlen(source) + 1);
-    while (destination[++i] != '\0')
-        result[i] = destination[i];
-
-    // Copy the characters from the source string to the destination
-    while (source[++j] != '\0')
-        result[i++] = source[j];
-    // Append a null character at the end of the concatenated string
-    result[i] = '\0';
-
-    return result;
+	i = 0;
+	j = 0;
+	if(!s1 && s2)
+	{
+		tab = malloc(ft_strlen(s2) + 1);
+		while(s2[i])
+		{
+			tab[i] = s2[i];
+			i++;
+		}
+		tab[i] = '\0';
+		free(s2);
+		return (tab);
+	}
+	if (!s1 || !s2)
+		return (NULL);
+	len_s1 = ft_strlen(s1);
+	len_s2 = ft_strlen(s2);
+	tab = (char *)malloc(sizeof(char) * ((len_s1 + len_s2) + 1));
+	if (!tab)
+		return (NULL);
+	while (s1[i])
+	{
+		tab[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+	{
+		tab[i++] = s2[j++];
+	}
+	free(s1);
+	free(s2);
+	return (tab[i] = '\0', tab);
 }
-

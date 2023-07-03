@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:46:07 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/03 08:20:17 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/03 09:59:59 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,44 +14,48 @@
 
 t_gs	g_v;
 
-char **apply_ex_q(char **splitdata, t_env *en) 
+char	**apply_ex_q(char **splitdata, t_env *en)
 {
-    int i;
-    
-    i = 0;
-    while(splitdata[i]) 
-    {
-        char *expanded = ft_expand(splitdata[i], en);
-        splitdata[i] = expanded;
-        char *quotesRemoved = removequotes(splitdata[i]);
-        splitdata[i] = quotesRemoved;
-        i++;
-    }
-    return (splitdata);
+	int		i;
+	char	*expanded;
+	char	*quotesremoved;
+
+	i = 0;
+	while (splitdata[i])
+	{
+		expanded = ft_expand(splitdata[i], en);
+		splitdata[i] = expanded;
+		quotesremoved = removequotes(splitdata[i]);
+		splitdata[i] = quotesremoved;
+		i++;
+	}
+	return (splitdata);
 }
 
-splitnode *iteratelist(splitnode *head, t_env *en) 
+t_splitnode	*iteratelist(t_splitnode *head, t_env *en)
 {
-    splitnode *current = head;
-    while (current != NULL) 
-    {
-        char **splitdata = current->splitdata;
-        
-        splitdata = apply_ex_q(splitdata, en);
-        
-        current = current->next;
-    }
-    return (head);
+	t_splitnode	*current;
+	char		**splitdata;
+
+	current = head;
+	while (current != NULL)
+	{
+		splitdata = current->splitdata;
+		splitdata = apply_ex_q(splitdata, en);
+		current = current->next;
+	}
+	return (head);
 }
 
-splitnode   *parsing(char* prompt, t_env *env)
+t_splitnode	*parsing(char	*prompt, t_env *env)
 {
-    Node* node = splitstring(prompt);
-    splitnode* tokens = splitdatalinkedlist(node);
-    freenodes(node);
+	t_Node		*node;
+	t_splitnode	*tokens;
 
-    tokens = handle_redirections(tokens, env);
-    iteratelist(tokens, env);
-   
-    return(tokens);
+	node = splitstring(prompt);
+	tokens = splitdatalinkedlist(node);
+	freenodes(node);
+	tokens = handle_redirections(tokens, env);
+	iteratelist(tokens, env);
+	return (tokens);
 }
