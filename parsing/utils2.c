@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/01 02:34:43 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/03 05:41:56 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,24 +76,6 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 	return (c);
 }
 
-// char	*ft_substr(char *s,  int start, int len)
-// {
-// 	char	*sub;
-
-// 	if (!s)
-// 		return (NULL);
-// 	if (start >= ft_strlen(s))
-// 		start = ft_strlen(s);
-// 	if (ft_strlen(s + start) < len)
-// 		len = ft_strlen(s + start);
-// 	sub = (char *)malloc(sizeof(*s) * (len + 1));
-// 	if (!sub)
-// 		return (NULL);
-// 	ft_strlcpy(sub, s + start, len + 1);
-//     free(s);
-// 	return (sub);
-// }
-
 char	*ft_strtrim(char *s1, char *set)
 {
 	size_t	i;
@@ -113,7 +95,6 @@ char	*ft_strtrim(char *s1, char *set)
 	len = j - i + 1;
 	return (ft_substr(s1, i, len));
 }
-
 
 char    *ft_strcat(char *destination, const char    *source)
  {

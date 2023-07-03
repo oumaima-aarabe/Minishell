@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 00:19:11 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/02 01:19:44 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/03 06:19:11 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,13 +106,8 @@ char *get_redfilen(int *i, int *j, char **cmd_l, char *which_red, t_env *env)
             *j += file_len;
         }
     }
-    
-    // printf("fl : %s ", file_name);
-    file_name = ft_expand(file_name, env);
-    // true_face = removequotes(ft_expand(file_name, env));
-    printf("expanded :%s\n", file_name);
-    // return true_face;
-    return file_name;
+    true_face = removequotes(ft_expand(file_name, env));
+    return true_face;
 }
 
 void red_append(splitnode **node, int *i, int *j, char **cmdl, t_env *env) 
