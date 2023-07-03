@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:43 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/01 04:56:28 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/03 08:08:43 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char *removequotes(char *input)
 	int count = 0;
 	int insinglequotes = 0;
 	int indoublequotes = 0;
-
+	printf("in : %s\n", input);
 	// Count the number of characters without quotes
 	int i = 0;
 	while (i < length)
@@ -105,6 +105,7 @@ char *removequotes(char *input)
 		}
 		i++;
 	}
+	printf("OUT : %s\n", output);
 	return output;
 }
 
