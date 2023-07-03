@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/06/26 22:30:35 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/03 08:18:50 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,13 +108,13 @@ void free_split_nodes(splitnode *head)
 
 //________________________________________________________________________________
 
-char *ft_take_key(char *str, t_env *env, int j)
+char *ft_take_key(char *str, t_env *env, int j, int len)
 {
 
 	str += j;
 	while(env)
 	{
-		if(!ft_strcmp(str, env->key))
+		if(!ft_strncmp(str, env->key, len))
 		return (ft_strdup(env->valu));
 		env = env->next;
 	}
@@ -131,6 +131,7 @@ char *ft_expand(char *cmd, t_env *en)
 
 		while (cmd[j])
 		{
+			// printf ("old : j = %d cmd ={%s}\n", j, cmd);
 			if (cmd[j] == '\'')
 			{
 				if (!in_double_quotes)
@@ -153,14 +154,34 @@ char *ft_expand(char *cmd, t_env *en)
 			}
 			else if (!in_single_quotes && cmd[j] == '$')
 			{
+				int len = 0;
+				int pos = j + 1;
+				while (cmd[pos] && (isalnum(cmd[pos]) || cmd[pos] == '_'))
+				{
+					len++;
+					pos++;
+				}
 				// Variable expansion for other variables
 				tmp = ft_substr(cmd, 0, j);
-				new = ft_take_key(cmd, en, j + 1);
-				free(cmd);
-				cmd = ft_strjoin(tmp, new);
+				new = ft_substr(cmd, j + len + 1, ft_strlen(cmd) - (j + len + 1));
+				char *value = ft_take_key(cmd, en, j + 1, len);
+				if (ft_strlen(value))
+				{
+					char *expanded = ft_strjoin(value, new);
+					free(cmd);
+					cmd = ft_strjoin(tmp, expanded);
+					j += len + 1;
+				}
+				else
+				{
+					free(cmd);
+					cmd = ft_strjoin(tmp, new);
+				}
+				
 			}
-
-			j++;
+			else
+				j++;
+			// printf ("new : j = %d cmd ={%s}\n", j, cmd);
 		}
 	return cmd;
 }
