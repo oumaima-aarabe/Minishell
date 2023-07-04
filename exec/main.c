@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/03 10:03:20 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/04 17:44:51 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ char *ft_expand(char *cmd, t_env *en)
 					free(cmd);
 					cmd = ft_strjoin(tmp, new);
 				}
-				
+
 			}
 			else
 				j++;
@@ -220,8 +220,10 @@ int main(int argc, char **argv, char **env)
 			continue;
 		}
 		tokens = parsing(prompt, g_v.env);
-		if(!tokens)
-			continue;
+		// if(!tokens)
+		// {
+		// 	continue;
+		// }
 		free(prompt);
 		prompt = NULL;
 		execution(tokens);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_go_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/03 09:04:38 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/04 17:56:24 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,11 @@ int ft_execut_cmd(t_splitnode *cmd)
 	int pid = 0;
 	int status;
 
-
+	// printf("one  -->> %c\n", cmd->splitdata[0][0]);
+	if(!cmd->splitdata[0])
+		return (-1);
 	if(!cmd->next)
-		return (ft_one_cmd(cmd, g_v.env));
+		return (ft_one_cmd(cmd, g_v.env)); // ft_one_cd return -1 if execut bulti
 	else if (cmd->next)
 	{
 		pipe(fd);
