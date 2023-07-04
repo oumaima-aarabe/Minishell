@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/04 21:54:41 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/04 22:35:10 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,6 @@ int ft_one_cmd(t_splitnode *cmd, t_env *env)
 
 
 
-	// if(cmd->in != -1)
-	// 	dup2(cmd->in, 0);
-
 
 
 	if(cmd->in != -1)
@@ -52,7 +49,7 @@ int ft_one_cmd(t_splitnode *cmd, t_env *env)
 
 		if(cmd->in != -1)
 		{
-		dup2(fd_in, 1);
+		dup2(fd_in, 0);
 		close(fd_in);
 		}
 		if(cmd->out != -1)
@@ -75,7 +72,7 @@ int ft_one_cmd(t_splitnode *cmd, t_env *env)
 	waitpid(pid, &status, 0);
 	if(cmd->in != -1)
 	{
-	dup2(fd_in, 1);
+	dup2(fd_in, 0);
 	close(fd_in);
 	}
 	if(cmd->out != -1)
@@ -83,6 +80,7 @@ int ft_one_cmd(t_splitnode *cmd, t_env *env)
 	dup2(fd_out, 1);
 	close(fd_out);
 	}
+	// printf("-->> %d\n", status);
 	return (status);
 }
 
@@ -135,7 +133,7 @@ int ft_execut_cmd(t_splitnode *cmd)
 
 	if(!cmd->next)
 		return (ft_one_cmd(cmd, g_v.env)); // ft_one_cd return -1 if execut bulti
-	else if (cmd->next)
+	if (cmd->next)
 	{
 		pipe(fd);
 		pid =  fork_execut(cmd, (t_fds){cmd->in, fd[1], fd[0], -1}, g_v.env);
@@ -192,11 +190,10 @@ void execution(t_splitnode *cmd)
 
 	statu = ft_execut_cmd(cmd);
 	// printf("%d\n", statu);
-	// 	// if(statu == -1)
-	// 	// {
-
-	// 	// 	return ;
-	// 	// }
+		// if(statu == 0)
+		// {
+		// 	return ;
+		// }
 	if (statu != -1)
 		ft_exit_status(statu);
 	printf("%d\n", g_v.ex_s);

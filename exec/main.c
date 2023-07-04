@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/04 21:55:21 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/04 22:35:35 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ char *ft_expand(char *cmd, t_env *en)
 int main(int argc, char **argv, char **env)
 {
 	// char *pwd;
-	char *prompt;
+	char *prompt = NULL;
 	// char *path;
 	t_splitnode *tokens = NULL;
 
@@ -202,9 +202,6 @@ int main(int argc, char **argv, char **env)
 		signal(SIGINT, hendl_ctr_c);
 		signal(SIGQUIT, SIG_IGN);
 
-		// path = getcwd(NULL, 0);
-		// pwd = ft_strcat(path, " -> ");
-		// free (path);
 		prompt = readline("Minishell -> ");
 		if (!prompt)
 		{
@@ -220,10 +217,6 @@ int main(int argc, char **argv, char **env)
 			continue;
 		}
 		tokens = parsing(prompt, g_v.env);
-		// if(!tokens)
-		// {
-		// 	continue;
-		// }
 		free(prompt);
 		prompt = NULL;
 		execution(tokens);
