@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/04 22:35:10 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/04 23:09:30 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,6 @@ int ft_one_cmd(t_splitnode *cmd, t_env *env)
 	pid = 0;
 	int fd_in = dup(0);
 	int fd_out = dup(1);
-
-
-
-
 
 
 	if(cmd->in != -1)
@@ -64,11 +60,6 @@ int ft_one_cmd(t_splitnode *cmd, t_env *env)
 		return(perror("Minishell: "), -1);
 	if(pid == 0)
 		ft_exec(cmd->splitdata , env);
-
-
-
-
-
 	waitpid(pid, &status, 0);
 	if(cmd->in != -1)
 	{
@@ -80,7 +71,6 @@ int ft_one_cmd(t_splitnode *cmd, t_env *env)
 	dup2(fd_out, 1);
 	close(fd_out);
 	}
-	// printf("-->> %d\n", status);
 	return (status);
 }
 
@@ -90,7 +80,9 @@ int fork_execut(t_splitnode *ptr, t_fds pipe, t_env *env)
 {
 	int pid;
 
-	// if(ptr->in != 0)
+	// put
+
+	// if(ptr->in != -1)
 	// 	inp = ptr->in;
 	// if(ptr->out != 1)
 	// 	out = ptr->out;
@@ -196,6 +188,6 @@ void execution(t_splitnode *cmd)
 		// }
 	if (statu != -1)
 		ft_exit_status(statu);
-	printf("%d\n", g_v.ex_s);
+	// printf("%d\n", g_v.ex_s);
 
 }
