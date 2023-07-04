@@ -43,5 +43,6 @@ char *removequotes(char *input)
 		}
 		i++;
 	}
+	free (input);
 	return output;
 }
