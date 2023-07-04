@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/04 17:44:51 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/04 21:55:21 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,7 @@ int main(int argc, char **argv, char **env)
 		prompt = readline("Minishell -> ");
 		if (!prompt)
 		{
-			printf("exit \n");
+			printf("exit\n");
 			// free (pwd);
             exit(0);
 		}

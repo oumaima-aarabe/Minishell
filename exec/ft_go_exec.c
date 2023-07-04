@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/04 17:56:24 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/04 21:54:41 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,63 @@ int ft_one_cmd(t_splitnode *cmd, t_env *env)
 	int status;
 	int pid;
 	pid = 0;
-	if(ft_execut_bultins(cmd->splitdata))
-		return (-1);
-	pid = fork();
+	int fd_in = dup(0);
+	int fd_out = dup(1);
 
+
+
+
+	// if(cmd->in != -1)
+	// 	dup2(cmd->in, 0);
+
+
+
+	if(cmd->in != -1)
+	{
+		dup2(cmd->in, 0);
+		close(cmd->in);
+	}
+	if(cmd->out != -1)
+	{
+		dup2(cmd->out, 1);
+		close(cmd->out);
+	}
+	if(ft_execut_bultins(cmd->splitdata))
+	{
+
+		if(cmd->in != -1)
+		{
+		dup2(fd_in, 1);
+		close(fd_in);
+		}
+		if(cmd->out != -1)
+		{
+		dup2(fd_out, 1);
+		close(fd_out);
+		}
+		return (-1);
+	}
+	pid = fork();
 	if(pid == -1)
 		return(perror("Minishell: "), -1);
 	if(pid == 0)
 		ft_exec(cmd->splitdata , env);
+
+
+
+
+
 	waitpid(pid, &status, 0);
+	if(cmd->in != -1)
+	{
+	dup2(fd_in, 1);
+	close(fd_in);
+	}
+	if(cmd->out != -1)
+	{
+	dup2(fd_out, 1);
+	close(fd_out);
+	}
 	return (status);
 }
 
@@ -84,6 +132,7 @@ int ft_execut_cmd(t_splitnode *cmd)
 	// printf("one  -->> %c\n", cmd->splitdata[0][0]);
 	if(!cmd->splitdata[0])
 		return (-1);
+
 	if(!cmd->next)
 		return (ft_one_cmd(cmd, g_v.env)); // ft_one_cd return -1 if execut bulti
 	else if (cmd->next)
