@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/04 22:35:35 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/06 00:13:09 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ char *ft_expand(char *cmd, t_env *en)
 				cmd = ft_strjoin(tmp, ft_strjoin(ft_itoa(g_v.ex_s), new));
 				g_v.ex_s = 0;
 			}
-			else if (!in_single_quotes && cmd[j] == '$')
+			else if (!in_single_quotes && cmd[j] == '$' && cmd[j + 1] && (isalnum(cmd[j + 1]) || cmd[j + 1] == '_'))
 			{
 				int len = 0;
 				int pos = j + 1;
