@@ -100,7 +100,7 @@ int fork_execut(t_splitnode *ptr, t_fds pipe, t_env *env)
 			dup2(pipe.in, 0);
 			close(pipe.in);
 		}
-		if (pipe.out != 1)
+		if (pipe.out != 1) //ila kan -1
 		{
 			dup2(pipe.out, 1);
 			close(pipe.out);

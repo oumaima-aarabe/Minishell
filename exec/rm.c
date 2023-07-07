@@ -96,7 +96,10 @@ int word_count(char **cmdl)
                         j = get_fl(cmdl[++i]);
                     }
                     else if (cmdl[i][j] == '<' && cmdl[i][j + 1] == '<')
-                        later();
+                        {if (cmdl[i][j + 2])
+                        j +=   get_fl(&cmdl[i][j + 2]) + 1;
+                        else if (cmdl[i + 1])
+                        j = get_fl(cmdl[++i]);}
                 }
                 
                 if (is_quote(cmdl[i][j]))
@@ -162,7 +165,12 @@ char **newstring(char **cmdl, int wc)
                     j = get_fl(cmdl[++i]);
                 }
                 else if (cmdl[i][j] == '<' && cmdl[i][j + 1] == '<')
-                    later();
+                   {
+                    if (cmdl[i][j + 2])
+                    j +=   get_fl(&cmdl[i][j + 2]) + 1;
+                    else if (cmdl[i + 1])
+                    j = get_fl(cmdl[++i]);
+                }
             }
             if (cmdl[i][j])
             {
