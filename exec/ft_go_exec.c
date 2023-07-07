@@ -29,7 +29,6 @@ int ft_one_cmd(t_splitnode *cmd, t_env *env)
 	int fd_in = dup(0);
 	int fd_out = dup(1);
 
-
 	if(cmd->in != -1)
 	{
 		dup2(cmd->in, 0);
@@ -183,7 +182,6 @@ void execution(t_splitnode *cmd)
 {
 	int statu;
 
-
 	statu = ft_execut_cmd(cmd);
 	// printf("%d\n", statu);
 		// if(statu == 0)
@@ -193,5 +191,4 @@ void execution(t_splitnode *cmd)
 	if (statu != -1)
 		ft_exit_status(statu);
 	// printf("%d\n", g_v.ex_s);
-
 }

@@ -185,6 +185,7 @@ void	read_hd(char **cmdl, int *in, int *i, int *j, t_env *env)
 			free(line);
 		}
 	}
+	close (fd[1]);
 	wait(NULL);
 	free(lmtr);
 	*in = fd[0];
