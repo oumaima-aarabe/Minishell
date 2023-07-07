@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/04 22:29:39 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/07 22:43:22 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,21 @@ char **ft_my_env(t_env *en)
 	while(env)
 	{
 		tmp = env;
+		if(env->valu)
+		{
 		key = ft_strjoin(ft_strdup(tmp->key), ft_strdup("="));
 		valu = ft_strjoin(key ,ft_strdup(tmp->valu));
 		tab[i] = valu;
+		}
 		env = tmp->next;
 		i++;
 		free(tmp);
 	}
 	ft_lstclear(&env);
 	tab[i] = NULL;
+	i = 0;
+	while(tab[i])
+		printf("my env - > %s\n" , tab[i++]);
 	return tab;
 }
 
@@ -114,8 +120,8 @@ char *is_valid_cmd(char **path, char *cmd)
 	char *ss;
 	while(path[i])
 	{
-		if(!cmd[0]) // empty string
-			return (ft_print_err(cmd, ": command not found\n"), exit(127), NULL);
+		// printf("-->%s\n", cmd);
+
 		test = ft_strjoin(ft_strdup("/"), ft_strdup(cmd));
 		ss = ft_strjoin(ft_strdup(path[i]), test);
 		if(!(access(ss, F_OK)))

@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/07 10:29:57 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/07 22:31:08 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,10 @@ int phandle(int status)
 {
     int new = WTERMSIG(status);
     if (new == SIGSEGV)
-        ft_putstr_fd("yaha  segv ", 2);
+	{
+        ft_putstr_fd("ha wahd  segv ", 2);
+		puts("  ok");
+	}
 
     return (WTERMSIG(status) + 128);
 }
@@ -182,6 +185,7 @@ int ft_exit_status(int	statu)
 void execution(t_splitnode *cmd)
 {
 	int statu;
+			// printf("-->> %s\n",cmd->splitdata[0]);
 
 	statu = ft_execut_cmd(cmd);
 	// printf("%d\n", statu);
