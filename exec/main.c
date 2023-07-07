@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/06 00:13:09 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/07 22:29:20 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ void  hendl_ctr_c(int sig)
 	{
 		printf("\n");
 		rl_on_new_line();
-		// rl_replace_line(" ", 0);
+		rl_replace_line(" ", 0);
 		rl_redisplay();
+		// exit status
 	}
 }
 
@@ -113,7 +114,12 @@ char *ft_take_key(char *str, t_env *env, int j, int len)
 	while(env)
 	{
 		if(!ft_strncmp(str, env->key, len))
-		return (ft_strdup(env->valu));
+		{
+			if(env->valu)
+				return (ft_strdup(env->valu));
+			else
+				break;
+		}
 		env = env->next;
 	}
 	return (ft_strdup(""));
@@ -224,6 +230,7 @@ int main(int argc, char **argv, char **env)
 		tokens = parsing(prompt, g_v.env);
 		free(prompt);
 		prompt = NULL;
+		// puts("----mora hna bdit ana ------");
 		execution(tokens);
 		free_split_nodes(tokens);
 	}
