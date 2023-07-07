@@ -21,7 +21,7 @@ void  hendl_ctr_c(int sig)
 	{
 		printf("\n");
 		rl_on_new_line();
-		rl_replace_line(" ", 0);
+		// rl_replace_line(" ", 0);÷
 		rl_redisplay();
 	}
 }
@@ -210,7 +210,12 @@ int main(int argc, char **argv, char **env)
             exit(0);
 		}
 		// free(pwd);
-		add_history(prompt);
+		int i = -1;
+		while (prompt[++i])
+			if (prompt[i] != ' ' && prompt[i] != '\t')
+				break ;
+		if (prompt[i])
+			add_history(prompt);
 		if (!lexer(prompt) || !lexer2(prompt))
 		{
 			ft_syntax_err();
@@ -221,7 +226,6 @@ int main(int argc, char **argv, char **env)
 		prompt = NULL;
 		execution(tokens);
 		free_split_nodes(tokens);
-
 	}
 }
 

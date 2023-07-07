@@ -23,7 +23,7 @@ int	lexer(char *line)
 		return (0);
 	while (*line)
 	{
-		if (*line == '\"')
+		if (*line == '"')
 			i++;
 		else if (*line == '\'')
 			j++;
