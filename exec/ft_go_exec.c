@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/05 22:40:38 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/07 10:29:57 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int fork_execut(t_splitnode *ptr, t_fds pipe, t_env *env)
 		return(perror("Minishell "), -1);
 	if(pid == 0)
 	{
-		if (pipe.in != 0)
+		if (pipe.in != -1)
 		{
 			dup2(pipe.in, 0);
 			close(pipe.in);
@@ -133,7 +133,9 @@ int ft_execut_cmd(t_splitnode *cmd)
 		pipe(fd);
 		pid =  fork_execut(cmd, (t_fds){cmd->in, fd[1], fd[0], -1}, g_v.env);
 		close(fd[1]);
-		while(cmd->next->next != NULL)
+		if(cmd->next->next)
+			cmd = cmd->next;
+		while(cmd->next != NULL)
 		{
 			pipe(dexieme_fd);
 			pid =  fork_execut(cmd, (t_fds){fd[0], dexieme_fd[1], dexieme_fd[0], -1}, g_v.env);
@@ -144,7 +146,6 @@ int ft_execut_cmd(t_splitnode *cmd)
 			close(dexieme_fd[1]);
 			cmd = cmd->next;
 		}
-		cmd = cmd->next;
 		pid = fork_execut(cmd, (t_fds){fd[0], cmd->out, -1, -1}, g_v.env);
 		close(fd[0]);
 		waitpid(pid, &status, 0);
