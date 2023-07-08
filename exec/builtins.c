@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/06/24 21:15:37 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/08 14:26:39 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,9 @@ void ft_execut_cd(char *str, t_env *env)
 		free(pwd);
 
 
+
+//----------------------------------------------------------------
+
 	while(tmp)
 	{
 		if(!ft_strcmp("PWD", tmp->key))
@@ -146,6 +149,7 @@ void ft_execut_cd(char *str, t_env *env)
 		}
 		tmp = tmp->next;
 	}
+//----------------------------------------------------------------
 }
 
 //____________________________________pwd_________________________________________
@@ -212,7 +216,7 @@ int is_alphabet(int c)
 
 
 
-int ft_invalid_export_unset(char *cmd, char *bult)
+int	ft_invalid_export_unset(char *cmd, char *bult)
 {
 
 
@@ -285,25 +289,25 @@ int ft_cheak_expor(char *cmd, t_env *tmp)
 	return 0;
 }
 
-int ft_add_export(char *cmd , t_env *env)
+int ft_add_export(char *cmd)
 {
 	int j = 0;
 		if(ft_sine(cmd, '=') )
 		{
 			j = ft_sine(cmd, '=');
 			if(cmd[j - 1] == '+')
-				ft_lstadd_back(&env,ft_creat(ft_substr(cmd, 0, j - 1), ft_substr(cmd, j + 2, ft_strlen(cmd) - j)));
+				ft_lstadd_back(&g_v.env,ft_creat(ft_substr(cmd, 0, j - 1), ft_substr(cmd, j + 2, ft_strlen(cmd) - j)));
 			else
-				ft_lstadd_back(&env,ft_creat(ft_substr(cmd, 0, j), ft_substr(cmd, j + 1, ft_strlen(cmd) - j)));
+				ft_lstadd_back(&g_v.env,ft_creat(ft_substr(cmd, 0, j), ft_substr(cmd, j + 1, ft_strlen(cmd) - j)));
 		}
 		else
 		{
-			ft_lstadd_back(&env, ft_creat(ft_strdup(cmd), NULL));
+			ft_lstadd_back(&g_v.env, ft_creat(ft_strdup(cmd), NULL));
 		}
 	return (1);
 }
 
-void ft_execut_export(t_env *env, char **cmd)
+void  ft_execut_export(char **cmd)
 {
 	char 	*swap;
 
@@ -317,7 +321,7 @@ void ft_execut_export(t_env *env, char **cmd)
 	while(cmd[i])
 	{
 
-		if(ft_cheak_expor(cmd[i],env))
+		if(ft_cheak_expor(cmd[i],g_v.env))
 		{
 			if(cmd[i + 1])
 			{
@@ -326,7 +330,7 @@ void ft_execut_export(t_env *env, char **cmd)
 			}
 			return ;
 		}
-		if (ft_add_export(cmd[i] ,env))
+		if (ft_add_export(cmd[i]))
 		{
 			if(cmd[i + 1])
 			{
@@ -338,7 +342,7 @@ void ft_execut_export(t_env *env, char **cmd)
 		i++;
 	}
 
-	tmp = duplicate_linked_list(env);
+	tmp = duplicate_linked_list(g_v.env);
 
 
 	tmp1 = tmp;
@@ -545,7 +549,7 @@ int ft_execut_bultins(char **cmd)
 
 	else if(!(ft_strcmp(cmd[0], "export")))
 	{
-		ft_execut_export(g_v.env, cmd);
+		ft_execut_export(cmd);
 		return (1);
 	}
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/03 09:39:40 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/08 15:43:27 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,5 +156,9 @@ char			**ft_split(char *st, char c);
 int				ft_execut_cmd(t_splitnode *cmd);
 int				ft_execut_bultins(char **cmd);
 int				ft_sine(char *st, char c);
+
+
+
+int 			ft_add_export(char *cmd);
 
 #endif
