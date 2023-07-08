@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/08 15:42:39 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/08 16:10:30 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,9 +141,11 @@ int ft_execut_cmd(t_splitnode *cmd)
 		// puts("wra lwl ");
 
 		close(fd[1]);
-		if(cmd->next)
+		// if(cmd->next->next)
 			cmd = cmd->next;
-		while(cmd)
+
+
+		while(cmd->next != NULL)
 		{
 			// puts(" chi 7aja");
 			pipe(dexieme_fd);
@@ -154,14 +156,14 @@ int ft_execut_cmd(t_splitnode *cmd)
 			close(fd[0]);
 			fd[0] = dexieme_fd[0];
 			close(dexieme_fd[1]);
-			if (cmd->next == NULL)
-				break;
+			// if ()
+			// 	break;
 			cmd = cmd->next;
 		}
 		// cmd = cmd->next;
 			// printf("-- >> wra while %s\n", cmd->splitdata[0]);
 
-		// pid = fork_execut(cmd, (t_fds){fd[0], cmd->out, -1, -1}, g_v.env);
+		pid = fork_execut(cmd, (t_fds){fd[0], cmd->out, -1, -1}, g_v.env);
 		close(fd[0]);
 		waitpid(pid, &status, 0);
 		while(wait(NULL) != -1)
