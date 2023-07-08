@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 08:19:19 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/08 20:28:41 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/09 00:00:29 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,44 @@ t_splitnode   *remove_redirections(t_splitnode  *node, int hr)
 
     t_splitnode   *head = NULL;
     t_splitnode   *tail = NULL;
+    int             wc;
 
     while (current != NULL) 
     {
         if (hr == 0)
-            splitdata = newstring(current->splitdata, word_count(current->splitdata));
-        else if(hr == 1)
-            splitdata = ns_heredoc(current->splitdata, wc_heredoc(current->splitdata));
-        t_splitnode   *new_node = create_new_node(splitdata, current->in, current->out);
-
-        if (head == NULL) 
         {
-            head = new_node;
-            tail = head;
-        } else 
-        {
-            tail->next = new_node;
-            new_node->prev = tail;
-            tail = new_node;
+            wc = word_count(current->splitdata);
+            if (wc)
+                splitdata = newstring(current->splitdata, wc);
+            else 
+            {
+                current = current->next;
+                continue;
+            }
         }
+        else if(hr == 1)
+        {
+            wc =  wc_heredoc(current->splitdata);
+             if (wc)
+                splitdata = ns_heredoc(current->splitdata, wc);
+            else 
+            {
+                current = current->next;
+                continue;
+            }
+        }    
+            t_splitnode   *new_node = create_new_node(splitdata, current->in, current->out);
+
+            if (head == NULL) 
+            {
+                head = new_node;
+                tail = head;
+            } else 
+            {
+                tail->next = new_node;
+                new_node->prev = tail;
+                tail = new_node;
+            }
         current = current->next;
     }
 
