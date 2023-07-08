@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/07 22:29:20 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/08 14:22:12 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int ft_sine(char *st, char c)
 	return 0;
 }
 
-t_env *ft_shelvl(t_env *env)
+void	ft_shelvl(t_env *env)
 {
 	t_env *tmp;
 	static  int i;
@@ -56,25 +56,28 @@ t_env *ft_shelvl(t_env *env)
 				i += 1;
 			free(tmp->valu);
 			tmp->valu = ft_itoa(i);
+			return ;
 		}
 		tmp = tmp->next;
 	}
-	return(env);
+	ft_add_export("SHLVL=1");
 }
 
-t_env *environment(char **env)
+void	environment(char **env)
 {
 	int i = 0;
 	int j = 0;
-	t_env *en = NULL;
+	// g_v.env = malloc(sizeof(t_env));
+	// 	if(!g_v.env)
+	// 		return(exit(1));
+	// 	puts("herr");
 	while(env[i])
 	{
 		j = ft_sine(env[i], '=');
-		ft_lstadd_back(&en, ft_creat(ft_substr(env[i], 0, j), ft_substr(env[i], j + 1, (ft_strlen(env[i]) - j ))));
+		ft_lstadd_back(&g_v.env, ft_creat(ft_substr(env[i], 0, j), ft_substr(env[i], j + 1, (ft_strlen(env[i]) - j ))));
 		i++;
 	}
-	en = ft_shelvl(en);
-	return(en);
+	ft_shelvl(g_v.env);
 }
 
 
@@ -196,12 +199,15 @@ int main(int argc, char **argv, char **env)
 	char *prompt = NULL;
 	// char *path;
 	t_splitnode *tokens = NULL;
+	// int i = 0;
+	// while(env[i])
+	// 	printf("-> %s\n", env[i++]);
 
 	(void)argc;
 	(void)argv;
 	// if (!env[0])
 	// 	ft_syntax_err();
-	g_v.env = environment(env);
+	environment(env);
 	// rl_catch_signals = 0;
 	while(2307)
 	{

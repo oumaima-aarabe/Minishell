@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:51:59 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/03 08:46:58 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/08 13:19:41 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ t_env	*ft_creat(char *key, char *val)
 		return (NULL);
 	else
 	{
+						// printf("-->> %s\n", key);
+						// printf("-->> %s\n", val);
+
 		new->key = key;
 		new->valu = val;
 		new->next = NULL;
