@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/08 14:26:39 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/08 16:19:39 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -569,12 +569,6 @@ int ft_execut_bultins(char **cmd)
 	{
 		if(ft_execut_exit(cmd))
 			return (1);
-	}
-	else if(!ft_strcmp(cmd[0], "<<"))
-	{
-		ft_hairdoc(cmd);
-		return(1);
-
 	}
 	return(0);
 }
