@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:08:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/08 21:42:51 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/08 22:38:32 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ void	read_hd(char **cmdl, int *in, int *i, int *j, t_env *env)
 	int fd[2];
 	char *lmtr = get_redfilen(i, j, cmdl, "<<", env);
 	char *tmp = lmtr;
+	int k;
 
-			printf ("{%s} vs {%s}\n", lmtr, tmp);
 	lmtr = removequotes(lmtr);
+	k = ft_strcmp(lmtr, tmp);
 	char *line = NULL;
 	if (pipe(fd) < 0)
 		return ;
@@ -27,17 +28,16 @@ void	read_hd(char **cmdl, int *in, int *i, int *j, t_env *env)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		close(fd[0]);
+		// close(fd[0]);
 		while (1)
 		{
 			line = readline("$> ");
 			if (!line || !strcmp(line, lmtr))
 				exit(0);
-			printf ("2 : {%s} vs {%s}\n", lmtr, tmp);
-			if (!ft_strcmp(lmtr, tmp))
+			if (!k)
 			{
 				line = ft_expand(line, env);
-				puts("here");
+				// puts("here");
 			}
 			ft_putendl_fd(line, fd[1]);
 			free(line);
