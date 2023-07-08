@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/08 23:48:45 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/09 00:02:43 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ int main(int argc, char **argv, char **env)
 	// char *pwd;
 	char *prompt = NULL;
 	// char *path;
-	// t_splitnode *tokens = NULL;
+	t_splitnode *tokens = NULL;
 	// int i = 0;
 	// while(env[i])
 	// 	printf("-> %s\n", env[i++]);
@@ -234,13 +234,13 @@ int main(int argc, char **argv, char **env)
 			ft_syntax_err();
 			continue;
 		}
-		// tokens = parsing(prompt, g_v.env);
-		parsing(prompt, g_v.env);
+		tokens = parsing(prompt, g_v.env);
+		// parsing(prompt, g_v.env);
 		free(prompt);
 		prompt = NULL;
 		// puts("----mora hna bdit ana ------");
-		// execution(tokens);
-		// free_split_nodes(tokens);
+		execution(tokens);
+		free_split_nodes(tokens);
 	}
 }
 
