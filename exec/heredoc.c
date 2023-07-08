@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:08:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/08 20:23:22 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/08 21:42:51 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	read_hd(char **cmdl, int *in, int *i, int *j, t_env *env)
 	char *lmtr = get_redfilen(i, j, cmdl, "<<", env);
 	char *tmp = lmtr;
 
+			printf ("{%s} vs {%s}\n", lmtr, tmp);
 	lmtr = removequotes(lmtr);
 	char *line = NULL;
 	if (pipe(fd) < 0)
@@ -32,8 +33,12 @@ void	read_hd(char **cmdl, int *in, int *i, int *j, t_env *env)
 			line = readline("$> ");
 			if (!line || !strcmp(line, lmtr))
 				exit(0);
+			printf ("2 : {%s} vs {%s}\n", lmtr, tmp);
 			if (!ft_strcmp(lmtr, tmp))
+			{
 				line = ft_expand(line, env);
+				puts("here");
+			}
 			ft_putendl_fd(line, fd[1]);
 			free(line);
 		}
@@ -82,16 +87,16 @@ int wc_heredoc(char **cmdl)
 	int i = 0;
     int wc = 0;
     bool print = false;
-	
- 	while (cmdl[i]) 
+
+ 	while (cmdl[i])
 	{
 		int j = 0;
 		bool inside_quotes = false;
-		while (cmdl[i][j]) 
+		while (cmdl[i][j])
 		{
 			if (ft_strncmp("<<", &cmdl[i][j], 2))
 				print = true;
-			if (!inside_quotes && !is_quote(cmdl[i][j])) 
+			if (!inside_quotes && !is_quote(cmdl[i][j]))
 			{
 				if (cmdl[i][j] == '<' && cmdl[i][j + 1] == '<')
 				{
@@ -100,7 +105,7 @@ int wc_heredoc(char **cmdl)
 					else if (cmdl[i + 1])
 						j = get_fl(cmdl[++i]);}
 			}
-			
+
 			if (is_quote(cmdl[i][j]))
 				inside_quotes = !inside_quotes;
 			if (cmdl[i][j])
@@ -127,13 +132,13 @@ char **ns_heredoc(char **cmdl, int wc)
     int k = 0;
     int z;
 
-    
+
     new_s = (char **)ft_calloc((wc + 1) , sizeof(char *));
-     while (cmdl[i] && i < wc) 
+     while (cmdl[i] && i < wc)
     {
         j = 0;
         bool inside_quotes = false;
-        while (cmdl[i][j]) 
+        while (cmdl[i][j])
         {
             if (inside_quotes || strncmp("<<", &cmdl[i][j], 2))
             {
@@ -141,7 +146,7 @@ char **ns_heredoc(char **cmdl, int wc)
                 z = i;
                 count++;
             }
-            if (!inside_quotes && !is_quote(cmdl[i][j])) 
+            if (!inside_quotes && !is_quote(cmdl[i][j]))
             {
                 if (cmdl[i][j] == '<' && cmdl[i][j + 1] == '<')
                 {

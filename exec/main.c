@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/08 20:33:25 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/08 21:39:30 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,9 +136,10 @@ char *ft_expand(char *cmd, t_env *en)
 	int in_single_quotes = 0;
 	int in_double_quotes = 0;
 
+		// printf ("cmd ={%s}\n", cmd);
+		fflush(stdout);
 		while (cmd[j])
 		{
-			// printf ("old : j = %d cmd ={%s}\n", j, cmd);
 			if (cmd[j] == '\'')
 			{
 				if (!in_double_quotes)
