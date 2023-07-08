@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/08 16:19:39 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/08 19:58:55 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,13 @@ void ft_execut_cd(char *str, t_env *env)
 		if(!ft_strcmp("PWD", env->key))
 		{
 			old = ft_strdup(env->valu);
+
 		}
 		env = env->next;
 	}
+	if(!old)
+		old = getcwd(NULL, 0);
+
 		if(!str)
 		{
 			if(!hom)
@@ -136,19 +140,12 @@ void ft_execut_cd(char *str, t_env *env)
 		}
 		if(!ft_strcmp("OLDPWD", tmp->key))
 		{
-			if(old)
-			{
 			free(tmp->valu);
-			tmp->valu = old;
-			}
-			else
-			{
-			free(tmp->valu);
-			tmp->valu = ft_strdup("");
-			}
+			tmp->valu = ft_strdup(old);
 		}
 		tmp = tmp->next;
 	}
+	free(old);
 //----------------------------------------------------------------
 }
 

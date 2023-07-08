@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/08 14:22:12 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/08 17:34:42 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,6 @@ int main(int argc, char **argv, char **env)
 		tokens = parsing(prompt, g_v.env);
 		free(prompt);
 		prompt = NULL;
-		// puts("----mora hna bdit ana ------");
 		execution(tokens);
 		free_split_nodes(tokens);
 	}
