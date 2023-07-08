@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 08:19:19 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/03 09:02:14 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/08 20:28:41 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ bool is_redirection(char ch)
     return (ch == '<' || ch == '>');
 }
 
-t_splitnode   *remove_redirections(t_splitnode  *node)
+t_splitnode   *remove_redirections(t_splitnode  *node, int hr)
 {
     t_splitnode *current = node;
     char **splitdata = NULL;
@@ -27,7 +27,10 @@ t_splitnode   *remove_redirections(t_splitnode  *node)
 
     while (current != NULL) 
     {
-        splitdata = newstring(current->splitdata, word_count(current->splitdata));
+        if (hr == 0)
+            splitdata = newstring(current->splitdata, word_count(current->splitdata));
+        else if(hr == 1)
+            splitdata = ns_heredoc(current->splitdata, wc_heredoc(current->splitdata));
         t_splitnode   *new_node = create_new_node(splitdata, current->in, current->out);
 
         if (head == NULL) 

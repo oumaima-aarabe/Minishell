@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 08:40:44 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/03 09:15:59 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/08 16:48:03 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,17 @@ void	ft_putstr_fd(char *s, int fd)
 		return ;
 	while (s[i])
 		write(fd, &s[i++], 1);
+}
+void	ft_putendl_fd(char *s, int fd)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return ;
+	while (s[i])
+		write(fd, &s[i++], 1);
+		write(fd, "\n", 1);
 }
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)

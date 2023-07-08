@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/08 14:22:12 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/08 20:33:25 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,6 +233,7 @@ int main(int argc, char **argv, char **env)
 			ft_syntax_err();
 			continue;
 		}
+		// tokens = parsing(prompt, g_v.env);
 		tokens = parsing(prompt, g_v.env);
 		free(prompt);
 		prompt = NULL;

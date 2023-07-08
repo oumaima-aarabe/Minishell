@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: azarda <azarda@student.42.fr>              +#+  +:+       +#+         #
+#    By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 15:19:53 by azarda            #+#    #+#              #
-#    Updated: 2023/07/04 14:46:32 by azarda           ###   ########.fr        #
+#    Updated: 2023/07/08 16:10:14 by ouaarabe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRC =	obj/ft_error.c\
 		obj/ft_go_exec.c\
 		obj/redirections.c\
 		obj/quotes.c\
+		obj/heredoc.c\
 		obj/free.c\
 		obj/rm.c
 

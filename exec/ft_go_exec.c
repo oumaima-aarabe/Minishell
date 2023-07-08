@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_go_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/08 15:42:39 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/08 20:36:04 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int fork_execut(t_splitnode *ptr, t_fds pipe, t_env *env)
 			dup2(pipe.in, 0);
 			close(pipe.in);
 		}
-		if (pipe.out != 1) //ila kan -1
+		if (pipe.out != -1) //ila kan -1
 		{
 			dup2(pipe.out, 1);
 			close(pipe.out);

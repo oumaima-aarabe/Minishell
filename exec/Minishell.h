@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/08 15:43:27 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/08 20:32:30 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,17 +102,27 @@ t_splitnode		*handle_redirections(t_splitnode *node, t_env *env);
 t_splitnode		*create_new_node(char **splitdata, int in, int out);
 int				word_count(char **cmdl);
 char			**newstring(char **cmdl, int wc);
-t_splitnode		*remove_redirections(t_splitnode *node);
+t_splitnode   	*remove_redirections(t_splitnode  *node, int hr);
 bool			is_quote(char c);
 int				get_fl(const char *str);
-void			later(void);
+bool			is_redirection(char ch);
 
+// void		parsing(char *prompt, t_env *env);
 t_splitnode		*parsing(char *prompt, t_env *env);
 void			hendl_ctr_c(int sig);
 void			*ft_calloc(size_t count, size_t size);
 char			**checkquotes(char **list, t_env *env);
 char			*ft_strtrim(char *s1, char *set);
 char			*get_redfilen(int *i, int *j, char **cmd_l, char *which_red, t_env *env);
+
+////////////////////////////////////////////////////////////////
+///////////////////////HEREDOC//////////////////////////////////
+
+void			read_hd(char **cmdl, int *in, int *i, int *j, t_env *env);
+t_splitnode		*handle_heredoc(t_splitnode *node, t_env *env);
+int				wc_heredoc(char **cmdl);
+char			**ns_heredoc(char **cmdl, int wc);
+
 
 ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
@@ -146,6 +156,7 @@ char			*ft_expand(char *cmd, t_env *en);
 
 void			execution(t_splitnode *cmd);
 void			ft_putstr_fd(char *s, int fd);
+void			ft_putendl_fd(char *s, int fd);
 void			ft_free_(char **tab);
 void			ft_exec(char **cm, t_env *en);
 void			ft_print_err(char *cmd, char *st);
