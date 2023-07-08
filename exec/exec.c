@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/08 15:44:03 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/08 20:25:29 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,7 @@ char **ft_my_env(t_env *en)
 		free(tmp);
 	}
 	ft_lstclear(&env);
-	tab[i] = NULL;
-	// i = 0;
-	// while(tab[i])
-	// 	printf("my env - > %s\n" , tab[i++]);
-	return tab;
+	return (tab[i] = NULL, tab);
 }
 
 char **ft_get_path(t_env *env)

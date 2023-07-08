@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/08 20:12:02 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/08 20:26:24 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,6 @@ void execution(t_splitnode *cmd)
 
 	statu = ft_execut_cmd(cmd);
 
-	// printf("%d\n", statu);
 		// if(statu == 0)
 		// {
 		// 	return ;
