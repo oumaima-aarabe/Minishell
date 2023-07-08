@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/08 16:18:01 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/08 16:52:25 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int ft_one_cmd(t_splitnode *cmd, t_env *env)
 int fork_execut(t_splitnode *ptr, t_fds pipe, t_env *env)
 {
 	int pid;
-
 	// puts("____________________________________");
 	// printf("in  -->> %d\n", ptr->in);
 	// printf("out -->> %d\n", ptr->out);
@@ -91,7 +90,11 @@ int fork_execut(t_splitnode *ptr, t_fds pipe, t_env *env)
 
 	pid = fork();
 	if(pid == -1)
+	{
+
+		puts("i = 1");
 		return(perror("Minishell "), -1);
+	}
 	if(pid == 0)
 	{
 		if (pipe.in != -1)
@@ -117,14 +120,11 @@ int fork_execut(t_splitnode *ptr, t_fds pipe, t_env *env)
 
 int ft_execut_cmd(t_splitnode *cmd)
 {
-	// int in_tmp = dup(0);
-	// int out_tmp = dup(1);
 	int fd[2];
 	int dexieme_fd[2];
 	int pid = 0;
 	int status;
 
-	// printf("one  -->> %c\n", cmd->splitdata[0][0]);
 	if(!cmd->splitdata[0])
 		return (-1);
 
@@ -132,9 +132,6 @@ int ft_execut_cmd(t_splitnode *cmd)
 		return (ft_one_cmd(cmd, g_v.env)); // ft_one_cd return -1 if execut bulti
 
 
-
-	// if (cmd->next)
-	// {
 		pipe(fd);
 		pid =  fork_execut(cmd, (t_fds){cmd->in, fd[1], fd[0], -1}, g_v.env);
 
@@ -145,9 +142,7 @@ int ft_execut_cmd(t_splitnode *cmd)
 
 		while(cmd->next != NULL)
 		{
-			// puts(" chi 7aja");
 			pipe(dexieme_fd);
-			// printf("-- >> >> %s\n", cmd->splitdata[0]);
 			pid =  fork_execut(cmd, (t_fds){fd[0], dexieme_fd[1], dexieme_fd[0], -1}, g_v.env);
 			if(pid == -1)
 				return (-1);
@@ -156,17 +151,13 @@ int ft_execut_cmd(t_splitnode *cmd)
 			close(dexieme_fd[1]);
 			cmd = cmd->next;
 		}
-		// cmd = cmd->next;
-			// printf("-- >> wra while %s\n", cmd->splitdata[0]);
-
 		pid = fork_execut(cmd, (t_fds){fd[0], cmd->out, -1, -1}, g_v.env);
 		close(fd[0]);
 		waitpid(pid, &status, 0);
+		cmd = cmd->next;
 		while(wait(NULL) != -1)
 			;
 	return (status);
-	// }
-	return (-1); //
 }
 
 
@@ -198,9 +189,9 @@ int ft_exit_status(int	statu)
 void execution(t_splitnode *cmd)
 {
 	int statu;
-			// printf("-->> %s\n",cmd->splitdata[0]);
 
 	statu = ft_execut_cmd(cmd);
+
 	// printf("%d\n", statu);
 		// if(statu == 0)
 		// {
