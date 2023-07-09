@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/08 21:17:50 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/09 16:36:35 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -469,31 +469,31 @@ int ft_execut_exit(char **cmd)
 	printf("exit\n");
 	if(cmd[1])
 	{
-		if(cmd[1][i] && !cmd[2])
+		if(cmd[1][i])
 		{
 			nb = ft_atoi(cmd[1]);
 			while(cmd[1][i])
 			{
-				if(!ft_isdigit(cmd[1][i]) && cmd[1][i] != '-')
+				if((!ft_isdigit(cmd[1][i]) && cmd[1][i] != '-'))
 				{
 					printf("minishell: exit: %s: numeric argument required\n", cmd[1]);
 					nb = 255;
-					break;
+					exit(nb);
 				}
 				i++;
 			}
+			if(cmd[1] && cmd[2])
+			{
+				ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+				return(1);
+			}
 		}
-		else if(cmd[1] && cmd[2])
-		{
-			ft_putstr_fd("minishell: exit: too many arguments\n", 2);
-			return(1);
-		}
-		// else
+		// else if(nb > 255 && nb < 0)
+		// {
+		// 	nb = 255;
+		// 	nb -= 256;
+		// }
 	}
-	// if(nb > 255)
-	// {
-	// 	nb -= 256;
-	// }
 	printf("%d\n", nb);
 	exit(nb);
 }
