@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/09 17:59:22 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/09 22:20:48 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,6 @@ void	environment(char **env)
 	ft_shelvl(g_v.env);
 }
 
-
-
-
-
-
-
-
 //________________________________________________________________________________
 
 void free_split_nodes(t_splitnode *head)
@@ -98,16 +91,19 @@ void free_split_nodes(t_splitnode *head)
         head = head->next;
 
         int i = 0;
-        while (current->splitdata[i])
-        {
-            free(current->splitdata[i]);
-            i++;
-        }
+		if (current->splitdata)
+		{
+			
+			while (current->splitdata[i])
+			{
+				free(current->splitdata[i]);
+				i++;
+			}
+		}
         free(current->splitdata);
         free(current);
     }
 }
-
 
 //________________________________________________________________________________
 

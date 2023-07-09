@@ -6,7 +6,7 @@
 #    By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 15:19:53 by azarda            #+#    #+#              #
-#    Updated: 2023/07/08 16:10:14 by ouaarabe         ###   ########.fr        #
+#    Updated: 2023/07/09 21:58:04 by ouaarabe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CC = cc
 
 READLINE = $(shell brew --prefix readline)
 
-FLAGS = -Wall -Werror -Wextra -I$(READLINE)/include #-g -fsanitize=address
+FLAGS = -Wall -Werror -Wextra -I$(READLINE)/include -g -fsanitize=address
 
 
 
