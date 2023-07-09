@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/09 16:36:35 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/09 17:06:30 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -460,6 +460,35 @@ int	ft_isdigit(int c)
 	return (0);
 }
 
+int	ft_atoi_exit(char *str)
+{
+	int		s;
+	long	d;
+
+	s = 1;
+	d = 0;
+	while ((*str >= 9 && *str <= 13) || *str == ' ')
+		str++;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			s *= -1;
+		str++;
+	}
+	while (*str >= '0' && *str <= '9')
+	{
+
+		d = d * 10 + *str - '0';
+			str++;
+	}
+	if (*str != '\0')
+	{
+		ft_print_err(str,  " numeric argument required\n");
+		exit(255);
+	}
+	return ((int)(d * s));
+}
+
 int ft_execut_exit(char **cmd)
 {
 	int nb;
@@ -471,17 +500,7 @@ int ft_execut_exit(char **cmd)
 	{
 		if(cmd[1][i])
 		{
-			nb = ft_atoi(cmd[1]);
-			while(cmd[1][i])
-			{
-				if((!ft_isdigit(cmd[1][i]) && cmd[1][i] != '-'))
-				{
-					printf("minishell: exit: %s: numeric argument required\n", cmd[1]);
-					nb = 255;
-					exit(nb);
-				}
-				i++;
-			}
+			nb = ft_atoi_exit(cmd[1]);
 			if(cmd[1] && cmd[2])
 			{
 				ft_putstr_fd("minishell: exit: too many arguments\n", 2);

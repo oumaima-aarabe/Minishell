@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/09 04:28:25 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/09 17:07:13 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ int main(int argc, char **argv, char **env)
 	// if (!env[0])
 	// 	ft_syntax_err();
 	environment(env);
-	// rl_catch_signals = 0;
+	rl_catch_signals = 0;
 	while(2307)
 	{
 		signal(SIGINT, hendl_ctr_c);
