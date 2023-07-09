@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/09 04:28:04 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/09 20:41:36 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ char			**ns_heredoc(char **cmdl, int wc);
 int				ft_strlen(char *str);
 char			*ft_substr(char *s, int start, int len);
 void			ft_putstr_fd(char *s, int fd);
-int				ft_strncmp(const char *s1, const char *s2, size_t n);
+int				ft_strncmp( char *s1,  char *s2, size_t n);
 char			*ft_strdup( char *s1);
 int				ft_strcmp(char *s1, char *s2);
 char			**ft_split(char *st, char c);

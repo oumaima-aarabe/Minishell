@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/09 17:56:54 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/09 20:42:47 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,7 +247,6 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 int ft_cheak_expor(char *cmd, t_env *tmp)
 {
 	int i = 0;
-
 	if(ft_invalid_export_unset(cmd, "export"))
 		return (1);
 	if(cmd)
@@ -274,8 +273,11 @@ int ft_cheak_expor(char *cmd, t_env *tmp)
 	}
 	while(cmd && tmp)
 	{
+
 		if(!ft_strncmp(cmd, tmp->key, i))
 		{
+			// printf("i ==  --- >>> %d\n", i);
+
 			i = ft_sine(cmd, '=');
 			if(i && cmd[i - 1] == '+')
 				tmp->valu =  ft_strjoin(tmp->valu, ft_substr(cmd, i + 1, (ft_strlen(cmd) - i)));
@@ -319,9 +321,9 @@ void  ft_execut_export(char **cmd)
 
 	i = 1;
 
-
 	while(cmd[i])
 	{
+
 
 		if(ft_cheak_expor(cmd[i],g_v.env))
 		{
@@ -331,7 +333,9 @@ void  ft_execut_export(char **cmd)
 				continue;
 			}
 			return ;
+			printf("wast export %s\n", cmd[i]);
 		}
+		puts("----------------------------------------");
 		if (ft_add_export(cmd[i]))
 		{
 			if(cmd[i + 1])
@@ -380,7 +384,7 @@ void  ft_execut_export(char **cmd)
 //__________________________________unset_________________________________________
 
 
-void	ft_list_remov( char *cmd)
+void	ft_list_remov(char *cmd)
 {
 	t_env	*tmp_env;
 	t_env	*prev;
@@ -402,7 +406,6 @@ void	ft_list_remov( char *cmd)
 			else
 			{
 				prev->next = tmp_env->next;
-				// g_v.env =
 				free(tmp_env->key);
 				free(tmp_env->valu);
 				free(tmp_env);
