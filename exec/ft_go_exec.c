@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/08 21:18:19 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/09 00:18:48 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,18 @@ int ft_one_cmd(t_splitnode *cmd, t_env *env)
 	int status;
 	int pid;
 	pid = 0;
-	int fd_in = dup(0);
-	int fd_out = dup(1);
+	int fd_out = -1;
+	int fd_in = -1;
 
 	if(cmd->in != -1)
 	{
+		fd_in = dup(0);
 		dup2(cmd->in, 0);
 		close(cmd->in);
 	}
 	if(cmd->out != -1)
 	{
+		fd_out = dup(1);
 		dup2(cmd->out, 1);
 		close(cmd->out);
 	}
@@ -83,6 +85,8 @@ int fork_execut(t_splitnode *ptr, t_fds pipe, t_env *env)
 	// printf("out -->> %d\n", ptr->out);
 	// puts("____________________________________");
 
+	if(!ptr->splitdata || (ptr->splitdata && !ptr->splitdata[0]))
+		return (0);
 	if(ptr->in != -1)
 		pipe.in = ptr->in;
 	if(ptr->out != -1)
