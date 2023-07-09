@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/09 21:55:22 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/09 22:59:41 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ int fork_execut(t_splitnode *ptr, t_fds pipe, t_env *env)
 	// printf("in  -->> %d\n", ptr->in);
 	// printf("out -->> %d\n", ptr->out);
 	// puts("____________________________________");
-
+	if(!ptr)
+		return (-1);
 	if(!ptr->splitdata || (ptr->splitdata && !ptr->splitdata[0]))
 		return (0);
 	if(ptr->in != -1)
