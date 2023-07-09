@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/09 17:06:30 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/09 17:56:54 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,12 @@ void ft_execut_cd(char *str, t_env *env)
 				ft_putstr_fd("minishell: cd: HOME not set\n", 2);
 				// ex_s = 1;
  			}
-			chdir(hom);
+			if(chdir(hom) < 0)
+			{
+				ft_putstr_fd("minishell: cd: ", 2);
+				perror(hom);
+				// printf()
+			}
 		}
 		else if(str[0] == '-' && str[1] == '\0')
 		{
@@ -390,17 +395,9 @@ void	ft_list_remov( char *cmd)
 			{
 				prev = tmp_env->next;
 				g_v.env = prev;
-				// printf("deleted: %s head %s", tmp_env->key , prev->key);
-				// fflush(stdout);
 				free(tmp_env->key);
 				free(tmp_env->valu);
 				free(tmp_env);
-				// while(*env)
-				// {
-				// 	printf("key == %s vall == %s \n", (*env)->key, (*env)->valu);
-				// 	(*env) = (*env)->next;
-				// }
-				// exit(0);
 			}
 			else
 			{
@@ -451,14 +448,6 @@ void ft_execut_env(t_env *env)
 //___________________________________exit_________________________________________
 
 
-int	ft_isdigit(int c)
-{
-	if (c >= '0' && c <= '9')
-	{
-		return (1);
-	}
-	return (0);
-}
 
 int	ft_atoi_exit(char *str)
 {
@@ -517,69 +506,25 @@ int ft_execut_exit(char **cmd)
 	exit(nb);
 }
 
-
-//________________________________________________________________________________
-
-
-
-void ft_hairdoc(char **tab)
-{
-	char *str;
-	while(1)
-	{
-		str = readline("> ");
-		if(!ft_strcmp(str, tab[1]))
-			break;
-		free(str);
-		str = NULL;
-	}
-
-}
-
-
-
-
-//________________________________________________________________________________
-
 int ft_execut_bultins(char **cmd)
 {
-
-
 	if(!ft_strcmp(cmd[0], "echo"))
-	{
-		ft_execut_echo(cmd);
-		return (1);
-	}
+		return (ft_execut_echo(cmd), 1);
 
 	else if(!ft_strcmp(cmd[0], "cd"))
-	{
-		ft_execut_cd(cmd[1], g_v.env);
-		return (1);
-	}
+		return (ft_execut_cd(cmd[1], g_v.env),  1);
 
 	else if(!ft_strcmp(cmd[0], "pwd"))
-	{
-		ft_ft_execut_pwd(cmd[1] ,g_v.env);
-		return (1);
-	}
+		return (ft_ft_execut_pwd(cmd[1] ,g_v.env), 1);
 
 	else if(!(ft_strcmp(cmd[0], "export")))
-	{
-		ft_execut_export(cmd);
-		return (1);
-	}
+		return (ft_execut_export(cmd), 1);
 
 	else if(!(ft_strcmp(cmd[0], "unset")))
-	{
-			ft_execut_unset(cmd);
-		return (1);
-	}
+		return (ft_execut_unset(cmd), 1);
 
 	else if(!(ft_strcmp(cmd[0], "env")))
-	{
-			ft_execut_env(g_v.env); // he nide SHELV
-			return(1);
-	}
+		return(ft_execut_env(g_v.env), 1);
 
 	else if(!ft_strcmp(cmd[0], "exit"))
 	{

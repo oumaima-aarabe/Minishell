@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/09 17:07:13 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/09 17:59:22 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@ void  hendl_ctr_c(int sig)
 	(void)sig;
 	if (waitpid(0, NULL, WNOHANG))
 	{
-		printf("\n");
+		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line(" ", 0);
 		rl_redisplay();
 		// exit status
 	}
+		// write(1, "\n", 1);
 }
 
 int ft_sine(char *st, char c)
