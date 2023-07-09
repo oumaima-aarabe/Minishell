@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/09 00:18:48 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/09 21:55:22 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,10 +129,14 @@ int ft_execut_cmd(t_splitnode *cmd)
 	int pid = 0;
 	int status;
 
-	if(!cmd->splitdata[0])
+	if(!cmd)
+		return(-1);
+	if(cmd && (!cmd->splitdata || (cmd->splitdata && !cmd->splitdata[0])))
 		return (-1);
+	// if(!cmd->splitdata[0])
+	// 	return (-1);
 
-	if(!cmd->next)
+	if(cmd && !cmd->next)
 		return (ft_one_cmd(cmd, g_v.env)); // ft_one_cd return -1 if execut bulti
 
 
