@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 08:19:19 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/09 00:00:29 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/09 04:24:36 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ char **newstring(char **cmdl, int wc)
 
     
     new_s = (char **)ft_calloc((wc + 1) , sizeof(char *));
-     while (cmdl[i] && i < wc) 
+     while (cmdl[i]) 
     {
         j = 0;
         bool inside_quotes = false;
@@ -181,13 +181,6 @@ char **newstring(char **cmdl, int wc)
                 }
                 else if (cmdl[i][j] == '>' && cmdl[i][j + 1] == '>')
                 {
-                    if (cmdl[i][j + 2])
-                    j +=   get_fl(&cmdl[i][j + 2]) + 1;
-                    else if (cmdl[i + 1])
-                    j = get_fl(cmdl[++i]);
-                }
-                else if (cmdl[i][j] == '<' && cmdl[i][j + 1] == '<')
-                   {
                     if (cmdl[i][j + 2])
                     j +=   get_fl(&cmdl[i][j + 2]) + 1;
                     else if (cmdl[i + 1])

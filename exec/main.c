@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/09 00:02:43 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/09 04:28:25 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,8 +228,9 @@ int main(int argc, char **argv, char **env)
 			if (prompt[i] != ' ' && prompt[i] != '\t')
 				break ;
 		if (prompt[i])
+		{
 			add_history(prompt);
-		if (!lexer(prompt) || !lexer2(prompt))
+			if (!lexer(prompt) || !lexer2(prompt))
 		{
 			ft_syntax_err();
 			continue;
@@ -240,7 +241,7 @@ int main(int argc, char **argv, char **env)
 		prompt = NULL;
 		// puts("----mora hna bdit ana ------");
 		execution(tokens);
-		free_split_nodes(tokens);
-	}
+		free_split_nodes(tokens);}
+		}
 }
 

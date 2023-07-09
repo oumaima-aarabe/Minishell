@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:08:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/09 00:57:04 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/09 04:25:32 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ char **ns_heredoc(char **cmdl, int wc)
 
 
     new_s = (char **)ft_calloc((wc + 1) , sizeof(char *));
-     while (cmdl[i] && i < wc)
+     while (cmdl[i])
     {
         j = 0;
         bool inside_quotes = false;

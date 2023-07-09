@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:46:07 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/09 00:02:23 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/09 04:26:58 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_splitnode	*parsing(char	*prompt, t_env *env)
 //     freenodes(node);
 
 // 	tokens = handle_heredoc(tokens, env);
-//     // tokens = handle_redirections(tokens, env);
+//     tokens = handle_redirections(tokens, env);
 //     iteratelist(tokens, env);
 //     t_splitnode *current = tokens;
 //     while (current != NULL) 
