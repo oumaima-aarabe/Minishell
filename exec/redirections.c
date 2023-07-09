@@ -170,31 +170,33 @@ t_splitnode *handle_redirections(t_splitnode *node, t_env *env)
 	{
 		char **cmdl = current->splitdata;
 		int i = 0;
-
-		while (cmdl[i])
+		if (cmdl)
 		{
-			int j = 0;
-			bool inside_quotes = false;
-
-			while (cmdl[i][j])
+			while (cmdl[i])
 			{
-				if (!inside_quotes && !is_quote(cmdl[i][j]))
-				{
-					if (cmdl[i][j] == '<' && cmdl[i][j + 1] != '<')
-						red_input(&current, &i, &j, cmdl, env);
-					else if (cmdl[i][j] == '>' && cmdl[i][j + 1] != '>')
-						red_output(&current, &i, &j, cmdl, env);
-					else if (cmdl[i][j] == '>' && cmdl[i][j + 1] == '>')
-						red_append(&current, &i, &j, cmdl, env);
-				}
-				if (is_quote(cmdl[i][j]))
-					inside_quotes = !inside_quotes;
+				int j = 0;
+				bool inside_quotes = false;
 
-				if (cmdl[i][j])
-					j++;
-			}
-			i++;
+				while (cmdl[i][j])
+				{
+					if (!inside_quotes && !is_quote(cmdl[i][j]))
+					{
+						if (cmdl[i][j] == '<' && cmdl[i][j + 1] != '<')
+							red_input(&current, &i, &j, cmdl, env);
+						else if (cmdl[i][j] == '>' && cmdl[i][j + 1] != '>')
+							red_output(&current, &i, &j, cmdl, env);
+						else if (cmdl[i][j] == '>' && cmdl[i][j + 1] == '>')
+							red_append(&current, &i, &j, cmdl, env);
+					}
+					if (is_quote(cmdl[i][j]))
+						inside_quotes = !inside_quotes;
+
+					if (cmdl[i][j])
+						j++;
+				}
+				i++;
 		}
+	}
 		current = current->next;
 	}
 	trimmed = remove_redirections(node, 0);

@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:46:07 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/09 04:26:58 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/09 22:02:56 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,19 @@ char	**apply_ex_q(char **splitdata, t_env *en)
 	char	*quotesremoved;
 
 	i = 0;
-	while (splitdata[i])
+	if (splitdata)
 	{
-		expanded = ft_expand(splitdata[i], en);
-		splitdata[i] = expanded;
-		quotesremoved = removequotes(splitdata[i]);
-		splitdata[i] = quotesremoved;
-		i++;
+		if (splitdata[i])
+		{
+			while (splitdata[i])
+			{
+				expanded = ft_expand(splitdata[i], en);
+				splitdata[i] = expanded;
+				quotesremoved = removequotes(splitdata[i]);
+				splitdata[i] = quotesremoved;
+				i++;
+			}
+		}
 	}
 	return (splitdata);
 }

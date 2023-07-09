@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 08:19:19 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/09 04:24:36 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/09 22:15:00 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,7 @@ t_splitnode   *remove_redirections(t_splitnode  *node, int hr)
             if (wc)
                 splitdata = newstring(current->splitdata, wc);
             else 
-            {
-                current = current->next;
-                continue;
-            }
+                splitdata = NULL;
         }
         else if(hr == 1)
         {
@@ -45,13 +42,9 @@ t_splitnode   *remove_redirections(t_splitnode  *node, int hr)
              if (wc)
                 splitdata = ns_heredoc(current->splitdata, wc);
             else 
-            {
-                current = current->next;
-                continue;
-            }
+                splitdata = NULL;
         }    
             t_splitnode   *new_node = create_new_node(splitdata, current->in, current->out);
-
             if (head == NULL) 
             {
                 head = new_node;
@@ -85,7 +78,8 @@ int word_count(char **cmdl)
         int i = 0;
         int wc = 0;
         bool print = false;
-
+    if (cmdl)
+    {
         while (cmdl[i]) 
         {
             int j = 0;
@@ -117,11 +111,6 @@ int word_count(char **cmdl)
                         else if (cmdl[i + 1])
                         j = get_fl(cmdl[++i]);
                     }
-                    else if (cmdl[i][j] == '<' && cmdl[i][j + 1] == '<')
-                        {if (cmdl[i][j + 2])
-                        j +=   get_fl(&cmdl[i][j + 2]) + 1;
-                        else if (cmdl[i + 1])
-                        j = get_fl(cmdl[++i]);}
                 }
                 
                 if (is_quote(cmdl[i][j]))
@@ -136,7 +125,8 @@ int word_count(char **cmdl)
             }
             i++;
         }
-        return (wc);
+    }
+    return (wc);
 }
 
 char **newstring(char **cmdl, int wc)

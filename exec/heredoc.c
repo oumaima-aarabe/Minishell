@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:08:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/09 04:25:32 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/09 22:09:25 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	read_hd(char **cmdl, int *in, int *i, int *j, t_env *env)
 {
 	int fd[2];
 	char *lmtr = get_redfilen(i, j, cmdl, "<<", env);
-	char *tmp = lmtr;
+	char *tmp = ft_strdup(lmtr);
 	int k;
 
 	lmtr = removequotes(lmtr);
@@ -46,6 +46,7 @@ void	read_hd(char **cmdl, int *in, int *i, int *j, t_env *env)
 	close (fd[1]);
 	wait(NULL);
 	free(lmtr);
+	free(tmp);
 	*in = fd[0];
 }
 
