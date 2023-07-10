@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 08:19:19 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/09 22:15:00 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/10 04:42:16 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_splitnode   *remove_redirections(t_splitnode  *node, int hr)
     {
         if (hr == 0)
         {
+            
             wc = word_count(current->splitdata);
             if (wc)
                 splitdata = newstring(current->splitdata, wc);
@@ -38,7 +39,10 @@ t_splitnode   *remove_redirections(t_splitnode  *node, int hr)
         }
         else if(hr == 1)
         {
-            wc =  wc_heredoc(current->splitdata);
+            if (g_v.sig_flag)
+                wc = 0;
+            else
+                wc =  wc_heredoc(current->splitdata);
              if (wc)
                 splitdata = ns_heredoc(current->splitdata, wc);
             else 
@@ -49,7 +53,13 @@ t_splitnode   *remove_redirections(t_splitnode  *node, int hr)
             {
                 head = new_node;
                 tail = head;
-            } else 
+                if (g_v.sig_flag)
+                {
+                    g_v.sig_flag = 0;
+                    return(head);
+                }
+            } 
+            else 
             {
                 tail->next = new_node;
                 new_node->prev = tail;

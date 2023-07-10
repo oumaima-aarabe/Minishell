@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:08:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/10 04:07:34 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/10 04:54:45 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void Minishell(int sig)
 {
 		(void)sig;
 		g_v.sig_flag = 1;
+		rl_on_new_line();
+		rl_replace_line("", 0);
 		ioctl(0, TIOCSTI, "\4");
 }
 
@@ -55,7 +57,6 @@ void	read_hd(char **cmdl, int *in, int *i, int *j, t_env *env)
 		close(fd[0]);
 		return;
 	}
-	
 	*in = fd[0];
 }
 
@@ -97,7 +98,7 @@ int wc_heredoc(char **cmdl)
 	int i = 0;
     int wc = 0;
     bool print = false;
-
+	
  	while (cmdl[i])
 	{
 		int j = 0;
