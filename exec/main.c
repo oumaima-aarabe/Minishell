@@ -21,7 +21,7 @@ void  hendl_ctr_c(int sig)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();
-		rl_replace_line(" ", 0);
+		// rl_replace_line(" ", 0);
 		rl_redisplay();
 		// exit status
 	}
@@ -207,7 +207,7 @@ int main(int argc, char **argv, char **env)
 	// if (!env[0])
 	// 	ft_syntax_err();
 	environment(env);
-	rl_catch_signals = 0;
+	// rl_catch_signals = 0;
 	while(2307)
 	{
 		signal(SIGINT, hendl_ctr_c);

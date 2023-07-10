@@ -132,8 +132,8 @@ int ft_execut_cmd(t_splitnode *cmd)
 
 	if(!cmd)
 		return(-1);
-	if(cmd && (!cmd->splitdata || (cmd->splitdata && !cmd->splitdata[0])))
-		return (-1);
+	// if(cmd && (!cmd->splitdata || (cmd->splitdata && !cmd->splitdata[0])))
+	// 	return (-1);
 	// if(!cmd->splitdata[0])
 	// 	return (-1);
 

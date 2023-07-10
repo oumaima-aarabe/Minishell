@@ -91,13 +91,14 @@ void	ft_lstclear(t_env **alist)
 	if (!alist)
 		return ;
 	nlist = *alist;
-	while (nlist)
-	{
-		clist = nlist;
-		free(clist);
-		nlist = nlist->next;
-	}
-	*alist = NULL;
+
+		while (nlist)
+		{
+			clist = nlist;
+			nlist = nlist->next;
+			free(clist);
+		}
+		*alist = NULL;
 }
 
 int	ft_lstsize(t_env *env)

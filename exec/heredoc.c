@@ -19,7 +19,7 @@ void Minishell(int sig)
 		(void)sig;
 		g_v.sig_flag = 1;
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		// rl_replace_line("", 0);
 		ioctl(0, TIOCSTI, "\4");
 }
 
