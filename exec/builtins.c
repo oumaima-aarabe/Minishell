@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/10 22:55:21 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/10 23:31:27 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,11 +213,6 @@ int is_alphabet(int c)
 	return (1);
 }
 
-
-
-
-
-
 int	ft_invalid_export_unset(char *cmd, char *bult)
 {
 	if(cmd && is_alphabet(cmd[0]) && cmd[0] != '_')
@@ -278,6 +273,7 @@ int ft_cheak_old_env(char *cmd)
 
 		if(!ft_strcmp(new_key, tmp->key))
 		{
+			printf("-->>  |%s|\n", new_key);
 			i = ft_sine(cmd, '=');
 			if(i && cmd[i - 1] == '+')
 				tmp->valu =  ft_strjoin(tmp->valu, ft_substr(cmd, i + 1, (ft_strlen(cmd) - i)));
@@ -313,7 +309,7 @@ int ft_add_export(char *cmd)
 		{
 			j = ft_sine(cmd, '=');
 			if(cmd[j - 1] == '+')
-				ft_lstadd_back(&g_v.env,ft_creat(ft_substr(cmd, 0, j - 1), ft_substr(cmd, j + 2, ft_strlen(cmd) - j)));
+				ft_lstadd_back(&g_v.env,ft_creat(ft_substr(cmd, 0, j - 1), ft_substr(cmd, j + 1, ft_strlen(cmd) - j)));
 			else
 				ft_lstadd_back(&g_v.env,ft_creat(ft_substr(cmd, 0, j), ft_substr(cmd, j + 1, ft_strlen(cmd) - j)));
 		}
