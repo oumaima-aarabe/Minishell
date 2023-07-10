@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_go_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/10 04:14:03 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/10 12:33:04 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int ft_execut_cmd(t_splitnode *cmd)
 	// 	return (-1);
 
 	if(cmd && !cmd->next)
-		return (ft_one_cmd(cmd, g_v.env)); // ft_one_cd return -1 if execut bulti
+			return (ft_one_cmd(cmd, g_v.env)); // ft_one_cd return -1 if execut bulti
 
 
 		pipe(fd);

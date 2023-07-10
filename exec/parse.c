@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:46:07 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/09 22:02:56 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/10 12:34:14 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-t_gs	g_v;
 
 char	**apply_ex_q(char **splitdata, t_env *en)
 {

@@ -1,6 +1,5 @@
 #include "Minishell.h"
 
-t_gs	g_v;
 
 char *removequotes(char *input)
 {

@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/09 20:42:47 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/10 12:32:46 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void ft_execut_cd(char *str, t_env *env)
 		env = env->next;
 	}
 	if(!old)
-		old = getcwd(NULL, 0);
+			old = getcwd(NULL, 0);
 
 		if(!str)
 		{

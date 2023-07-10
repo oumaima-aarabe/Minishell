@@ -1,6 +1,5 @@
 #include "Minishell.h"
 
-t_gs	g_v;
 
 bool is_quote(char c)
 {

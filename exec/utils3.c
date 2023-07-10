@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 08:40:44 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/09 20:41:10 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/10 12:32:08 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_putendl_fd(char *s, int fd)
 		return ;
 	while (s[i])
 		write(fd, &s[i++], 1);
-		write(fd, "\n", 1);
+	write(fd, "\n", 1);
 }
 
 int	ft_strncmp( char *s1,  char *s2, size_t n)
