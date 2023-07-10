@@ -115,11 +115,18 @@ void red_append(t_splitnode **node, int *i, int *j, char **cmdl, t_env *env)
 	{
 		int fd = open(appfile, O_WRONLY | O_CREAT | O_APPEND, 0666);
 		if (fd == -1)
-			perror(appfile);
+		{
+			if (!g_v.red_flag)
+			{
+				perror(appfile);
+				g_v.red_flag = 1;
+				(*node)->out = -2;
+			}
+		}
 		else
 		{
 			if ((*node)->out != -1)
-				close((*node)->out);
+			close((*node)->out);
 			(*node)->out = fd;
 		}
 		free(appfile);
@@ -133,11 +140,18 @@ void red_input(t_splitnode **node, int *i, int *j, char **cmdl, t_env *env)
 	{
 		int fd = open(infile, O_RDONLY);
 		if (fd == -1)
-			perror(infile);
+		{
+			if (!g_v.red_flag)
+			{
+				perror(infile);
+				g_v.red_flag = 1;
+				(*node)->in = -2;
+			}
+		}
 		else
 		{
 			if ((*node)->in != -1)
-				close((*node)->in);
+			close((*node)->in);
 			(*node)->in = fd;
 		}
 		free(infile);
@@ -151,7 +165,14 @@ void red_output(t_splitnode **node, int *i, int *j, char **cmdl, t_env *env)
 	{
 		int fd = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd == -1)
-			perror(outfile);
+		{
+			if (!g_v.red_flag)
+            {
+                perror(outfile);
+                g_v.red_flag = 1;
+                (*node)->out = -2;
+            }
+		}
 		else
 		{
 			if ((*node)->out != -1)
@@ -168,16 +189,16 @@ t_splitnode *handle_redirections(t_splitnode *node, t_env *env)
 	t_splitnode *trimmed;
 	while (current != NULL)
 	{
+		g_v.red_flag = 0;
 		char **cmdl = current->splitdata;
 		int i = 0;
 		if (cmdl)
 		{
-			while (cmdl[i])
+			while (cmdl[i] && !g_v.red_flag)
 			{
 				int j = 0;
 				bool inside_quotes = false;
-
-				while (cmdl[i][j])
+				while (cmdl[i][j] && !g_v.red_flag)
 				{
 					if (!inside_quotes && !is_quote(cmdl[i][j]))
 					{

@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 08:19:19 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/10 04:42:16 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/10 06:36:46 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ t_splitnode   *remove_redirections(t_splitnode  *node, int hr)
     {
         if (hr == 0)
         {
-            
-            wc = word_count(current->splitdata);
+            if (current->in == -2 || current->out == -2)
+                wc = 0;
+            else
+                wc = word_count(current->splitdata);
             if (wc)
                 splitdata = newstring(current->splitdata, wc);
             else 
@@ -49,6 +51,9 @@ t_splitnode   *remove_redirections(t_splitnode  *node, int hr)
                 splitdata = NULL;
         }    
             t_splitnode   *new_node = create_new_node(splitdata, current->in, current->out);
+            // if (new_node->splitdata)
+                // printf("cmdl : [%s]=====%d=====%d\n", new_node->splitdata[0], new_node->in, new_node->out);
+            
             if (head == NULL) 
             {
                 head = new_node;
@@ -149,7 +154,6 @@ char **newstring(char **cmdl, int wc)
     int k = 0;
     int z;
 
-    
     new_s = (char **)ft_calloc((wc + 1) , sizeof(char *));
      while (cmdl[i]) 
     {
