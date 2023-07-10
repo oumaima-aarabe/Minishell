@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:08:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/10 03:35:05 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/10 04:07:34 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,41 +33,28 @@ void	read_hd(char **cmdl, int *in, int *i, int *j, t_env *env)
 	char *line = NULL;
 	if (pipe(fd) < 0)
 		return ;
-		signal(SIGINT, Minishell);
-		signal(SIGQUIT, SIG_IGN);
-		while (1)
-		{
-			line = readline("$> ");
-			printf("==> (%s)\n", line);
-			if (!line || !strcmp(line, lmtr))
-				break;
-			if (!k)
-			{
-				line = ft_expand(line, env);
-				// puts("here");
-			}
-			ft_putendl_fd(line, fd[1]);
-			free(line);
-		}
-	// }
+	
+	g_v.sig_flag = 0;
+	signal(SIGINT, Minishell);
+	signal(SIGQUIT, SIG_IGN);
+	while (1)
+	{
+		line = readline("$> ");
+		if (!line || !strcmp(line, lmtr))
+			break;
+		if (!k)
+			line = ft_expand(line, env);
+		ft_putendl_fd(line, fd[1]);
+		free(line);
+	}
 	close (fd[1]);
-	// int alo;
-	// wait(&alo);
 	free(lmtr);
 	free(tmp);
-	// if (WEXITSTATUS(alo) == 131)
-	// if (g_v.ctrlc)
-	// {
-	// 	write(2, "afefdg\n", 8);
-	// 	close(fd[0]);
-	// 	g_v.ctrlc = 0;
-	// 	// rl_on_new_line();
-	// 	// rl_replace_line(" ", 0);
-	// 	// rl_redisplay();
-	// 	// exit status
-	// 			return ;
-	// }
-	
+	if (g_v.sig_flag)
+	{
+		close(fd[0]);
+		return;
+	}
 	
 	*in = fd[0];
 }
