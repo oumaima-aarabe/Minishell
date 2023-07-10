@@ -6,11 +6,20 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:08:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/09 22:09:25 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/10 03:35:05 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
+ #include <sys/ioctl.h>
+
+
+void Minishell(int sig)
+{
+		(void)sig;
+		g_v.sig_flag = 1;
+		ioctl(0, TIOCSTI, "\4");
+}
 
 void	read_hd(char **cmdl, int *in, int *i, int *j, t_env *env)
 {
@@ -24,16 +33,14 @@ void	read_hd(char **cmdl, int *in, int *i, int *j, t_env *env)
 	char *line = NULL;
 	if (pipe(fd) < 0)
 		return ;
-	if (!fork())
-	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
-		// close(fd[0]);
+		signal(SIGINT, Minishell);
+		signal(SIGQUIT, SIG_IGN);
 		while (1)
 		{
 			line = readline("$> ");
+			printf("==> (%s)\n", line);
 			if (!line || !strcmp(line, lmtr))
-				exit(0);
+				break;
 			if (!k)
 			{
 				line = ft_expand(line, env);
@@ -42,11 +49,26 @@ void	read_hd(char **cmdl, int *in, int *i, int *j, t_env *env)
 			ft_putendl_fd(line, fd[1]);
 			free(line);
 		}
-	}
+	// }
 	close (fd[1]);
-	wait(NULL);
+	// int alo;
+	// wait(&alo);
 	free(lmtr);
 	free(tmp);
+	// if (WEXITSTATUS(alo) == 131)
+	// if (g_v.ctrlc)
+	// {
+	// 	write(2, "afefdg\n", 8);
+	// 	close(fd[0]);
+	// 	g_v.ctrlc = 0;
+	// 	// rl_on_new_line();
+	// 	// rl_replace_line(" ", 0);
+	// 	// rl_redisplay();
+	// 	// exit status
+	// 			return ;
+	// }
+	
+	
 	*in = fd[0];
 }
 

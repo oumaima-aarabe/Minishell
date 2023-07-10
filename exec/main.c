@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/09 22:20:48 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/10 00:39:29 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ t_gs	g_v;
 void  hendl_ctr_c(int sig)
 {
 	(void)sig;
-	if (waitpid(0, NULL, WNOHANG))
-	{
+	// if (waitpid(0, NULL, WNOHANG))
+	// {
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line(" ", 0);
 		rl_redisplay();
 		// exit status
-	}
+	// }
 		// write(1, "\n", 1);
 }
 
