@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/10 13:27:16 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/10 22:55:21 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,36 +220,43 @@ int is_alphabet(int c)
 
 int	ft_invalid_export_unset(char *cmd, char *bult)
 {
-
-
-
 	if(cmd && is_alphabet(cmd[0]) && cmd[0] != '_')
 	{
-		// dup2(2,1);
-		if(cmd[0] == '-')
-		{
-			printf("minishell: %s: %c%c: invalid option\n",bult, cmd[0], cmd[1]);
-		}
+		if(cmd[0] == '-') // cheack option dir tlila fsubject problem in g_v
+			ft_print_err(cmd , "  invalid option\n");
 		else
-			printf("minishell: %s: `%s': not a valid identifier\n", bult ,cmd);
-		// dup2(1,2);
+			ft_print_err(cmd , " : not a valid identifier\n");
+		g_v.ex_s = 1;
 		return 1;
+	}
+	if(cmd && !ft_sine(cmd, '=') && ft_sine(cmd, '+'))
+	{
+		if((cmd[ft_sine(cmd , '+') + 1] != '='))
+		{
+			ft_print_err(cmd , " : not a valid identifier\n");
+			g_v.ex_s = 1;
+			return 1;
+		}
+	}
+	if(!ft_strcmp(bult, "unset") && (ft_sine(cmd, '+') || ft_sine(cmd, '=')))
+	{
+		ft_print_err(cmd , " : not a valid identifier\n");
+		g_v.ex_s = 1;
+		return (1);
 	}
 	return (0);
 }
 
 
 
-
-
-
-
-int ft_cheak_expor(char *cmd, t_env *tmp)
+int ft_cheak_old_env(char *cmd)
 {
 	int i = 0;
 	char *new_key;
-	if(ft_invalid_export_unset(cmd, "export"))
-		return (1);
+	t_env *tmp = g_v.env;
+
+
+
 	if(cmd)
 	{
 	if (ft_sine(cmd, '='))
@@ -262,25 +269,15 @@ int ft_cheak_expor(char *cmd, t_env *tmp)
 	else
 		i = ft_strlen(cmd);
 	}
-	if(cmd && ft_sine(cmd, '='))
-	{
-		char *tmp = ft_substr(cmd , 0, ft_sine(cmd, '='));
-		if(ft_sine(tmp, '+') && cmd[ft_sine(cmd , '+') + 1] != '=')
-		{
-			free(tmp);
-			printf("minishell: export: `%s': not a valid identifier\n", cmd);
-			return 1;
-		}
-		free(tmp);
-	}
+
+
+
+
 	while(cmd && tmp)
 	{
 
-			// printf("cmd  == %s i ==  %d tmp == %s \n", cmd, i , tmp->key);
-			// printf("key tess ==  |%s| old key == |%s|\n", ft_substr(cmd, 0, i), tmp->key);
 		if(!ft_strcmp(new_key, tmp->key))
 		{
-
 			i = ft_sine(cmd, '=');
 			if(i && cmd[i - 1] == '+')
 				tmp->valu =  ft_strjoin(tmp->valu, ft_substr(cmd, i + 1, (ft_strlen(cmd) - i)));
@@ -289,10 +286,23 @@ int ft_cheak_expor(char *cmd, t_env *tmp)
 				free(tmp->valu);
 				tmp->valu = ft_substr(cmd, i + 1, (ft_strlen(cmd) - i));
 			}
+			// free(new_key);
 			return 1;
 		}
 		tmp = tmp->next;
 	}
+	// free(new_key);
+	return (0);
+}
+
+int ft_cheak_expor(char *cmd)
+{
+
+	if(ft_invalid_export_unset(cmd, "export"))
+		return (1);
+	if(ft_cheak_old_env(cmd))
+		return (1);
+
 	return 0;
 }
 
@@ -328,7 +338,7 @@ void  ft_execut_export(char **cmd)
 	{
 
 
-		if(ft_cheak_expor(cmd[i],g_v.env))
+		if(ft_cheak_expor(cmd[i]))
 		{
 			if(cmd[i + 1])
 			{
@@ -336,9 +346,7 @@ void  ft_execut_export(char **cmd)
 				continue;
 			}
 			return ;
-			printf("wast export %s\n", cmd[i]);
 		}
-		puts("----------------------------------------");
 		if (ft_add_export(cmd[i]))
 		{
 			if(cmd[i + 1])
