@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/10 04:09:45 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/10 08:59:33 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,8 @@ char *ft_expand(char *cmd, t_env *en)
 	int in_single_quotes = 0;
 	int in_double_quotes = 0;
 
-		// printf ("cmd ={%s}\n", cmd);
-		fflush(stdout);
+	if (cmd) 
+	{
 		while (cmd[j])
 		{
 			if (cmd[j] == '\'')
@@ -175,7 +175,7 @@ char *ft_expand(char *cmd, t_env *en)
 					char *expanded = ft_strjoin(value, new);
 					free(cmd);
 					cmd = ft_strjoin(tmp, expanded);
-					j += len + 1;
+					j += len;
 				}
 				else
 				{
@@ -184,10 +184,11 @@ char *ft_expand(char *cmd, t_env *en)
 				}
 
 			}
-			else
+			if (cmd[j])
 				j++;
 			// printf ("new : j = %d cmd ={%s}\n", j, cmd);
 		}
+	}
 	return cmd;
 }
 

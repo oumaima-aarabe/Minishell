@@ -4,6 +4,9 @@ t_gs	g_v;
 
 char *removequotes(char *input)
 {
+	if (input)
+	{
+
 	int length = strlen(input);
 	int count = 0;
 	int insinglequotes = 0;
@@ -45,4 +48,6 @@ char *removequotes(char *input)
 	}
 	free (input);
 	return output;
+	}
+	return input;
 }
