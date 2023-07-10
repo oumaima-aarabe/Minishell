@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/10 12:32:46 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/10 13:27:16 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,6 +247,7 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 int ft_cheak_expor(char *cmd, t_env *tmp)
 {
 	int i = 0;
+	char *new_key;
 	if(ft_invalid_export_unset(cmd, "export"))
 		return (1);
 	if(cmd)
@@ -256,6 +257,7 @@ int ft_cheak_expor(char *cmd, t_env *tmp)
 		i = ft_sine(cmd, '=');
 		if(cmd[i - 1] == '+')
 		i -= 1;
+		new_key = ft_substr(cmd, 0, i); // il faut free
 	}
 	else
 		i = ft_strlen(cmd);
@@ -274,9 +276,10 @@ int ft_cheak_expor(char *cmd, t_env *tmp)
 	while(cmd && tmp)
 	{
 
-		if(!ft_strncmp(cmd, tmp->key, i))
+			// printf("cmd  == %s i ==  %d tmp == %s \n", cmd, i , tmp->key);
+			// printf("key tess ==  |%s| old key == |%s|\n", ft_substr(cmd, 0, i), tmp->key);
+		if(!ft_strcmp(new_key, tmp->key))
 		{
-			// printf("i ==  --- >>> %d\n", i);
 
 			i = ft_sine(cmd, '=');
 			if(i && cmd[i - 1] == '+')

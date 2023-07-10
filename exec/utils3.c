@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 08:40:44 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/10 12:32:08 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/10 13:27:56 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_strncmp( char *s1,  char *s2, size_t n)
 	if(ft_strlen(s1) != ft_strlen(s2))
 		return (1);
 	while (s1[i] && s2[i] && s1[i] == s2[i] && i < n - 1)
-	i++;
+			i++;
 	return ((unsigned char)(s1[i]) - (unsigned char)(s2[i]));
 }
 

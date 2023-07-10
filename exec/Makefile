@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+         #
+#    By: azarda <azarda@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 15:19:53 by azarda            #+#    #+#              #
-#    Updated: 2023/07/10 08:54:24 by ouaarabe         ###   ########.fr        #
+#    Updated: 2023/07/10 12:44:36 by azarda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,9 @@ INCLUDE = Minishell.h
 
 CC = cc
 
-READLINE = $(shell brew --prefix readline)
+# READLINE = $(shell brew --prefix readline)
 
-FLAGS = -Wall -Werror -Wextra -I$(READLINE)/include -g -fsanitize=address
+FLAGS = -Wall -Werror -Wextra #-I$(READLINE)/include -g -fsanitize=address
 
 
 
@@ -55,7 +55,7 @@ dir = obj
 all: $(NAME)
 
 $(NAME): ${dir} $(OBJ)  $(INCLUDE)
-	$(CC) $(FLAGS) $(OBJ) -lreadline -o $(NAME) -L$(READLINE)/lib
+	$(CC) $(FLAGS) $(OBJ) -lreadline -o $(NAME) #-L$(READLINE)/lib
 
 
 obj/%.o : %.c $(INCLUDE)
