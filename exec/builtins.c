@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/11 01:25:44 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/11 04:11:13 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,12 +269,8 @@ int ft_cheak_old_env(char *cmd)
 
 	tmp = g_v.env;
 	new_key = ft_new_key(cmd);
-
-
 	if(new_key[0] == '_')
-		return (1);
-
-	
+		return (free(new_key),  1);
 	i = ft_sine(cmd, '=');
 	while(cmd && tmp)
 	{
@@ -291,22 +287,20 @@ int ft_cheak_old_env(char *cmd)
 				free(tmp->valu);
 				tmp->valu = ft_substr(cmd, i + 1, (ft_strlen(cmd) - i));
 			}
-			free(new_key);
-			return 1;
+			return (free(new_key),1);
 		}
 		tmp = tmp->next;
 	}
-	free(new_key);
-	return (0);
+	return (free(new_key),1);
 }
 
 int ft_cheak_expor(char *cmd)
 {
-	if(cmd && cmd[0] == '_' && (cmd[1] == '=' || cmd[1] == '+'))
-	{
-		printf(" >> %s\n", cmd);
-		return (1);
-	}
+	// if(cmd && cmd[0] == '_' && (cmd[1] == '=' || cmd[1] == '+'))
+	// {
+	// 	// printf(" >> %s\n", cmd);
+	// 	return (1);
+	// }
 	if(ft_invalid_export_unset(cmd, "export"))
 		return (1);
 	if(ft_cheak_old_env(cmd))
@@ -412,6 +406,13 @@ void  ft_execut_export(char **cmd)
 
 //__________________________________unset_________________________________________
 
+void ft_free_plus(char *s1, char *s2, void *s3)
+{
+	free(s1);
+	free(s2);
+	free(s3);
+
+}
 
 void	ft_list_remov(char *cmd)
 {
@@ -428,16 +429,12 @@ void	ft_list_remov(char *cmd)
 			{
 				prev = tmp_env->next;
 				g_v.env = prev;
-				free(tmp_env->key);
-				free(tmp_env->valu);
-				free(tmp_env);
+				ft_free_plus(tmp_env->key, tmp_env->valu, tmp_env);
 			}
 			else
 			{
 				prev->next = tmp_env->next;
-				free(tmp_env->key);
-				free(tmp_env->valu);
-				free(tmp_env);
+				ft_free_plus(tmp_env->key, tmp_env->valu, tmp_env);
 			}
 			return ;
 		}
@@ -546,6 +543,8 @@ int ft_execut_exit(char **cmd)
 
 int ft_execut_bultins(char **cmd)
 {
+	if(cmd)
+	{
 	if(!ft_strcmp(cmd[0], "echo"))
 		return (ft_execut_echo(cmd), 1);
 
@@ -568,6 +567,7 @@ int ft_execut_bultins(char **cmd)
 	{
 		if(ft_execut_exit(cmd))
 			return (1);
+	}
 	}
 	return(0);
 }

@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/09 17:49:07 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/11 03:37:19 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,8 @@ void ft_exec(char **cmd, t_env *env)
 	ss = NULL;
 	char **my_env = NULL;
 
-
+	if (!cmd)
+		exit(0);
 	my_env = ft_my_env(env);
 
 

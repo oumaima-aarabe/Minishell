@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/10 13:07:57 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/11 04:08:01 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void  hendl_ctr_c(int sig)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();
-		// rl_replace_line(" ", 0);
+		rl_replace_line(" ", 0);
 		rl_redisplay();
 		// exit status
 	}
@@ -93,7 +93,7 @@ void free_split_nodes(t_splitnode *head)
         int i = 0;
 		if (current->splitdata)
 		{
-			
+
 			while (current->splitdata[i])
 			{
 				free(current->splitdata[i]);
@@ -133,7 +133,7 @@ char *ft_expand(char *cmd, t_env *en)
 	int in_single_quotes = 0;
 	int in_double_quotes = 0;
 
-	if (cmd) 
+	if (cmd)
 	{
 		while (cmd[j])
 		{
@@ -194,33 +194,24 @@ char *ft_expand(char *cmd, t_env *en)
 
 int main(int argc, char **argv, char **env)
 {
-	// char *pwd;
 	char *prompt = NULL;
-	// char *path;
 	t_splitnode *tokens = NULL;
-	// int i = 0;
-	// while(env[i])
-	// 	printf("-> %s\n", env[i++]);
+
 
 	(void)argc;
 	(void)argv;
-	// if (!env[0])
-	// 	ft_syntax_err();
+	rl_catch_signals = 0;
+	// if(isatty(STDIN_FILENO) == 0)
+	// 	return (0);
 	environment(env);
-	// rl_catch_signals = 0;
-	while(2307)
+	while(1337)
 	{
 		signal(SIGINT, hendl_ctr_c);
 		signal(SIGQUIT, SIG_IGN);
 
 		prompt = readline("Minishell -> ");
 		if (!prompt)
-		{
-			printf("exit\n");
-			// free (pwd);
-            exit(0);
-		}
-		// free(pwd);
+			return(printf("exit\n"), exit(0), 1);
 		int i = -1;
 		while (prompt[++i])
 			if (prompt[i] != ' ' && prompt[i] != '\t')
@@ -234,10 +225,8 @@ int main(int argc, char **argv, char **env)
 			continue;
 		}
 		tokens = parsing(prompt, g_v.env);
-		// parsing(prompt, g_v.env);
 		free(prompt);
 		prompt = NULL;
-		// puts("----mora hna bdit ana ------");
 		execution(tokens);
 		free_split_nodes(tokens);}
 		}

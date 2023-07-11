@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/10 12:33:04 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/11 03:44:50 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int exec(char **cmd, t_env *env)
 {
 	if(ft_execut_bultins(cmd))
-		return (exit(1), 1);
+		return (exit(0), 1);
 	ft_exec(cmd , env);
 		return (1);
 }
@@ -86,8 +86,8 @@ int fork_execut(t_splitnode *ptr, t_fds pipe, t_env *env)
 	// puts("____________________________________");
 	if(!ptr)
 		return (-1);
-	if(!ptr->splitdata || (ptr->splitdata && !ptr->splitdata[0]))
-		return (0);
+	// if(!ptr->splitdata || (ptr->splitdata && !ptr->splitdata[0]))
+	// 	return (0);
 	if(ptr->in != -1)
 		pipe.in = ptr->in;
 	if(ptr->out != -1)
