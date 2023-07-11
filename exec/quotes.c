@@ -11,7 +11,6 @@ char *removequotes(char *input)
 	int insinglequotes = 0;
 	int indoublequotes = 0;
 
-	// Count the number of characters without quotes
 	int i = 0;
 	while (i < length)
 	{
@@ -30,7 +29,6 @@ char *removequotes(char *input)
 	insinglequotes = 0;
 	indoublequotes = 0;
 
-	// Copy characters without quotes to the output array
 	i = 0;
 	while (i < length)
 	{

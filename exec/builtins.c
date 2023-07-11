@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/11 06:24:53 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/11 10:55:47 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,17 +218,17 @@ int ft_cheak_mines(char *cmd)
 {
 	char *tmp;
 
-	tmp = ft_substr(cmd, 0, ft_sine(cmd, '='));
-	if(ft_sine(cmd, '-'))
+	tmp = ft_substr(cmd, 0, ft_signe(cmd, '='));
+	if(ft_signe(cmd, '-'))
 	{
-	if(!ft_sine(cmd, '=') && cmd[ft_sine(cmd, '-') + 1] == '\0')
+	if(!ft_signe(cmd, '=') && cmd[ft_signe(cmd, '-') + 1] == '\0')
 	{
 		ft_print_err(cmd , " : not a valid identifier\n");
 		g_v.ex_s = 1;
 		free(tmp);
 		return 1;
 	}
-	if(ft_sine(tmp, '-'))
+	if(ft_signe(tmp, '-'))
 	{
 		ft_print_err(cmd , " : not a valid identifier\n");
 		g_v.ex_s = 1;
@@ -244,7 +244,7 @@ int ft_cheak_mines(char *cmd)
 
 int	ft_invalid_export_unset(char *cmd, char *bult)
 {
-	// if(ft_sine(cmd, '=') && ft_sine(cmd, '-'))
+	// if(ft_signe(cmd, '=') && ft_signe(cmd, '-'))
 	// {
 	// 	printf(" - - > %s", cmd);
 	// 	return(ft_print_err(cmd , " : not a valid identifier\n"), g_v.ex_s = 1, 1);
@@ -264,9 +264,9 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 		return 1;
 	}
 
-	if(cmd && !ft_sine(cmd, '=') && ft_sine(cmd, '+'))
+	if(cmd && !ft_signe(cmd, '=') && ft_signe(cmd, '+'))
 	{
-		if((cmd[ft_sine(cmd , '+') + 1] != '='))
+		if((cmd[ft_signe(cmd , '+') + 1] != '='))
 		{
 					printf("|%s|\n", cmd);
 
@@ -276,7 +276,7 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 		}
 	}
 
-	if(!ft_strcmp(bult, "unset") && (ft_sine(cmd, '+') || ft_sine(cmd, '=')))
+	if(!ft_strcmp(bult, "unset") && (ft_signe(cmd, '+') || ft_signe(cmd, '=')))
 	{
 		ft_print_err(cmd , " : not a valid identifier\n");
 		g_v.ex_s = 1;
@@ -293,9 +293,9 @@ char *ft_new_key(char *cmd)
 
 	if(cmd)
 	{
-		if (ft_sine(cmd, '='))
+		if (ft_signe(cmd, '='))
 		{
-			i = ft_sine(cmd, '=');
+			i = ft_signe(cmd, '=');
 			if(cmd[i - 1] == '+')
 				i -= 1;
 			new_key = ft_substr(cmd, 0, i);
@@ -315,7 +315,7 @@ int ft_cheak_old_env(char *cmd)
 	new_key = ft_new_key(cmd);
 	if(new_key[0] == '_')
 		return (free(new_key),  1);
-	i = ft_sine(cmd, '=');
+	i = ft_signe(cmd, '=');
 	while(cmd && tmp)
 	{
 		if(!ft_strcmp(new_key, tmp->key))
@@ -355,9 +355,9 @@ int ft_cheak_expor(char *cmd)
 int ft_add_export(char *cmd)
 {
 	int j = 0;
-		if(ft_sine(cmd, '='))
+		if(ft_signe(cmd, '='))
 		{
-			j = ft_sine(cmd, '=');
+			j = ft_signe(cmd, '=');
 			if(cmd[j - 1] == '+')
 				ft_lstadd_back(&g_v.env,ft_creat(ft_substr(cmd, 0, j - 1), ft_substr(cmd, j + 1, ft_strlen(cmd) - j)));
 			else

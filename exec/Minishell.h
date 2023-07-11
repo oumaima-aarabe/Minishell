@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/10 06:05:06 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/11 11:14:50 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <stdint.h>
 # include <errno.h>
 # include <stdbool.h>
+#include <sys/ioctl.h>
 
 /////////////////////////////////3lachghenat///////////////////////////
 
@@ -168,10 +169,13 @@ char			*ft_strdup(char *s1);
 char			**ft_split(char *st, char c);
 int				ft_execut_cmd(t_splitnode *cmd);
 int				ft_execut_bultins(char **cmd);
-int				ft_sine(char *st, char c);
+int				ft_signe(char *st, char c);
 
 
 
 int 			ft_add_export(char *cmd);
+void			ft_shelvl(t_env *env);
+void			environment(char **env);
+char 			*ft_take_key(char *str, t_env *env, int j, int len);
 
 #endif

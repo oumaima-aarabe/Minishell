@@ -6,21 +6,20 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:08:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/11 08:01:34 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/11 11:16:12 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
- #include <sys/ioctl.h>
-
-
-void Minishell(int sig)
+ 
+void	handle_c(int sig)
 {
-		(void)sig;
-		g_v.sig_flag = 1;
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		ioctl(0, TIOCSTI, "\4");
+	(void)sig;
+	g_v.sig_flag = 1;
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	ioctl(0, TIOCSTI, "\4");
+	g_v.ex_s = 1;
 }
 
 void	read_hd(char **cmdl, int *in, int *i, int *j, t_env *env)
@@ -35,9 +34,8 @@ void	read_hd(char **cmdl, int *in, int *i, int *j, t_env *env)
 	char *line = NULL;
 	if (pipe(fd) < 0)
 		return ;
-	
 	g_v.sig_flag = 0;
-	signal(SIGINT, Minishell);
+	signal(SIGINT, handle_c);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
@@ -131,7 +129,6 @@ int wc_heredoc(char **cmdl)
 	}
 	return (wc);
 }
-
 
 char **ns_heredoc(char **cmdl, int wc)
 {

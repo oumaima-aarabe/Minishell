@@ -6,7 +6,6 @@ bool is_quote(char c)
 	return (c == '\'' || c == '\"');
 }
 
-
 int	get_fl(const char *str)
 {
 	int		length;
@@ -18,7 +17,6 @@ int	get_fl(const char *str)
 	quote_type = '\0';
 	while (str[length] != '\0')
 	{
-
 		if (str[length] == '\'' || str[length] == '\"')
 		{
 			if (inside_quotes && quote_type == str[length])
@@ -34,74 +32,41 @@ int	get_fl(const char *str)
 		}
 		else if (!inside_quotes && (str[length] == '<' || str[length] == '>'))
 			break; // Stop at red operator
-
 		length++;
 	}
 	return length;
 }
+
 char *get_redfilen(int *i, int *j, char **cmd_l, char *which_red, t_env *env)
 {
 	char *file_name = NULL;
 	char *true_face = NULL;
 	int file_len = 0;
+	int k;
 
-	if (!strcmp(which_red, ">>") || !strcmp(which_red, "<<"))
+	if(!strcmp(which_red, ">>") || !strcmp(which_red, "<<"))
+		k = 2;
+	else
+		k = 1;
+	if (cmd_l[*i][*j + k])
 	{
-		if (cmd_l[*i][*j + 2])
-		{
-			file_len = get_fl(&cmd_l[*i][*j + 2]);
-			file_name = strndup(&cmd_l[*i][*j + 2], file_len);
-			*j += file_len;
-		}
-		else if (cmd_l[*i + 1] && ft_strlen(cmd_l[*i + 1]) > 0)
-		{
-			*j = 0;
-			file_len = get_fl(cmd_l[*i + 1]);
-			file_name = strndup(cmd_l[*i + 1], file_len);
-			*i += 1;
-			*j += file_len;
-		}
+		file_len = get_fl(&cmd_l[*i][*j + k]);
+		file_name = strndup(&cmd_l[*i][*j + k], file_len);
+		*j += file_len;
 	}
-	else if (strcmp(which_red, ">") == 0)
+	else if (cmd_l[*i + 1] && ft_strlen(cmd_l[*i + 1]) > 0)
 	{
-		if (cmd_l[*i][*j + 1])
-		{
-			file_len = get_fl(&cmd_l[*i][*j + 1]);
-			file_name = strndup(&cmd_l[*i][*j + 1], file_len);
-			*j += file_len;
-		}
-		 else if (cmd_l[*i + 1] && ft_strlen(cmd_l[*i + 1]) > 0)
-		 {
-			 *j = 0;
-			file_len = get_fl(cmd_l[*i + 1]);
-			file_name = strndup(cmd_l[*i + 1], file_len);
-			*i += 1;
-			*j += file_len;
-		}
-	}
-	 else if (strcmp(which_red, "<") == 0)
-	 {
-		if (cmd_l[*i][*j + 1])
-		{
-			file_len = get_fl(&cmd_l[*i][*j + 1]);
-			file_name = strndup(&cmd_l[*i][*j + 1], file_len);
-			*j += file_len;
-		}
-		else if (cmd_l[*i + 1] && ft_strlen(cmd_l[*i + 1]) > 0)
-		{
-			 *j = 0;
-			file_len = get_fl(cmd_l[*i + 1]);
-			file_name = strndup(cmd_l[*i + 1], file_len);
-			*i += 1;
-			*j += file_len;
-		}
+		*j = 0;
+		file_len = get_fl(cmd_l[*i + 1]);
+		file_name = strndup(cmd_l[*i + 1], file_len);
+		*i += 1;
+		*j += file_len;
 	}
 	char *tmp = file_name;
 	if (ft_strcmp(which_red ,"<<"))
 	{
-
 		true_face = removequotes(ft_expand(file_name, env));
-		return true_face;
+		return (true_face);
 	}
 	else
 		return (tmp);

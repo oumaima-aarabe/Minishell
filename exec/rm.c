@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 08:19:19 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/10 06:36:46 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/11 11:09:40 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,7 @@ t_splitnode   *remove_redirections(t_splitnode  *node, int hr)
             else 
                 splitdata = NULL;
         }    
-            t_splitnode   *new_node = create_new_node(splitdata, current->in, current->out);
-            // if (new_node->splitdata)
-                // printf("cmdl : [%s]=====%d=====%d\n", new_node->splitdata[0], new_node->in, new_node->out);
-            
+            t_splitnode   *new_node = create_new_node(splitdata, current->in, current->out); 
             if (head == NULL) 
             {
                 head = new_node;
@@ -72,8 +69,6 @@ t_splitnode   *remove_redirections(t_splitnode  *node, int hr)
             }
         current = current->next;
     }
-
-    
     return head;
 }
 
