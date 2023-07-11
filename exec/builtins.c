@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/11 06:04:28 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/11 06:24:53 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void ft_execut_cd(char *str, t_env *env)
 			if(chdir(hom) < 0)
 			{
 				ft_putstr_fd("minishell: cd: ", 2);
+				g_v.ex_s = 1;
 				perror(hom);
 				// printf()
 			}
@@ -100,7 +101,7 @@ void ft_execut_cd(char *str, t_env *env)
 					{
 						ft_putstr_fd("minishell: cd: ", 2);
 						perror(str);
-						// ex_s = 1;
+						g_v.ex_s = 1;
 						break;
 					}
 					printf("%s\n",tmp_1->valu);
@@ -119,7 +120,7 @@ void ft_execut_cd(char *str, t_env *env)
 		{
 			ft_putstr_fd("minishell: cd: ", 2);
 			perror(str);
-			// ex_s = 1;
+			g_v.ex_s = 1;
 		}
 
 		pwd = getcwd(NULL, 0);
@@ -551,7 +552,7 @@ int	ft_atoi_exit(char *str)
 	}
 	if (*str != '\0')
 	{
-		ft_print_err(str,  " numeric argument required\n");
+		ft_print_err(str,  " : numeric argument required\n");
 		exit(255);
 	}
 	return ((int)(d * s));
@@ -572,6 +573,7 @@ int ft_execut_exit(char **cmd)
 			if(cmd[1] && cmd[2])
 			{
 				ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+				g_v.ex_s = 1;
 				return(1);
 			}
 		}
