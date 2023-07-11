@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/10 23:31:27 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/11 01:25:44 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,58 +242,71 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 	return (0);
 }
 
+char *ft_new_key(char *cmd)
+{
+	int i = 0;
+	char *new_key = NULL;
 
+	if(cmd)
+	{
+		if (ft_sine(cmd, '='))
+		{
+			i = ft_sine(cmd, '=');
+			if(cmd[i - 1] == '+')
+				i -= 1;
+			new_key = ft_substr(cmd, 0, i);
+			return(new_key);
+		}
+	}
+	return (ft_strdup(cmd));
+}
 
 int ft_cheak_old_env(char *cmd)
 {
 	int i = 0;
 	char *new_key;
-	t_env *tmp = g_v.env;
+	t_env *tmp;
+
+	tmp = g_v.env;
+	new_key = ft_new_key(cmd);
 
 
+	if(new_key[0] == '_')
+		return (1);
 
-	if(cmd)
-	{
-	if (ft_sine(cmd, '='))
-	{
-		i = ft_sine(cmd, '=');
-		if(cmd[i - 1] == '+')
-		i -= 1;
-		new_key = ft_substr(cmd, 0, i); // il faut free
-	}
-	else
-		i = ft_strlen(cmd);
-	}
-
-
-
-
+	
+	i = ft_sine(cmd, '=');
 	while(cmd && tmp)
 	{
-
 		if(!ft_strcmp(new_key, tmp->key))
 		{
-			printf("-->>  |%s|\n", new_key);
-			i = ft_sine(cmd, '=');
 			if(i && cmd[i - 1] == '+')
-				tmp->valu =  ft_strjoin(tmp->valu, ft_substr(cmd, i + 1, (ft_strlen(cmd) - i)));
-			else if (i)
 			{
+				puts("--->>1<<----");
+				tmp->valu =  ft_strjoin(tmp->valu, ft_substr(cmd, i + 1, (ft_strlen(cmd) - i))); // ha wa7d liksa
+			}
+			else if (i) // ila kant = bo7dha makanch +
+			{
+				puts("--->>2<<----");
 				free(tmp->valu);
 				tmp->valu = ft_substr(cmd, i + 1, (ft_strlen(cmd) - i));
 			}
-			// free(new_key);
+			free(new_key);
 			return 1;
 		}
 		tmp = tmp->next;
 	}
-	// free(new_key);
+	free(new_key);
 	return (0);
 }
 
 int ft_cheak_expor(char *cmd)
 {
-
+	if(cmd && cmd[0] == '_' && (cmd[1] == '=' || cmd[1] == '+'))
+	{
+		printf(" >> %s\n", cmd);
+		return (1);
+	}
 	if(ft_invalid_export_unset(cmd, "export"))
 		return (1);
 	if(ft_cheak_old_env(cmd))
@@ -305,7 +318,7 @@ int ft_cheak_expor(char *cmd)
 int ft_add_export(char *cmd)
 {
 	int j = 0;
-		if(ft_sine(cmd, '=') )
+		if(ft_sine(cmd, '='))
 		{
 			j = ft_sine(cmd, '=');
 			if(cmd[j - 1] == '+')
@@ -314,26 +327,17 @@ int ft_add_export(char *cmd)
 				ft_lstadd_back(&g_v.env,ft_creat(ft_substr(cmd, 0, j), ft_substr(cmd, j + 1, ft_strlen(cmd) - j)));
 		}
 		else
-		{
 			ft_lstadd_back(&g_v.env, ft_creat(ft_strdup(cmd), NULL));
-		}
 	return (1);
 }
 
-void  ft_execut_export(char **cmd)
+int ft_cheack_add_export(char **cmd)
 {
-	char 	*swap;
-
-	t_env *tmp;
-	t_env *tmp1;
 	int i;
 
 	i = 1;
-
 	while(cmd[i])
 	{
-
-
 		if(ft_cheak_expor(cmd[i]))
 		{
 			if(cmd[i + 1])
@@ -341,7 +345,7 @@ void  ft_execut_export(char **cmd)
 				i++;
 				continue;
 			}
-			return ;
+			return 1;
 		}
 		if (ft_add_export(cmd[i]))
 		{
@@ -350,13 +354,17 @@ void  ft_execut_export(char **cmd)
 				i++;
 				continue;
 			}
-			return ;
+			return 1;
 		}
 		i++;
 	}
+	return (0);
+}
 
-	tmp = duplicate_linked_list(g_v.env);
-
+t_env *ft_sort_export(t_env *tmp)
+{
+	t_env *tmp1;
+	char 	*swap;
 
 	tmp1 = tmp;
 	while(tmp && tmp->next != NULL)
@@ -375,6 +383,20 @@ void  ft_execut_export(char **cmd)
 			tmp = tmp->next;
 	}
 	tmp = tmp1;
+	return (tmp);
+}
+
+void  ft_execut_export(char **cmd)
+{
+	t_env *tmp;
+	t_env *tmp1;
+
+	if(ft_cheack_add_export(cmd))
+		return ;
+
+	tmp = duplicate_linked_list(g_v.env);
+	tmp = ft_sort_export(tmp);
+	tmp1 = tmp;
 	while(tmp)
 	{
 		if(tmp->valu)
@@ -434,7 +456,13 @@ void ft_execut_unset(char **cmd)
 			i++;
 			continue;
 		}
-		ft_list_remov(cmd[i]);
+		if(cmd[i][0] == '_' && cmd[i][1] == '\0')
+		{
+			printf("-->> %s\n", cmd[i]);
+			i++;
+			continue;
+		}
+			ft_list_remov(cmd[i]);
 		i++;
 	}
 
