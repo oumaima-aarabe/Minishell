@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/11 05:16:08 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/11 05:32:13 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,29 @@ int is_alphabet(int c)
 	return (1);
 }
 
+int ft_cheak_mines(char *cmd)
+{
+	char *tmp;
+
+	tmp = ft_substr(cmd, 0, ft_sine(cmd, '='));
+	if(cmd[ft_sine(cmd, '-') + 1] == '\0')
+	{
+		ft_print_err(cmd , " : not a valid identifier\n");
+		g_v.ex_s = 1;
+		free(tmp);
+		return 1;
+	}
+	if(ft_sine(tmp, '-'))
+	{
+		ft_print_err(cmd , " : not a valid identifier\n");
+		g_v.ex_s = 1;
+		free(tmp);
+		return 1;
+	}
+	free(tmp);
+	return(0);
+
+}
 
 
 int	ft_invalid_export_unset(char *cmd, char *bult)
@@ -222,6 +245,8 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 	// 	printf(" - - > %s", cmd);
 	// 	return(ft_print_err(cmd , " : not a valid identifier\n"), g_v.ex_s = 1, 1);
 	// }
+	if(ft_cheak_mines(cmd))
+		return 1;
 
 	if(cmd && is_alphabet(cmd[0]) && cmd[0] != '_')
 	{
@@ -236,6 +261,8 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 	{
 		if((cmd[ft_sine(cmd , '+') + 1] != '='))
 		{
+					printf("|%s|\n", cmd);
+
 			ft_print_err(cmd , " : not a valid identifier\n");
 			g_v.ex_s = 1;
 			return 1;
