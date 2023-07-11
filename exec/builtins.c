@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/11 04:11:13 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/11 05:16:08 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,8 +213,16 @@ int is_alphabet(int c)
 	return (1);
 }
 
+
+
 int	ft_invalid_export_unset(char *cmd, char *bult)
 {
+	// if(ft_sine(cmd, '=') && ft_sine(cmd, '-'))
+	// {
+	// 	printf(" - - > %s", cmd);
+	// 	return(ft_print_err(cmd , " : not a valid identifier\n"), g_v.ex_s = 1, 1);
+	// }
+
 	if(cmd && is_alphabet(cmd[0]) && cmd[0] != '_')
 	{
 		if(cmd[0] == '-') // cheack option dir tlila fsubject problem in g_v
@@ -291,14 +299,13 @@ int ft_cheak_old_env(char *cmd)
 		}
 		tmp = tmp->next;
 	}
-	return (free(new_key),1);
+	return (free(new_key),0);
 }
 
 int ft_cheak_expor(char *cmd)
 {
 	// if(cmd && cmd[0] == '_' && (cmd[1] == '=' || cmd[1] == '+'))
 	// {
-	// 	// printf(" >> %s\n", cmd);
 	// 	return (1);
 	// }
 	if(ft_invalid_export_unset(cmd, "export"))
@@ -384,7 +391,9 @@ void  ft_execut_export(char **cmd)
 {
 	t_env *tmp;
 	t_env *tmp1;
-
+	// int i = 0;
+	// while(cmd[i])
+	// printf("- - > %s\n", cmd[i++]);
 	if(ft_cheack_add_export(cmd))
 		return ;
 

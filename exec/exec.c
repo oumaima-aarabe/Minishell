@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/11 04:34:21 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/11 04:35:36 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,8 +154,6 @@ char *ft_prepar_path(char *cmd)
 		}
 		else if(path)
 		{
-
-
 			return (is_valid_cmd(path, cmd));
 		}
 	return (ss);

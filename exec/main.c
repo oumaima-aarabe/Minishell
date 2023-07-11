@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/11 04:08:01 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/11 04:46:36 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,9 +200,9 @@ int main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	rl_catch_signals = 0;
 	// if(isatty(STDIN_FILENO) == 0)
 	// 	return (0);
+	rl_catch_signals = 0;
 	environment(env);
 	while(1337)
 	{
