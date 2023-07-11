@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/11 04:46:36 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/11 09:06:51 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void  hendl_ctr_c(int sig)
 	{
 		write(1, "\n", 1);
 		rl_on_new_line();
-		rl_replace_line(" ", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 		// exit status
 	}
@@ -109,20 +109,21 @@ void free_split_nodes(t_splitnode *head)
 
 char *ft_take_key(char *str, t_env *env, int j, int len)
 {
+	char	*tmp;
 
-	str += j;
+	tmp = strndup(str + j, len);
 	while(env)
 	{
-		if(!ft_strncmp(str, env->key, len))
+		if(!ft_strncmp(tmp, env->key, len))
 		{
 			if(env->valu)
-				return (ft_strdup(env->valu));
+				return (free(tmp), ft_strdup(env->valu));
 			else
 				break;
 		}
 		env = env->next;
 	}
-	return (ft_strdup(""));
+	return (free(tmp), ft_strdup(""));
 }
 
 char *ft_expand(char *cmd, t_env *en)
@@ -150,7 +151,6 @@ char *ft_expand(char *cmd, t_env *en)
 
 			if (!in_single_quotes && (cmd[j] == '$' && cmd[j + 1] == '?'))
 			{
-				// Variable expansion for $?
 				tmp = ft_substr(cmd, 0, j);
 				new = ft_substr(cmd, j + 2, ft_strlen(cmd) - j);
 				free(cmd);
@@ -184,9 +184,8 @@ char *ft_expand(char *cmd, t_env *en)
 				}
 
 			}
-			if (cmd[j])
+			else if (cmd[j])
 				j++;
-			// printf ("new : j = %d cmd ={%s}\n", j, cmd);
 		}
 	}
 	return cmd;
@@ -200,8 +199,11 @@ int main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	// if(isatty(STDIN_FILENO) == 0)
-	// 	return (0);
+	if(isatty(STDIN_FILENO) == 0)
+	{
+		puts("9lawi la dkhelti");
+		return (0);
+	}
 	rl_catch_signals = 0;
 	environment(env);
 	while(1337)
@@ -212,14 +214,9 @@ int main(int argc, char **argv, char **env)
 		prompt = readline("Minishell -> ");
 		if (!prompt)
 			return(printf("exit\n"), exit(0), 1);
-		int i = -1;
-		while (prompt[++i])
-			if (prompt[i] != ' ' && prompt[i] != '\t')
-				break ;
-		if (prompt[i])
-		{
+		if (prompt[0])
 			add_history(prompt);
-			if (!lexer(prompt) || !lexer2(prompt))
+		if (!lexer(prompt) || !lexer2(prompt))
 		{
 			ft_syntax_err();
 			continue;
@@ -228,7 +225,7 @@ int main(int argc, char **argv, char **env)
 		free(prompt);
 		prompt = NULL;
 		execution(tokens);
-		free_split_nodes(tokens);}
+		free_split_nodes(tokens);
 		}
 }
 
