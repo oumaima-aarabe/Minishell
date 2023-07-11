@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/11 03:37:19 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/11 04:34:21 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,8 @@ char *is_valid_cmd(char **path, char *cmd)
 	while(path[i])
 	{
 		// printf("-->%s\n", cmd);
-
+		if(!cmd[0])
+			return (ft_print_err(cmd, ": command not found\n"), exit(127), NULL);
 		test = ft_strjoin(ft_strdup("/"), ft_strdup(cmd));
 		ss = ft_strjoin(ft_strdup(path[i]), test);
 		if(!(access(ss, F_OK)))
