@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/11 05:32:13 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/11 06:04:28 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,9 @@ int ft_cheak_mines(char *cmd)
 	char *tmp;
 
 	tmp = ft_substr(cmd, 0, ft_sine(cmd, '='));
-	if(cmd[ft_sine(cmd, '-') + 1] == '\0')
+	if(ft_sine(cmd, '-'))
+	{
+	if(!ft_sine(cmd, '=') && cmd[ft_sine(cmd, '-') + 1] == '\0')
 	{
 		ft_print_err(cmd , " : not a valid identifier\n");
 		g_v.ex_s = 1;
@@ -231,6 +233,7 @@ int ft_cheak_mines(char *cmd)
 		g_v.ex_s = 1;
 		free(tmp);
 		return 1;
+	}
 	}
 	free(tmp);
 	return(0);
@@ -245,8 +248,10 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 	// 	printf(" - - > %s", cmd);
 	// 	return(ft_print_err(cmd , " : not a valid identifier\n"), g_v.ex_s = 1, 1);
 	// }
+
 	if(ft_cheak_mines(cmd))
 		return 1;
+
 
 	if(cmd && is_alphabet(cmd[0]) && cmd[0] != '_')
 	{
@@ -257,6 +262,7 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 		g_v.ex_s = 1;
 		return 1;
 	}
+
 	if(cmd && !ft_sine(cmd, '=') && ft_sine(cmd, '+'))
 	{
 		if((cmd[ft_sine(cmd , '+') + 1] != '='))
@@ -268,12 +274,14 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 			return 1;
 		}
 	}
+
 	if(!ft_strcmp(bult, "unset") && (ft_sine(cmd, '+') || ft_sine(cmd, '=')))
 	{
 		ft_print_err(cmd , " : not a valid identifier\n");
 		g_v.ex_s = 1;
 		return (1);
 	}
+
 	return (0);
 }
 
