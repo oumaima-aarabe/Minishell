@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/12 06:24:43 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/12 07:02:15 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,35 @@ void ft_cd_home(char *hom)
 		}
 }
 
+void ft_cd_old_pwd(t_env *env)
+{
+	while (env)
+	{
+		if(!ft_strcmp(env->key, "OLDPWD"))
+		{
+			if(chdir(env->valu) < 0)
+			{
+				ft_putstr_fd("minishell: cd: ", 2);
+				perror(env->valu);
+				g_v.ex_s = 1;
+				break;
+			}
+			printf("%s\n",env->valu);
+			break;
+		}
+		env = env->next;
+	}
+	if(!env)
+	{
+		ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
+		g_v.ex_s = 1;
+	}
+
+}
+
 void ft_execut_cd(char *str, t_env *env)
 {
 
-	t_env *tmp_1 = env;
 	char *old;
 	char *pwd;
 	char *hom;
@@ -96,61 +121,30 @@ void ft_execut_cd(char *str, t_env *env)
 		if(!ft_strcmp("PWD", env->key))
 		{
 			old = ft_strdup(env->valu);
-
 		}
 		env = env->next;
 	}
 	if(!old)
-			old = getcwd(NULL, 0);
-		if(!str)
-			ft_cd_home(hom);
-		else if(str[0] == '-' && str[1] == '\0')
-		{
-			while (tmp_1)
-			{
-				if(!ft_strcmp(tmp_1->key, "OLDPWD"))
-				{
-					if(chdir(tmp_1->valu) < 0)
-					{
-						ft_putstr_fd("minishell: cd: ", 2);
-						perror(str);
-						g_v.ex_s = 1;
-						break;
-					}
-					printf("%s\n",tmp_1->valu);
-					break;
-				}
-				tmp_1 = tmp_1->next;
-			}
-			if(!tmp_1)
-			{
-				ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
-				// ex_s = 1;
-			}
-
-		}
-		else if(chdir(str) < 0)
-		{
-			ft_putstr_fd("minishell: cd: ", 2);
-			perror(str);
-			g_v.ex_s = 1;
-		}
-
-		pwd = getcwd(NULL, 0);
-		if(pwd == NULL)
-		{
-			ft_putstr_fd("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n", 2);
-			free(pwd);
-			// free(old);
-			return ;
-		}
+		old = getcwd(NULL, 0);
+	if(!str)
+		ft_cd_home(hom);
+	else if(str[0] == '-' && str[1] == '\0')
+		ft_cd_old_pwd(g_v.env);
+	else if(chdir(str) < 0)
+	{
+		ft_putstr_fd("minishell: cd: ", 2);
+		perror(str);
+		g_v.ex_s = 1;
+	}
+	pwd = getcwd(NULL, 0);
+	if(pwd == NULL)
+	{
+		ft_putstr_fd("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n", 2);
 		free(pwd);
+		return ;
+	}
+	free(pwd);
 	ft_change_env(g_v.env, old);
-
-
-//----------------------------------------------------------------
-
-//----------------------------------------------------------------
 }
 
 //____________________________________pwd_________________________________________
