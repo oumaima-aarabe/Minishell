@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:08:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/12 01:10:08 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/12 01:48:00 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	handle_c(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	ioctl(0, TIOCSTI, "\4");
-	// printf("====%d\n", g_v.ex_s);
 }
 
 void	read_hd(char **cmdl, int *in, int *i, int *j, t_env *env)
@@ -38,7 +37,6 @@ void	read_hd(char **cmdl, int *in, int *i, int *j, t_env *env)
 	g_v.sig_flag = 0;
 	signal(SIGINT, handle_c);
 	signal(SIGQUIT, SIG_IGN);
-	puts("here");
 	while (1)
 	{
 		line = readline("$> ");

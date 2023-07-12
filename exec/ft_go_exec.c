@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/12 00:54:01 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/12 01:52:48 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ int ft_execut_cmd(t_splitnode *cmd)
 	int pid = 0;
 	int status;
 
+
 	if(!cmd)
 		return(-1);
 	// if(cmd && (!cmd->splitdata || (cmd->splitdata && !cmd->splitdata[0])))
@@ -179,7 +180,7 @@ int phandle(int status)
     if (new == SIGQUIT)
 		printf("Quit\n");
     if (new == SIGINT)
-		printf("Minishell : %s\n", "interrupt");
+		printf("interrupt\n");
     return (WTERMSIG(status) + 128);
 }
 
@@ -200,12 +201,8 @@ void execution(t_splitnode *cmd)
 	int statu;
 
 	statu = ft_execut_cmd(cmd);
-
-		// if(statu == 0)
-		// {
-		// 	return ;
-		// }
+	if(statu == 0 && !cmd->splitdata)
+			return ;
 	if (statu != -1)
 		ft_exit_status(statu);
-	// printf("%d\n", g_v.ex_s);
 }

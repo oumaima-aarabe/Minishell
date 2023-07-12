@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/11 10:52:04 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/12 01:48:30 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 
 void ft_exucve(char *cmd, char **arg, char **env)
 {
-	// int i = 0;
-	// while(arg[i])
 	if(execve(cmd, arg, env) < 0)
 	{
 		free(cmd);
@@ -137,9 +135,9 @@ char *is_valid_cmd(char **path, char *cmd)
 }
 
 //________________________________________________________________________________
+
 char *ft_prepar_path(char *cmd)
 {
-
 	char **path;
 	char *ss;
 	ss = NULL;
