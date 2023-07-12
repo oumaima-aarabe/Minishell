@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/11 10:55:47 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/12 05:37:13 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,36 +17,31 @@
 
 void ft_execut_echo(char **tab)
 {
-	int i = 0;
+	int i = 1;
 	int j = 0;
 	int bol = 1;
 
-	if(!ft_strcmp(tab[i], "echo"))
+	while(tab[i] && (ft_strncmp(tab[i], "-n", 2)) == 0)
 	{
+		j = 2;
+		while(tab[i][j] && tab[i][j] == 'n')
+			j++;
+		if(tab[i][j] && tab[i][j] != 'n')
+			break;
+		if(tab[i][j])
+			bol = 1;
+		else
+			bol = 0;
 		i++;
-		while(tab[i] && (ft_strncmp(tab[i], "-n", 2)) == 0)
-		{
-			j = 2;
-			while(tab[i][j] && tab[i][j] == 'n')
-				j++;
-			if(tab[i][j] && tab[i][j] != 'n')
-				break;
-			if(tab[i][j])
-				bol = 1;
-			else
-				bol = 0;
-			i++;
-		}
-		while (tab[i])
-		{
-			printf("%s", tab[i]);
-			i++;
-			if(tab[i] != NULL)
-				printf(" ");
-		}
-		if(bol)
-			printf("\n");
 	}
+	while (tab[i])
+	{
+		ft_putstr_fd(tab[i++], 1);
+		if(tab[i] != NULL)
+		ft_putstr_fd(" ", 1);
+	}
+	if(bol)
+		ft_putstr_fd("\n", 1);
 }
 //_____________________________________cd_________________________________________
 
