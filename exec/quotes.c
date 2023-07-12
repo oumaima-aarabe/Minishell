@@ -1,50 +1,58 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   quotes.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/12 04:20:51 by ouaarabe          #+#    #+#             */
+/*   Updated: 2023/07/12 04:31:05 by ouaarabe         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Minishell.h"
 
-
-char *removequotes(char *input)
+char	*quotes_removed(int count, char *input)
 {
-	if (input)
-	{
+	char	*output;
+	int		j;
+	int		i;
+	t_quote	check_q;
 
-	int length = strlen(input);
-	int count = 0;
-	int insinglequotes = 0;
-	int indoublequotes = 0;
-
-	int i = 0;
-	while (i < length)
-	{
-		if (input[i] == '\'' && !indoublequotes)
-			insinglequotes = !insinglequotes;
-		else if (input[i] == '"' && !insinglequotes)
-			indoublequotes = !indoublequotes;
-		else
-			count++;
-		i++;
-	}
-
-	char *output = calloc(count + 1, sizeof(char));
-
-	int j = 0;
-	insinglequotes = 0;
-	indoublequotes = 0;
-
+	output = calloc(count + 1, sizeof(char));
+	j = 0;
 	i = 0;
-	while (i < length)
+	check_q = init_q();
+	while (i < ft_strlen(input))
 	{
-		if (input[i] == '\'' && !indoublequotes)
-			insinglequotes = !insinglequotes;
-		else if (input[i] == '"' && !insinglequotes)
-			indoublequotes = !indoublequotes;
-		else
-		{
-			output[j] = input[i];
-			j++;
-		}
+		check_q = check_quotes(check_q, i, input);
+		if (!check_q.changed)
+			output[j++] = input[i];
 		i++;
 	}
 	free (input);
-	return output;
+	return (output);
+}
+
+char	*removequotes(char *input)
+{
+	int		count;
+	t_quote	check_q;
+	int		i;
+
+	if (input)
+	{
+		count = 0;
+		check_q = init_q();
+		i = 0;
+		while (i < ft_strlen(input))
+		{
+			check_q = check_quotes(check_q, i, input);
+			if (!check_q.changed)
+				count++;
+			i++;
+		}
+		return (quotes_removed(count, input));
 	}
-	return input;
+	return (input);
 }

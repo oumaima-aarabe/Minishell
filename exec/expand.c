@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 01:39:03 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/12 03:33:12 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/12 04:13:05 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,24 @@ t_quote	init_q(void)
 
 	check_q.in_dquotes = 0;
 	check_q.in_squotes = 0;
+	check_q.changed = 0;
 	return (check_q);
 }
 
 t_quote	check_quotes(t_quote check_q, int j, char *cmd)
 {
-	if (cmd[j] == '\'')
+	if (cmd[j] == '\'' && !check_q.in_dquotes)
 	{
-		if (!check_q.in_dquotes)
-			check_q.in_squotes = !check_q.in_squotes;
+		check_q.changed = 1;
+		check_q.in_squotes = !check_q.in_squotes;
 	}
-	else if (cmd[j] == '\"')
+	else if (cmd[j] == '"' && !check_q.in_squotes)
 	{
-		if (!check_q.in_squotes)
-			check_q.in_dquotes = !check_q.in_dquotes;
+		check_q.changed = 1;	
+		check_q.in_dquotes = !check_q.in_dquotes;
 	}
+	else 
+        check_q.changed = 0;
 	return (check_q);
 }
 

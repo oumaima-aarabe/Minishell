@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/12 02:30:55 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/12 03:50:05 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_quotes
 {
 	int	in_squotes;
 	int in_dquotes;
+	int	changed;
 }	t_quote;
 
 typedef struct s_env
@@ -196,4 +197,5 @@ char 			*ft_take_key(char *str, t_env *env, int j, int len);
 
 
 t_quote		check_quotes(t_quote check_q, int j, char *cmd);
+t_quote		init_q(void);
 #endif
