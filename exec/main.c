@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/11 11:15:03 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/12 01:10:30 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ char *ft_expand(char *cmd, t_env *en)
 
 			if (!in_single_quotes && (cmd[j] == '$' && cmd[j + 1] == '?'))
 			{
+				printf("===%d\n", g_v.ex_s);
 				tmp = ft_substr(cmd, 0, j);
 				new = ft_substr(cmd, j + 2, ft_strlen(cmd) - j);
 				free(cmd);

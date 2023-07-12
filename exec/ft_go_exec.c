@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/12 00:50:44 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/12 00:54:01 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,6 @@ int phandle(int status)
 		printf("Quit\n");
     if (new == SIGINT)
 		printf("Minishell : %s\n", "interrupt");
-
     return (WTERMSIG(status) + 128);
 }
 

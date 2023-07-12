@@ -3,23 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:08:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/11 11:16:12 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/12 01:10:08 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
- 
+
 void	handle_c(int sig)
 {
 	(void)sig;
+	g_v.ex_s = 1;
 	g_v.sig_flag = 1;
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	ioctl(0, TIOCSTI, "\4");
-	g_v.ex_s = 1;
+	// printf("====%d\n", g_v.ex_s);
 }
 
 void	read_hd(char **cmdl, int *in, int *i, int *j, t_env *env)
@@ -37,6 +38,7 @@ void	read_hd(char **cmdl, int *in, int *i, int *j, t_env *env)
 	g_v.sig_flag = 0;
 	signal(SIGINT, handle_c);
 	signal(SIGQUIT, SIG_IGN);
+	puts("here");
 	while (1)
 	{
 		line = readline("$> ");
@@ -96,7 +98,7 @@ int wc_heredoc(char **cmdl)
 	int i = 0;
     int wc = 0;
     bool print = false;
-	
+
  	while (cmdl[i])
 	{
 		int j = 0;
