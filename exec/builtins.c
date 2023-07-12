@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/12 05:37:13 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/12 06:24:43 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,43 @@ void ft_execut_echo(char **tab)
 }
 //_____________________________________cd_________________________________________
 
+void ft_change_env(t_env *env, char *old)
+{
+	while(env)
+	{
+		if(!ft_strcmp("PWD", env->key))
+		{
+			free(env->valu);
+			env->valu = getcwd(NULL, 0);
+		}
+		if(!ft_strcmp("OLDPWD", env->key))
+		{
+			free(env->valu);
+			env->valu = ft_strdup(old);
+		}
+		env = env->next;
+	}
+	free(old);
+}
+
+void ft_cd_home(char *hom)
+{
+		if(!hom)
+		{
+			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
+			g_v.ex_s = 1;
+ 		}
+		else if(chdir(hom) < 0)
+		{
+			ft_putstr_fd("minishell: cd: ", 2);
+			g_v.ex_s = 1;
+			perror(hom);
+		}
+}
 
 void ft_execut_cd(char *str, t_env *env)
 {
 
-	t_env *tmp = env;
 	t_env *tmp_1 = env;
 	char *old;
 	char *pwd;
@@ -70,22 +102,8 @@ void ft_execut_cd(char *str, t_env *env)
 	}
 	if(!old)
 			old = getcwd(NULL, 0);
-
 		if(!str)
-		{
-			if(!hom)
-			{
-				ft_putstr_fd("minishell: cd: HOME not set\n", 2);
-				// ex_s = 1;
- 			}
-			if(chdir(hom) < 0)
-			{
-				ft_putstr_fd("minishell: cd: ", 2);
-				g_v.ex_s = 1;
-				perror(hom);
-				// printf()
-			}
-		}
+			ft_cd_home(hom);
 		else if(str[0] == '-' && str[1] == '\0')
 		{
 			while (tmp_1)
@@ -127,26 +145,11 @@ void ft_execut_cd(char *str, t_env *env)
 			return ;
 		}
 		free(pwd);
-
+	ft_change_env(g_v.env, old);
 
 
 //----------------------------------------------------------------
 
-	while(tmp)
-	{
-		if(!ft_strcmp("PWD", tmp->key))
-		{
-			free(tmp->valu);
-			tmp->valu = getcwd(NULL, 0);
-		}
-		if(!ft_strcmp("OLDPWD", tmp->key))
-		{
-			free(tmp->valu);
-			tmp->valu = ft_strdup(old);
-		}
-		tmp = tmp->next;
-	}
-	free(old);
 //----------------------------------------------------------------
 }
 
