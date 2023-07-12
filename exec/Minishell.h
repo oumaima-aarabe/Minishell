@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/11 11:14:50 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/12 02:30:55 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,22 @@
 #include <sys/ioctl.h>
 
 /////////////////////////////////3lachghenat///////////////////////////
+
+typedef struct s_exv
+{
+	char	*tmp;
+	char	*new;
+	char	*value;
+	char *expanded;
+	int		len;
+	int		pos;
+}	t_exv;
+
+typedef struct s_quotes
+{
+	int	in_squotes;
+	int in_dquotes;
+}	t_quote;
 
 typedef struct s_env
 {
@@ -178,4 +194,6 @@ void			ft_shelvl(t_env *env);
 void			environment(char **env);
 char 			*ft_take_key(char *str, t_env *env, int j, int len);
 
+
+t_quote		check_quotes(t_quote check_q, int j, char *cmd);
 #endif
