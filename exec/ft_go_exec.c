@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/12 01:52:48 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/13 01:04:39 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ int phandle(int status)
     if (new == SIGQUIT)
 		printf("Quit\n");
     if (new == SIGINT)
-		printf("interrupt\n");
+		printf("\n");
     return (WTERMSIG(status) + 128);
 }
 
