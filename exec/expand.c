@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 01:39:03 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/12 04:13:05 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/13 02:36:26 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,11 @@ char	*expanding(char *cmd, int *j, t_env *en)
 	usd_v.value = ft_take_key(cmd, en, *j + 1, usd_v.len);
 	if (ft_strlen(usd_v.value))
 	{
+		int k = ft_strlen(usd_v.value);
 		usd_v.expanded = ft_strjoin(usd_v.value, usd_v.new);
 		free(cmd);
 		cmd = ft_strjoin(usd_v.tmp, usd_v.expanded);
-		*j += usd_v.len;
+		*j += k;
 	}
 	else
 	{
