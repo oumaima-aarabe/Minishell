@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/12 01:49:00 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/13 04:45:37 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,11 @@ char *ft_expand(char *cmd, t_env *en)
 				char *value = ft_take_key(cmd, en, j + 1, len);
 				if (ft_strlen(value))
 				{
+					int k = ft_strlen(value);
 					char *expanded = ft_strjoin(value, new);
 					free(cmd);
 					cmd = ft_strjoin(tmp, expanded);
-					j += len;
+					j += k;
 				}
 				else
 				{

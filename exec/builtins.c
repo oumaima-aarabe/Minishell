@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/13 04:39:19 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/13 05:00:43 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -358,7 +358,7 @@ int ft_cheak_old_env(char *cmd)
 
 	tmp = g_v.env;
 	new_key = ft_new_key(cmd);
-	if(new_key[0] == '_')
+	if(new_key[0] == '_' && new_key[1] == '\0')
 		return (free(new_key),  1);
 	i = ft_signe(cmd, '=');
 	while(cmd && tmp)
