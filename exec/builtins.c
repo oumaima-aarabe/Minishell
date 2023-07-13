@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/12 07:02:15 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/13 03:31:16 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,76 +206,12 @@ int is_alphabet(int c)
 	return (1);
 }
 
-int ft_cheak_mines(char *cmd)
+int	ft_isalnum(int c)
 {
-	char *tmp;
-
-	tmp = ft_substr(cmd, 0, ft_signe(cmd, '='));
-	if(ft_signe(cmd, '-'))
-	{
-	if(!ft_signe(cmd, '=') && cmd[ft_signe(cmd, '-') + 1] == '\0')
-	{
-		ft_print_err(cmd , " : not a valid identifier\n");
-		g_v.ex_s = 1;
-		free(tmp);
-		return 1;
-	}
-	if(ft_signe(tmp, '-'))
-	{
-		ft_print_err(cmd , " : not a valid identifier\n");
-		g_v.ex_s = 1;
-		free(tmp);
-		return 1;
-	}
-	}
-	free(tmp);
-	return(0);
-
-}
-
-
-int	ft_invalid_export_unset(char *cmd, char *bult)
-{
-	// if(ft_signe(cmd, '=') && ft_signe(cmd, '-'))
-	// {
-	// 	printf(" - - > %s", cmd);
-	// 	return(ft_print_err(cmd , " : not a valid identifier\n"), g_v.ex_s = 1, 1);
-	// }
-
-	if(ft_cheak_mines(cmd))
-		return 1;
-
-
-	if(cmd && is_alphabet(cmd[0]) && cmd[0] != '_')
-	{
-		if(cmd[0] == '-') // cheack option dir tlila fsubject problem in g_v
-			ft_print_err(cmd , "  invalid option\n");
-		else
-			ft_print_err(cmd , " : not a valid identifier\n");
-		g_v.ex_s = 1;
-		return 1;
-	}
-
-	if(cmd && !ft_signe(cmd, '=') && ft_signe(cmd, '+'))
-	{
-		if((cmd[ft_signe(cmd , '+') + 1] != '='))
-		{
-					printf("|%s|\n", cmd);
-
-			ft_print_err(cmd , " : not a valid identifier\n");
-			g_v.ex_s = 1;
-			return 1;
-		}
-	}
-
-	if(!ft_strcmp(bult, "unset") && (ft_signe(cmd, '+') || ft_signe(cmd, '=')))
-	{
-		ft_print_err(cmd , " : not a valid identifier\n");
-		g_v.ex_s = 1;
-		return (1);
-	}
-
-	return (0);
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
+		|| (c >= '0' && c <= '9'))
+		return (0);
+	return (1);
 }
 
 char *ft_new_key(char *cmd)
@@ -296,6 +232,114 @@ char *ft_new_key(char *cmd)
 	}
 	return (ft_strdup(cmd));
 }
+// int ft_cheak_mines(char *cmd)
+// {
+// 	char *tmp;
+
+// 	tmp = ft_substr(cmd, 0, ft_signe(cmd, '='));
+// 	if(ft_signe(cmd, '-'))
+// 	{
+// 	if(!ft_signe(cmd, '=') && cmd[ft_signe(cmd, '-') + 1] == '\0')
+// 	{
+// 		ft_print_err(cmd , " : not a valid identifier\n");
+// 		g_v.ex_s = 1;
+// 		free(tmp);
+// 		return 1;
+// 	}
+// 	if(ft_signe(tmp, '-'))
+// 	{
+// 		ft_print_err(cmd , " : not a valid identifier\n");
+// 		g_v.ex_s = 1;
+// 		free(tmp);
+// 		return 1;
+// 	}
+// 	}
+// 	free(tmp);
+// 	return(0);
+
+// }
+int ft_autre_cara(char *cmd)
+{
+	int i = 0;
+
+	while(cmd[i])
+	{
+		if(ft_isalnum(cmd[i]))
+			return(1);
+		i++;
+	}
+	return (0);
+}
+
+
+int	ft_invalid_export_unset(char *cmd, char *bult)
+{
+	char *new;
+	int i = ft_signe(cmd, '=');
+	if(i)
+	i -= 1;
+	if(cmd && is_alphabet(cmd[0]) && cmd[0] != '_')
+	{
+		if(cmd[0] == '-') // cheack option dir tlila fsubject problem in g_v
+			ft_print_err(cmd , " : invalid option\n");
+		else
+			ft_print_err(cmd , " : not a valid identifier\n");
+		g_v.ex_s = 1;
+		return 1;
+	}
+	if(cmd && !i)
+	{
+		if(ft_autre_cara(cmd))
+		{
+			ft_print_err(cmd , " : not a valid identifier\n");
+			g_v.ex_s = 1;
+			return 1;
+		}
+	}
+	new = ft_new_key(cmd);
+	if(cmd)
+	{
+		if(ft_autre_cara(new))
+		{
+			ft_print_err(cmd , " : not a valid identifier\n");
+			g_v.ex_s = 1;
+			return 1;
+		}
+		// if((cmd[ft_signe(cmd , '+') + 1] != '='))
+		// {
+		// 			printf("|%s|\n", cmd);// khasha t7aid
+
+		// 	ft_print_err(cmd , " : not a valid identifier\n");
+		// 	g_v.ex_s = 1;
+		// 	return 1;
+		// }
+	}
+	if(cmd && (cmd[i] != '+' && cmd[i] != '_' && ft_isalnum(cmd[i])))
+	{
+		ft_print_err(cmd , " : not a valid identifier\n");
+		g_v.ex_s = 1;
+		return 1;
+	}
+
+
+
+
+
+
+
+
+
+
+	if(!ft_strcmp(bult, "unset") && (ft_signe(cmd, '+') || ft_signe(cmd, '=')))
+	{
+		ft_print_err(cmd , " : not a valid identifier\n");
+		g_v.ex_s = 1;
+		return (1);
+	}
+
+	return (0);
+}
+
 
 int ft_cheak_old_env(char *cmd)
 {
@@ -332,10 +376,6 @@ int ft_cheak_old_env(char *cmd)
 
 int ft_cheak_expor(char *cmd)
 {
-	// if(cmd && cmd[0] == '_' && (cmd[1] == '=' || cmd[1] == '+'))
-	// {
-	// 	return (1);
-	// }
 	if(ft_invalid_export_unset(cmd, "export"))
 		return (1);
 	if(ft_cheak_old_env(cmd))
