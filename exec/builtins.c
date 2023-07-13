@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/13 05:00:43 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/13 18:41:05 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,8 @@
 
 //________________________________echo____________________________________________
 
-void ft_execut_echo(char **tab)
+void ft_execut_echo(char **tab, int i, int j, int bol)
 {
-	int i = 1;
-	int j = 0;
-	int bol = 1;
-
 	while(tab[i] && (ft_strncmp(tab[i], "-n", 2)) == 0)
 	{
 		j = 2;
@@ -43,125 +39,21 @@ void ft_execut_echo(char **tab)
 	if(bol)
 		ft_putstr_fd("\n", 1);
 }
-//_____________________________________cd_________________________________________
 
-void ft_change_env(t_env *env, char *old)
-{
-	while(env)
-	{
-		if(!ft_strcmp("PWD", env->key))
-		{
-			free(env->valu);
-			env->valu = getcwd(NULL, 0);
-		}
-		if(!ft_strcmp("OLDPWD", env->key))
-		{
-			free(env->valu);
-			env->valu = ft_strdup(old);
-		}
-		env = env->next;
-	}
-	free(old);
-}
 
-void ft_cd_home(char *hom)
-{
-		if(!hom)
-		{
-			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
-			g_v.ex_s = 1;
- 		}
-		else if(chdir(hom) < 0)
-		{
-			ft_putstr_fd("minishell: cd: ", 2);
-			g_v.ex_s = 1;
-			perror(hom);
-		}
-}
-
-void ft_cd_old_pwd(t_env *env)
-{
-	while (env)
-	{
-		if(!ft_strcmp(env->key, "OLDPWD"))
-		{
-			if(chdir(env->valu) < 0)
-			{
-				ft_putstr_fd("minishell: cd: ", 2);
-				perror(env->valu);
-				g_v.ex_s = 1;
-				break;
-			}
-			printf("%s\n",env->valu);
-			break;
-		}
-		env = env->next;
-	}
-	if(!env)
-	{
-		ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
-		g_v.ex_s = 1;
-	}
-
-}
-
-void ft_execut_cd(char *str, t_env *env)
-{
-
-	char *old;
-	char *pwd;
-	char *hom;
-
-	old = NULL;
-	hom = NULL;
-	while(env)
-	{
-		if(!ft_strcmp("HOME", env->key))
-			hom = env->valu;
-		if(!ft_strcmp("PWD", env->key))
-		{
-			old = ft_strdup(env->valu);
-		}
-		env = env->next;
-	}
-	if(!old)
-		old = getcwd(NULL, 0);
-	if(!str)
-		ft_cd_home(hom);
-	else if(str[0] == '-' && str[1] == '\0')
-		ft_cd_old_pwd(g_v.env);
-	else if(chdir(str) < 0)
-	{
-		ft_putstr_fd("minishell: cd: ", 2);
-		perror(str);
-		g_v.ex_s = 1;
-	}
-	pwd = getcwd(NULL, 0);
-	if(pwd == NULL)
-	{
-		ft_putstr_fd("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n", 2);
-		free(pwd);
-		return ;
-	}
-	free(pwd);
-	ft_change_env(g_v.env, old);
-}
 
 //____________________________________pwd_________________________________________
 
 void ft_ft_execut_pwd(char *cmd, t_env *env)
 {
 	char *pwd;
-	(void)cmd;
-	// (void)outfile;
 
-	// if(cmd && cmd[0] == '-' && cmd[1])
-	// {
-	// 	ft_print_err("minishell: pwd:" ,cmd,  ": invalid option\n");
-	// 	ex_s = 1;
-	// 	return;
-	// }
-	// puts("hgfd");
+	if(cmd && cmd[0] == '-' && cmd[1])
+	{
+		ft_print_err(cmd ,  ": No take option\n");
+		g_v.ex_s = 1;
+		return;
+	}
 	pwd = getcwd(NULL, 0);
 	if(pwd)
 	{
@@ -170,11 +62,11 @@ void ft_ft_execut_pwd(char *cmd, t_env *env)
 		free(pwd);
 		return ;
 	}
+	free(pwd);
 	while(env)
 	{
 		if(!ft_strcmp("PWD", env->key))
 		{
-			// write(outfile, env->valu, ft_strlen(env->valu));
 			printf("%s\n", env->valu);
 			return ;
 		}
@@ -279,7 +171,7 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 {
 	char *new;
 	int i = ft_signe(cmd, '=');
-	puts("1");
+
 	if(cmd && is_alphabet(cmd[0]) && cmd[0] != '_')
 	{
 		if(cmd[0] == '-') // cheack option dir tlila fsubject problem in g_v
@@ -289,7 +181,7 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 		g_v.ex_s = 1;
 		return 1;
 	}
-	puts("2");
+
 	if(cmd && !i)
 	{
 		if(ft_autre_cara(cmd))
@@ -299,7 +191,7 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 			return 1;
 		}
 	}
-	puts("3");
+
 	new = ft_new_key(cmd); // khasso itfria
 
 	if(cmd)
@@ -319,7 +211,7 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 		// 	return 1;
 		// }
 	}
-	puts("3");
+
 	if(i)
 	i -= 1;
 	if(cmd && (cmd[i] != '+' && cmd[i] != '_' && ft_isalnum(cmd[i])))
@@ -328,7 +220,7 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 		g_v.ex_s = 1;
 		return 1;
 	}
-	puts("4");
+
 
 
 
@@ -358,8 +250,8 @@ int ft_cheak_old_env(char *cmd)
 
 	tmp = g_v.env;
 	new_key = ft_new_key(cmd);
-	if(new_key[0] == '_' && new_key[1] == '\0')
-		return (free(new_key),  1);
+	// if(new_key[0] == '_' && new_key[1] == '\0')
+	// 	return (free(new_key),  1);
 	i = ft_signe(cmd, '=');
 	while(cmd && tmp)
 	{
@@ -539,12 +431,12 @@ void ft_execut_unset(char **cmd)
 			i++;
 			continue;
 		}
-		if(cmd[i][0] == '_' && cmd[i][1] == '\0')
-		{
-			printf("-->> %s\n", cmd[i]);
-			i++;
-			continue;
-		}
+		// if(cmd[i][0] == '_' && cmd[i][1] == '\0')
+		// {
+		// 	printf("-->> %s\n", cmd[i]);
+		// 	i++;
+		// 	continue;
+		// }
 			ft_list_remov(cmd[i]);
 		i++;
 	}
@@ -633,7 +525,7 @@ int ft_execut_bultins(char **cmd)
 	if(cmd)
 	{
 	if(!ft_strcmp(cmd[0], "echo"))
-		return (ft_execut_echo(cmd), 1);
+		return (ft_execut_echo(cmd, 1, 0, 1), 1);
 
 	else if(!ft_strcmp(cmd[0], "cd"))
 		return (ft_execut_cd(cmd[1], g_v.env),  1);

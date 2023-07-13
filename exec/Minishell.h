@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/11 11:14:50 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/13 18:33:01 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,5 +177,11 @@ int 			ft_add_export(char *cmd);
 void			ft_shelvl(t_env *env);
 void			environment(char **env);
 char 			*ft_take_key(char *str, t_env *env, int j, int len);
+
+
+//--------------------------------bultin---------------------------//
+
+
+void ft_execut_cd(char *str, t_env *env);
 
 #endif
