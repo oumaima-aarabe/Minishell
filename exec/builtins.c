@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/13 03:55:08 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/13 04:39:19 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,7 +264,7 @@ int ft_autre_cara(char *cmd)
 
 	while(cmd[i])
 	{
-		if(ft_isalnum(cmd[i]) && cmd[i] != '=')
+		if(ft_isalnum(cmd[i]) && cmd[i] != '=' && cmd[i] != '_')
 		{
 			printf("%c\n",cmd[i]); // dell in norm
 			return(1);
@@ -279,8 +279,6 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 {
 	char *new;
 	int i = ft_signe(cmd, '=');
-	if(i)
-	i -= 1;
 	puts("1");
 	if(cmd && is_alphabet(cmd[0]) && cmd[0] != '_')
 	{
@@ -303,7 +301,7 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 	}
 	puts("3");
 	new = ft_new_key(cmd); // khasso itfria
-	
+
 	if(cmd)
 	{
 		if(ft_autre_cara(new))
@@ -322,6 +320,8 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 		// }
 	}
 	puts("3");
+	if(i)
+	i -= 1;
 	if(cmd && (cmd[i] != '+' && cmd[i] != '_' && ft_isalnum(cmd[i])))
 	{
 		ft_print_err(cmd , " : not a valid identifier\n");
