@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/13 03:31:16 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/13 03:55:08 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,8 +264,11 @@ int ft_autre_cara(char *cmd)
 
 	while(cmd[i])
 	{
-		if(ft_isalnum(cmd[i]))
+		if(ft_isalnum(cmd[i]) && cmd[i] != '=')
+		{
+			printf("%c\n",cmd[i]); // dell in norm
 			return(1);
+		}
 		i++;
 	}
 	return (0);
@@ -278,6 +281,7 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 	int i = ft_signe(cmd, '=');
 	if(i)
 	i -= 1;
+	puts("1");
 	if(cmd && is_alphabet(cmd[0]) && cmd[0] != '_')
 	{
 		if(cmd[0] == '-') // cheack option dir tlila fsubject problem in g_v
@@ -287,6 +291,7 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 		g_v.ex_s = 1;
 		return 1;
 	}
+	puts("2");
 	if(cmd && !i)
 	{
 		if(ft_autre_cara(cmd))
@@ -296,7 +301,9 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 			return 1;
 		}
 	}
-	new = ft_new_key(cmd);
+	puts("3");
+	new = ft_new_key(cmd); // khasso itfria
+	
 	if(cmd)
 	{
 		if(ft_autre_cara(new))
@@ -314,12 +321,14 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 		// 	return 1;
 		// }
 	}
+	puts("3");
 	if(cmd && (cmd[i] != '+' && cmd[i] != '_' && ft_isalnum(cmd[i])))
 	{
 		ft_print_err(cmd , " : not a valid identifier\n");
 		g_v.ex_s = 1;
 		return 1;
 	}
+	puts("4");
 
 
 
