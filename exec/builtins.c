@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/14 00:57:20 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/14 01:53:41 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,8 +199,10 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 		{
 			ft_print_err(cmd , " : not a valid identifier\n");
 			g_v.ex_s = 1;
+			free(new);
 			return 1;
 		}
+			free(new);
 		// if((cmd[ft_signe(cmd , '+') + 1] != '='))
 		// {
 		// 			printf("|%s|\n", cmd);// khasha t7aid

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/10 08:58:22 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/14 01:30:13 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 int	ft_strlen(char *s)
 {
 	const char	*c;
+	if(!s)
+		return(0);
 
 	c = s;
 	while (*c)

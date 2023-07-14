@@ -6,20 +6,19 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:15:12 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/14 01:40:52 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/14 01:43:34 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-void ft_change_env(t_env *en, char *old)
+void ft_change_env(t_env *env, char *old)
 {
-	t_env  *env = en;
+	// t_env  *env = en;
 	while(env)
 	{
 		if(!ft_strcmp("PWD", env->key))
 		{
-			// if()
 			free(env->valu);
 			env->valu = getcwd(NULL, 0);
 		}
