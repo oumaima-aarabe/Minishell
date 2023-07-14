@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 09:33:01 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/14 02:18:12 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/14 03:49:14 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ t_Node	*createnode(char *data)
 {
 	t_Node	*newnode;
 
-    printf("data: %s\n", data);
-    fflush(stdout);
 	newnode = (t_Node *)malloc(sizeof(t_Node));
 	newnode->data = strdup(data);
 	newnode->prev = NULL;

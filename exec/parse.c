@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:46:07 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/12 04:09:54 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/14 04:00:12 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ t_splitnode	*iteratelist(t_splitnode *head, t_env *en)
 	{
 		splitdata = current->splitdata;
 		splitdata = apply_ex_q(splitdata, en);
+        current->splitdata = splitdata;
 		current = current->next;
 	}
 	return (head);

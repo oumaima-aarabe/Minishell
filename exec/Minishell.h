@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/14 01:19:18 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/14 03:40:32 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,4 +200,6 @@ char 			*ft_take_key(char *str, t_env *env, int j, int len);
 
 t_quote		check_quotes(t_quote check_q, int j, char *cmd);
 t_quote		init_q(void);
+int			_dquotes(char *line, int index);
+int			_squotes(char *line, int index);
 #endif
