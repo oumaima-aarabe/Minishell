@@ -6,11 +6,38 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 04:20:51 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/12 04:31:05 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/14 00:53:44 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
+
+t_quote	init_q(void)
+{
+	t_quote	check_q;
+
+	check_q.in_dquotes = 0;
+	check_q.in_squotes = 0;
+	check_q.changed = 0;
+	return (check_q);
+}
+
+t_quote	check_quotes(t_quote check_q, int j, char *cmd)
+{
+	if (cmd[j] == '\'' && !check_q.in_dquotes)
+	{
+		check_q.changed = 1;
+		check_q.in_squotes = !check_q.in_squotes;
+	}
+	else if (cmd[j] == '"' && !check_q.in_squotes)
+	{
+		check_q.changed = 2;
+		check_q.in_dquotes = !check_q.in_dquotes;
+	}
+	else 
+        check_q.changed = 0;
+	return (check_q);
+}
 
 char	*quotes_removed(int count, char *input)
 {

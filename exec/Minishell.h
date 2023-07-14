@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/12 03:50:05 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/14 01:19:18 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,10 @@ typedef struct splitnode {
 	int					flag;
 }	t_splitnode;
 
-int				lexer(char *line);
-int				lexer2(char *line);
+int		check_red1(char *line);
+int	check_pipe(char *line);
+int	valid_quotes(char *line);
+
 void			ft_syntax_err(void);
 
 ////////////////////////////////////////////////////////////////
