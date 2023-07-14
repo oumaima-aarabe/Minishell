@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/14 04:19:05 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/14 04:30:24 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ int ft_autre_cara(char *cmd)
 	{
 		if(ft_isalnum(cmd[i]) && cmd[i] != '=' && cmd[i] != '_')
 		{
-			printf("%c\n",cmd[i]); // dell in norm
+			// printf("%c\n",cmd[i]); // dell in norm
 			return(1);
 		}
 		i++;
@@ -527,8 +527,8 @@ int ft_execut_bultins(char **cmd)
 	{
 	if(!ft_strcmp(cmd[0], "echo"))
 		return (ft_execut_echo(cmd, 1, 0, 1), 1);
-	
-	else if(!ft_strcmp(cmd[0], "cd"))
+	g_v.ex_s = 0;
+	if(!ft_strcmp(cmd[0], "cd"))
 		return (ft_execut_cd(cmd[1], g_v.env),  1);
 
 	else if(!ft_strcmp(cmd[0], "pwd"))
