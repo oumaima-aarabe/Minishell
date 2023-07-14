@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/13 18:33:01 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/15 00:20:59 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,6 @@ void			ft_print_err(char *cmd, char *st);
 
 char			*ft_strjoin(char *s1, char *s2);
 char			*ft_strdup(char *s1);
-char			**ft_split(char *st, char c);
 int				ft_execut_cmd(t_splitnode *cmd);
 int				ft_execut_bultins(char **cmd);
 int				ft_signe(char *st, char c);
@@ -181,7 +180,9 @@ char 			*ft_take_key(char *str, t_env *env, int j, int len);
 
 //--------------------------------bultin---------------------------//
 
-
+void  ft_execut_export(char **cmd);
 void ft_execut_cd(char *str, t_env *env);
+int	ft_invalid_export_unset(char *cmd, char *bult);
+
 
 #endif
