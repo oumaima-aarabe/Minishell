@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/14 04:30:24 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/14 23:06:02 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,32 +124,7 @@ char *ft_new_key(char *cmd)
 	}
 	return (ft_strdup(cmd));
 }
-// int ft_cheak_mines(char *cmd)
-// {
-// 	char *tmp;
 
-// 	tmp = ft_substr(cmd, 0, ft_signe(cmd, '='));
-// 	if(ft_signe(cmd, '-'))
-// 	{
-// 	if(!ft_signe(cmd, '=') && cmd[ft_signe(cmd, '-') + 1] == '\0')
-// 	{
-// 		ft_print_err(cmd , " : not a valid identifier\n");
-// 		g_v.ex_s = 1;
-// 		free(tmp);
-// 		return 1;
-// 	}
-// 	if(ft_signe(tmp, '-'))
-// 	{
-// 		ft_print_err(cmd , " : not a valid identifier\n");
-// 		g_v.ex_s = 1;
-// 		free(tmp);
-// 		return 1;
-// 	}
-// 	}
-// 	free(tmp);
-// 	return(0);
-
-// }
 int ft_autre_cara(char *cmd)
 {
 	int i = 0;
@@ -157,10 +132,7 @@ int ft_autre_cara(char *cmd)
 	while(cmd[i])
 	{
 		if(ft_isalnum(cmd[i]) && cmd[i] != '=' && cmd[i] != '_')
-		{
-			// printf("%c\n",cmd[i]); // dell in norm
 			return(1);
-		}
 		i++;
 	}
 	return (0);
@@ -204,14 +176,6 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 			return 1;
 		}
 			free(new);
-		// if((cmd[ft_signe(cmd , '+') + 1] != '='))
-		// {
-		// 			printf("|%s|\n", cmd);// khasha t7aid
-
-		// 	ft_print_err(cmd , " : not a valid identifier\n");
-		// 	g_v.ex_s = 1;
-		// 	return 1;
-		// }
 	}
 
 	if(i)
@@ -233,7 +197,7 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 
 
 
-	if(!ft_strcmp(bult, "unset") && (ft_signe(cmd, '+') || ft_signe(cmd, '=')))
+	if(!ft_strcmp(bult, "unset") && (ft_autre_cara(cmd) || ft_signe(cmd , '=')))
 	{
 		ft_print_err(cmd , " : not a valid identifier\n");
 		g_v.ex_s = 1;
