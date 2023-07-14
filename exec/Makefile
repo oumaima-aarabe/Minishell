@@ -6,7 +6,7 @@
 #    By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 15:19:53 by azarda            #+#    #+#              #
-#    Updated: 2023/07/14 06:20:30 by ouaarabe         ###   ########.fr        #
+#    Updated: 2023/07/14 07:56:18 by ouaarabe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ SRC =	obj/ft_error.c\
 		obj/ft_excute_cd.c\
 		obj/env.c\
 		obj/expand.c\
+		obj/double_split.c\
 		obj/rm.c
 
 

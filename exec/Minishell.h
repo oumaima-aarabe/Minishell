@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/14 07:17:49 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/14 07:44:50 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,4 +203,7 @@ t_quote		init_q(void);
 int			_dquotes(char *line, int index);
 int			_squotes(char *line, int index);
 void ft_execut_cd(char *str, t_env *env);
+char    **ft_joindstrs_at(char **ds1, char **ds2, int at);
+int ft_double_strlen(char **dstr);
+
 #endif

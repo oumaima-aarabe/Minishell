@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:38:46 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/13 02:39:19 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/14 08:07:06 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char    **ft_joindstrs_at(char **ds1, char **ds2, int at)
     i = 0;
     j = 0;
     k = 0;
-    words = malloc(sizeof(char *) * (ft_double_strlen(ds1) + ft_double_strlen(ds2) + 1));
+    words = calloc(sizeof(char *) , (ft_double_strlen(ds1) + ft_double_strlen(ds2) + 1));
     if (!words)
         return (NULL);
     while (ds1[i] && i != at)

@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/14 01:19:03 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/14 07:25:43 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int main(int argc, char **argv, char **env)
 		signal(SIGINT, hendl_ctr_c);
 		signal(SIGQUIT, SIG_IGN);
 		prompt = readline("Minishell -> ");
-		if (!prompt)
+		if (!prompt)	
 			return(printf("exit\n"), exit(0), 1);
 		if (prompt[0])
 			add_history(prompt);

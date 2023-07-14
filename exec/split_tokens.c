@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 03:39:36 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/14 07:05:12 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/14 07:30:51 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ char **split_string(char *str, int *word_count) {
 
 	if (in_word)
 		count++;
-	// Allocate memory for the words array
-	printf("===%d\n", count);
 	char **words = (char **)calloc((count + 1) , sizeof(char *));
 	int word_index = 0;
 	int start_index = 0;

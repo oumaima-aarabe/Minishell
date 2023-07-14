@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/14 06:21:55 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/14 07:30:34 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,10 @@ char *is_valid_cmd(char **path, char *cmd)
 	while(path[i])
 	{
 		// printf("-->%s\n", cmd);
+		// if(!cmd[0])
+		// 	return (ft_print_err(cmd, ": command not found\n"), exit(127), NULL);
 		if(!cmd[0])
-			return (ft_print_err(cmd, ": command not found\n"), exit(127), NULL);
+			return (exit(0), NULL);
 		test = ft_strjoin(ft_strdup("/"), ft_strdup(cmd));
 		ss = ft_strjoin(ft_strdup(path[i]), test);
 		if(!(access(ss, F_OK)))
