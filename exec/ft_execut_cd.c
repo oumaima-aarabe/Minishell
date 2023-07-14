@@ -6,29 +6,31 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:15:12 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/13 18:33:27 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/14 01:40:52 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-void ft_change_env(t_env *env, char *old)
+void ft_change_env(t_env *en, char *old)
 {
+	t_env  *env = en;
 	while(env)
 	{
 		if(!ft_strcmp("PWD", env->key))
 		{
+			// if()
 			free(env->valu);
 			env->valu = getcwd(NULL, 0);
 		}
 		if(!ft_strcmp("OLDPWD", env->key))
 		{
 			free(env->valu);
-			env->valu = ft_strdup(old);
+			env->valu = old;
 		}
 		env = env->next;
 	}
-	free(old);
+	// free(old);
 }
 
 void ft_cd_home(char *hom)
@@ -122,6 +124,10 @@ void ft_execut_cd(char *str, t_env *env)
 	if(ft_cd_execut(str, hom))
 		return ;
 	if(ft_cheak_getcwd())
+	{
+		free(old);
 		return ;
+	}
+	// printf("old -> %s |||  adress old -> %p\n", old, old);
 	ft_change_env(g_v.env, old);
 }

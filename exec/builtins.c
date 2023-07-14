@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/13 18:41:05 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/14 00:57:20 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void ft_execut_echo(char **tab, int i, int j, int bol)
 
 //____________________________________pwd_________________________________________
 
-void ft_ft_execut_pwd(char *cmd, t_env *env)
+void ft_execut_pwd(char *cmd, t_env *env)
 {
 	char *pwd;
 
@@ -58,7 +58,6 @@ void ft_ft_execut_pwd(char *cmd, t_env *env)
 	if(pwd)
 	{
 		printf("%s\n", pwd);
-		// write(outfile, pwd, ft_strlen(pwd));
 		free(pwd);
 		return ;
 	}
@@ -531,7 +530,7 @@ int ft_execut_bultins(char **cmd)
 		return (ft_execut_cd(cmd[1], g_v.env),  1);
 
 	else if(!ft_strcmp(cmd[0], "pwd"))
-		return (ft_ft_execut_pwd(cmd[1] ,g_v.env), 1);
+		return (ft_execut_pwd(cmd[1] ,g_v.env), 1);
 
 	else if(!(ft_strcmp(cmd[0], "export")))
 		return (ft_execut_export(cmd), 1);

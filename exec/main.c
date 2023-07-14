@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/13 04:45:37 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/14 01:18:56 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,11 @@ char *ft_expand(char *cmd, t_env *en)
 	return cmd;
 }
 
+void le()
+{
+	system("leaks minishell");
+}
+
 int main(int argc, char **argv, char **env)
 {
 	char *prompt;
@@ -103,6 +108,7 @@ int main(int argc, char **argv, char **env)
 	(void)argv;
 	if(isatty(STDIN_FILENO) == 0)
 		return (0);
+		// atexit(le);
 	rl_catch_signals = 0;
 	environment(env);
 	while(1337)
