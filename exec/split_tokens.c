@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 03:39:36 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/14 04:15:51 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/14 07:05:12 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,20 @@ char **split_string(char *str, int *word_count) {
 	// Count the number of words
 	while (i < length) 
 	{
-		if ((str[i] == ' ' || str[i] == '\t') && (!s_quotes || !d_quotes))
+		if ((str[i] == ' ' || str[i] == '\t') && (!s_quotes && !d_quotes))
 		{
 			if (in_word) {
 				count++;
 				in_word = 0;
 			}
-		} else if (str[i] == '"' && !s_quotes) 
+		}
+		else if (str[i] == '"' &&  !s_quotes) 
 		{
+		
 			d_quotes = !d_quotes;
 			in_word = 1;
 		}
-		else if (str[i] == '\'' && !d_quotes) 
+		else if (str[i] == '\'' && !s_quotes) 
 		{
 			s_quotes = !s_quotes;
 			in_word = 1;
@@ -86,6 +88,7 @@ char **split_string(char *str, int *word_count) {
 	if (in_word)
 		count++;
 	// Allocate memory for the words array
+	printf("===%d\n", count);
 	char **words = (char **)calloc((count + 1) , sizeof(char *));
 	int word_index = 0;
 	int start_index = 0;
@@ -102,11 +105,10 @@ char **split_string(char *str, int *word_count) {
 
 	while (i <= length) 
 	{
-		if ((str[i] == ' ' || str[i] == '\t' || str[i] == '\0') && (!s_quotes || !d_quotes)) 
+		if ((str[i] == ' ' || str[i] == '\t' || str[i] == '\0') && (!s_quotes && !d_quotes)) 
 		{
 			if (in_word) 
 			{
-				puts("here\n");
 				words[word_index] = (char *)calloc((i - start_index + 1) , sizeof(char));
 				strncpy(words[word_index], &str[start_index], i - start_index);
 				words[word_index][i - start_index] = '\0';

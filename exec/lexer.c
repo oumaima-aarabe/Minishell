@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:29 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/14 01:26:10 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/14 07:07:23 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ int	valid_quotes(char *line)
 	int d;
 	int s;
 
-	
-	
 	d = 0;
 	s = 0;
 	t_quote cq;

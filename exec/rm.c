@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 08:19:19 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/14 04:03:16 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/14 07:17:28 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,17 +88,19 @@ int word_count(char **cmdl)
         int i = 0;
         int wc = 0;
         bool print = false;
+        t_quote cq;
     if (cmdl)
     {
         while (cmdl[i]) 
         {
             int j = 0;
-            bool inside_quotes = false;
+            memset(&cq, 0, sizeof(t_quote));
             while (cmdl[i][j]) 
             {
+                cq = check_quotes(cq,j, cmdl[i]);
                 if (!is_redirection(cmdl[i][j]))
                     print = true;
-                if (!inside_quotes && !is_quote(cmdl[i][j])) 
+                if (!cq.in_dquotes && !cq.in_squotes && !is_quote(cmdl[i][j])) 
                 {
                     if (cmdl[i][j] == '<' && cmdl[i][j + 1] != '<')
                     {
@@ -124,7 +126,7 @@ int word_count(char **cmdl)
                 }
                 
                 if (is_quote(cmdl[i][j]))
-                    inside_quotes = !inside_quotes;
+                    cq = check_quotes(cq,j, cmdl[i]);
                 if (cmdl[i][j])
                     j++;
             }
@@ -148,21 +150,23 @@ char **newstring(char **cmdl, int wc)
     bool print = false;
     int k = 0;
     int z;
+    t_quote cq;
 
     new_s = (char **)ft_calloc((wc + 1) , sizeof(char *));
      while (cmdl[i]) 
     {
         j = 0;
-        bool inside_quotes = false;
+        memset(&cq, 0, sizeof(t_quote));
         while (cmdl[i][j]) 
         {
-            if (inside_quotes || !is_redirection(cmdl[i][j]))
+            cq = check_quotes(cq,j, cmdl[i]);
+            if ((!cq.in_dquotes && !cq.in_squotes) || !is_redirection(cmdl[i][j]))
             {
                 print = true;
                 z = i;
                 count++;
             }
-            if (!inside_quotes && !is_quote(cmdl[i][j])) 
+            if (!cq.in_dquotes && !cq.in_squotes && !is_quote(cmdl[i][j])) 
             {
                 if (cmdl[i][j] == '<' && cmdl[i][j + 1] != '<')
                 {
@@ -189,7 +193,7 @@ char **newstring(char **cmdl, int wc)
             if (cmdl[i][j])
             {
                 if (is_quote(cmdl[i][j]))
-                    inside_quotes = !inside_quotes;
+                    cq = check_quotes(cq,j, cmdl[i]);
                 j++;
             }
         }

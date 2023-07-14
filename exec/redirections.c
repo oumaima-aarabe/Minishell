@@ -6,31 +6,17 @@ bool is_quote(char c)
 	return (c == '\'' || c == '\"');
 }
 
-int	get_fl(const char *str)
+int	get_fl( char *str)
 {
 	int		length;
-	bool	inside_quotes;
-	char	quote_type;
-
+	t_quote cq;
 	length = 0;
-	inside_quotes = false;
-	quote_type = '\0';
+
+	memset(&cq, 0, sizeof(t_quote));
 	while (str[length] != '\0')
 	{
-		if (str[length] == '\'' || str[length] == '\"')
-		{
-			if (inside_quotes && quote_type == str[length])
-			{
-				inside_quotes = false;
-				quote_type = '\0';
-			}
-			else if (!inside_quotes)
-			{
-				inside_quotes = true;
-				quote_type = str[length];
-			}
-		}
-		else if (!inside_quotes && (str[length] == '<' || str[length] == '>'))
+		cq = check_quotes(cq, length, str);
+		if (!cq.in_dquotes && !cq.in_squotes && (str[length] == '<' || str[length] == '>'))
 			break; // Stop at red operator
 		length++;
 	}
@@ -151,6 +137,7 @@ t_splitnode *handle_redirections(t_splitnode *node, t_env *env)
 {
 	t_splitnode *current = node;
 	t_splitnode *trimmed;
+	t_quote		cq;
 	while (current != NULL)
 	{
 		g_v.red_flag = 0;
@@ -161,10 +148,11 @@ t_splitnode *handle_redirections(t_splitnode *node, t_env *env)
 			while (cmdl[i] && !g_v.red_flag)
 			{
 				int j = 0;
-				bool inside_quotes = false;
+				memset(&cq, 0, sizeof(t_quote));
 				while (cmdl[i][j] && !g_v.red_flag)
 				{
-					if (!inside_quotes && !is_quote(cmdl[i][j]))
+					cq = check_quotes(cq,j, cmdl[i]);
+					if (!cq.in_dquotes && !cq.in_squotes && !is_quote(cmdl[i][j]))
 					{
 						if (cmdl[i][j] == '<' && cmdl[i][j + 1] != '<')
 							red_input(&current, &i, &j, cmdl, env);
@@ -174,7 +162,7 @@ t_splitnode *handle_redirections(t_splitnode *node, t_env *env)
 							red_append(&current, &i, &j, cmdl, env);
 					}
 					if (is_quote(cmdl[i][j]))
-						inside_quotes = !inside_quotes;
+						cq = check_quotes(cq, j, cmdl[i]);
 
 					if (cmdl[i][j])
 						j++;

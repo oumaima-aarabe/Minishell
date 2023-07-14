@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/14 03:40:32 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/14 07:17:49 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int				word_count(char **cmdl);
 char			**newstring(char **cmdl, int wc);
 t_splitnode   	*remove_redirections(t_splitnode  *node, int hr);
 bool			is_quote(char c);
-int				get_fl(const char *str);
+int				get_fl(char *str);
 bool			is_redirection(char ch);
 
 // void		parsing(char *prompt, t_env *env);
@@ -202,4 +202,5 @@ t_quote		check_quotes(t_quote check_q, int j, char *cmd);
 t_quote		init_q(void);
 int			_dquotes(char *line, int index);
 int			_squotes(char *line, int index);
+void ft_execut_cd(char *str, t_env *env);
 #endif

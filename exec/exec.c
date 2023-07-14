@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/12 01:48:30 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/14 06:21:55 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,14 @@ char **ft_my_env(t_env *en)
 	while(env)
 	{
 		tmp = env;
-		if(env->valu)
+		if(env->valu != NULL)
 		{
 		key = ft_strjoin(ft_strdup(tmp->key), ft_strdup("="));
 		valu = ft_strjoin(key ,ft_strdup(tmp->valu));
 		tab[i] = valu;
+		i++;
 		}
 		env = tmp->next;
-		i++;
 		free(tmp);
 	}
 	ft_lstclear(&env);

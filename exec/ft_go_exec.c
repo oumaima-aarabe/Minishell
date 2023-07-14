@@ -3,18 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_go_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/12 01:52:48 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/14 06:22:11 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
 
-int exec(char **cmd, t_env *env)
+int exec(char **cmd, t_env *env, t_fds pipe)
 {
+	if (pipe.in != -1)
+	{
+		dup2(pipe.in, 0);
+		close(pipe.in);
+	}
+	if (pipe.out != -1)
+	{
+		dup2(pipe.out, 1);
+		close(pipe.out);
+	}
+	if (pipe.fd_in != -1)
+		close(pipe.fd_in);
+	if (pipe.fd_out != -1)
+		close(pipe.fd_out);
+
+
 	if(ft_execut_bultins(cmd))
 		return (exit(0), 1);
 	ft_exec(cmd , env);
@@ -58,7 +74,7 @@ int ft_one_cmd(t_splitnode *cmd, t_env *env)
 	}
 	pid = fork();
 	if(pid == -1)
-		return(perror("Minishell: "), -1);
+		return(perror("Minishell: "), g_v.ex_s = 1, -1);
 	if(pid == 0)
 		ft_exec(cmd->splitdata , env);
 	waitpid(pid, &status, 0);
@@ -89,35 +105,31 @@ int fork_execut(t_splitnode *ptr, t_fds pipe, t_env *env)
 	// if(!ptr->splitdata || (ptr->splitdata && !ptr->splitdata[0]))
 	// 	return (0);
 	if(ptr->in != -1)
+	{
 		pipe.in = ptr->in;
+		// close(ptr->in);
+	}
 	if(ptr->out != -1)
+	{
 		pipe.out = ptr->out;
+		// close(ptr->out);
+	}
 
 	pid = fork();
 	if(pid == -1)
-	{
-
-		puts("i = 1");
-		return(perror("Minishell "), -1);
-	}
+		return(perror("Minishell "),  g_v.ex_s = 1, -1);
 	if(pid == 0)
-	{
-		if (pipe.in != -1)
-		{
-			dup2(pipe.in, 0);
-			close(pipe.in);
-		}
-		if (pipe.out != -1) //ila kan -1
-		{
-			dup2(pipe.out, 1);
-			close(pipe.out);
-		}
-		if (pipe.fd_in != -1)
-			close(pipe.fd_in);
-		if (pipe.fd_out != -1)
-			close(pipe.fd_out);
-		exec(ptr->splitdata, env);
+		exec(ptr->splitdata, env, pipe);
+	if (ptr->in != -1){
+		write(2, ft_itoa(ptr->in), ft_strlen(ft_itoa(ptr->in)));
+		close(ptr->in);
 	}
+	// write(2, "\n", 1);
+	if (ptr->out != -1){
+		write(2, ft_itoa(ptr->out), ft_strlen(ft_itoa(ptr->out)));
+		close(ptr->out);
+	}
+	// write(2, "\n", 1);
 	return(pid);
 }
 
@@ -144,29 +156,27 @@ int ft_execut_cmd(t_splitnode *cmd)
 
 		pipe(fd);
 		pid =  fork_execut(cmd, (t_fds){cmd->in, fd[1], fd[0], -1}, g_v.env);
-
 		close(fd[1]);
-		// if(cmd->next->next)
 			cmd = cmd->next;
-
-
-		while(cmd->next != NULL)
+		while(pid != -1 && cmd->next != NULL)
 		{
 			pipe(dexieme_fd);
 			pid =  fork_execut(cmd, (t_fds){fd[0], dexieme_fd[1], dexieme_fd[0], -1}, g_v.env);
-			if(pid == -1)
-				return (-1);
 			close(fd[0]);
 			fd[0] = dexieme_fd[0];
 			close(dexieme_fd[1]);
 			cmd = cmd->next;
 		}
+		if (pid != -1)
 		pid = fork_execut(cmd, (t_fds){fd[0], cmd->out, -1, -1}, g_v.env);
 		close(fd[0]);
+		if (pid != -1)
 		waitpid(pid, &status, 0);
-		cmd = cmd->next;
+		// cmd = cmd->next;
 		while(wait(NULL) != -1)
 			;
+					if(pid == -1)
+				return (-1);
 	return (status);
 }
 
@@ -180,7 +190,7 @@ int phandle(int status)
     if (new == SIGQUIT)
 		printf("Quit\n");
     if (new == SIGINT)
-		printf("interrupt\n");
+		printf("\n");
     return (WTERMSIG(status) + 128);
 }
 
