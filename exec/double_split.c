@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:38:46 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/14 08:07:06 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/14 08:35:49 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@ char    **ft_joindstrs_at(char **ds1, char **ds2, int at)
     i = 0;
     j = 0;
     k = 0;
+      int c = 0;
+        while (ds2) 
+        {
+            printf("Token %d: %s\n", c + 1, ds2[c]);
+            c++;
+        }
+        pause();
+        // 
     words = calloc(sizeof(char *) , (ft_double_strlen(ds1) + ft_double_strlen(ds2) + 1));
     if (!words)
         return (NULL);

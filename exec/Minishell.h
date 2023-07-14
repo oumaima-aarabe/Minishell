@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/14 07:44:50 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/14 08:17:34 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,8 @@ bool			is_quote(char c);
 int				get_fl(char *str);
 bool			is_redirection(char ch);
 
-// void		parsing(char *prompt, t_env *env);
-t_splitnode		*parsing(char *prompt, t_env *env);
+void		parsing(char *prompt, t_env *env);
+// t_splitnode		*parsing(char *prompt, t_env *env);
 void			hendl_ctr_c(int sig);
 void			*ft_calloc(size_t count, size_t size);
 char			**checkquotes(char **list, t_env *env);
