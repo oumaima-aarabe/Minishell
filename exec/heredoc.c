@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:08:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 06:34:46 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 07:34:35 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,45 +99,51 @@ t_splitnode *handle_heredoc(t_splitnode *node, t_env *env)
 	return trimmed;
 }
 
+t_hd	check_dprintable(char **cmdl, t_quote cq, t_hd hd)
+{
+	if (ft_strncmp("<<", &cmdl[hd.i][hd.j], 2))
+		hd.print = true;
+	if (!cq.in_dquotes && !cq.in_squotes && !is_quote(cmdl[hd.i][hd.j]))
+	{
+		if (cmdl[hd.i][hd.j] == '<' && cmdl[hd.i][hd.j + 1] == '<')
+		{
+			if (cmdl[hd.i][hd.j + 2])
+				hd.j +=   get_fl(&cmdl[hd.i][hd.j + 2]) + 1;
+			else if (cmdl[hd.i + 1])
+				hd.j = get_fl(cmdl[++hd.i]);}
+	}
+
+	if (is_quote(cmdl[hd.i][hd.j]))
+		cq = check_quotes(cq, hd.j, cmdl[hd.i]);
+	if (cmdl[hd.i][hd.j])
+		hd.j++;
+	return (hd);
+}
+
 int wc_heredoc(char **cmdl)
 {
-	int i = 0;
-    int wc = 0;
-    bool print = false;
+	t_hd	hd;
 	t_quote cq;
 
- 	while (cmdl[i])
+	ft_memset(&hd, 0, sizeof(t_hd));
+ 	while (cmdl[hd.i])
 	{
-		int j = 0;
+		hd.j = 0;
 		ft_memset(&cq, 0, sizeof(t_quote));
-		while (cmdl[i][j])
+		while (cmdl[hd.i][hd.j])
 		{
-			cq = check_quotes(cq,j, cmdl[i]);
-			if (ft_strncmp("<<", &cmdl[i][j], 2))
-				print = true;
-			if (!cq.in_dquotes && !cq.in_squotes && !is_quote(cmdl[i][j]))
-			{
-				if (cmdl[i][j] == '<' && cmdl[i][j + 1] == '<')
-				{
-					if (cmdl[i][j + 2])
-						j +=   get_fl(&cmdl[i][j + 2]) + 1;
-					else if (cmdl[i + 1])
-						j = get_fl(cmdl[++i]);}
-			}
-
-			if (is_quote(cmdl[i][j]))
-				cq = check_quotes(cq, j, cmdl[i]);
-			if (cmdl[i][j])
-				j++;
+			cq = check_quotes(cq,hd.j, cmdl[hd.i]);
+			hd = check_dprintable(cmdl, cq, hd);
+			cq = check_quotes(cq,hd.j, cmdl[hd.i]);
 		}
-		if (print)
+		if (hd.print)
 		{
-			wc++;
-			print = false;
+			hd.wc++;
+			hd.print = false;
 		}
-		i++;
+		hd.i++;
 	}
-	return (wc);
+	return (hd.wc);
 }
 
 t_hd	numerate(t_hd hd)
