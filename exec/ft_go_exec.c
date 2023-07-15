@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/15 01:25:31 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/15 03:24:33 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,12 +121,12 @@ int fork_execut(t_splitnode *ptr, t_fds pipe, t_env *env)
 	if(pid == 0)
 		exec(ptr->splitdata, env, pipe);
 	if (ptr->in != -1){
-		write(2, ft_itoa(ptr->in), ft_strlen(ft_itoa(ptr->in)));
+		// write(2, ft_itoa(ptr->in), ft_strlen(ft_itoa(ptr->in)));
 		close(ptr->in);
 	}
 	// write(2, "\n", 1);
 	if (ptr->out != -1){
-		write(2, ft_itoa(ptr->out), ft_strlen(ft_itoa(ptr->out)));
+		// write(2, ft_itoa(ptr->out), ft_strlen(ft_itoa(ptr->out)));
 		close(ptr->out);
 	}
 	// write(2, "\n", 1);

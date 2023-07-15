@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:46:07 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 02:07:07 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 03:18:52 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char **split_expanded(char *str, int word_count) {
 	int d_quotes = 0;
 	int i = 0;
 	// Count the number of words
-	while (i < length) 
+	while (i < length)
 	{
 		if ((str[i] == ' ' || str[i] == '\t') && (!s_quotes && !d_quotes))
 		{
@@ -29,13 +29,13 @@ char **split_expanded(char *str, int word_count) {
 				in_word = 0;
 			}
 		}
-		else if (str[i] == '"' &&  !s_quotes) 
+		else if (str[i] == '"' &&  !s_quotes)
 		{
-		
+
 			d_quotes = !d_quotes;
 			in_word = 1;
 		}
-		else if (str[i] == '\'' && !s_quotes) 
+		else if (str[i] == '\'' && !s_quotes)
 		{
 			s_quotes = !s_quotes;
 			in_word = 1;
@@ -61,11 +61,11 @@ char **split_expanded(char *str, int word_count) {
 
 	start_index = i;
 
-	while (i <= length) 
+	while (i <= length)
 	{
-		if ((str[i] == ' ' || str[i] == '\t' || str[i] == '\0') && (!s_quotes && !d_quotes)) 
+		if ((str[i] == ' ' || str[i] == '\t' || str[i] == '\0') && (!s_quotes && !d_quotes))
 		{
-			if (in_word) 
+			if (in_word)
 			{
 				words[word_index] = (char *)calloc((i - start_index + 1) , sizeof(char));
 				strncpy(words[word_index], &str[start_index], i - start_index);
@@ -75,17 +75,17 @@ char **split_expanded(char *str, int word_count) {
 			}
 			start_index = i + 1;
 		}
-		 else if (str[i] == '"' && !s_quotes) 
+		 else if (str[i] == '"' && !s_quotes)
 		{
 			d_quotes = !d_quotes;
 			in_word = 1;
 		}
-		else if (str[i] == '\'' && !d_quotes) 
+		else if (str[i] == '\'' && !d_quotes)
 		{
 			s_quotes = !s_quotes;
 			in_word = 1;
 		}
-		else 
+		else
 			in_word = 1;
 		i++;
 	}
@@ -140,7 +140,7 @@ char	**apply_ex_q(char **splitdata, t_env *en)
 			i = 0;
 			while (splitdata[i])
 			{
-				
+
 				quotesremoved = removequotes(splitdata[i]);
 				splitdata[i] = quotesremoved;
 				i++;
@@ -178,46 +178,3 @@ t_splitnode	*parsing(char	*prompt, t_env *env)
 	iteratelist(tokens, env);
 	return (tokens);
 }
-
-// void	parsing(char	*prompt, t_env *env)
-// {
-// 	t_Node		*node;
-// 	t_splitnode	*tokens;
-
-// 	node = splitstring(prompt);
-// 	tokens = splitdatalinkedlist(node);
-// 	freenodes(node);
-// 	tokens = handle_heredoc(tokens, env);
-// 	tokens = handle_redirections(tokens, env);
-// 	iteratelist(tokens, env);
-//     t_splitnode *current = tokens;
-
-// 	while (current != NULL)
-//      {
-
-//         t_splitnode *next = current;
-//         // Print the split data
-//         int i = 0;
-//         while (current->splitdata[i]) 
-//         {
-//             // printf("{{{%d}}", j++);
-//             // fflush(stdout);
-//             printf("Token %d: %s\n", i + 1, current->splitdata[i]);
-//             i++;
-//         }
-//         // Free the memory allocated for split data
-//         i = 0;
-//         while (next->splitdata[i] != NULL)
-//          {
-//             free(current->splitdata[i]);
-//             i++;
-//         }
-//         free(current->splitdata);
-
-//         current = current->next;
-//         current = next->next;
-//         free (next);
-//             // exit(1);
-//     }
-// 	// return (tokens);
-// }
