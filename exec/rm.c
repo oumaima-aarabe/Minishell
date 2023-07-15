@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 08:19:19 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/14 07:17:28 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 02:15:10 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ char **newstring(char **cmdl, int wc)
     t_quote cq;
 
     new_s = (char **)ft_calloc((wc + 1) , sizeof(char *));
-     while (cmdl[i]) 
+    while (cmdl[i] && k < wc) 
     {
         j = 0;
         memset(&cq, 0, sizeof(t_quote));
