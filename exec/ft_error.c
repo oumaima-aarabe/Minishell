@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 02:18:13 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/15 05:05:37 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 23:05:46 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	ft_syntax_err(void)
 {
+	ft_putstr_fd("Minishell: ", 2);
 	ft_putendl_fd("syntax error", 2);
 }
 

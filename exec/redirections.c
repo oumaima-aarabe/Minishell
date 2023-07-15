@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 10:54:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 10:56:09 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 23:05:12 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void red_append(t_splitnode **node, int *i, int *j, t_env *env)
 		{
 			if (!g_v.red_flag)
 			{
+				ft_putstr_fd("Minishell: ", 2);
 				perror(appfile);
 				g_v.red_flag = 1;
 				(*node)->out = -2;
@@ -116,6 +117,7 @@ void red_input(t_splitnode **node, int *i, int *j, t_env *env)
 		{
 			if (!g_v.red_flag)
 			{
+				ft_putstr_fd("Minishell: ", 2);
 				perror(infile);
 				g_v.red_flag = 1;
 				(*node)->in = -2;
@@ -141,6 +143,7 @@ void red_output(t_splitnode **node, int *i, int *j, t_env *env)
 		{
 			if (!g_v.red_flag)
             {
+				ft_putstr_fd("Minishell: ", 2);
                 perror(outfile);
                 g_v.red_flag = 1;
                 (*node)->out = -2;

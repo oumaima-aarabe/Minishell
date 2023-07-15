@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 09:33:01 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 11:41:17 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 11:44:02 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_Node	*splitstring(char* line)
     int i = 0;
     int start = 0;
 
-    while (i < length) 
+    while (i <  length) 
     {
         if (line[i] == '|' && (_squotes(line, i) && _dquotes(line, i))) 
         {
