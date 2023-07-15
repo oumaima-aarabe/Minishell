@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:08:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 06:30:30 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 06:34:46 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,17 +140,21 @@ int wc_heredoc(char **cmdl)
 	return (wc);
 }
 
+t_hd	numerate(t_hd hd)
+{
+	hd.print = 1;
+	hd.z = hd.i;
+	hd.count++;
+	return (hd);
+}
+
 t_hd	check_printable(char **cmdl, t_quote cq, t_hd hd)
 {
 	while (cmdl[hd.i][hd.j])
 	{
 		cq = check_quotes(cq,hd.j, cmdl[hd.i]);
 		if ((cq.in_dquotes || cq.in_squotes) || strncmp("<<", &cmdl[hd.i][hd.j], 2))
-		{
-			hd.print = 1;
-			hd.z = hd.i;
-			hd.count++;
-		}
+			hd = numerate(hd);
 		if (!cq.in_dquotes && !cq.in_squotes && !is_quote(cmdl[hd.i][hd.j]))
 		{
 			if (cmdl[hd.i][hd.j] == '<' && cmdl[hd.i][hd.j + 1] == '<')
@@ -170,6 +174,7 @@ t_hd	check_printable(char **cmdl, t_quote cq, t_hd hd)
 	}
 	return(hd);
 }
+
 char	*fill_ns_hd(char *cmdl, int count)
 {
 	char *new_s;
