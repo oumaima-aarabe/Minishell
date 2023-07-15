@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 09:33:48 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 09:56:14 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ char			*get_2redfilen(int *i, int *j, char **cmd_l, t_env *env);
 ////////////////////////////////////////////////////////////////
 ///////////////////////HEREDOC//////////////////////////////////
 
-void			read_hd(char **cmdl, int *in, int *i, int *j, t_env *env);
+t_splitnode	*read_hd(t_splitnode *current, int *i, int *j, t_env *env);
 t_splitnode		*handle_heredoc(t_splitnode *node, t_env *env);
 int				wc_heredoc(char **cmdl);
 char			**ns_heredoc(char **cmdl, int wc);

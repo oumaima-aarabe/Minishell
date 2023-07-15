@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:08:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 09:41:44 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 09:59:20 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,17 @@ char *gethd_redfilen(int *i, int *j, char **cmd_l)
 	}
 		return (file_name);
 }
-void	read_hd(char **cmdl, int *in, int *i, int *j, t_env *env)
+t_splitnode	*read_hd(t_splitnode *current, int *i, int *j, t_env *env)
 {
 	int fd[2];
-	char *lmtr = gethd_redfilen(i, j, cmdl);
+	char *lmtr = gethd_redfilen(i, j, current->splitdata);
 	char *tmp = ft_strdup(lmtr);
 	int k;
 
 	lmtr = removequotes(lmtr);
 	k = ft_strcmp(lmtr, tmp);
 	if (pipe(fd) < 0)
-		return ;
+		return (current);
 	g_v.sig_flag = 0;
 	signal(SIGINT, handle_c);
 	signal(SIGQUIT, SIG_IGN);
@@ -81,9 +81,10 @@ void	read_hd(char **cmdl, int *in, int *i, int *j, t_env *env)
 	if (g_v.sig_flag)
 	{
 		close(fd[0]);
-		return;
+		return (current);
 	}
-	*in = fd[0];
+	current->in = fd[0];
+	return (current);
 }
 
 t_splitnode *handle_heredoc(t_splitnode *node, t_env *env)
@@ -92,25 +93,24 @@ t_splitnode *handle_heredoc(t_splitnode *node, t_env *env)
 	t_splitnode *trimmed;
 	while (current != NULL)
 	{
-		char **cmdl = current->splitdata;
 		int i = 0;
 
-		while (cmdl[i])
+		while (current->splitdata[i])
 		{
 			int j = 0;
 			bool inside_quotes = false;
 
-			while (cmdl[i][j])
+			while (current->splitdata[i][j])
 			{
-				if (!inside_quotes && !is_quote(cmdl[i][j]))
-					if (cmdl[i][j] == '<' && cmdl[i][j + 1] == '<')
-						read_hd(cmdl, &current->in, &i, &j, env);
-				if (is_quote(cmdl[i][j]))
+				if (!inside_quotes && !is_quote(current->splitdata[i][j]))
+					if (current->splitdata[i][j] == '<' && current->splitdata[i][j + 1] == '<')
+						current = read_hd(current, &i, &j, env);
+				if (is_quote(current->splitdata[i][j]))
 					inside_quotes = !inside_quotes;
-				if (cmdl[i][j])
+				if (current->splitdata[i][j])
 					j++;
 			}
-			if (cmdl[i])
+			if (current->splitdata[i])
 				i++;
 		}
 		current = current->next;
