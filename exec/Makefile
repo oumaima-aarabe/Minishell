@@ -6,7 +6,7 @@
 #    By: azarda <azarda@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 15:19:53 by azarda            #+#    #+#              #
-#    Updated: 2023/07/15 00:21:20 by azarda           ###   ########.fr        #
+#    Updated: 2023/07/15 01:26:04 by azarda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,8 +41,10 @@ SRC =	obj/ft_error.c\
 		obj/quotes.c\
 		obj/heredoc.c\
 		obj/free.c\
+		obj/ft_excute_cd.c\
 		obj/env.c\
-		obj/ft_execut_cd.c\
+		obj/expand.c\
+		obj/double_split.c\
 		obj/ft_export.c\
 		obj/rm.c
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 00:15:18 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/10 08:58:22 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 int	ft_strlen(char *s)
 {
 	const char	*c;
-	if(!s)
-		return(0);
 
 	c = s;
 	while (*c)
@@ -55,6 +53,25 @@ size_t	ft_strlcpy(char *dest, char *src, size_t size)
 	return (c);
 }
 
+char	*ft_strtrim(char *s1, char *set)
+{
+	size_t	i;
+	size_t	j;
+	size_t	len;
+
+	if (!s1)
+		return (NULL);
+	if (!set || *set == '\0')
+		return (ft_strdup(s1));
+	i = 0;
+	while (ft_strchr(set, s1[i]) && s1[i] != '\0')
+		i++;
+	j = ft_strlen(s1) - 1;
+	while (ft_strchr(set, s1[j]) && j != 0 && j >= i)
+		j--;
+	len = j - i + 1;
+	return (ft_substr(s1, i, len));
+}
 
 char	*ft_strjoin(char *s1, char *s2)
 {

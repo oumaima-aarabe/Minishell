@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 00:20:59 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/15 01:29:34 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,23 @@
 #include <sys/ioctl.h>
 
 /////////////////////////////////3lachghenat///////////////////////////
+
+typedef struct s_exv
+{
+	char	*tmp;
+	char	*new;
+	char	*value;
+	char *expanded;
+	int		len;
+	int		pos;
+}	t_exv;
+
+typedef struct s_quotes
+{
+	int	in_squotes;
+	int in_dquotes;
+	int	changed;
+}	t_quote;
 
 typedef struct s_env
 {
@@ -75,8 +92,10 @@ typedef struct splitnode {
 	int					flag;
 }	t_splitnode;
 
-int				lexer(char *line);
-int				lexer2(char *line);
+int		check_red1(char *line);
+int	check_pipe(char *line);
+int	valid_quotes(char *line);
+
 void			ft_syntax_err(void);
 
 ////////////////////////////////////////////////////////////////
@@ -107,7 +126,7 @@ int				word_count(char **cmdl);
 char			**newstring(char **cmdl, int wc);
 t_splitnode   	*remove_redirections(t_splitnode  *node, int hr);
 bool			is_quote(char c);
-int				get_fl(const char *str);
+int				get_fl(char *str);
 bool			is_redirection(char ch);
 
 // void		parsing(char *prompt, t_env *env);
@@ -166,6 +185,7 @@ void			ft_print_err(char *cmd, char *st);
 
 char			*ft_strjoin(char *s1, char *s2);
 char			*ft_strdup(char *s1);
+char			**ft_split(char *st, char c);
 int				ft_execut_cmd(t_splitnode *cmd);
 int				ft_execut_bultins(char **cmd);
 int				ft_signe(char *st, char c);
@@ -178,11 +198,14 @@ void			environment(char **env);
 char 			*ft_take_key(char *str, t_env *env, int j, int len);
 
 
-//--------------------------------bultin---------------------------//
-
-void  ft_execut_export(char **cmd);
+t_quote		check_quotes(t_quote check_q, int j, char *cmd);
+t_quote		init_q(void);
+int			_dquotes(char *line, int index);
+int			_squotes(char *line, int index);
 void ft_execut_cd(char *str, t_env *env);
+char    **ft_joindstrs_at(char **ds1, char **ds2, int at);
+int ft_double_strlen(char **dstr);
 int	ft_invalid_export_unset(char *cmd, char *bult);
-
+void  ft_execut_export(char **cmd);
 
 #endif

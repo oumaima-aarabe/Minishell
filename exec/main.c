@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/14 23:10:06 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/15 01:26:43 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,77 +27,6 @@ void  hendl_ctr_c(int sig)
 	}
 }
 
-char *ft_expand(char *cmd, t_env *en)
-{
-	int j = 0;
-	char *tmp;
-	char *new;
-	int in_single_quotes = 0;
-	int in_double_quotes = 0;
-
-	if (cmd)
-	{
-		while (cmd[j])
-		{
-			if (cmd[j] == '\'')
-			{
-				if (!in_double_quotes)
-					in_single_quotes = !in_single_quotes;
-			}
-			else if (cmd[j] == '\"')
-			{
-				if (!in_single_quotes)
-					in_double_quotes = !in_double_quotes;
-			}
-
-			if (!in_single_quotes && (cmd[j] == '$' && cmd[j + 1] == '?'))
-			{
-				tmp = ft_substr(cmd, 0, j);
-				new = ft_substr(cmd, j + 2, ft_strlen(cmd) - j);
-				free(cmd);
-				cmd = ft_strjoin(tmp, ft_strjoin(ft_itoa(g_v.ex_s), new));
-				g_v.ex_s = 0;
-			}
-			else if (!in_single_quotes && cmd[j] == '$' && cmd[j + 1] && (isalnum(cmd[j + 1]) || cmd[j + 1] == '_'))
-			{
-				int len = 0;
-				int pos = j + 1;
-				while (cmd[pos] && (isalnum(cmd[pos]) || cmd[pos] == '_'))
-				{
-					len++;
-					pos++;
-				}
-				// Variable expansion for other variables
-				tmp = ft_substr(cmd, 0, j);
-				new = ft_substr(cmd, j + len + 1, ft_strlen(cmd) - (j + len + 1));
-				char *value = ft_take_key(cmd, en, j + 1, len);
-				if (ft_strlen(value))
-				{
-					int k = ft_strlen(value);
-					char *expanded = ft_strjoin(value, new);
-					free(cmd);
-					cmd = ft_strjoin(tmp, expanded);
-					j += k;
-				}
-				else
-				{
-					free(cmd);
-					cmd = ft_strjoin(tmp, new);
-				}
-
-			}
-			else if (cmd[j])
-				j++;
-		}
-	}
-	return cmd;
-}
-
-void le()
-{
-	system("leaks minishell");
-}
-
 int main(int argc, char **argv, char **env)
 {
 	char *prompt;
@@ -108,7 +37,6 @@ int main(int argc, char **argv, char **env)
 	(void)argv;
 	if(isatty(STDIN_FILENO) == 0)
 		return (0);
-		// atexit(le);
 	rl_catch_signals = 0;
 	environment(env);
 	while(1337)
@@ -121,12 +49,13 @@ int main(int argc, char **argv, char **env)
 			return(printf("exit\n"), exit(0), 1);
 		if (prompt[0])
 			add_history(prompt);
-		if (!lexer(prompt) || !lexer2(prompt))
+		if (!valid_quotes(prompt) || !check_pipe(prompt) || !check_red1(prompt))
 		{
 			ft_syntax_err();
 			continue;
 		}
 		tokens = parsing(prompt, g_v.env);
+		// parsing(prompt, g_v.env);
 		free(prompt);
 		execution(tokens);
 		free_split_nodes(tokens);
