@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/14 08:19:22 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 00:38:00 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void  hendl_ctr_c(int sig)
 int main(int argc, char **argv, char **env)
 {
 	char *prompt;
-	// t_splitnode *tokens;
+	t_splitnode *tokens;
 
-	// tokens = NULL;
+	tokens = NULL;
 	(void)argc;
 	(void)argv;
 	// if(isatty(STDIN_FILENO) == 0)
@@ -54,10 +54,10 @@ int main(int argc, char **argv, char **env)
 			ft_syntax_err();
 			continue;
 		}
-		// tokens = parsing(prompt, g_v.env);
-		parsing(prompt, g_v.env);
+		tokens = parsing(prompt, g_v.env);
+		// parsing(prompt, g_v.env);
 		free(prompt);
-		// execution(tokens);
-		// free_split_nodes(tokens);
+		execution(tokens);
+		free_split_nodes(tokens);
 	}
 }

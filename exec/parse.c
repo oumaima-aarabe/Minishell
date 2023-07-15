@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:46:07 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/14 08:40:12 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 01:16:52 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,11 +106,7 @@ int	check_for_space(char *expanded)
 	{
 		cq = check_quotes(cq, i, expanded);
 		if(!cq.in_dquotes && !cq.in_squotes && expanded[i] == ' ')
-		{
-					puts("here\n");
-			
 			return(1);
-		}
 		i++;
 	}
 	return(0);
@@ -119,7 +115,7 @@ int	check_for_space(char *expanded)
 char	**apply_ex_q(char **splitdata, t_env *en)
 {
 	int		i;
-	// int		k;
+	int		k;
 	char	*expanded;
 	char	*quotesremoved;
 	char	**splitted = NULL;
@@ -136,9 +132,9 @@ char	**apply_ex_q(char **splitdata, t_env *en)
 				if (check_for_space(expanded))
 				{
 					splitted = split_expanded(expanded, count_words(expanded));
-					// k = ft_double_strlen(splitted);
+					k = ft_double_strlen(splitted);
 					splitdata = ft_joindstrs_at(splitdata, splitted, i);
-					// i += k;
+					i += k;
 				}
 				if (splitdata[i])
 					i++;
@@ -172,21 +168,7 @@ t_splitnode	*iteratelist(t_splitnode *head, t_env *en)
 	return (head);
 }
 
-// t_splitnode	*parsing(char	*prompt, t_env *env)
-// {
-// 	t_Node		*node;
-// 	t_splitnode	*tokens;
-
-// 	node = splitstring(prompt);
-// 	tokens = splitdatalinkedlist(node);
-// 	freenodes(node);
-// 	tokens = handle_heredoc(tokens, env);
-// 	tokens = handle_redirections(tokens, env);
-// 	iteratelist(tokens, env);
-// 	return (tokens);
-// }
-
-void	parsing(char	*prompt, t_env *env)
+t_splitnode	*parsing(char	*prompt, t_env *env)
 {
 	t_Node		*node;
 	t_splitnode	*tokens;
@@ -197,34 +179,48 @@ void	parsing(char	*prompt, t_env *env)
 	tokens = handle_heredoc(tokens, env);
 	tokens = handle_redirections(tokens, env);
 	iteratelist(tokens, env);
-    t_splitnode *current = tokens;
-
-	while (current != NULL)
-     {
-
-        t_splitnode *next = current;
-        // Print the split data
-        int i = 0;
-        while (current->splitdata[i]) 
-        {
-            // printf("{{{%d}}", j++);
-            // fflush(stdout);
-            printf("Token %d: %s\n", i + 1, current->splitdata[i]);
-            i++;
-        }
-        // Free the memory allocated for split data
-        i = 0;
-        while (next->splitdata[i] != NULL)
-         {
-            free(current->splitdata[i]);
-            i++;
-        }
-        free(current->splitdata);
-
-        current = current->next;
-        current = next->next;
-        free (next);
-            // exit(1);
-    }
-	// return (tokens);
+	return (tokens);
 }
+
+// void	parsing(char	*prompt, t_env *env)
+// {
+// 	t_Node		*node;
+// 	t_splitnode	*tokens;
+
+// 	node = splitstring(prompt);
+// 	tokens = splitdatalinkedlist(node);
+// 	freenodes(node);
+// 	tokens = handle_heredoc(tokens, env);
+// 	tokens = handle_redirections(tokens, env);
+// 	iteratelist(tokens, env);
+//     t_splitnode *current = tokens;
+
+// 	while (current != NULL)
+//      {
+
+//         t_splitnode *next = current;
+//         // Print the split data
+//         int i = 0;
+//         while (current->splitdata[i]) 
+//         {
+//             // printf("{{{%d}}", j++);
+//             // fflush(stdout);
+//             printf("Token %d: %s\n", i + 1, current->splitdata[i]);
+//             i++;
+//         }
+//         // Free the memory allocated for split data
+//         i = 0;
+//         while (next->splitdata[i] != NULL)
+//          {
+//             free(current->splitdata[i]);
+//             i++;
+//         }
+//         free(current->splitdata);
+
+//         current = current->next;
+//         current = next->next;
+//         free (next);
+//             // exit(1);
+//     }
+// 	// return (tokens);
+// }
