@@ -6,13 +6,14 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:46:07 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 04:55:57 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 10:14:22 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-char **split_expanded(char *str, int word_count) {
+char **split_expanded(char *str, int word_count) 
+{
 	int length = ft_strlen(str);
 	int count = 0;
 	int in_word = 0;

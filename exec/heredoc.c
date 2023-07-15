@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:08:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 09:59:20 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 10:58:31 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,24 +89,25 @@ t_splitnode	*read_hd(t_splitnode *current, int *i, int *j, t_env *env)
 
 t_splitnode *handle_heredoc(t_splitnode *node, t_env *env)
 {
-	t_splitnode *current = node;
+	t_splitnode *current;
 	t_splitnode *trimmed;
+	t_quote		cq;
+
+	current = node;
 	while (current != NULL)
 	{
 		int i = 0;
-
 		while (current->splitdata[i])
 		{
 			int j = 0;
-			bool inside_quotes = false;
+			ft_memset(&cq, 0, sizeof(t_quote));
 
 			while (current->splitdata[i][j])
 			{
-				if (!inside_quotes && !is_quote(current->splitdata[i][j]))
+				cq = check_quotes(cq,j, current->splitdata[i]);
+				if (!cq.in_dquotes && !cq.in_squotes && !is_quote(current->splitdata[i][j]))
 					if (current->splitdata[i][j] == '<' && current->splitdata[i][j + 1] == '<')
 						current = read_hd(current, &i, &j, env);
-				if (is_quote(current->splitdata[i][j]))
-					inside_quotes = !inside_quotes;
 				if (current->splitdata[i][j])
 					j++;
 			}

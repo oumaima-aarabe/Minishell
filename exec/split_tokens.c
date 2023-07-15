@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 03:39:36 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 04:49:53 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 11:14:37 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,8 @@ t_splitnode   *splitdatalinkedlist(t_Node  *original_list)
 		{
 			head = new_node;
 			tail = head;
-		} else 
+		}
+		else 
 		{
 			tail->next = new_node;
 			new_node->prev = tail;
@@ -173,20 +174,3 @@ t_splitnode   *splitdatalinkedlist(t_Node  *original_list)
 	return head;
 }
 
-// void free_split_nodes(t_splitnode *head)
-// {
-//     while (head != NULL) 
-//     {
-//         t_splitnode   *current = head;
-//         head = head->next;
-
-//         int i = 0;
-//         while (current->splitdata[i]) 
-//         {
-//             free(current->splitdata[i]);
-//             i++;
-//         }
-//         free(current->splitdata);
-//         free(current);
-//     }
-// }
