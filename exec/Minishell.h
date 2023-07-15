@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 07:27:39 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 09:33:48 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,8 @@ void			hendl_ctr_c(int sig);
 void			*ft_calloc(size_t count, size_t size);
 char			**checkquotes(char **list, t_env *env);
 char			*ft_strtrim(char *s1, char *set);
-char			*get_redfilen(int *i, int *j, char **cmd_l, char *which_red, t_env *env);
+char			*get_1redfilen(int *i, int *j, char **cmd_l, t_env *env);
+char			*get_2redfilen(int *i, int *j, char **cmd_l, t_env *env);
 
 ////////////////////////////////////////////////////////////////
 ///////////////////////HEREDOC//////////////////////////////////

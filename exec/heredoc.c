@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:08:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 07:34:35 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 09:41:44 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,31 @@ void	read_inhd(char *lmtr, int k, int fd, t_env *env)
 		free(line);
 	}
 }
+char *gethd_redfilen(int *i, int *j, char **cmd_l)
+{
+	char *file_name = NULL;
+	int file_len = 0;
+
+	if (cmd_l[*i][*j + 2])
+	{
+		file_len = get_fl(&cmd_l[*i][*j + 2]);
+		file_name = strndup(&cmd_l[*i][*j + 2], file_len);
+		*j += file_len;
+	}
+	else if (cmd_l[*i + 1] && ft_strlen(cmd_l[*i + 1]) > 0)
+	{
+		*j = 0;
+		file_len = get_fl(cmd_l[*i + 1]);
+		file_name = strndup(cmd_l[*i + 1], file_len);
+		*i += 1;
+		*j += file_len;
+	}
+		return (file_name);
+}
 void	read_hd(char **cmdl, int *in, int *i, int *j, t_env *env)
 {
 	int fd[2];
-	char *lmtr = get_redfilen(i, j, cmdl, "<<", env);
+	char *lmtr = gethd_redfilen(i, j, cmdl);
 	char *tmp = ft_strdup(lmtr);
 	int k;
 
