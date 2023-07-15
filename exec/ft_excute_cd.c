@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_excute_cd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:15:12 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/15 01:25:21 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/15 01:39:09 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void ft_cd_old_pwd(t_env *env)
 	}
 
 }
-int ft_cheak_getcwd()
+int ft_check_getcwd()
 {
 	char *pwd;
 	pwd = getcwd(NULL, 0);
@@ -122,7 +122,7 @@ void ft_execut_cd(char *str, t_env *env)
 		old = getcwd(NULL, 0);
 	if(ft_cd_execut(str, hom))
 		return ;
-	if(ft_cheak_getcwd())
+	if(ft_check_getcwd())
 	{
 		free(old);
 		return ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 23:11:47 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/15 01:25:50 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/15 01:40:38 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 }
 
 
-int ft_cheak_old_env(char *cmd)
+int ft_check_old_env(char *cmd)
 {
 	int i = 0;
 	char *new_key;
@@ -152,11 +152,11 @@ int ft_cheak_old_env(char *cmd)
 	return (free(new_key),0);
 }
 
-int ft_cheak_expor(char *cmd)
+int ft_check_expor(char *cmd)
 {
 	if(ft_invalid_export_unset(cmd, "export"))
 		return (1);
-	if(ft_cheak_old_env(cmd))
+	if(ft_check_old_env(cmd))
 		return (1);
 
 	return 0;
@@ -178,14 +178,14 @@ int ft_add_export(char *cmd)
 	return (1);
 }
 
-int ft_cheack_add_export(char **cmd)
+int ft_check_add_export(char **cmd)
 {
 	int i;
 
 	i = 1;
 	while(cmd[i])
 	{
-		if(ft_cheak_expor(cmd[i]))
+		if(ft_check_expor(cmd[i]))
 		{
 			if(cmd[i + 1])
 			{
@@ -240,7 +240,7 @@ void  ft_execut_export(char **cmd)
 	// int i = 0;
 	// while(cmd[i])
 	// printf("- - > %s\n", cmd[i++]);
-	if(ft_cheack_add_export(cmd))
+	if(ft_check_add_export(cmd))
 		return ;
 
 	tmp = duplicate_linked_list(g_v.env);
