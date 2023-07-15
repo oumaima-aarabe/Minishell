@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 23:11:47 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/15 00:28:59 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/15 01:22:05 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,8 @@ int ft_autre_cara(char *cmd)
 	return (0);
 }
 
-
-int	ft_invalid_export_unset(char *cmd, char *bult)
+int ft_invalid_unset_export(char *cmd, char *bult, int i)
 {
-	char *new;
-	int i = ft_signe(cmd, '=');
-
 	if(cmd && is_alphabet(cmd[0]) && cmd[0] != '_')
 	{
 		if(cmd[0] == '-') // cheack option dir tlila fsubject problem in g_v
@@ -90,18 +86,31 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 		if(ft_autre_cara(cmd))
 		{
 			ft_print_err(cmd , " : not a valid identifier\n");
-			g_v.ex_s = 1;
-			return 1;
+			return (g_v.ex_s = 1, 1);
 		}
 	}
+	if(!ft_strcmp(bult, "unset") && (ft_autre_cara(cmd) || ft_signe(cmd , '=')))
+	{
+		ft_print_err(cmd , " : not a valid identifier\n");
+		return (g_v.ex_s = 1, 1);
+	}
+	return(0);
+}
 
+
+int	ft_invalid_export_unset(char *cmd, char *bult)
+{
+	char *new;
+	int i;
+
+	i = ft_signe(cmd, '=');
+	if(ft_invalid_unset_export(cmd, bult, i))
+		return(1);
 	new = ft_new_key(cmd); // khasso itfria
 	if(cmd && ft_autre_cara(new))
 	{
 		ft_print_err(cmd , " : not a valid identifier\n");
-		g_v.ex_s = 1;
-		free(new);
-		return 1;
+		return (g_v.ex_s = 1, free(new), 1);
 	}
 	free(new);
 	if(i)
@@ -109,14 +118,7 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 	if(cmd && (cmd[i] != '+' && cmd[i] != '_' && ft_isalnum(cmd[i])))
 	{
 		ft_print_err(cmd , " : not a valid identifier\n");
-		g_v.ex_s = 1;
-		return 1;
-	}
-	if(!ft_strcmp(bult, "unset") && (ft_autre_cara(cmd) || ft_signe(cmd , '=')))
-	{
-		ft_print_err(cmd , " : not a valid identifier\n");
-		g_v.ex_s = 1;
-		return (1);
+		return (g_v.ex_s = 1, 1);
 	}
 	return (0);
 }
