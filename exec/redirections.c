@@ -147,8 +147,8 @@ t_splitnode *handle_redirections(t_splitnode *node, t_env *env)
 		{
 			while (cmdl[i] && !g_v.red_flag)
 			{
-				int j = 0;
 				ft_memset(&cq, 0, sizeof(t_quote));
+				int j = 0;
 				while (cmdl[i][j] && !g_v.red_flag)
 				{
 					cq = check_quotes(cq,j, cmdl[i]);
@@ -161,9 +161,6 @@ t_splitnode *handle_redirections(t_splitnode *node, t_env *env)
 						else if (cmdl[i][j] == '>' && cmdl[i][j + 1] == '>')
 							red_append(&current, &i, &j, cmdl, env);
 					}
-					if (is_quote(cmdl[i][j]))
-						cq = check_quotes(cq, j, cmdl[i]);
-
 					if (cmdl[i][j])
 						j++;
 				}
