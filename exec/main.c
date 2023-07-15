@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 00:38:00 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 01:26:43 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int main(int argc, char **argv, char **env)
 	tokens = NULL;
 	(void)argc;
 	(void)argv;
-	// if(isatty(STDIN_FILENO) == 0)
-	// 	return (0);
+	if(isatty(STDIN_FILENO) == 0)
+		return (0);
 	rl_catch_signals = 0;
 	environment(env);
 	while(1337)
@@ -45,7 +45,7 @@ int main(int argc, char **argv, char **env)
 		signal(SIGINT, hendl_ctr_c);
 		signal(SIGQUIT, SIG_IGN);
 		prompt = readline("Minishell -> ");
-		if (!prompt)	
+		if (!prompt)
 			return(printf("exit\n"), exit(0), 1);
 		if (prompt[0])
 			add_history(prompt);

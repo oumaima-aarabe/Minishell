@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+         #
+#    By: azarda <azarda@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 15:19:53 by azarda            #+#    #+#              #
-#    Updated: 2023/07/14 07:56:18 by ouaarabe         ###   ########.fr        #
+#    Updated: 2023/07/15 01:26:04 by azarda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SRC =	obj/ft_error.c\
 		obj/env.c\
 		obj/expand.c\
 		obj/double_split.c\
+		obj/ft_export.c\
 		obj/rm.c
 
 

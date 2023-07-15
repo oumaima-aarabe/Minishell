@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 00:37:44 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 01:29:34 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,5 +205,7 @@ int			_squotes(char *line, int index);
 void ft_execut_cd(char *str, t_env *env);
 char    **ft_joindstrs_at(char **ds1, char **ds2, int at);
 int ft_double_strlen(char **dstr);
+int	ft_invalid_export_unset(char *cmd, char *bult);
+void  ft_execut_export(char **cmd);
 
 #endif
