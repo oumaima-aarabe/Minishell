@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:46:07 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 03:18:52 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/15 04:55:57 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,54 +97,56 @@ char **split_expanded(char *str, int word_count) {
 
 int	check_for_space(char *expanded)
 {
-	t_quote cq;
-	int i;
+	t_quote	cq;
+	int		i;
 
 	i = 0;
-	memset(&cq, 0, sizeof(t_quote));
-	while(expanded[i])
+	ft_memset(&cq, 0, sizeof(t_quote));
+	while (expanded[i])
 	{
 		cq = check_quotes(cq, i, expanded);
-		if(!cq.in_dquotes && !cq.in_squotes && expanded[i] == ' ')
-			return(1);
+		if (!cq.in_dquotes && !cq.in_squotes && expanded[i] == ' ')
+			return (1);
 		i++;
 	}
-	return(0);
+	return (0);
 }
+char	**apply_q(char **splitdata)
+{
+	t_spex 	spex;
 
+	ft_memset(&spex, 0, sizeof(t_spex));
+	while (splitdata[spex.i])
+	{
+
+		spex.quotesremoved = removequotes(splitdata[spex.i]);
+		splitdata[spex.i] = spex.quotesremoved;
+		spex.i++;
+	}
+	return (splitdata);
+}
 char	**apply_ex_q(char **splitdata, t_env *en)
 {
-	int		i;
-	int		k;
-	char	*expanded;
-	char	*quotesremoved;
-	char	**splitted = NULL;
+	t_spex 	spex;
 
-	i = 0;
+	ft_memset(&spex, 0, sizeof(t_spex));
 	if (splitdata)
 	{
-			while (splitdata[i])
+			while (splitdata[spex.i])
 			{
-				expanded = ft_expand(splitdata[i], en);
-				splitdata[i] = expanded;
-				if (check_for_space(expanded))
+				spex.expanded = ft_expand(splitdata[spex.i], en);
+				splitdata[spex.i] = spex.expanded;
+				if (check_for_space(spex.expanded))
 				{
-					splitted = split_expanded(expanded, count_words(expanded));
-					k = ft_double_strlen(splitted);
-					splitdata = ft_joindstrs_at(splitdata, splitted, i);
-					i += k;
+					spex.splitted = split_expanded(spex.expanded, count_words(spex.expanded));
+					spex.k = ft_double_strlen(spex.splitted);
+					splitdata = ft_joindstrs_at(splitdata, spex.splitted, spex.i);
+					spex.i += spex.k;
 				}
-				if (splitdata[i])
-					i++;
+				if (splitdata[spex.i])
+					spex.i++;
 			}
-			i = 0;
-			while (splitdata[i])
-			{
-
-				quotesremoved = removequotes(splitdata[i]);
-				splitdata[i] = quotesremoved;
-				i++;
-			}
+			splitdata = apply_q(splitdata);
 	}
 	return (splitdata);
 }

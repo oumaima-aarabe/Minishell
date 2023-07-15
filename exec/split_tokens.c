@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 03:39:36 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/14 07:30:51 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 04:49:53 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char **split_string(char *str, int *word_count) {
 			d_quotes = !d_quotes;
 			in_word = 1;
 		}
-		else if (str[i] == '\'' && !s_quotes) 
+		else if (str[i] == '\'' && !d_quotes) 
 		{
 			s_quotes = !s_quotes;
 			in_word = 1;
@@ -100,8 +100,7 @@ char **split_string(char *str, int *word_count) {
 		i++;
 
 	start_index = i;
-
-	while (i <= length) 
+	while (i <= length && word_index < count) 
 	{
 		if ((str[i] == ' ' || str[i] == '\t' || str[i] == '\0') && (!s_quotes && !d_quotes)) 
 		{
@@ -130,7 +129,6 @@ char **split_string(char *str, int *word_count) {
 		i++;
 	}
 
-	words[word_index] = NULL;
 	*word_count = count;
 	return words;
 }

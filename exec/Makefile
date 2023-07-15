@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: azarda <azarda@student.42.fr>              +#+  +:+       +#+         #
+#    By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 15:19:53 by azarda            #+#    #+#              #
-#    Updated: 2023/07/15 01:26:04 by azarda           ###   ########.fr        #
+#    Updated: 2023/07/15 06:24:29 by ouaarabe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CC = cc
 
 READLINE = $(shell brew --prefix readline)
 
-FLAGS = -Wall -Werror -Wextra  -I$(READLINE)/include -g -fsanitize=address
+FLAGS = -Wall -Werror -Wextra  -I$(READLINE)/include #-g -fsanitize=address
 
 
 
@@ -39,13 +39,13 @@ SRC =	obj/ft_error.c\
 		obj/ft_go_exec.c\
 		obj/redirections.c\
 		obj/quotes.c\
-		obj/heredoc.c\
 		obj/free.c\
 		obj/ft_excute_cd.c\
 		obj/env.c\
 		obj/expand.c\
 		obj/double_split.c\
 		obj/ft_export.c\
+		obj/heredoc.c\
 		obj/rm.c
 
 

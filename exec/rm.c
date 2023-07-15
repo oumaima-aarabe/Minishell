@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 08:19:19 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 02:15:10 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 04:55:57 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int word_count(char **cmdl)
         while (cmdl[i]) 
         {
             int j = 0;
-            memset(&cq, 0, sizeof(t_quote));
+            ft_memset(&cq, 0, sizeof(t_quote));
             while (cmdl[i][j]) 
             {
                 cq = check_quotes(cq,j, cmdl[i]);
@@ -156,7 +156,7 @@ char **newstring(char **cmdl, int wc)
     while (cmdl[i] && k < wc) 
     {
         j = 0;
-        memset(&cq, 0, sizeof(t_quote));
+        ft_memset(&cq, 0, sizeof(t_quote));
         while (cmdl[i][j]) 
         {
             cq = check_quotes(cq,j, cmdl[i]);

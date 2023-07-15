@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:29 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/14 07:07:23 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 04:55:57 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	valid_quotes(char *line)
 	s = 0;
 	t_quote cq;
 
-	memset(&cq, 0, sizeof(t_quote));
+	ft_memset(&cq, 0, sizeof(t_quote));
 	while(*line)
 	{
 		cq = check_quotes(cq, 0, line);
@@ -38,7 +38,7 @@ int	check_pipe(char *line)
 {
 	t_quote cq;
 
-	memset(&cq, 0, sizeof(t_quote));
+	ft_memset(&cq, 0, sizeof(t_quote));
 	if (*line == ' ')
         while (*line == ' ')
             line++;
@@ -70,7 +70,7 @@ int		check_red1(char *line)
 {
 	t_quote cq;
 
-	memset(&cq, 0, sizeof(t_quote));
+	ft_memset(&cq, 0, sizeof(t_quote));
 	while (*line)
 	{
 		cq = check_quotes(cq, 0, line);

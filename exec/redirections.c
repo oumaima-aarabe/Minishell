@@ -12,7 +12,7 @@ int	get_fl( char *str)
 	t_quote cq;
 	length = 0;
 
-	memset(&cq, 0, sizeof(t_quote));
+	ft_memset(&cq, 0, sizeof(t_quote));
 	while (str[length] != '\0')
 	{
 		cq = check_quotes(cq, length, str);
@@ -148,7 +148,7 @@ t_splitnode *handle_redirections(t_splitnode *node, t_env *env)
 			while (cmdl[i] && !g_v.red_flag)
 			{
 				int j = 0;
-				memset(&cq, 0, sizeof(t_quote));
+				ft_memset(&cq, 0, sizeof(t_quote));
 				while (cmdl[i][j] && !g_v.red_flag)
 				{
 					cq = check_quotes(cq,j, cmdl[i]);

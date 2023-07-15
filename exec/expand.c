@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 01:39:03 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/13 03:03:07 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 05:01:23 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*expanding(char *cmd, int *j, t_env *en)
 
 	usd_v.pos = *j + 1;
 	usd_v.len = 0;
-	while (cmd[usd_v.pos] && (isalnum(cmd[usd_v.pos]) || cmd[usd_v.pos] == '_'))
+	while (cmd[usd_v.pos] && (ft_isalnum(cmd[usd_v.pos]) || cmd[usd_v.pos] == '_'))
 		usd_v.pos++;
 	usd_v.len = usd_v.pos - (*j + 1);
 	usd_v.tmp = ft_substr(cmd, 0, *j);
@@ -68,7 +68,7 @@ char	*ft_expand(char *cmd, t_env *en)
 			if (!check_q.in_squotes && (cmd[j] == '$' && cmd[j + 1] == '?'))
 				cmd = expandinterog(cmd, j);
 			else if (!check_q.in_squotes && cmd[j] == '$' && \
-			cmd[j + 1] && (isalpha(cmd[j + 1]) || cmd[j + 1] == '_'))
+			cmd[j + 1] && (ft_isalpha(cmd[j + 1]) || cmd[j + 1] == '_'))
 				cmd = expanding(cmd, &j, en);
 			else if (cmd[j])
 				j++;

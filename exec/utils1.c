@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:30 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/03 08:41:38 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 04:59:43 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,15 @@
 int	ft_isalpha(int c)
 {
 	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+}
+int	ft_isnum(int c)
+{
+	return ((c >= '9' && c <= '9'));
+}
+
+int	ft_isalnum(int c)
+{
+	return(ft_isalpha(c) || ft_isnum(c));
 }
 
 void	*ft_memset(void *b, int c, size_t len)

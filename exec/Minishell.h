@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 01:29:34 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/15 06:04:24 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,15 @@
 #include <sys/ioctl.h>
 
 /////////////////////////////////3lachghenat///////////////////////////
+
+typedef struct s_spex
+{
+	char			*expanded;
+	char			*quotesremoved;
+	char			**splitted;
+	int				k;
+	int				i;
+}	t_spex;
 
 typedef struct s_exv
 {
@@ -64,6 +73,18 @@ typedef struct s_fds
 	int	fd_in;
 	int	fd_out;
 }	t_fds;
+
+
+typedef struct s_hd
+{
+	int i;
+    int j;
+    int count;
+    int print;
+    int k;
+    int z;
+
+}	t_hd;
 
 typedef struct s_gs
 {
@@ -207,5 +228,14 @@ char    **ft_joindstrs_at(char **ds1, char **ds2, int at);
 int ft_double_strlen(char **dstr);
 int	ft_invalid_export_unset(char *cmd, char *bult);
 void  ft_execut_export(char **cmd);
+void	*ft_memset(void *b, int c, size_t len);
+int	ft_isalpha(int c);
+int	ft_isalnum(int c);
+
+void	read_inhd(char *lmtr, int k, int fd, t_env *env);
+
+
+
+
 
 #endif
