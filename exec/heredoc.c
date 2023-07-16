@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:08:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/16 07:36:57 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/16 09:01:30 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,6 @@ void	handle_c(int sig)
 	ioctl(0, TIOCSTI, "\4");
 }
 
-void	read_inhd(char *lmtr, int k, int fd, t_env *env)
-{
-	char *line = NULL;
-	while (1)
-	{
-		line = readline("$> ");
-		if (!line || !strcmp(line, lmtr))
-		{
-			free (line);
-			break;
-		}
-		if (!k)
-			line = ft_expand(line, env);
-		ft_putendl_fd(line, fd);
-		free(line);
-	}
-}
 char *gethd_redfilen(int *i, int *j, char **cmd_l)
 {
 	char *file_name = NULL;
@@ -60,6 +43,24 @@ char *gethd_redfilen(int *i, int *j, char **cmd_l)
 	}
 		return (file_name);
 }
+
+void	read_inhd(char *lmtr, int k, int fd, t_env *env)
+{
+	char *line = NULL;
+	while (1)
+	{
+		line = readline("$> ");
+		if (!line || !strcmp(line, lmtr))
+		{
+			free (line);
+			break;
+		}
+		if (!k)
+			line = ft_expand(line, env);
+		ft_putendl_fd(line, fd);
+		free(line);
+	}
+}
 t_splitnode	*read_hd(t_splitnode *current, int *i, int *j, t_env *env)
 {
 	int fd[2];
@@ -80,6 +81,8 @@ t_splitnode	*read_hd(t_splitnode *current, int *i, int *j, t_env *env)
 	close (fd[1]);
 	free(lmtr);
 	free(tmp);
+	if (current->in != -1)
+		close(current->in);
 	if (g_v.sig_flag)
 	{
 		close(fd[0]);
