@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/16 05:43:50 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/16 06:47:04 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,17 @@ void ft_exucve(char *cmd, char **arg, char **env)
 	}
 }
 
-char **ft_my_env(t_env *en)
+char **ft_my_env(t_env *env, int i)
 {
 	char **tab;
-	t_env *env = duplicate_linked_list(en);
 	t_env *tmp;
-
-	tab = (char **)malloc(sizeof(char *) * (ft_lstsize(env) + 1));
-	int i = 0;
 	char *key;
 	char *valu;
-	tmp = NULL;
 
+	tab = (char **)malloc(sizeof(char *) * (ft_lstsize(env) + 1));
+	if(!tab)
+		return (NULL);
+	tmp = NULL;
 	while(env)
 	{
 		tmp = env;
@@ -165,12 +164,15 @@ char *ft_prepar_path(char *cmd)
 void ft_exec(char **cmd, t_env *env)
 {
 	char *ss;
-	ss = NULL;
-	char **my_env = NULL;
+	char **my_env;
+	t_env *en_new;
 
+	ss = NULL;
 	if (!cmd)
 		exit(0);
-	my_env = ft_my_env(env);
+
+	en_new = duplicate_linked_list(env);
+	my_env = ft_my_env(en_new, 0);
 
 
 	signal(SIGINT, SIG_DFL);
