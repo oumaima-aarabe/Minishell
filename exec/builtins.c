@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/16 08:32:08 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/16 09:24:17 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,8 @@ int	ft_execut_exit(char **cmd)
 			}
 		}
 	}
+	else
+		exit(g_v.ex_s);
 	exit(nb);
 }
 
@@ -195,6 +197,11 @@ int	ft_execut_bultins(char **cmd)
 {
 	if (cmd && !ft_strcmp(cmd[0], "echo"))
 		return (ft_execut_echo(cmd, 1, 0, 1), 1);
+	if (cmd &&!ft_strcmp(cmd[0], "exit"))
+	{
+		if (ft_execut_exit(cmd))
+			return (1);
+	}
 	g_v.ex_s = 0;
 	if (cmd)
 	{
@@ -208,11 +215,6 @@ int	ft_execut_bultins(char **cmd)
 			return (ft_execut_unset(cmd), 1);
 		else if (!(ft_strcmp(cmd[0], "env")))
 			return (ft_execut_env(g_v.env, cmd), 1);
-		else if (!ft_strcmp(cmd[0], "exit"))
-		{
-			if (ft_execut_exit(cmd))
-				return (1);
-		}
 	}
 	return (0);
 }
