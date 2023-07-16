@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/16 05:47:30 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/16 06:39:08 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,19 +217,14 @@ int ft_execut_bultins(char **cmd)
 	{
 	if(!ft_strcmp(cmd[0], "cd"))
 		return (ft_execut_cd(cmd[1], g_v.env),  1);
-
 	else if(!ft_strcmp(cmd[0], "pwd"))
 		return (ft_execut_pwd(cmd[1] ,g_v.env), 1);
-
 	else if(!(ft_strcmp(cmd[0], "export")))
 		return (ft_execut_export(cmd), 1);
-
 	else if(!(ft_strcmp(cmd[0], "unset")))
 		return (ft_execut_unset(cmd), 1);
-
 	else if(!(ft_strcmp(cmd[0], "env")))
 		return(ft_execut_env(g_v.env, cmd), 1);
-
 	else if(!ft_strcmp(cmd[0], "exit"))
 	{
 		if(ft_execut_exit(cmd))
