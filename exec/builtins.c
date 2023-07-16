@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/16 01:33:06 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/16 05:47:30 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void ft_execut_echo(char **tab, int i, int j, int bol)
 	}
 	if(bol)
 		ft_putstr_fd("\n", 1);
-
+	g_v.ex_s = 0;
 }
 
 
@@ -72,7 +72,6 @@ void ft_execut_pwd(char *cmd, t_env *env)
 		}
 		env = env->next;
 	}
-
 }
 
 
@@ -132,12 +131,6 @@ void ft_execut_unset(char **cmd)
 			i++;
 			continue;
 		}
-		// if(cmd[i][0] == '_' && cmd[i][1] == '\0')
-		// {
-		// 	printf("-->> %s\n", cmd[i]);
-		// 	i++;
-		// 	continue;
-		// }
 			ft_list_remov(cmd[i]);
 		i++;
 	}
@@ -211,22 +204,17 @@ int ft_execut_exit(char **cmd)
 				return(1);
 			}
 		}
-		// else if(nb > 255 && nb < 0)
-		// {
-		// 	nb = 255;
-		// 	nb -= 256;
-		// }
 	}
 	exit(nb);
 }
 
 int ft_execut_bultins(char **cmd)
 {
-	if(cmd)
-	{
-	if(!ft_strcmp(cmd[0], "echo"))
+	if(cmd && !ft_strcmp(cmd[0], "echo"))
 		return (ft_execut_echo(cmd, 1, 0, 1), 1);
 	g_v.ex_s = 0;
+	if(cmd)
+	{
 	if(!ft_strcmp(cmd[0], "cd"))
 		return (ft_execut_cd(cmd[1], g_v.env),  1);
 

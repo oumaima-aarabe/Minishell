@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/16 05:26:01 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/16 05:43:50 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,22 +93,19 @@ char *is_path_exec(char *cmd)
 			ss = ft_strdup(cmd);
 			if(access(ss, F_OK) == -1)
 			{
-				ft_putstr_fd("minishell: ", 2);
-				perror(ss);
-				exit(127);
+				ft_putstr_fd("Minishell: ", 2);
+				return(perror(ss), exit(127), NULL);
 			}
 			if(access(ss, X_OK) == -1)
 			{
-				ft_putstr_fd("minishell: ", 2);
-				perror(ss);
-				exit(126);
+				ft_putstr_fd("Minishell: ", 2);
+				return(perror(ss), exit(126), NULL);
 			}
 			dir  = opendir(ss);
 			if(dir != NULL)
 			{
 				ft_print_err(cmd, ": is a directory\n");
-				closedir(dir);
-				exit(126);
+				return(closedir(dir),exit(126), NULL);
 			}
 			return (ss);
 		}
@@ -123,7 +120,6 @@ char *is_valid_cmd(char **path, char *cmd)
 	char *ss;
 	while(path[i])
 	{
-		// printf("-->%s\n", cmd);
 		if(!cmd[0])
 			return (ft_print_err(cmd, ": command not found\n"), exit(127), NULL);
 		test = ft_strjoin(ft_strdup("/"), ft_strdup(cmd));
@@ -140,7 +136,7 @@ char *is_valid_cmd(char **path, char *cmd)
 			return (ft_print_err(cmd, ": command not found\n"), exit(127), NULL);
 	}
 	ft_free_(path);
-	return (NULL); // ai3adat nadar
+	return (NULL);
 }
 
 //________________________________________________________________________________
