@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/16 07:36:48 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/16 08:07:41 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_execut_pwd(char *cmd, t_env *env)
 
 	if (cmd && cmd[0] == '-' && cmd[1])
 	{
-		ft_print_err(cmd ,  ": No take option\n");
+		ft_print_err(cmd , ": No take option\n");
 		g_v.ex_s = 1;
 		return ;
 	}
