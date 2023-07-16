@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 01:29:34 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/16 01:08:30 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,21 +33,36 @@
 
 /////////////////////////////////3lachghenat///////////////////////////
 
+typedef struct s_spex
+{
+	char			*expanded;
+	char			*quotesremoved;
+	char			**splitted;
+	int				k;
+	int				i;
+}	t_spex;
+
 typedef struct s_exv
 {
 	char	*tmp;
 	char	*new;
 	char	*value;
-	char *expanded;
+	char 	*expanded;
 	int		len;
 	int		pos;
 }	t_exv;
 
 typedef struct s_quotes
 {
+	int word_index;
 	int	in_squotes;
 	int in_dquotes;
 	int	changed;
+	int in_word;
+	int count;
+	int i;
+	int start_index;
+	int length;
 }	t_quote;
 
 typedef struct s_env
@@ -65,6 +80,19 @@ typedef struct s_fds
 	int	fd_out;
 }	t_fds;
 
+
+typedef struct s_hd
+{
+	int i;
+    int j;
+    int count;
+    int print;
+    int k;
+    int z;
+	int wc;
+
+}	t_hd;
+
 typedef struct s_gs
 {
 	t_env	*env;
@@ -73,7 +101,7 @@ typedef struct s_gs
 	int		red_flag;
 }	t_gs;
 
-extern t_gs	g_v;
+t_gs	g_v;
 
 /////////////////////////////////////////////////////////////////////
 ///////// Structure for doubly linked list node//////////////////////
@@ -93,6 +121,7 @@ typedef struct splitnode {
 }	t_splitnode;
 
 int		check_red1(char *line);
+int		check_red2(char *line);
 int	check_pipe(char *line);
 int	valid_quotes(char *line);
 
@@ -135,12 +164,13 @@ void			hendl_ctr_c(int sig);
 void			*ft_calloc(size_t count, size_t size);
 char			**checkquotes(char **list, t_env *env);
 char			*ft_strtrim(char *s1, char *set);
-char			*get_redfilen(int *i, int *j, char **cmd_l, char *which_red, t_env *env);
+char			*get_1redfilen(int *i, int *j, char **cmd_l, t_env *env);
+char			*get_2redfilen(int *i, int *j, char **cmd_l, t_env *env);
 
 ////////////////////////////////////////////////////////////////
 ///////////////////////HEREDOC//////////////////////////////////
 
-void			read_hd(char **cmdl, int *in, int *i, int *j, t_env *env);
+t_splitnode	*read_hd(t_splitnode *current, int *i, int *j, t_env *env);
 t_splitnode		*handle_heredoc(t_splitnode *node, t_env *env);
 int				wc_heredoc(char **cmdl);
 char			**ns_heredoc(char **cmdl, int wc);
@@ -207,5 +237,14 @@ char    **ft_joindstrs_at(char **ds1, char **ds2, int at);
 int ft_double_strlen(char **dstr);
 int	ft_invalid_export_unset(char *cmd, char *bult);
 void  ft_execut_export(char **cmd);
+void	*ft_memset(void *b, int c, size_t len);
+int	ft_isalpha(int c);
+int	ft_isalnum(int c);
+
+void	read_inhd(char *lmtr, int k, int fd, t_env *env);
+
+
+
+
 
 #endif

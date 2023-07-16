@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 08:19:19 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/14 07:17:28 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 09:11:48 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_splitnode   *remove_redirections(t_splitnode  *node, int hr)
                 wc = word_count(current->splitdata);
             if (wc)
                 splitdata = newstring(current->splitdata, wc);
-            else 
+            else
                 splitdata = NULL;
         }
         else if(hr == 1)
@@ -94,7 +94,7 @@ int word_count(char **cmdl)
         while (cmdl[i]) 
         {
             int j = 0;
-            memset(&cq, 0, sizeof(t_quote));
+            ft_memset(&cq, 0, sizeof(t_quote));
             while (cmdl[i][j]) 
             {
                 cq = check_quotes(cq,j, cmdl[i]);
@@ -153,14 +153,14 @@ char **newstring(char **cmdl, int wc)
     t_quote cq;
 
     new_s = (char **)ft_calloc((wc + 1) , sizeof(char *));
-     while (cmdl[i]) 
+    while (cmdl[i] && k < wc) 
     {
         j = 0;
-        memset(&cq, 0, sizeof(t_quote));
+        ft_memset(&cq, 0, sizeof(t_quote));
         while (cmdl[i][j]) 
         {
             cq = check_quotes(cq,j, cmdl[i]);
-            if ((!cq.in_dquotes && !cq.in_squotes) || !is_redirection(cmdl[i][j]))
+            if ((cq.in_dquotes || cq.in_squotes) || !is_redirection(cmdl[i][j]))
             {
                 print = true;
                 z = i;
@@ -191,11 +191,7 @@ char **newstring(char **cmdl, int wc)
                 }
             }
             if (cmdl[i][j])
-            {
-                if (is_quote(cmdl[i][j]))
-                    cq = check_quotes(cq,j, cmdl[i]);
                 j++;
-            }
         }
         if (print)
         {
@@ -206,7 +202,6 @@ char **newstring(char **cmdl, int wc)
                 new_s[k][j] = cmdl[z][j];
                 j++;
             }
-            new_s[k][j] = '\0';
             k++;
             print = false;
             count = 0;

@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 23:11:47 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/15 01:40:38 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 05:12:13 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,6 @@ int compar(int a, int b)
 	if(a > b)
 		return (0);
 	return(1);
-}
-
-
-int is_alphabet(int c)
-{
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-		return (0);
-	return (1);
-}
-
-int	ft_isalnum(int c)
-{
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
-		|| (c >= '0' && c <= '9'))
-		return (0);
-	return (1);
 }
 
 char *ft_new_key(char *cmd)
@@ -63,7 +47,7 @@ int ft_autre_cara(char *cmd)
 
 	while(cmd[i])
 	{
-		if(ft_isalnum(cmd[i]) && cmd[i] != '=' && cmd[i] != '_')
+		if(!ft_isalnum(cmd[i]) && cmd[i] != '=' && cmd[i] != '_')
 			return(1);
 		i++;
 	}
@@ -72,7 +56,7 @@ int ft_autre_cara(char *cmd)
 
 int ft_invalid_unset_export(char *cmd, char *bult, int i)
 {
-	if(cmd && is_alphabet(cmd[0]) && cmd[0] != '_')
+	if(cmd && !ft_isalpha(cmd[0]) && cmd[0] != '_')
 	{
 		if(cmd[0] == '-') // cheack option dir tlila fsubject problem in g_v
 			ft_print_err(cmd , " : invalid option\n");
@@ -115,7 +99,7 @@ int	ft_invalid_export_unset(char *cmd, char *bult)
 	free(new);
 	if(i)
 	i -= 1;
-	if(cmd && (cmd[i] != '+' && cmd[i] != '_' && ft_isalnum(cmd[i])))
+	if(cmd && (cmd[i] != '+' && cmd[i] != '_' && !ft_isalnum(cmd[i])))
 	{
 		ft_print_err(cmd , " : not a valid identifier\n");
 		return (g_v.ex_s = 1, 1);

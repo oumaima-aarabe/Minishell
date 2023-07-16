@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/15 01:25:00 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/15 23:08:08 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ void ft_exucve(char *cmd, char **arg, char **env)
 {
 	if(execve(cmd, arg, env) < 0)
 	{
-		free(cmd);
 		ft_free_(arg);
 		ft_free_(env);
-		perror("minishell   exeve faill   :"); // change msg err
+		ft_putstr_fd("Minishell: ", 2);
+		perror(cmd); // change msg err
+		free(cmd);
 		exit (errno);
 	}
 }
@@ -173,6 +174,7 @@ void ft_exec(char **cmd, t_env *env)
 	if(cmd[0] != NULL)
 	{
 		ss = ft_prepar_path(cmd[0]);
+		printf("-->%s\n", ss);
 		if(ss)
 			ft_exucve(ss, cmd, my_env);
 		free(ss);
