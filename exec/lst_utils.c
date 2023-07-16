@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:51:59 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/16 05:10:13 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/16 08:27:43 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,12 @@ void	ft_lstclear(t_env **alist)
 	if (!alist)
 		return ;
 	nlist = *alist;
-
-		while (nlist)
-		{
-			clist = nlist;
-			nlist = nlist->next;
-			free(clist);
-		}
+	while (nlist)
+	{
+		clist = nlist;
+		nlist = nlist->next;
+		free(clist);
+	}
 		*alist = NULL;
 }
 
