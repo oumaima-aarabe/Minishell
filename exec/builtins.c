@@ -6,25 +6,22 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/16 06:39:08 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/16 07:36:48 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-
-//________________________________echo____________________________________________
-
-void ft_execut_echo(char **tab, int i, int j, int bol)
+void	ft_execut_echo(char **tab, int i, int j, int bol)
 {
-	while(tab[i] && (ft_strncmp(tab[i], "-n", 2)) == 0)
+	while (tab[i] && (ft_strncmp(tab[i], "-n", 2)) == 0)
 	{
 		j = 2;
-		while(tab[i][j] && tab[i][j] == 'n')
+		while (tab[i][j] && tab[i][j] == 'n')
 			j++;
-		if(tab[i][j] && tab[i][j] != 'n')
-			break;
-		if(tab[i][j])
+		if (tab[i][j] && tab[i][j] != 'n')
+			break ;
+		if (tab[i][j])
 			bol = 1;
 		else
 			bol = 0;
@@ -33,39 +30,35 @@ void ft_execut_echo(char **tab, int i, int j, int bol)
 	while (tab[i])
 	{
 		ft_putstr_fd(tab[i++], 1);
-		if(tab[i] != NULL)
-		ft_putstr_fd(" ", 1);
+		if (tab[i] != NULL)
+			ft_putstr_fd (" ", 1);
 	}
-	if(bol)
+	if (bol)
 		ft_putstr_fd("\n", 1);
 	g_v.ex_s = 0;
 }
 
-
-
-//____________________________________pwd_________________________________________
-
-void ft_execut_pwd(char *cmd, t_env *env)
+void	ft_execut_pwd(char *cmd, t_env *env)
 {
-	char *pwd;
+	char	*pwd;
 
-	if(cmd && cmd[0] == '-' && cmd[1])
+	if (cmd && cmd[0] == '-' && cmd[1])
 	{
 		ft_print_err(cmd ,  ": No take option\n");
 		g_v.ex_s = 1;
-		return;
+		return ;
 	}
 	pwd = getcwd(NULL, 0);
-	if(pwd)
+	if (pwd)
 	{
 		printf("%s\n", pwd);
 		free(pwd);
 		return ;
 	}
 	free(pwd);
-	while(env)
+	while (env)
 	{
-		if(!ft_strcmp("PWD", env->key))
+		if (!ft_strcmp("PWD", env->key))
 		{
 			printf("%s\n", env->valu);
 			return ;
@@ -74,25 +67,14 @@ void ft_execut_pwd(char *cmd, t_env *env)
 	}
 }
 
-
-
-
-
-
-
-
-
-//__________________________________unset_________________________________________
-
-void ft_free_plus(char *s1, char *s2, void *s3)
+void	ft_free_plus(char *s1, char *s2, void *s3)
 {
 	free(s1);
 	free(s2);
 	free(s3);
-
 }
 
-void	ft_list_remov(char *cmd)
+void	ft_remov_lis(char *cmd)
 {
 	t_env	*tmp_env;
 	t_env	*prev;
@@ -121,40 +103,41 @@ void	ft_list_remov(char *cmd)
 	}
 }
 
-void ft_execut_unset(char **cmd)
+void	ft_execut_unset(char **cmd)
 {
-	int i = 1;
-	while(cmd[i])
+	int	i;
+
+	i = 1;
+	while (cmd[i])
 	{
-		if(ft_invalid_export_unset(cmd[i], "unset"))
+		if (ft_invalid_export_unset(cmd[i], "unset"))
 		{
 			i++;
-			continue;
+			continue ;
 		}
-			ft_list_remov(cmd[i]);
+		ft_remov_lis (cmd[i]);
 		i++;
 	}
-
 }
 
-//___________________________________env__________________________________________
-
-
-void ft_execut_env(t_env *env, char **cmd)
+void	ft_execut_env(t_env *env, char **cmd)
 {
-	if(cmd[1])
-		return ;
-	while(env)
+	if (cmd[1])
 	{
-		if(env->valu)
-		printf("%s=%s\n", env->key, env->valu);
+		if (cmd[1][0] == '-')
+			ft_print_err(cmd[0], ": No take option\n");
+		else
+			ft_print_err(cmd[0], ": No take argument\n");
+		g_v.ex_s = 1;
+		return ;
+	}
+	while (env)
+	{
+		if (env->valu)
+			printf("%s=%s\n", env->key, env->valu);
 		env = env->next;
 	}
 }
-
-//___________________________________exit_________________________________________
-
-
 
 int	ft_atoi_exit(char *str)
 {
@@ -173,35 +156,35 @@ int	ft_atoi_exit(char *str)
 	}
 	while (*str >= '0' && *str <= '9')
 	{
-
 		d = d * 10 + *str - '0';
 			str++;
 	}
 	if (*str != '\0')
 	{
-		ft_print_err(str,  " : numeric argument required\n");
+		ft_print_err(str, " : numeric argument required\n");
 		exit(255);
 	}
 	return ((int)(d * s));
 }
 
-int ft_execut_exit(char **cmd)
+int	ft_execut_exit(char **cmd)
 {
-	int nb;
+	int	nb;
+	int	i;
 
 	nb = 0;
-	int i = 0;
+	i = 0;
 	printf("exit\n");
-	if(cmd[1])
+	if (cmd[1])
 	{
-		if(cmd[1][i])
+		if (cmd[1][i])
 		{
 			nb = ft_atoi_exit(cmd[1]);
-			if(cmd[1] && cmd[2])
+			if (cmd[1] && cmd[2])
 			{
 				ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 				g_v.ex_s = 1;
-				return(1);
+				return (1);
 			}
 		}
 	}
@@ -210,26 +193,26 @@ int ft_execut_exit(char **cmd)
 
 int ft_execut_bultins(char **cmd)
 {
-	if(cmd && !ft_strcmp(cmd[0], "echo"))
+	if (cmd && !ft_strcmp(cmd[0], "echo"))
 		return (ft_execut_echo(cmd, 1, 0, 1), 1);
 	g_v.ex_s = 0;
-	if(cmd)
+	if (cmd)
 	{
-	if(!ft_strcmp(cmd[0], "cd"))
-		return (ft_execut_cd(cmd[1], g_v.env),  1);
-	else if(!ft_strcmp(cmd[0], "pwd"))
-		return (ft_execut_pwd(cmd[1] ,g_v.env), 1);
-	else if(!(ft_strcmp(cmd[0], "export")))
-		return (ft_execut_export(cmd), 1);
-	else if(!(ft_strcmp(cmd[0], "unset")))
-		return (ft_execut_unset(cmd), 1);
-	else if(!(ft_strcmp(cmd[0], "env")))
-		return(ft_execut_env(g_v.env, cmd), 1);
-	else if(!ft_strcmp(cmd[0], "exit"))
-	{
-		if(ft_execut_exit(cmd))
-			return (1);
+		if (!ft_strcmp(cmd[0], "cd"))
+			return (ft_execut_cd(cmd[1], g_v.env), 1);
+		else if (!ft_strcmp(cmd[0], "pwd"))
+			return (ft_execut_pwd(cmd[1] ,g_v.env), 1);
+		else if (!(ft_strcmp(cmd[0], "export")))
+			return (ft_execut_export(cmd), 1);
+		else if (!(ft_strcmp(cmd[0], "unset")))
+			return (ft_execut_unset(cmd), 1);
+		else if (!(ft_strcmp(cmd[0], "env")))
+			return (ft_execut_env(g_v.env, cmd), 1);
+		else if (!ft_strcmp(cmd[0], "exit"))
+		{
+			if (ft_execut_exit(cmd))
+				return (1);
+		}
 	}
-	}
-	return(0);
+	return (0);
 }

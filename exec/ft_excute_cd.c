@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:15:12 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/16 07:05:44 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/16 07:12:54 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void ft_change_env(t_env *env, char *old)
 {
-	// t_env  *env = en;
 	while(env)
 	{
 		if(!ft_strcmp("PWD", env->key))
