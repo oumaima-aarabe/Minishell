@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/16 01:28:43 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/16 03:02:15 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ int ft_is_path(char *str)
 
 char *is_path_exec(char *cmd)
 {
-	char *ss = NULL;
+	char *ss;
+	DIR *dir;
 		if(ft_is_path(cmd) ||  (cmd[0] == '.' && cmd[1] == '/'))
 		{
 			ss = ft_strdup(cmd);
@@ -100,6 +101,13 @@ char *is_path_exec(char *cmd)
 			{
 				ft_putstr_fd("minishell: ", 2);
 				perror(ss);
+				exit(126);
+			}
+			dir  = opendir(ss);
+			if(dir != NULL)
+			{
+				ft_print_err(cmd, ": is a directory\n");
+				closedir(dir);
 				exit(126);
 			}
 			return (ss);

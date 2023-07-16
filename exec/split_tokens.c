@@ -3,30 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   split_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 03:39:36 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/16 01:15:07 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/16 02:46:23 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-int count_words(char *str) 
+int count_words(char *str)
 {
 	t_quote cq;
-	
+
 	ft_memset(&cq, 0, sizeof(t_quote));
 	cq.length = ft_strlen(str);
-	while (cq.i < cq.length) 
+	while (cq.i < cq.length)
 	{
-		if ((str[cq.i] == ' ' || str[cq.i] == '\t') && !cq.in_word && (!cq.in_squotes || !cq.in_dquotes)) 
+		if ((str[cq.i] == ' ' || str[cq.i] == '\t') && !cq.in_word && (!cq.in_squotes || !cq.in_dquotes))
 		{
 			cq.i++;
 			continue;
 		}
 		if ((str[cq.i] == '"' && !cq.in_squotes) || (str[cq.i] == '\'' && !cq.in_dquotes))
-			cq = check_quotes(cq, cq.length, str);
+			cq = check_quotes(cq, cq.i, str);
 		else if ((str[cq.i] == ' ' || str[cq.i] == '\t')&& (!cq.in_squotes || !cq.in_dquotes))
 		{
 			cq.in_word = 0;
@@ -44,7 +44,7 @@ int count_words(char *str)
 char	*fill_array(char *str, t_quote cq)
 {
 	char *array;
-	
+
 	array = (char *)calloc((cq.i - cq.start_index + 1) , sizeof(char));
 	if (!array)
 		return (NULL);
@@ -52,11 +52,11 @@ char	*fill_array(char *str, t_quote cq)
 	array[cq.i - cq.start_index] = '\0';
 	return (array);
 }
-char **split_string(char *str, int *word_count) 
+char **split_string(char *str, int *word_count)
 {
 	t_quote cq;
 	char **words;
-	
+
 	ft_memset(&cq, 0, sizeof(t_quote));
 	cq.length = ft_strlen(str);
 	cq.count = count_words(str);
@@ -66,11 +66,11 @@ char **split_string(char *str, int *word_count)
 	while (cq.i < cq.length && (str[cq.i] == ' ' || str[cq.i] == '\t'))
 		cq.i++;
 	cq.start_index = cq.i;
-	while (cq.i <= cq.length && cq.word_index < cq.count) 
+	while (cq.i <= cq.length && cq.word_index < cq.count)
 	{
-		if ((str[cq.i] == ' ' || str[cq.i] == '\t' || str[cq.i] == '\0') && (!cq.in_squotes && !cq.in_dquotes)) 
+		if ((str[cq.i] == ' ' || str[cq.i] == '\t' || str[cq.i] == '\0') && (!cq.in_squotes && !cq.in_dquotes))
 		{
-			if (cq.in_word) 
+			if (cq.in_word)
 			{
 				words[cq.word_index] = fill_array(str, cq);
 				cq.word_index++;
@@ -78,9 +78,9 @@ char **split_string(char *str, int *word_count)
 			}
 			cq.start_index = cq.i + 1;
 		}
-		 else if ((str[cq.i] == '"' && !cq.in_squotes) || (str[cq.i] == '\'' && !cq.in_dquotes)) 
-			cq = check_quotes(cq, cq.length, str);
-		else 
+		 else if ((str[cq.i] == '"' && !cq.in_squotes) || (str[cq.i] == '\'' && !cq.in_dquotes))
+			cq = check_quotes(cq, cq.i, str);
+		else
 			cq.in_word = 1;
 		cq.i++;
 	}
@@ -88,7 +88,7 @@ char **split_string(char *str, int *word_count)
 	return words;
 }
 
-t_splitnode   *create_split_node(char   **splitdata, int word_count) 
+t_splitnode   *create_split_node(char   **splitdata, int word_count)
 {
 	(void)  word_count;
 	t_splitnode   *new_split_node = calloc(1, sizeof(t_splitnode));
@@ -100,23 +100,23 @@ t_splitnode   *create_split_node(char   **splitdata, int word_count)
 	return new_split_node;
 }
 
-t_splitnode   *splitdatalinkedlist(t_Node  *original_list) 
+t_splitnode   *splitdatalinkedlist(t_Node  *original_list)
 {
 	t_splitnode   *head = NULL;
 	t_splitnode   *tail = NULL;
 
 	t_Node    *current = original_list;
-	while (current != NULL) 
+	while (current != NULL)
 	{
 		int word_count = 0;
 		char    **splitdata = split_string(current->data, &word_count);
 		t_splitnode   *new_node = create_split_node(splitdata, word_count);
-		if (head == NULL) 
+		if (head == NULL)
 		{
 			head = new_node;
 			tail = head;
 		}
-		else 
+		else
 		{
 			tail->next = new_node;
 			new_node->prev = tail;

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+         #
+#    By: azarda <azarda@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 15:19:53 by azarda            #+#    #+#              #
-#    Updated: 2023/07/16 01:09:07 by ouaarabe         ###   ########.fr        #
+#    Updated: 2023/07/16 02:59:51 by azarda           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CC = cc
 
 READLINE = $(shell brew --prefix readline)
 
-FLAGS = -Wall -Werror -Wextra  -I$(READLINE)/include -g -fsanitize=address
+FLAGS = -Wall -Werror -Wextra  -I$(READLINE)/include # -g -fsanitize=address
 
 
 
