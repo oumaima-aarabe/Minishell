@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 03:39:36 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/16 01:15:07 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/16 02:43:11 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ int count_words(char *str)
 			continue;
 		}
 		if ((str[cq.i] == '"' && !cq.in_squotes) || (str[cq.i] == '\'' && !cq.in_dquotes))
-			cq = check_quotes(cq, cq.length, str);
-		else if ((str[cq.i] == ' ' || str[cq.i] == '\t')&& (!cq.in_squotes || !cq.in_dquotes))
+			cq = check_quotes(cq, cq.i, str);
+			
+		else if ((str[cq.i] == ' ' || str[cq.i] == '\t') && (!cq.in_squotes && !cq.in_dquotes))
 		{
 			cq.in_word = 0;
 			cq.count++;
@@ -49,10 +50,12 @@ char	*fill_array(char *str, t_quote cq)
 	if (!array)
 		return (NULL);
 	strncpy(array, &str[cq.start_index], cq.i - cq.start_index);
-	array[cq.i - cq.start_index] = '\0';
+	// array[cq.i - cq.start_index] = '\0';
 	return (array);
 }
-char **split_string(char *str, int *word_count) 
+
+/////////////////////////////////////////////////////////
+char **split_string(char *str) 
 {
 	t_quote cq;
 	char **words;
@@ -79,18 +82,17 @@ char **split_string(char *str, int *word_count)
 			cq.start_index = cq.i + 1;
 		}
 		 else if ((str[cq.i] == '"' && !cq.in_squotes) || (str[cq.i] == '\'' && !cq.in_dquotes)) 
-			cq = check_quotes(cq, cq.length, str);
+			cq = check_quotes(cq, cq.i, str);
 		else 
 			cq.in_word = 1;
 		cq.i++;
 	}
-	*word_count = cq.count;
 	return words;
 }
 
-t_splitnode   *create_split_node(char   **splitdata, int word_count) 
+/////////////////////////////////////////////////////////
+t_splitnode   *create_split_node(char   **splitdata) 
 {
-	(void)  word_count;
 	t_splitnode   *new_split_node = calloc(1, sizeof(t_splitnode));
 	new_split_node->splitdata = splitdata;
 	new_split_node->prev = NULL;
@@ -108,9 +110,8 @@ t_splitnode   *splitdatalinkedlist(t_Node  *original_list)
 	t_Node    *current = original_list;
 	while (current != NULL) 
 	{
-		int word_count = 0;
-		char    **splitdata = split_string(current->data, &word_count);
-		t_splitnode   *new_node = create_split_node(splitdata, word_count);
+		char    **splitdata = split_string(current->data);
+		t_splitnode   *new_node = create_split_node(splitdata);
 		if (head == NULL) 
 		{
 			head = new_node;

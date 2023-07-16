@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/16 01:08:30 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/16 02:27:12 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,10 +139,10 @@ int				check_for_quotes(char	*line, int index);
 /////////////////SPLIT USING SPACES/////////////////////////////
 
 t_splitnode		*splitdatalinkedlist(t_Node *originalist);
-t_splitnode		*create_split_node(char **splitdata, int word_count);
+t_splitnode		*create_split_node(char **splitdata);
 
 void			free_split_nodes(t_splitnode *head);
-char			**split_string(char *str, int *word_count);
+char			**split_string(char *str);
 int				count_words(char *str);
 int				is_inside_quotes(char *str);
 

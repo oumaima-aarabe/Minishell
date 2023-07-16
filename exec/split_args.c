@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 09:33:01 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/16 01:20:40 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/16 01:51:37 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int	_squotes(char *line, int index)
 	}
 	return (!inquotes);
 }
+/////////////////////////////////////////////////////////
+
 t_Node	*splitstring(char* line) 
 {
     t_Node	*head = NULL;
@@ -95,5 +97,4 @@ t_Node	*splitstring(char* line)
     }
     return head;
 }
-
-
+/////////////////////////////////////////////////////////

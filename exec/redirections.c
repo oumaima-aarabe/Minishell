@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 10:54:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 23:05:12 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/16 01:50:41 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ void red_output(t_splitnode **node, int *i, int *j, t_env *env)
 		free(outfile);
 	}
 }
+/////////////////////////////////////////////////////////
 
 t_splitnode *handle_redirections(t_splitnode *node, t_env *env)
 {
@@ -198,3 +199,4 @@ t_splitnode *handle_redirections(t_splitnode *node, t_env *env)
 	free_split_nodes(node);
 	return trimmed;
 }
+/////////////////////////////////////////////////////////

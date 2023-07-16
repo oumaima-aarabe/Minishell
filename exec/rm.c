@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 08:19:19 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 09:11:48 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/16 01:52:26 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ bool is_redirection(char ch)
 {
     return (ch == '<' || ch == '>');
 }
+/////////////////////////////////////////////////////////
 
 t_splitnode   *remove_redirections(t_splitnode  *node, int hr)
 {
@@ -71,6 +72,7 @@ t_splitnode   *remove_redirections(t_splitnode  *node, int hr)
     }
     return head;
 }
+/////////////////////////////////////////////////////////
 
 t_splitnode   *create_new_node(char   **splitdata, int in, int out) 
 {
@@ -82,6 +84,8 @@ t_splitnode   *create_new_node(char   **splitdata, int in, int out)
     new_split_node->out = out;
     return new_split_node;
 }
+
+/////////////////////////////////////////////////////////
 
 int word_count(char **cmdl)
 {
@@ -140,6 +144,8 @@ int word_count(char **cmdl)
     }
     return (wc);
 }
+
+/////////////////////////////////////////////////////////
 
 char **newstring(char **cmdl, int wc)
 {
@@ -210,3 +216,4 @@ char **newstring(char **cmdl, int wc)
     }
         return new_s;
 }
+/////////////////////////////////////////////////////////
