@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:08:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 10:58:31 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/16 07:36:57 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ t_splitnode	*read_hd(t_splitnode *current, int *i, int *j, t_env *env)
 	int fd[2];
 	char *lmtr = gethd_redfilen(i, j, current->splitdata);
 	char *tmp = ft_strdup(lmtr);
+	printf("lmtr%s\n", tmp);
+	fflush(stdout);
 	int k;
 
 	lmtr = removequotes(lmtr);
@@ -89,32 +91,38 @@ t_splitnode	*read_hd(t_splitnode *current, int *i, int *j, t_env *env)
 
 t_splitnode *handle_heredoc(t_splitnode *node, t_env *env)
 {
-	t_splitnode *current;
+	t_splitnode *c;
 	t_splitnode *trimmed;
 	t_quote		cq;
 
-	current = node;
-	while (current != NULL)
+	c = node;
+	while (c != NULL)
 	{
 		int i = 0;
-		while (current->splitdata[i])
+		while (c->splitdata[i])
 		{
 			int j = 0;
 			ft_memset(&cq, 0, sizeof(t_quote));
 
-			while (current->splitdata[i][j])
+			while (c->splitdata[i][j])
 			{
-				cq = check_quotes(cq,j, current->splitdata[i]);
-				if (!cq.in_dquotes && !cq.in_squotes && !is_quote(current->splitdata[i][j]))
-					if (current->splitdata[i][j] == '<' && current->splitdata[i][j + 1] == '<')
-						current = read_hd(current, &i, &j, env);
-				if (current->splitdata[i][j])
+				cq = check_quotes(cq,j, c->splitdata[i]);
+				if (!cq.ind && !cq.ins && !is_quote(c->splitdata[i][j]))
+					if (c->splitdata[i][j] == '<' && \
+					c->splitdata[i][j + 1] == '<')
+					{
+						
+						c = read_hd(c, &i, &j, env);
+						continue ;
+				// printf ("[%s]\n", c->splitdata[i] + j);
+					}
+				if (c->splitdata[i][j])
 					j++;
 			}
-			if (current->splitdata[i])
+			if (c->splitdata[i])
 				i++;
 		}
-		current = current->next;
+		c = c->next;
 	}
 	trimmed = remove_redirections(node, 1);
 	free_split_nodes(node);
@@ -125,16 +133,17 @@ t_hd	check_dprintable(char **cmdl, t_quote cq, t_hd hd)
 {
 	if (ft_strncmp("<<", &cmdl[hd.i][hd.j], 2))
 		hd.print = true;
-	if (!cq.in_dquotes && !cq.in_squotes && !is_quote(cmdl[hd.i][hd.j]))
+	if (!cq.ind && !cq.ins && !is_quote(cmdl[hd.i][hd.j]))
 	{
 		if (cmdl[hd.i][hd.j] == '<' && cmdl[hd.i][hd.j + 1] == '<')
 		{
 			if (cmdl[hd.i][hd.j + 2])
-				hd.j +=   get_fl(&cmdl[hd.i][hd.j + 2]) + 1;
+				hd.j +=   get_fl(&cmdl[hd.i][hd.j + 2]) + 2;
 			else if (cmdl[hd.i + 1])
-				hd.j = get_fl(cmdl[++hd.i]);}
+				hd.j = get_fl(cmdl[++hd.i]);
+			return (hd);
+		}
 	}
-
 	if (is_quote(cmdl[hd.i][hd.j]))
 		cq = check_quotes(cq, hd.j, cmdl[hd.i]);
 	if (cmdl[hd.i][hd.j])
@@ -181,16 +190,17 @@ t_hd	check_printable(char **cmdl, t_quote cq, t_hd hd)
 	while (cmdl[hd.i][hd.j])
 	{
 		cq = check_quotes(cq,hd.j, cmdl[hd.i]);
-		if ((cq.in_dquotes || cq.in_squotes) || strncmp("<<", &cmdl[hd.i][hd.j], 2))
+		if ((cq.ind || cq.ins) || strncmp("<<", &cmdl[hd.i][hd.j], 2))
 			hd = numerate(hd);
-		if (!cq.in_dquotes && !cq.in_squotes && !is_quote(cmdl[hd.i][hd.j]))
+		if (!cq.ind && !cq.ins && !is_quote(cmdl[hd.i][hd.j]))
 		{
 			if (cmdl[hd.i][hd.j] == '<' && cmdl[hd.i][hd.j + 1] == '<')
 			{
 				if (cmdl[hd.i][hd.j + 2])
-				hd.j +=   get_fl(&cmdl[hd.i][hd.j + 2]) + 1;
+				hd.j += get_fl(&cmdl[hd.i][hd.j + 2]) + 2;
 				else if (cmdl[hd.i + 1])
 				hd.j = get_fl(cmdl[++hd.i]);
+				continue;
 			}
 		}
 		if (cmdl[hd.i][hd.j])

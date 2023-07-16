@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:15:12 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/15 23:04:36 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/16 03:41:07 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ int ft_check_getcwd()
 	pwd = getcwd(NULL, 0);
 	if(pwd == NULL)
 	{
-		ft_putstr_fd("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n", 2);
+		ft_putstr_fd("cd: error retrieving current directory: getcwd:\
+		 cannot access parent directories: No such file or directory\n", 2);
 		free(pwd);
 		return(1);
 	}

@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/15 23:08:08 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/16 08:24:01 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,6 @@ char *is_valid_cmd(char **path, char *cmd)
 	return (NULL); // ai3adat nadar
 }
 
-//________________________________________________________________________________
-
 char *ft_prepar_path(char *cmd)
 {
 	char **path;
@@ -174,7 +172,7 @@ void ft_exec(char **cmd, t_env *env)
 	if(cmd[0] != NULL)
 	{
 		ss = ft_prepar_path(cmd[0]);
-		printf("-->%s\n", ss);
+		// printf("-->%s\n", ss);
 		if(ss)
 			ft_exucve(ss, cmd, my_env);
 		free(ss);

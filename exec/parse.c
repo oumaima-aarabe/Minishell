@@ -6,95 +6,11 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:46:07 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/16 02:28:47 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/16 03:50:02 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
-
-char **split_expanded(char *str, int word_count) 
-{
-	int length = ft_strlen(str);
-	int count = 0;
-	int in_word = 0;
-	int s_quotes = 0;
-	int d_quotes = 0;
-	int i = 0;
-	// Count the number of words
-	while (i < length)
-	{
-		if ((str[i] == ' ' || str[i] == '\t') && (!s_quotes && !d_quotes))
-		{
-			if (in_word) {
-				count++;
-				in_word = 0;
-			}
-		}
-		else if (str[i] == '"' &&  !s_quotes)
-		{
-
-			d_quotes = !d_quotes;
-			in_word = 1;
-		}
-		else if (str[i] == '\'' && !s_quotes)
-		{
-			s_quotes = !s_quotes;
-			in_word = 1;
-		}
-		 else
-			in_word = 1;
-		i++;
-	}
-
-	if (in_word)
-		count++;
-	char **words = (char **)calloc((count + 1) , sizeof(char *));
-	int word_index = 0;
-	int start_index = 0;
-	in_word = 0;
-	s_quotes = 0;
-	d_quotes = 0;
-	i = 0;
-
-	// Skip leading whitespace
-	while (i < length && (str[i] == ' ' || str[i] == '\t'))
-		i++;
-
-	start_index = i;
-
-	while (i <= length)
-	{
-		if ((str[i] == ' ' || str[i] == '\t' || str[i] == '\0') && (!s_quotes && !d_quotes))
-		{
-			if (in_word)
-			{
-				words[word_index] = (char *)calloc((i - start_index + 1) , sizeof(char));
-				strncpy(words[word_index], &str[start_index], i - start_index);
-				words[word_index][i - start_index] = '\0';
-				word_index++;
-				in_word = 0;
-			}
-			start_index = i + 1;
-		}
-		 else if (str[i] == '"' && !s_quotes)
-		{
-			d_quotes = !d_quotes;
-			in_word = 1;
-		}
-		else if (str[i] == '\'' && !d_quotes)
-		{
-			s_quotes = !s_quotes;
-			in_word = 1;
-		}
-		else
-			in_word = 1;
-		i++;
-	}
-
-	words[word_index] = NULL;
-	word_count = count;
-	return words;
-}
 
 int	check_for_space(char *expanded)
 {
@@ -106,7 +22,7 @@ int	check_for_space(char *expanded)
 	while (expanded[i])
 	{
 		cq = check_quotes(cq, i, expanded);
-		if (!cq.in_dquotes && !cq.in_squotes && expanded[i] == ' ')
+		if (!cq.ind && !cq.ins && expanded[i] == ' ')
 			return (1);
 		i++;
 	}
@@ -129,7 +45,9 @@ char	**apply_q(char **splitdata)
 char	**apply_ex_q(char **splitdata, t_env *en)
 {
 	t_spex 	spex;
+	t_quote cq;
 
+	ft_memset(&cq, 0, sizeof(t_quote));
 	ft_memset(&spex, 0, sizeof(t_spex));
 	if (splitdata)
 	{
@@ -139,12 +57,10 @@ char	**apply_ex_q(char **splitdata, t_env *en)
 				splitdata[spex.i] = spex.expanded;
 				if (check_for_space(spex.expanded))
 				{
-					int wc =  count_words(spex.expanded);
-					spex.splitted = split_expanded(spex.expanded, count_words(spex.expanded));
+					spex.splitted = split_string(spex.expanded, cq);
 					spex.k = ft_double_strlen(spex.splitted);
-					printf("%d=====%d\n", wc , spex.k);
-					fflush(stdout);
-					splitdata = ft_joindstrs_at(splitdata, spex.splitted, spex.i);
+					splitdata = ft_joindstrs_at(splitdata, \
+					spex.splitted, spex.i);
 					spex.i += spex.k;
 				}
 				if (splitdata[spex.i])

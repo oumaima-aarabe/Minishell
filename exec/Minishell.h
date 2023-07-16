@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/16 02:27:12 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/16 06:43:46 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ typedef struct s_exv
 typedef struct s_quotes
 {
 	int word_index;
-	int	in_squotes;
-	int in_dquotes;
+	int	ins;
+	int ind;
 	int	changed;
 	int in_word;
 	int count;
 	int i;
-	int start_index;
+	int start;
 	int length;
 }	t_quote;
 
@@ -90,7 +90,7 @@ typedef struct s_hd
     int k;
     int z;
 	int wc;
-
+	int	contin;
 }	t_hd;
 
 typedef struct s_gs
@@ -120,6 +120,13 @@ typedef struct splitnode {
 	int					flag;
 }	t_splitnode;
 
+
+
+typedef struct manp {
+	t_Node	*head;
+    t_Node	*tail;
+}	t_manp;
+
 int		check_red1(char *line);
 int		check_red2(char *line);
 int	check_pipe(char *line);
@@ -142,8 +149,8 @@ t_splitnode		*splitdatalinkedlist(t_Node *originalist);
 t_splitnode		*create_split_node(char **splitdata);
 
 void			free_split_nodes(t_splitnode *head);
-char			**split_string(char *str);
-int				count_words(char *str);
+char			**split_string(char *str, t_quote cq);
+int				count_words(char *str, t_quote cq);
 int				is_inside_quotes(char *str);
 
 ////////////////////////////////////////////////////////////////

@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 08:19:19 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/16 01:52:26 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/16 07:36:44 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,40 +18,42 @@ bool is_redirection(char ch)
 }
 /////////////////////////////////////////////////////////
 
+char **splitget(int hr, t_splitnode *current)
+{
+    int wc;
+    char **splitdata;
+
+    splitdata = NULL;
+    if (hr == 0)
+    {
+        if (current->in == -2 || current->out == -2)
+            wc = 0;
+        else
+            wc = word_count(current->splitdata);
+        if (wc)
+            splitdata = newstring(current->splitdata, wc);
+    }
+    else if (hr == 1)
+    {
+        if (g_v.sig_flag)
+            wc = 0;
+        else
+            wc =  wc_heredoc(current->splitdata);
+            if (wc)
+            splitdata = ns_heredoc(current->splitdata, wc);
+    }
+    return (splitdata);
+}
 t_splitnode   *remove_redirections(t_splitnode  *node, int hr)
 {
     t_splitnode *current = node;
-    char **splitdata = NULL;
-
     t_splitnode   *head = NULL;
     t_splitnode   *tail = NULL;
-    int             wc;
+    t_splitnode   *new_node;
 
     while (current != NULL) 
     {
-        if (hr == 0)
-        {
-            if (current->in == -2 || current->out == -2)
-                wc = 0;
-            else
-                wc = word_count(current->splitdata);
-            if (wc)
-                splitdata = newstring(current->splitdata, wc);
-            else
-                splitdata = NULL;
-        }
-        else if(hr == 1)
-        {
-            if (g_v.sig_flag)
-                wc = 0;
-            else
-                wc =  wc_heredoc(current->splitdata);
-             if (wc)
-                splitdata = ns_heredoc(current->splitdata, wc);
-            else 
-                splitdata = NULL;
-        }    
-            t_splitnode   *new_node = create_new_node(splitdata, current->in, current->out); 
+            new_node = create_new_node(splitget(hr, current), current->in, current->out); 
             if (head == NULL) 
             {
                 head = new_node;
@@ -104,7 +106,7 @@ int word_count(char **cmdl)
                 cq = check_quotes(cq,j, cmdl[i]);
                 if (!is_redirection(cmdl[i][j]))
                     print = true;
-                if (!cq.in_dquotes && !cq.in_squotes && !is_quote(cmdl[i][j])) 
+                if (!cq.ind && !cq.ins && !is_quote(cmdl[i][j])) 
                 {
                     if (cmdl[i][j] == '<' && cmdl[i][j + 1] != '<')
                     {
@@ -112,6 +114,7 @@ int word_count(char **cmdl)
                         j +=   get_fl(&cmdl[i][j + 1]);
                         else if (cmdl[i + 1])
                         j = get_fl(cmdl[++i]);
+                        continue;
                     }
                     else if (cmdl[i][j] == '>' && cmdl[i][j + 1] != '>')
                     {
@@ -119,13 +122,15 @@ int word_count(char **cmdl)
                         j +=   get_fl(&cmdl[i][j + 1]);
                         else if (cmdl[i + 1])
                         j = get_fl(cmdl[++i]);
+                        continue;
                     }
                     else if (cmdl[i][j] == '>' && cmdl[i][j + 1] == '>')
                     {
                         if (cmdl[i][j + 2])
-                        j +=   get_fl(&cmdl[i][j + 2]) + 1;
+                        j +=   get_fl(&cmdl[i][j + 2]) + 2;
                         else if (cmdl[i + 1])
                         j = get_fl(cmdl[++i]);
+                        continue;
                     }
                 }
                 
@@ -142,6 +147,8 @@ int word_count(char **cmdl)
             i++;
         }
     }
+    // printf("===%d===\n", wc);
+    fflush(stdout);
     return (wc);
 }
 
@@ -166,34 +173,37 @@ char **newstring(char **cmdl, int wc)
         while (cmdl[i][j]) 
         {
             cq = check_quotes(cq,j, cmdl[i]);
-            if ((cq.in_dquotes || cq.in_squotes) || !is_redirection(cmdl[i][j]))
+            if ((cq.ind || cq.ins) || !is_redirection(cmdl[i][j]))
             {
                 print = true;
                 z = i;
                 count++;
             }
-            if (!cq.in_dquotes && !cq.in_squotes && !is_quote(cmdl[i][j])) 
+            if (!cq.ind && !cq.ins && !is_quote(cmdl[i][j])) 
             {
                 if (cmdl[i][j] == '<' && cmdl[i][j + 1] != '<')
                 {
                     if (cmdl[i][j + 1])
-                    j +=   get_fl(&cmdl[i][j + 1]);
+                    j +=   get_fl(&cmdl[i][j + 1]) + 1;
                     else if (cmdl[i + 1])
                     j = get_fl(cmdl[++i]);
+                    continue;
                 }
                 else if (cmdl[i][j] == '>' && cmdl[i][j + 1] != '>')
                 {
                     if (cmdl[i][j + 1])
-                    j +=   get_fl(&cmdl[i][j + 1]);
+                    j +=   get_fl(&cmdl[i][j + 1]) + 1;
                     else if (cmdl[i + 1])
                     j = get_fl(cmdl[++i]);
+                    continue;
                 }
                 else if (cmdl[i][j] == '>' && cmdl[i][j + 1] == '>')
                 {
                     if (cmdl[i][j + 2])
-                    j +=   get_fl(&cmdl[i][j + 2]) + 1;
+                    j +=   get_fl(&cmdl[i][j + 2]) + 2;
                     else if (cmdl[i + 1])
                     j = get_fl(cmdl[++i]);
+                    continue;
                 }
             }
             if (cmdl[i][j])

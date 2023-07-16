@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/15 03:15:06 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/16 03:24:19 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
-
-
-//________________________________echo____________________________________________
 
 void ft_execut_echo(char **tab, int i, int j, int bol)
 {
@@ -40,10 +37,6 @@ void ft_execut_echo(char **tab, int i, int j, int bol)
 		ft_putstr_fd("\n", 1);
 
 }
-
-
-
-//____________________________________pwd_________________________________________
 
 void ft_execut_pwd(char *cmd, t_env *env)
 {
@@ -74,16 +67,6 @@ void ft_execut_pwd(char *cmd, t_env *env)
 	}
 
 }
-
-
-
-
-
-
-
-
-
-//__________________________________unset_________________________________________
 
 void ft_free_plus(char *s1, char *s2, void *s3)
 {
@@ -144,9 +127,6 @@ void ft_execut_unset(char **cmd)
 
 }
 
-//___________________________________env__________________________________________
-
-
 void ft_execut_env(t_env *env)
 {
 	while(env)
@@ -156,10 +136,6 @@ void ft_execut_env(t_env *env)
 		env = env->next;
 	}
 }
-
-//___________________________________exit_________________________________________
-
-
 
 int	ft_atoi_exit(char *str)
 {

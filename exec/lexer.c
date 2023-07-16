@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:29 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 23:28:58 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/16 03:44:59 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	check_pipe(char *line)
 	while (*line)
 	{
 		cq = check_quotes(cq, 0, line);
-		if (*line == '|' && !cq.in_dquotes && !cq.in_squotes)
+		if (*line == '|' && !cq.ind && !cq.ins)
 		{
 			if (!*(line + 1) || *(line + 1) == '|')
 				return (0);
@@ -77,7 +77,7 @@ int		check_red1(char *line)
 	while (*line)
 	{
 		cq = check_quotes(cq, 0, line);
-		if (*line == '>' && !cq.in_dquotes && !cq.in_squotes)
+		if (*line == '>' && !cq.ind && !cq.ins)
 		{
 			if(*( line + 1 ) == '>')
 				line += 2;
@@ -103,7 +103,7 @@ int		check_red2(char *line)
 	while (*line)
 	{
 		cq = check_quotes(cq, 0, line);
-		if (*line == '<' && !cq.in_dquotes && !cq.in_squotes)
+		if (*line == '<' && !cq.ind && !cq.ins)
 		{
 			if(*( line + 1 ) == '<')
 				line += 2;
