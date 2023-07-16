@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:15:12 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/16 05:25:26 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/16 07:05:44 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ void ft_change_env(t_env *env, char *old)
 		if(!ft_strcmp("OLDPWD", env->key))
 		{
 			free(env->valu);
-			env->valu = old;
+			env->valu = ft_strdup(old);
 		}
 		env = env->next;
 	}
-	// free(old);
+	free(old);
 }
 
 void ft_cd_home(char *hom)
@@ -67,6 +67,7 @@ void ft_cd_old_pwd(t_env *env)
 	}
 	if(!env)
 	{
+
 		ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
 		g_v.ex_s = 1;
 	}
@@ -128,6 +129,5 @@ void ft_execut_cd(char *str, t_env *env)
 		free(old);
 		return ;
 	}
-	// printf("old -> %s |||  adress old -> %p\n", old, old);
 	ft_change_env(g_v.env, old);
 }
