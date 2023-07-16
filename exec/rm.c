@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   rm.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 08:19:19 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 09:11:48 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/16 03:32:02 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-bool is_redirection(char ch) 
+bool is_redirection(char ch)
 {
     return (ch == '<' || ch == '>');
 }
@@ -26,7 +26,7 @@ t_splitnode   *remove_redirections(t_splitnode  *node, int hr)
     t_splitnode   *tail = NULL;
     int             wc;
 
-    while (current != NULL) 
+    while (current != NULL)
     {
         if (hr == 0)
         {
@@ -47,11 +47,11 @@ t_splitnode   *remove_redirections(t_splitnode  *node, int hr)
                 wc =  wc_heredoc(current->splitdata);
              if (wc)
                 splitdata = ns_heredoc(current->splitdata, wc);
-            else 
+            else
                 splitdata = NULL;
-        }    
-            t_splitnode   *new_node = create_new_node(splitdata, current->in, current->out); 
-            if (head == NULL) 
+        }
+            t_splitnode   *new_node = create_new_node(splitdata, current->in, current->out);
+            if (head == NULL)
             {
                 head = new_node;
                 tail = head;
@@ -60,8 +60,8 @@ t_splitnode   *remove_redirections(t_splitnode  *node, int hr)
                     g_v.sig_flag = 0;
                     return(head);
                 }
-            } 
-            else 
+            }
+            else
             {
                 tail->next = new_node;
                 new_node->prev = tail;
@@ -72,9 +72,9 @@ t_splitnode   *remove_redirections(t_splitnode  *node, int hr)
     return head;
 }
 
-t_splitnode   *create_new_node(char   **splitdata, int in, int out) 
+t_splitnode   *create_new_node(char   **splitdata, int in, int out)
 {
-    t_splitnode   *new_split_node = calloc(1, sizeof(t_splitnode));
+    t_splitnode   *new_split_node = ft_calloc(1, sizeof(t_splitnode));
     new_split_node->splitdata = splitdata;
     new_split_node->prev = NULL;
     new_split_node->next = NULL;
@@ -91,16 +91,16 @@ int word_count(char **cmdl)
         t_quote cq;
     if (cmdl)
     {
-        while (cmdl[i]) 
+        while (cmdl[i])
         {
             int j = 0;
             ft_memset(&cq, 0, sizeof(t_quote));
-            while (cmdl[i][j]) 
+            while (cmdl[i][j])
             {
                 cq = check_quotes(cq,j, cmdl[i]);
                 if (!is_redirection(cmdl[i][j]))
                     print = true;
-                if (!cq.in_dquotes && !cq.in_squotes && !is_quote(cmdl[i][j])) 
+                if (!cq.in_dquotes && !cq.in_squotes && !is_quote(cmdl[i][j]))
                 {
                     if (cmdl[i][j] == '<' && cmdl[i][j + 1] != '<')
                     {
@@ -124,7 +124,7 @@ int word_count(char **cmdl)
                         j = get_fl(cmdl[++i]);
                     }
                 }
-                
+
                 if (is_quote(cmdl[i][j]))
                     cq = check_quotes(cq,j, cmdl[i]);
                 if (cmdl[i][j])
@@ -153,11 +153,11 @@ char **newstring(char **cmdl, int wc)
     t_quote cq;
 
     new_s = (char **)ft_calloc((wc + 1) , sizeof(char *));
-    while (cmdl[i] && k < wc) 
+    while (cmdl[i] && k < wc)
     {
         j = 0;
         ft_memset(&cq, 0, sizeof(t_quote));
-        while (cmdl[i][j]) 
+        while (cmdl[i][j])
         {
             cq = check_quotes(cq,j, cmdl[i]);
             if ((cq.in_dquotes || cq.in_squotes) || !is_redirection(cmdl[i][j]))
@@ -166,7 +166,7 @@ char **newstring(char **cmdl, int wc)
                 z = i;
                 count++;
             }
-            if (!cq.in_dquotes && !cq.in_squotes && !is_quote(cmdl[i][j])) 
+            if (!cq.in_dquotes && !cq.in_squotes && !is_quote(cmdl[i][j]))
             {
                 if (cmdl[i][j] == '<' && cmdl[i][j + 1] != '<')
                 {

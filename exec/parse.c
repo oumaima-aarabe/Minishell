@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:46:07 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 11:35:39 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/16 03:32:02 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-char **split_expanded(char *str, int word_count) 
+char **split_expanded(char *str, int word_count)
 {
 	int length = ft_strlen(str);
 	int count = 0;
@@ -48,7 +48,7 @@ char **split_expanded(char *str, int word_count)
 
 	if (in_word)
 		count++;
-	char **words = (char **)calloc((count + 1) , sizeof(char *));
+	char **words = (char **)ft_calloc((count + 1) , sizeof(char *));
 	int word_index = 0;
 	int start_index = 0;
 	in_word = 0;
@@ -68,7 +68,7 @@ char **split_expanded(char *str, int word_count)
 		{
 			if (in_word)
 			{
-				words[word_index] = (char *)calloc((i - start_index + 1) , sizeof(char));
+				words[word_index] = (char *)ft_calloc((i - start_index + 1) , sizeof(char));
 				strncpy(words[word_index], &str[start_index], i - start_index);
 				words[word_index][i - start_index] = '\0';
 				word_index++;

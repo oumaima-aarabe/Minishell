@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 23:11:47 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/15 05:12:13 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/16 05:09:32 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ int ft_check_old_env(char *cmd)
 				tmp->valu =  ft_strjoin(tmp->valu, ft_substr(cmd, i + 1, (ft_strlen(cmd) - i))); // ha wa7d liksa
 			else if (i) // ila kant = bo7dha makanch +
 			{
+
 				free(tmp->valu);
 				tmp->valu = ft_substr(cmd, i + 1, (ft_strlen(cmd) - i));
 			}
@@ -139,7 +140,7 @@ int ft_check_old_env(char *cmd)
 int ft_check_expor(char *cmd)
 {
 	if(ft_invalid_export_unset(cmd, "export"))
-		return (1);
+		return ( 1);
 	if(ft_check_old_env(cmd))
 		return (1);
 

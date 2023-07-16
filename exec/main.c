@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/16 01:08:24 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/16 05:09:51 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ void  hendl_ctr_c(int sig)
 		g_v.ex_s = 1;
 	}
 }
-
+void ll()
+{
+	system("leaks minishell");
+}
 int main(int argc, char **argv, char **env)
 {
 	char *prompt;
@@ -35,6 +38,7 @@ int main(int argc, char **argv, char **env)
 	tokens = NULL;
 	(void)argc;
 	(void)argv;
+	// atexit(ll);
 	if(isatty(STDIN_FILENO) == 0)
 		return (0);
 	rl_catch_signals = 0;

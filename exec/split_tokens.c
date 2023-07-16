@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 03:39:36 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/16 02:46:23 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/16 03:32:02 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*fill_array(char *str, t_quote cq)
 {
 	char *array;
 
-	array = (char *)calloc((cq.i - cq.start_index + 1) , sizeof(char));
+	array = (char *)ft_calloc((cq.i - cq.start_index + 1) , sizeof(char));
 	if (!array)
 		return (NULL);
 	strncpy(array, &str[cq.start_index], cq.i - cq.start_index);
@@ -60,7 +60,7 @@ char **split_string(char *str, int *word_count)
 	ft_memset(&cq, 0, sizeof(t_quote));
 	cq.length = ft_strlen(str);
 	cq.count = count_words(str);
-	words = (char **)calloc((cq.count + 1) , sizeof(char *));
+	words = (char **)ft_calloc((cq.count + 1) , sizeof(char *));
 	if (!words)
 		return (NULL);
 	while (cq.i < cq.length && (str[cq.i] == ' ' || str[cq.i] == '\t'))
@@ -91,7 +91,7 @@ char **split_string(char *str, int *word_count)
 t_splitnode   *create_split_node(char   **splitdata, int word_count)
 {
 	(void)  word_count;
-	t_splitnode   *new_split_node = calloc(1, sizeof(t_splitnode));
+	t_splitnode   *new_split_node = ft_calloc(1, sizeof(t_splitnode));
 	new_split_node->splitdata = splitdata;
 	new_split_node->prev = NULL;
 	new_split_node->next = NULL;

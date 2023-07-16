@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 04:20:51 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 23:38:37 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/16 03:32:02 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_quote	check_quotes(t_quote check_q, int j, char *cmd)
 		check_q.in_dquotes = !check_q.in_dquotes;
 		check_q.in_word = 1;
 	}
-	else 
+	else
         check_q.changed = 0;
 	return (check_q);
 }
@@ -48,7 +48,7 @@ char	*quotes_removed(int count, char *input)
 	int		i;
 	t_quote	check_q;
 
-	output = calloc(count + 1, sizeof(char));
+	output = ft_calloc(count + 1, sizeof(char));
 	j = 0;
 	i = 0;
 	check_q = init_q();
