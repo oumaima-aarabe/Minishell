@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 09:56:14 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/16 01:08:30 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,22 @@ typedef struct s_exv
 	char	*tmp;
 	char	*new;
 	char	*value;
-	char *expanded;
+	char 	*expanded;
 	int		len;
 	int		pos;
 }	t_exv;
 
 typedef struct s_quotes
 {
+	int word_index;
 	int	in_squotes;
 	int in_dquotes;
 	int	changed;
+	int in_word;
+	int count;
+	int i;
+	int start_index;
+	int length;
 }	t_quote;
 
 typedef struct s_env
@@ -95,7 +101,7 @@ typedef struct s_gs
 	int		red_flag;
 }	t_gs;
 
-extern t_gs	g_v;
+t_gs	g_v;
 
 /////////////////////////////////////////////////////////////////////
 ///////// Structure for doubly linked list node//////////////////////
@@ -115,6 +121,7 @@ typedef struct splitnode {
 }	t_splitnode;
 
 int		check_red1(char *line);
+int		check_red2(char *line);
 int	check_pipe(char *line);
 int	valid_quotes(char *line);
 

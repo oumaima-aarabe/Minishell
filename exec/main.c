@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 03:23:47 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/16 01:08:24 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-t_gs	g_v;
+// t_gs	g_v;
 
 void  hendl_ctr_c(int sig)
 {
@@ -49,7 +49,7 @@ int main(int argc, char **argv, char **env)
 			return(printf("exit\n"), exit(0), 1);
 		if (prompt[0])
 			add_history(prompt);
-		if (!valid_quotes(prompt) || !check_pipe(prompt) || !check_red1(prompt))
+		if (!valid_quotes(prompt) || !check_pipe(prompt) || !check_red1(prompt) || !check_red2(prompt))
 		{
 			ft_syntax_err();
 			continue;

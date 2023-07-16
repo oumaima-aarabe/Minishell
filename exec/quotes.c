@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 04:20:51 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 08:57:30 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/15 23:38:37 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@ t_quote	check_quotes(t_quote check_q, int j, char *cmd)
 	{
 		check_q.changed = 1;
 		check_q.in_squotes = !check_q.in_squotes;
+		check_q.in_word = 1;
 	}
 	else if (cmd[j] == '"' && !check_q.in_squotes)
 	{
 		check_q.changed = 2;
 		check_q.in_dquotes = !check_q.in_dquotes;
+		check_q.in_word = 1;
 	}
 	else 
         check_q.changed = 0;

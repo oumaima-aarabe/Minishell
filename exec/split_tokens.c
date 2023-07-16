@@ -6,134 +6,87 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 03:39:36 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 11:14:37 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/16 01:15:07 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-int count_words(char    *str) 
+int count_words(char *str) 
 {
-	int length = ft_strlen(str);
-	int count = 0;
-	int in_word = 0;
-	int s_quotes = 0;
-	int d_quotes = 0;
-	int i = 0;
-
-	while (i < length) 
+	t_quote cq;
+	
+	ft_memset(&cq, 0, sizeof(t_quote));
+	cq.length = ft_strlen(str);
+	while (cq.i < cq.length) 
 	{
-		if (str[i] == ' ' && !in_word && (!s_quotes || !d_quotes)) 
+		if ((str[cq.i] == ' ' || str[cq.i] == '\t') && !cq.in_word && (!cq.in_squotes || !cq.in_dquotes)) 
 		{
-			i++;
+			cq.i++;
 			continue;
 		}
-		if (str[i] == '"' && !s_quotes) 
+		if ((str[cq.i] == '"' && !cq.in_squotes) || (str[cq.i] == '\'' && !cq.in_dquotes))
+			cq = check_quotes(cq, cq.length, str);
+		else if ((str[cq.i] == ' ' || str[cq.i] == '\t')&& (!cq.in_squotes || !cq.in_dquotes))
 		{
-			d_quotes = !d_quotes;
-			in_word = 1;
+			cq.in_word = 0;
+			cq.count++;
 		}
-		else if (str[i] == '\'' && !d_quotes) 
-		{
-			s_quotes = !s_quotes;
-			in_word = 1;
-		}
-		else if (str[i] == ' ' && (!s_quotes || !d_quotes))
-		{
-			in_word = 0;
-			count++;
-		} else
-			in_word = 1;
-		i++;
+		else
+			cq.in_word = 1;
+		cq.i++;
 	}
-
-	if (in_word)
-		count++;
-	return count;
+	if (cq.in_word)
+		cq.count++;
+	return (cq.count);
 }
 
-char **split_string(char *str, int *word_count) {
-	int length = ft_strlen(str);
-	int count = 0;
-	int in_word = 0;
-	int s_quotes = 0;
-	int d_quotes = 0;
-	int i = 0;
-	// Count the number of words
-	while (i < length) 
+char	*fill_array(char *str, t_quote cq)
+{
+	char *array;
+	
+	array = (char *)calloc((cq.i - cq.start_index + 1) , sizeof(char));
+	if (!array)
+		return (NULL);
+	strncpy(array, &str[cq.start_index], cq.i - cq.start_index);
+	array[cq.i - cq.start_index] = '\0';
+	return (array);
+}
+char **split_string(char *str, int *word_count) 
+{
+	t_quote cq;
+	char **words;
+	
+	ft_memset(&cq, 0, sizeof(t_quote));
+	cq.length = ft_strlen(str);
+	cq.count = count_words(str);
+	words = (char **)calloc((cq.count + 1) , sizeof(char *));
+	if (!words)
+		return (NULL);
+	while (cq.i < cq.length && (str[cq.i] == ' ' || str[cq.i] == '\t'))
+		cq.i++;
+	cq.start_index = cq.i;
+	while (cq.i <= cq.length && cq.word_index < cq.count) 
 	{
-		if ((str[i] == ' ' || str[i] == '\t') && (!s_quotes && !d_quotes))
+		if ((str[cq.i] == ' ' || str[cq.i] == '\t' || str[cq.i] == '\0') && (!cq.in_squotes && !cq.in_dquotes)) 
 		{
-			if (in_word) {
-				count++;
-				in_word = 0;
-			}
-		}
-		else if (str[i] == '"' &&  !s_quotes) 
-		{
-		
-			d_quotes = !d_quotes;
-			in_word = 1;
-		}
-		else if (str[i] == '\'' && !d_quotes) 
-		{
-			s_quotes = !s_quotes;
-			in_word = 1;
-		}
-		 else
-			in_word = 1;
-		i++;
-	}
-
-	if (in_word)
-		count++;
-	char **words = (char **)calloc((count + 1) , sizeof(char *));
-	int word_index = 0;
-	int start_index = 0;
-	in_word = 0;
-	s_quotes = 0;
-	d_quotes = 0;
-	i = 0;
-
-	// Skip leading whitespace
-	while (i < length && (str[i] == ' ' || str[i] == '\t'))
-		i++;
-
-	start_index = i;
-	while (i <= length && word_index < count) 
-	{
-		if ((str[i] == ' ' || str[i] == '\t' || str[i] == '\0') && (!s_quotes && !d_quotes)) 
-		{
-			if (in_word) 
+			if (cq.in_word) 
 			{
-				words[word_index] = (char *)calloc((i - start_index + 1) , sizeof(char));
-				strncpy(words[word_index], &str[start_index], i - start_index);
-				words[word_index][i - start_index] = '\0';
-				word_index++;
-				in_word = 0;
+				words[cq.word_index] = fill_array(str, cq);
+				cq.word_index++;
+				cq.in_word = 0;
 			}
-			start_index = i + 1;
+			cq.start_index = cq.i + 1;
 		}
-		 else if (str[i] == '"' && !s_quotes) 
-		{
-			d_quotes = !d_quotes;
-			in_word = 1;
-		}
-		else if (str[i] == '\'' && !d_quotes) 
-		{
-			s_quotes = !s_quotes;
-			in_word = 1;
-		}
+		 else if ((str[cq.i] == '"' && !cq.in_squotes) || (str[cq.i] == '\'' && !cq.in_dquotes)) 
+			cq = check_quotes(cq, cq.length, str);
 		else 
-			in_word = 1;
-		i++;
+			cq.in_word = 1;
+		cq.i++;
 	}
-
-	*word_count = count;
+	*word_count = cq.count;
 	return words;
 }
-
-
 
 t_splitnode   *create_split_node(char   **splitdata, int word_count) 
 {
@@ -173,4 +126,3 @@ t_splitnode   *splitdatalinkedlist(t_Node  *original_list)
 	}
 	return head;
 }
-
