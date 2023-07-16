@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 09:33:01 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 11:44:02 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/16 01:20:40 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ t_Node	*splitstring(char* line)
         tail->next->prev = tail;
         tail = tail->next;
     }
-
     return head;
 }
 
