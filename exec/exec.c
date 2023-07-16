@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/16 03:02:15 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/16 05:26:01 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,6 @@ void ft_exec(char **cmd, t_env *env)
 	if(cmd[0] != NULL)
 	{
 		ss = ft_prepar_path(cmd[0]);
-		printf("-->%s\n", ss);
 		if(ss)
 			ft_exucve(ss, cmd, my_env);
 		free(ss);

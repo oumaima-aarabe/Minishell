@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_excute_cd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:15:12 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/15 23:04:36 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/16 05:25:26 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int ft_check_getcwd()
 	return (0);
 }
 
-int ft_cd_execut(char *str, char *hom)
+int ft_cd_execut(char *str, char *hom,char *old)
 {
 
 	if(!str)
@@ -97,6 +97,7 @@ int ft_cd_execut(char *str, char *hom)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
 		perror(str);
+		free(old);
 		g_v.ex_s = 1;
 		return 1;
 	}
@@ -120,7 +121,7 @@ void ft_execut_cd(char *str, t_env *env)
 	}
 	if(!old)
 		old = getcwd(NULL, 0);
-	if(ft_cd_execut(str, hom))
+	if(ft_cd_execut(str, hom, old))
 		return ;
 	if(ft_check_getcwd())
 	{
