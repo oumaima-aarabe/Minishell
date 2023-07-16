@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/15 23:08:08 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/16 01:28:43 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,13 @@ char *is_path_exec(char *cmd)
 		if(ft_is_path(cmd) ||  (cmd[0] == '.' && cmd[1] == '/'))
 		{
 			ss = ft_strdup(cmd);
-			if(ft_is_path(cmd) && access(ss, F_OK) == -1)
+			if(access(ss, F_OK) == -1)
 			{
 				ft_putstr_fd("minishell: ", 2);
 				perror(ss);
 				exit(127);
 			}
-			if((cmd[0] == '.' && cmd[1] == '/') && access(ss, X_OK) == -1)
+			if(access(ss, X_OK) == -1)
 			{
 				ft_putstr_fd("minishell: ", 2);
 				perror(ss);

@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/15 03:15:06 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/16 01:33:06 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,8 +147,10 @@ void ft_execut_unset(char **cmd)
 //___________________________________env__________________________________________
 
 
-void ft_execut_env(t_env *env)
+void ft_execut_env(t_env *env, char **cmd)
 {
+	if(cmd[1])
+		return ;
 	while(env)
 	{
 		if(env->valu)
@@ -238,7 +240,7 @@ int ft_execut_bultins(char **cmd)
 		return (ft_execut_unset(cmd), 1);
 
 	else if(!(ft_strcmp(cmd[0], "env")))
-		return(ft_execut_env(g_v.env), 1);
+		return(ft_execut_env(g_v.env, cmd), 1);
 
 	else if(!ft_strcmp(cmd[0], "exit"))
 	{
