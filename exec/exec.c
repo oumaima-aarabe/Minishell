@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/16 07:51:39 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/16 08:45:07 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	**ft_my_env(t_env *env, int i)
 	return (tab[i] = NULL, tab);
 }
 
-char **ft_get_path(t_env *env)
+char	**ft_get_path(t_env *env)
 {
 	char	**path;
 
@@ -72,7 +72,7 @@ char **ft_get_path(t_env *env)
 
 int	ft_is_path(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -113,7 +113,6 @@ char	*is_path_exec(char *cmd)
 	return (NULL);
 }
 
-
 char	*is_valid_cmd(char **path, char *cmd)
 {
 	int		i;
@@ -141,6 +140,7 @@ char	*is_valid_cmd(char **path, char *cmd)
 	ft_free_(path);
 	return (NULL);
 }
+
 char	*ft_prepar_path(char *cmd)
 {
 	char	**path;

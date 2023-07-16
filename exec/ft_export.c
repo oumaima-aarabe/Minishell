@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 23:11:47 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/16 08:19:35 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/16 08:46:50 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*ft_new_key(char *cmd)
 
 int	ft_autre_cara(char *cmd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (cmd[i])
@@ -229,9 +229,9 @@ void	ft_execut_export(char **cmd)
 	while (tmp)
 	{
 		if (tmp->valu)
-			printf("declare -x %s=\"%s\"\n",tmp->key, tmp->valu);
+			printf("declare -x %s=\"%s\"\n", tmp->key, tmp->valu);
 		else
-			printf("declare -x %s\n",tmp->key);
+			printf("declare -x %s\n", tmp->key);
 		tmp = tmp->next;
 	}
 	ft_lstclear(&tmp1);

@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/16 08:07:41 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/16 08:32:08 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_execut_pwd(char *cmd, t_env *env)
 
 	if (cmd && cmd[0] == '-' && cmd[1])
 	{
-		ft_print_err(cmd , ": No take option\n");
+		ft_print_err(cmd, ": No take option\n");
 		g_v.ex_s = 1;
 		return ;
 	}
@@ -191,7 +191,7 @@ int	ft_execut_exit(char **cmd)
 	exit(nb);
 }
 
-int ft_execut_bultins(char **cmd)
+int	ft_execut_bultins(char **cmd)
 {
 	if (cmd && !ft_strcmp(cmd[0], "echo"))
 		return (ft_execut_echo(cmd, 1, 0, 1), 1);
@@ -201,7 +201,7 @@ int ft_execut_bultins(char **cmd)
 		if (!ft_strcmp(cmd[0], "cd"))
 			return (ft_execut_cd(cmd[1], g_v.env), 1);
 		else if (!ft_strcmp(cmd[0], "pwd"))
-			return (ft_execut_pwd(cmd[1] ,g_v.env), 1);
+			return (ft_execut_pwd(cmd[1], g_v.env), 1);
 		else if (!(ft_strcmp(cmd[0], "export")))
 			return (ft_execut_export(cmd), 1);
 		else if (!(ft_strcmp(cmd[0], "unset")))

@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/16 08:27:25 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/16 08:48:44 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	ft_ex_bult_close(t_splitnode *cmd, int fd_in, int fd_out)
 	}
 	return (0);
 }
+
 int	wait_close(t_splitnode *cmd, int pid, int fd_in, int fd_out)
 {
 	int	status;
@@ -120,7 +121,7 @@ int	fork_execut(t_splitnode *ptr, t_fds pipe, t_env *env)
 
 int	wait_pid(int pid)
 {
-	int status;
+	int	status;
 
 	if (pid != -1)
 		waitpid(pid, &status, 0);
@@ -160,7 +161,7 @@ int	ft_execut_cmd(t_splitnode *cmd)
 
 int	check_child(int status)
 {
-	int n_si;
+	int	n_si;
 
 	n_si = WTERMSIG(status);
 	if (n_si == SIGSEGV)
@@ -172,7 +173,7 @@ int	check_child(int status)
 	return (WTERMSIG(status) + 128);
 }
 
-int	ft_exit_status(int	statu)
+int	ft_exit_status(int statu)
 {
 	if (WIFEXITED(statu))
 		return (g_v.ex_s = (WEXITSTATUS(statu)), 1);

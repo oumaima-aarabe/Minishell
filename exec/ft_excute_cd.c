@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:15:12 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/16 08:05:23 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/16 08:46:06 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	ft_cd_old_pwd(t_env *env)
 				g_v.ex_s = 1;
 				break ;
 			}
-			printf("%s\n",env->valu);
+			printf("%s\n", env->valu);
 			break ;
 		}
 		env = env->next;
@@ -107,8 +107,8 @@ int	ft_cd_execut(char *str, char *hom, char *old)
 
 void	ft_execut_cd(char *str, t_env *env)
 {
-	char *old;
-	char *hom;
+	char	*old;
+	char	*hom;
 
 	old = NULL;
 	hom = NULL;
