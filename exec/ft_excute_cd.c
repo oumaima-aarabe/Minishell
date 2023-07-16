@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:15:12 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/16 08:46:06 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/16 11:48:35 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,11 @@ void	ft_execut_cd(char *str, t_env *env)
 	}
 	if (!old)
 		old = getcwd(NULL, 0);
+	// printf("--> old %s\n", old);
 	if (ft_cd_execut(str, hom, old))
 		return ;
+	if(getcwd(NULL, 0))
+		g_v.pwd = getcwd(NULL, 0);
 	if (ft_check_getcwd())
 	{
 		free(old);

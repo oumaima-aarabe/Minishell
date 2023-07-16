@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/16 06:10:18 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/16 10:00:28 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	// atexit(ll);
-	if(isatty(STDIN_FILENO) == 0)
-		return (0);
+	// if(isatty(STDIN_FILENO) == 0)
+	// 	return (0);
 	rl_catch_signals = 0;
 	environment(env);
 	while(1337)
@@ -50,7 +50,7 @@ int main(int argc, char **argv, char **env)
 		signal(SIGQUIT, SIG_IGN);
 		prompt = readline("Minishell -> ");
 		if (!prompt)
-			return(printf("exit\n"), exit(0), 1);
+			return(printf("exit\n"), g_v.ex_s);
 		if (prompt[0])
 			add_history(prompt);
 		if (!valid_quotes(prompt) || !check_pipe(prompt) || !check_red1(prompt) || !check_red2(prompt))
