@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 23:11:47 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/16 08:46:50 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/17 05:00:45 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	ft_invalid_unset_export(char *cmd, char *bult, int i)
 	if (cmd && !ft_isalpha(cmd[0]) && cmd[0] != '_')
 	{
 		if (cmd[0] == '-')
-			return (g_v.ex_s = 2, ft_print_err(cmd, " : No take option\n"), 1);
+			return (g_v.ex_s = 2, ft_print_err(bult, " : No take option\n"), 1);
 		else
 			ft_print_err(cmd, " : not a valid identifier\n");
 		g_v.ex_s = 1;

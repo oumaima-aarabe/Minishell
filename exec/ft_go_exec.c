@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/16 08:48:44 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/17 05:03:35 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	ft_one_cmd(t_splitnode *cmd, t_env *env, int fd_in, int fd_out)
 		return (-1);
 	pid = fork();
 	if (pid == -1)
-		return (perror("Minishell: "), g_v.ex_s = 1, -1);
+		return (perror("Minishell "), g_v.ex_s = 1, -1);
 	if (pid == 0)
 		ft_exec(cmd->splitdata, env);
 	return (wait_close(cmd, pid, fd_in, fd_out));

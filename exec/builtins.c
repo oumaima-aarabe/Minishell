@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/16 11:50:06 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/17 05:03:35 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,34 +38,30 @@ void	ft_execut_echo(char **tab, int i, int j, int bol)
 	g_v.ex_s = 0;
 }
 
-void	ft_execut_pwd(char *cmd, t_env *env)
+int	ft_execut_pwd(char *cmd, t_env *env)
 {
 	char	*pwd;
 
 	if (cmd && cmd[0] == '-' && cmd[1])
 	{
-		ft_print_err(cmd, ": No take option\n");
-		g_v.ex_s = 1;
-		return ;
+		ft_print_err("pwd", ": No take option\n");
+		return (g_v.ex_s = 1, 1);
 	}
 	pwd = getcwd(NULL, 0);
 	if (pwd)
 	{
 		printf("%s\n", pwd);
-		free(pwd);
-		return ;
+		return (free(pwd), 1);
 	}
 	free(pwd);
 	while (env)
 	{
 		if (!ft_strcmp("PWD", env->key))
-		{
-			printf("%s\n", env->valu);
-			return ;
-		}
+			return (printf("%s\n", env->valu), 1);
 		env = env->next;
 	}
 	printf("%s\n", g_v.pwd);
+	return (0);
 }
 
 void	ft_free_plus(char *s1, char *s2, void *s3)
@@ -183,7 +179,7 @@ int	ft_execut_exit(char **cmd)
 			nb = ft_atoi_exit(cmd[1]);
 			if (cmd[1] && cmd[2])
 			{
-				ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+				ft_putstr_fd("Minishell exit: too many arguments\n", 2);
 				g_v.ex_s = 1;
 				return (1);
 			}

@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/17 03:05:10 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/17 05:03:35 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_exucve(char *cmd, char **arg, char **env)
 	{
 		ft_free_(arg);
 		ft_free_(env);
-		ft_putstr_fd("Minishell: ", 2);
+		ft_putstr_fd("Minishell ", 2);
 		perror(cmd);
 		free(cmd);
 		exit (errno);
@@ -94,12 +94,12 @@ char	*is_path_exec(char *cmd)
 	{
 		if (access(ss, F_OK) == -1)
 		{
-			ft_putstr_fd("Minishell: ", 2);
+			ft_putstr_fd("Minishell ", 2);
 			return (perror(ss), exit(127), NULL);
 		}
 		if (access(ss, X_OK) == -1)
 		{
-			ft_putstr_fd("Minishell: ", 2);
+			ft_putstr_fd("Minishell ", 2);
 			return (perror(ss), exit(126), NULL);
 		}
 		dir = opendir(ss);

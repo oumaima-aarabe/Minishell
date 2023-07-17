@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:15:12 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/17 04:44:36 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/17 05:03:35 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ int	ft_cd_home(char *hom)
 {
 	if (!hom)
 	{
-		ft_putstr_fd("minishell: cd: HOME not set\n", 2);
+		ft_putstr_fd("Minishell cd: HOME not set\n", 2);
 		g_v.ex_s = 1;
 		return (1);
 	}
 	else if (chdir(hom) < 0)
 	{
-		ft_putstr_fd("minishell: cd: ", 2);
+		ft_putstr_fd("Minishell cd: ", 2);
 		g_v.ex_s = 1;
 		perror(hom);
 		return (1);
@@ -57,7 +57,7 @@ int	ft_cd_old_pwd(t_env *env)
 		{
 			if (chdir(env->valu) < 0)
 			{
-				ft_putstr_fd("minishell: cd: ", 2);
+				ft_putstr_fd("Minishell cd: ", 2);
 				perror(env->valu);
 				g_v.ex_s = 1;
 				return (1);
@@ -69,7 +69,7 @@ int	ft_cd_old_pwd(t_env *env)
 	}
 	if (!env)
 	{
-		ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
+		ft_putstr_fd("Minishell cd: OLDPWD not set\n", 2);
 		g_v.ex_s = 1;
 		return (1);
 	}
@@ -108,7 +108,7 @@ int	ft_cd_execut(char *str, char *hom, char *old)
 	}
 	else if (chdir(str) < 0)
 	{
-		ft_putstr_fd("minishell: cd: ", 2);
+		ft_putstr_fd("Minishell cd: ", 2);
 		perror(str);
 		free(old);
 		g_v.ex_s = 1;
