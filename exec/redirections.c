@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 10:54:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/17 03:28:17 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/17 03:51:10 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,24 +178,31 @@ t_splitnode *handle_redirections(t_splitnode *node, t_env *env)
 		{
 			while (current->splitdata[i] && !g_v.red_flag)
 			{
-				// printf("part:%s\n", current->splitdata[i]);
+				printf("part:%s\n", current->splitdata[i]);
 				ft_memset(&cq, 0, sizeof(t_quote));
 				int j = 0;
 				while (current->splitdata[i][j] && !g_v.red_flag)
 				{
-					// printf("===%s\n", current->splitdata[i] + j);
+					printf("===%s\n", current->splitdata[i] + j);
 					cq = check_quotes(cq,j, current->splitdata[i]);
 					if (!cq.ind && !cq.ins && !is_quote(current->splitdata[i][j]))
 					{
 						if (current->splitdata[i][j] == '<' && current->splitdata[i][j + 1] != '<')
+						{
 							red_input(&current, &i, &j, env);
+							continue;
+						}
 						else if (current->splitdata[i][j] == '>' && current->splitdata[i][j + 1] != '>')
+						{
 							red_output(&current, &i, &j, env);
+							continue;
+						}
 						else if (current->splitdata[i][j] == '>' && current->splitdata[i][j + 1] == '>')
 						{
 							red_append(&current, &i, &j, env);
 							if (current->splitdata[i][j])
 								j++;
+								continue;
 						}
 					}
 					if (current->splitdata[i][j])

@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:08:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/17 03:44:22 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/17 03:47:17 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ t_splitnode	*read_hd(t_splitnode *current, int *i, int *j, t_env *env)
 	int fd[2];
 	char *lmtr = gethd_redfilen(i, j, current->splitdata);
 	char *tmp = ft_strdup(lmtr);
-	// printf("lmtr%s\n", tmp);
 	fflush(stdout);
 	int k;
 
@@ -106,18 +105,15 @@ t_splitnode *handle_heredoc(t_splitnode *node, t_env *env)
 		{
 			int j = 0;
 			ft_memset(&cq, 0, sizeof(t_quote));
-
 			while (c->splitdata[i][j])
 			{
 				cq = check_quotes(cq,j, c->splitdata[i]);
 				if (!cq.ind && !cq.ins && !is_quote(c->splitdata[i][j]))
 					if (c->splitdata[i][j] == '<' && \
 					c->splitdata[i][j + 1] == '<')
-					{
-						
+					{	
 						c = read_hd(c, &i, &j, env);
 						continue ;
-				// printf ("[%s]\n", c->splitdata[i] + j);
 					}
 				if (c->splitdata[i][j])
 					j++;
@@ -193,13 +189,9 @@ t_hd	check_printable(char **cmdl, t_quote cq, t_hd hd)
 {
 	while (cmdl[hd.i][hd.j])
 	{
-		printf("if printable : %c\n", cmdl[hd.i][hd.j]);
 		cq = check_quotes(cq,hd.j, cmdl[hd.i]);
 		if ((cq.ind || cq.ins) || strncmp("<<", &cmdl[hd.i][hd.j], 2))
-		{
-			printf("printable : %c\n", cmdl[hd.i][hd.j]);
 			hd = numerate(hd);
-		}
 		if (!cq.ind && !cq.ins && !is_quote(cmdl[hd.i][hd.j]))
 		{
 			if (cmdl[hd.i][hd.j] == '<' && cmdl[hd.i][hd.j + 1] == '<')
@@ -254,11 +246,9 @@ char **ns_heredoc(char **cmdl, int wc)
         hd.j = 0;
         ft_memset(&cq, 0, sizeof(t_quote));
 		hd = check_printable(cmdl, cq, hd);
-		// cq = check_quotes(cq, hd.j, cmdl[hd.i]);
         if (hd.print)
 		{
             new_s[hd.k++] = fill_ns_hd(cmdl[hd.z], hd.count, cq);
-			printf("new_s: %s, count : %d\n", new_s[hd.k - 1], hd.count);
 			hd.print = 0;
 			hd.count = 0;	
 		}
