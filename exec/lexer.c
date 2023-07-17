@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:29 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/16 03:44:59 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/17 09:01:03 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,6 @@ int	valid_quotes(char *line)
 	return (s % 2 == 0 && d % 2 == 0);
 }
 
-
-
-// int	check_after_pipe(char *line)
-// {
-	
-// }
 int	check_pipe(char *line)
 {
 	t_quote cq;

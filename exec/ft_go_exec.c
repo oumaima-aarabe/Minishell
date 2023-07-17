@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_go_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 15:11:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/15 03:24:33 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/17 09:10:17 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-
-int exec(char **cmd, t_env *env, t_fds pipe)
+int	exec(char **cmd, t_env *env, t_fds pipe)
 {
 	if (pipe.in != -1)
 	{
@@ -29,190 +28,172 @@ int exec(char **cmd, t_env *env, t_fds pipe)
 		close(pipe.fd_in);
 	if (pipe.fd_out != -1)
 		close(pipe.fd_out);
-
-
-	if(ft_execut_bultins(cmd))
+	if (ft_execut_bultins(cmd))
 		return (exit(0), 1);
-	ft_exec(cmd , env);
-		return (1);
+	ft_exec(cmd, env);
+	return (1);
 }
 
-int ft_one_cmd(t_splitnode *cmd, t_env *env)
+int	ft_ex_bult_close(t_splitnode *cmd, int fd_in, int fd_out)
 {
-	int status;
-	int pid;
-	pid = 0;
-	int fd_out = -1;
-	int fd_in = -1;
+	if (ft_execut_bultins(cmd->splitdata))
+	{
+		if (cmd->in != -1)
+		{
+			dup2(fd_in, 0);
+			close(fd_in);
+		}
+		if (cmd->out != -1)
+		{
+			dup2(fd_out, 1);
+			close(fd_out);
+		}
+		return (1);
+	}
+	return (0);
+}
 
-	if(cmd->in != -1)
+int	wait_close(t_splitnode *cmd, int pid, int fd_in, int fd_out)
+{
+	int	status;
+
+	waitpid(pid, &status, 0);
+	if (cmd->in != -1)
+	{
+		dup2(fd_in, 0);
+		close(fd_in);
+	}
+	if (cmd->out != -1)
+	{
+		dup2(fd_out, 1);
+		close(fd_out);
+	}
+	return (status);
+}
+
+int	ft_one_cmd(t_splitnode *cmd, t_env *env, int fd_in, int fd_out)
+{
+	int	pid;
+
+	if (cmd->in != -1)
 	{
 		fd_in = dup(0);
 		dup2(cmd->in, 0);
 		close(cmd->in);
 	}
-	if(cmd->out != -1)
+	if (cmd->out != -1)
 	{
 		fd_out = dup(1);
 		dup2(cmd->out, 1);
 		close(cmd->out);
 	}
-	if(ft_execut_bultins(cmd->splitdata))
-	{
-
-		if(cmd->in != -1)
-		{
-		dup2(fd_in, 0);
-		close(fd_in);
-		}
-		if(cmd->out != -1)
-		{
-		dup2(fd_out, 1);
-		close(fd_out);
-		}
+	if (ft_ex_bult_close(cmd, fd_in, fd_out))
 		return (-1);
-	}
 	pid = fork();
-	if(pid == -1)
-		return(perror("Minishell: "), g_v.ex_s = 1, -1);
-	if(pid == 0)
-		ft_exec(cmd->splitdata , env);
-	waitpid(pid, &status, 0);
-	if(cmd->in != -1)
-	{
-	dup2(fd_in, 0);
-	close(fd_in);
-	}
-	if(cmd->out != -1)
-	{
-	dup2(fd_out, 1);
-	close(fd_out);
-	}
-	return (status);
+	if (pid == -1)
+		return (perror("Minishell "), g_v.ex_s = 1, -1);
+	if (pid == 0)
+		ft_exec(cmd->splitdata, env);
+	return (wait_close(cmd, pid, fd_in, fd_out));
 }
 
-
-
-int fork_execut(t_splitnode *ptr, t_fds pipe, t_env *env)
+int	fork_execut(t_splitnode *ptr, t_fds pipe, t_env *env)
 {
-	int pid;
-	// puts("____________________________________");
-	// printf("in  -->> %d\n", ptr->in);
-	// printf("out -->> %d\n", ptr->out);
-	// puts("____________________________________");
-	if(!ptr)
+	int	pid;
+
+	if (!ptr)
 		return (-1);
-	// if(!ptr->splitdata || (ptr->splitdata && !ptr->splitdata[0]))
-	// 	return (0);
-	if(ptr->in != -1)
-	{
+	if (ptr->in != -1)
 		pipe.in = ptr->in;
-		// close(ptr->in);
-	}
-	if(ptr->out != -1)
-	{
+	if (ptr->out != -1)
 		pipe.out = ptr->out;
-		// close(ptr->out);
-	}
-
 	pid = fork();
-	if(pid == -1)
-		return(perror("Minishell "),  g_v.ex_s = 1, -1);
-	if(pid == 0)
+	if (pid == -1)
+		return (perror("Minishell "), g_v.ex_s = 1, -1);
+	if (pid == 0)
 		exec(ptr->splitdata, env, pipe);
-	if (ptr->in != -1){
-		// write(2, ft_itoa(ptr->in), ft_strlen(ft_itoa(ptr->in)));
+	if (ptr->in != -1)
 		close(ptr->in);
-	}
-	// write(2, "\n", 1);
-	if (ptr->out != -1){
-		// write(2, ft_itoa(ptr->out), ft_strlen(ft_itoa(ptr->out)));
+	if (ptr->out != -1)
 		close(ptr->out);
-	}
-	// write(2, "\n", 1);
-	return(pid);
+	return (pid);
 }
 
-
-
-int ft_execut_cmd(t_splitnode *cmd)
+int	wait_pid(int pid)
 {
-	int fd[2];
-	int dexieme_fd[2];
-	int pid = 0;
-	int status;
+	int	status;
 
-
-	if(!cmd)
-		return(-1);
-	// if(cmd && (!cmd->splitdata || (cmd->splitdata && !cmd->splitdata[0])))
-	// 	return (-1);
-	// if(!cmd->splitdata[0])
-	// 	return (-1);
-
-	if(cmd && !cmd->next)
-			return (ft_one_cmd(cmd, g_v.env)); // ft_one_cd return -1 if execut bulti
-
-
-		pipe(fd);
-		pid =  fork_execut(cmd, (t_fds){cmd->in, fd[1], fd[0], -1}, g_v.env);
-		close(fd[1]);
-			cmd = cmd->next;
-		while(pid != -1 && cmd->next != NULL)
-		{
-			pipe(dexieme_fd);
-			pid =  fork_execut(cmd, (t_fds){fd[0], dexieme_fd[1], dexieme_fd[0], -1}, g_v.env);
-			close(fd[0]);
-			fd[0] = dexieme_fd[0];
-			close(dexieme_fd[1]);
-			cmd = cmd->next;
-		}
-		if (pid != -1)
-		pid = fork_execut(cmd, (t_fds){fd[0], cmd->out, -1, -1}, g_v.env);
-		close(fd[0]);
-		if (pid != -1)
+	if (pid != -1)
 		waitpid(pid, &status, 0);
-		// cmd = cmd->next;
-		while(wait(NULL) != -1)
-			;
-					if(pid == -1)
-				return (-1);
+	while (wait(NULL) != -1)
+		;
 	return (status);
 }
 
-
-
-int phandle(int status)
+int	ft_execut_cmd(t_splitnode *cmd)
 {
-    int new = WTERMSIG(status);
-    if (new == SIGSEGV)
-		printf("Minishell : %s\n", "Segmentation fault");
-    if (new == SIGQUIT)
-		printf("Quit\n");
-    if (new == SIGINT)
-		printf("\n");
-    return (WTERMSIG(status) + 128);
+	int	fd[2];
+	int	de_fd[2];
+	int	pid;
+	int	status;
+
+	pipe(fd);
+	pid = fork_execut(cmd, (t_fds){cmd->in, fd[1], fd[0], -1}, g_v.env);
+	close(fd[1]);
+		cmd = cmd->next;
+	while (pid != -1 && cmd->next != NULL)
+	{
+		pipe(de_fd);
+		pid = fork_execut(cmd, (t_fds){fd[0], de_fd[1], de_fd[0], -1}, g_v.env);
+		close(fd[0]);
+		fd[0] = de_fd[0];
+		close(de_fd[1]);
+		cmd = cmd->next;
+	}
+	if (pid != -1)
+		pid = fork_execut(cmd, (t_fds){fd[0], cmd->out, -1, -1}, g_v.env);
+	close(fd[0]);
+	status = wait_pid(pid);
+	if (pid == -1)
+		return (-1);
+	return (status);
 }
 
-
-
-int ft_exit_status(int	statu)
+int	check_child(int status)
 {
-	// (void)statu;
+	int	n_si;
+
+	n_si = WTERMSIG(status);
+	if (n_si == SIGSEGV)
+		printf("Minishell : %s\n", "Segmentation fault");
+	if (n_si == SIGQUIT)
+		printf("Quit\n");
+	if (n_si == SIGINT)
+		printf("\n");
+	return (WTERMSIG(status) + 128);
+}
+
+int	ft_exit_status(int statu)
+{
 	if (WIFEXITED(statu))
-        return (g_v.ex_s = (WEXITSTATUS(statu)), 1);
+		return (g_v.ex_s = (WEXITSTATUS(statu)), 1);
 	else if (WIFSIGNALED(statu))
-        return (g_v.ex_s = phandle(statu));
+		return (g_v.ex_s = check_child(statu));
 	return (0);
 }
 
-void execution(t_splitnode *cmd)
+void	execution(t_splitnode *cmd)
 {
-	int statu;
+	int	statu;
 
-	statu = ft_execut_cmd(cmd);
-	if(statu == 0 && !cmd->splitdata)
-			return ;
+	if (!cmd)
+		return ;
+	if (cmd && !cmd->next)
+		statu = ft_one_cmd(cmd, g_v.env, 0, 0);
+	else
+		statu = ft_execut_cmd(cmd);
+	if (statu == 0 && !cmd->splitdata)
+		return ;
 	if (statu != -1)
 		ft_exit_status(statu);
 }

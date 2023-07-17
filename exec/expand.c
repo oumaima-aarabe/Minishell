@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 01:39:03 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/16 03:44:59 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/17 09:28:16 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ char	*expandinterog(char *cmd, int j)
 	usd_v.new = ft_substr(cmd, j + 2, ft_strlen(cmd) - j);
 	free(cmd);
 	cmd = ft_strjoin(usd_v.tmp, ft_strjoin(ft_itoa(g_v.ex_s), usd_v.new));
-	g_v.ex_s = 0;
 	return (cmd);
 }
 

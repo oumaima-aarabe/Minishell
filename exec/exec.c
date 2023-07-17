@@ -6,46 +6,43 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/16 08:24:01 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/17 09:09:05 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-
-
-void ft_exucve(char *cmd, char **arg, char **env)
+void	ft_exucve(char *cmd, char **arg, char **env)
 {
-	if(execve(cmd, arg, env) < 0)
+	if (execve(cmd, arg, env) < 0)
 	{
 		ft_free_(arg);
 		ft_free_(env);
-		ft_putstr_fd("Minishell: ", 2);
-		perror(cmd); // change msg err
+		ft_putstr_fd("Minishell ", 2);
+		perror(cmd);
 		free(cmd);
 		exit (errno);
 	}
 }
 
-char **ft_my_env(t_env *en)
+char	**ft_my_env(t_env *env, int i)
 {
-	char **tab;
-	t_env *env = duplicate_linked_list(en);
-	t_env *tmp;
+	char	**tab;
+	t_env	*tmp;
+	char	*key;
+	char	*valu;
 
 	tab = (char **)malloc(sizeof(char *) * (ft_lstsize(env) + 1));
-	int i = 0;
-	char *key;
-	char *valu;
+	if (!tab)
+		return (NULL);
 	tmp = NULL;
-
-	while(env)
+	while (env)
 	{
 		tmp = env;
-		if(env->valu != NULL)
+		if (env->valu != NULL)
 		{
 		key = ft_strjoin(ft_strdup(tmp->key), ft_strdup("="));
-		valu = ft_strjoin(key ,ft_strdup(tmp->valu));
+		valu = ft_strjoin(key, ft_strdup(tmp->valu));
 		tab[i] = valu;
 		i++;
 		}
@@ -56,13 +53,14 @@ char **ft_my_env(t_env *en)
 	return (tab[i] = NULL, tab);
 }
 
-char **ft_get_path(t_env *env)
+char	**ft_get_path(t_env *env)
 {
-	char **path;
+	char	**path;
+
 	path = NULL;
-	while(env)
+	while (env)
 	{
-		if((!ft_strcmp("PATH", env->key)))
+		if ((!ft_strcmp("PATH", env->key)))
 		{
 			path = ft_split(env->valu, ':');
 			return (path);
@@ -72,55 +70,63 @@ char **ft_get_path(t_env *env)
 	return (path);
 }
 
-int ft_is_path(char *str)
+int	ft_is_path(char *str)
 {
-	int i = 0 ;
-	while(str[i])
+	int	i;
+
+	i = 0;
+	while (str[i])
 	{
-		if(str[i] == '/')
-			return(1);
+		if (str[i] == '/')
+			return (1);
 		i++;
 	}
 	return (0);
 }
 
-char *is_path_exec(char *cmd)
+char	*is_path_exec(char *cmd)
 {
-	char *ss = NULL;
-		if(ft_is_path(cmd) ||  (cmd[0] == '.' && cmd[1] == '/'))
+	char	*ss;
+	DIR		*dir;
+
+	ss = ft_strdup(cmd);
+	if (ft_is_path(cmd) || (cmd[0] == '.' && cmd[1] == '/'))
+	{
+		if (access(ss, F_OK) == -1)
 		{
-			ss = ft_strdup(cmd);
-			if(ft_is_path(cmd) && access(ss, F_OK) == -1)
-			{
-				ft_putstr_fd("minishell: ", 2);
-				perror(ss);
-				exit(127);
-			}
-			if((cmd[0] == '.' && cmd[1] == '/') && access(ss, X_OK) == -1)
-			{
-				ft_putstr_fd("minishell: ", 2);
-				perror(ss);
-				exit(126);
-			}
-			return (ss);
+			ft_putstr_fd("Minishell ", 2);
+			return (perror(ss), exit(127), NULL);
 		}
+		if (access(ss, X_OK) == -1)
+		{
+			ft_putstr_fd("Minishell ", 2);
+			return (perror(ss), exit(126), NULL);
+		}
+		dir = opendir(ss);
+		if (dir != NULL)
+		{
+			ft_print_err(cmd, ": is a directory\n");
+			return (closedir(dir), exit(126), NULL);
+		}
+		return (ss);
+	}
 	return (NULL);
 }
 
-
-char *is_valid_cmd(char **path, char *cmd)
+char	*is_valid_cmd(char **path, char *cmd)
 {
-	int i = 0;
-	char *test;
-	char *ss;
-	while(path[i])
+	int		i;
+	char	*test;
+	char	*ss;
+
+	i = 0;
+	while (path[i])
 	{
-		// printf("-->%s\n", cmd);
-		if(!cmd[0])
+		if (!cmd[0] || (cmd[0] == '.' ||( cmd[0] == '.' && cmd[1] == '.')))
 			return (ft_print_err(cmd, ": command not found\n"), exit(127), NULL);
 		test = ft_strjoin(ft_strdup("/"), ft_strdup(cmd));
 		ss = ft_strjoin(ft_strdup(path[i]), test);
-		if(!(access(ss, F_OK)))
+		if (!(access(ss, F_OK)))
 			return (ss);
 		else
 		{
@@ -128,52 +134,52 @@ char *is_valid_cmd(char **path, char *cmd)
 			ss = NULL;
 			i++;
 		}
-		if(!path[i])
+		if (!path[i])
 			return (ft_print_err(cmd, ": command not found\n"), exit(127), NULL);
 	}
 	ft_free_(path);
-	return (NULL); // ai3adat nadar
+	return (NULL);
 }
 
-char *ft_prepar_path(char *cmd)
+char	*ft_prepar_path(char *cmd)
 {
-	char **path;
-	char *ss;
+	char	**path;
+	char	*ss;
+
 	ss = NULL;
-		path = ft_get_path(g_v.env);
-		if(!path) // if path unsett
-			ss = ft_strdup(cmd);
-		if(is_path_exec(cmd))
-		{
-			if(path)
-				ft_free_(path);
-			return(is_path_exec(cmd));
-		}
-		else if(path)
-		{
-			return (is_valid_cmd(path, cmd));
-		}
+	path = ft_get_path(g_v.env);
+	if (!path)
+		ss = ft_strdup(cmd);
+	if (is_path_exec(cmd))
+	{
+		if (path)
+			ft_free_(path);
+		return (is_path_exec(cmd));
+	}
+	else if (path)
+	{
+		return (is_valid_cmd(path, cmd));
+	}
 	return (ss);
 }
 
-void ft_exec(char **cmd, t_env *env)
+void	ft_exec(char **cmd, t_env *env)
 {
-	char *ss;
-	ss = NULL;
-	char **my_env = NULL;
+	char	*ss;
+	char	**my_env;
+	t_env	*en_new;
 
+	ss = NULL;
 	if (!cmd)
 		exit(0);
-	my_env = ft_my_env(env);
-
-
+	en_new = duplicate_linked_list(env);
+	my_env = ft_my_env(en_new, 0);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	if(cmd[0] != NULL)
+	if (cmd[0] != NULL)
 	{
 		ss = ft_prepar_path(cmd[0]);
-		// printf("-->%s\n", ss);
-		if(ss)
+		if (ss)
 			ft_exucve(ss, cmd, my_env);
 		free(ss);
 		ss = NULL;
