@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 08:19:19 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/16 07:36:44 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/17 05:29:06 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ bool is_redirection(char ch)
 {
     return (ch == '<' || ch == '>');
 }
-/////////////////////////////////////////////////////////
 
 char **splitget(int hr, t_splitnode *current)
 {
@@ -89,67 +88,72 @@ t_splitnode   *create_new_node(char   **splitdata, int in, int out)
 
 /////////////////////////////////////////////////////////
 
+t_quote skip_red(t_quote cq, char **cmdl)
+{
+        if (!cq.ind && !cq.ins && !is_quote(cmdl[cq.i][cq.j])) 
+        {
+            if ((cmdl[cq.i][cq.j] == '<' && cmdl[cq.i][cq.j + 1] != '<') \
+            || (cmdl[cq.i][cq.j] == '>' && cmdl[cq.i][cq.j + 1] != '>'))
+            {
+                if (cmdl[cq.i][cq.j + 1])
+                cq.j +=   get_fl(&cmdl[cq.i][cq.j + 1]);
+                else if (cmdl[cq.i + 1])
+                cq.j = get_fl(cmdl[++(cq.i)]);
+                return cq;
+            }
+            else if (cmdl[cq.i][cq.j] == '>' && cmdl[cq.i][cq.j + 1] == '>')
+            {
+                if (cmdl[cq.i][cq.j + 2])
+                cq.j +=   get_fl(&cmdl[cq.i][cq.j + 2]) + 2;
+                else if (cmdl[cq.i + 1])
+                cq.j = get_fl(cmdl[++(cq.i)]);
+                return cq;
+            }
+        }
+    return (cq);
+}
+
+t_quote _check_printable(t_quote cq, char *cmdl, int n)
+{
+    cq = check_quotes(cq, cq.j, cmdl);
+    if ((cq.ind || cq.ins) ||!is_redirection(cmdl[cq.j]))
+    {
+        cq.print = true;
+        if(n)
+        {   
+            cq.z = cq.i;
+            cq.count++;    
+        }  
+    }
+    return(cq);
+}
 int word_count(char **cmdl)
 {
-        int i = 0;
-        int wc = 0;
-        bool print = false;
         t_quote cq;
+        ft_memset(&cq, 0, sizeof(t_quote));
     if (cmdl)
     {
-        while (cmdl[i]) 
+        while (cmdl[cq.i]) 
         {
-            int j = 0;
-            ft_memset(&cq, 0, sizeof(t_quote));
-            while (cmdl[i][j]) 
+            cq.j = 0;
+            while (cmdl[cq.i][cq.j]) 
             {
-                cq = check_quotes(cq,j, cmdl[i]);
-                if (!is_redirection(cmdl[i][j]))
-                    print = true;
-                if (!cq.ind && !cq.ins && !is_quote(cmdl[i][j])) 
-                {
-                    if (cmdl[i][j] == '<' && cmdl[i][j + 1] != '<')
-                    {
-                        if (cmdl[i][j + 1])
-                        j +=   get_fl(&cmdl[i][j + 1]);
-                        else if (cmdl[i + 1])
-                        j = get_fl(cmdl[++i]);
-                        continue;
-                    }
-                    else if (cmdl[i][j] == '>' && cmdl[i][j + 1] != '>')
-                    {
-                        if (cmdl[i][j + 1])
-                        j +=   get_fl(&cmdl[i][j + 1]);
-                        else if (cmdl[i + 1])
-                        j = get_fl(cmdl[++i]);
-                        continue;
-                    }
-                    else if (cmdl[i][j] == '>' && cmdl[i][j + 1] == '>')
-                    {
-                        if (cmdl[i][j + 2])
-                        j +=   get_fl(&cmdl[i][j + 2]) + 2;
-                        else if (cmdl[i + 1])
-                        j = get_fl(cmdl[++i]);
-                        continue;
-                    }
-                }
-                
-                if (is_quote(cmdl[i][j]))
-                    cq = check_quotes(cq,j, cmdl[i]);
-                if (cmdl[i][j])
-                    j++;
+                cq = check_quotes(cq,cq.j, cmdl[cq.i]);
+                if ((cq.ind || cq.ins) ||!is_redirection(cmdl[cq.i][cq.j]))
+                    cq.print = true;
+                cq = skip_red(cq, cmdl);
+                if (cmdl[cq.i][cq.j])
+                    cq.j++;
             }
-            if (print)
+            if (cq.print)
             {
-                wc++;
-                print = false;
+                cq.wc++;
+                cq.print = false;
             }
-            i++;
+            cq.i++;
         }
     }
-    // printf("===%d===\n", wc);
-    fflush(stdout);
-    return (wc);
+    return (cq.wc);
 }
 
 /////////////////////////////////////////////////////////

@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/16 06:43:46 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/17 05:01:22 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,10 @@ typedef struct s_quotes
 	int in_word;
 	int count;
 	int i;
+	int j;
+	int wc;
+	int z;
+	int print;
 	int start;
 	int length;
 }	t_quote;
