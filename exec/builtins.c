@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/17 09:08:28 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/17 11:12:33 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_execut_pwd(char *cmd, t_env *env)
 
 	if (cmd && cmd[0] == '-' && cmd[1])
 	{
-		ft_print_err("pwd", ": No take option\n");
+		ft_print_err("pwd", ": Does not take options\n");
 		return (g_v.ex_s = 1, 1);
 	}
 	pwd = getcwd(NULL, 0);
@@ -122,9 +122,9 @@ void	ft_execut_env(t_env *env, char **cmd)
 	if (cmd[1])
 	{
 		if (cmd[1][0] == '-')
-			ft_print_err(cmd[0], ": No take option\n");
+			ft_print_err(cmd[0], ": Does not take options\n");
 		else
-			ft_print_err(cmd[0], ": No take argument\n");
+			ft_print_err(cmd[0], ": Does not take arguments\n");
 		g_v.ex_s = 1;
 		return ;
 	}
