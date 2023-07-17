@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/17 05:03:35 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/17 06:48:36 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,31 +136,32 @@ void	ft_execut_env(t_env *env, char **cmd)
 	}
 }
 
-int	ft_atoi_exit(char *str)
+int	ft_atoi_exit(char *str, int i)
 {
 	int		s;
 	long	d;
 
 	s = 1;
 	d = 0;
-	while ((*str >= 9 && *str <= 13) || *str == ' ')
-		str++;
-	if (*str == '-' || *str == '+')
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
+		i++;
+	if (str[i] == '-' || str[i] == '+')
 	{
-		if (*str == '-')
-			s *= -1;
-		str++;
+		if (str[i] == '-')
+			s = -1;
+		i++;
 	}
-	while (*str >= '0' && *str <= '9')
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-		d = d * 10 + *str - '0';
-			str++;
+		if(d > d * 10 + str[i] - '0')
+				return(ft_print_err(str, \
+		" : numeric argument required\n"), exit(255), 1);
+		d = d * 10 + str[i] - '0';
+		i++;
 	}
-	if (*str != '\0')
-	{
-		ft_print_err(str, " : numeric argument required\n");
-		exit(255);
-	}
+	if (str[i] != '\0')
+		return(ft_print_err(str, \
+		" : numeric argument required\n"), exit(255), 1);
 	return ((int)(d * s));
 }
 
@@ -176,7 +177,7 @@ int	ft_execut_exit(char **cmd)
 	{
 		if (cmd[1][i])
 		{
-			nb = ft_atoi_exit(cmd[1]);
+			nb = ft_atoi_exit(cmd[1], 0);
 			if (cmd[1] && cmd[2])
 			{
 				ft_putstr_fd("Minishell exit: too many arguments\n", 2);
