@@ -49,12 +49,5 @@ Minishell -> cd -
 
 
 
-Minishell -> export l3bid="oumaima zerda"
-Minishell: l3bid=oumaima zerda : not a valid identifier
-Minishell -> echo $l3bid
-3bid
 
-Minishell -> export $l3bid=$l3bid
-Minishell: 3bid=3bid : not a valid identifier
-Minishell ->
 
