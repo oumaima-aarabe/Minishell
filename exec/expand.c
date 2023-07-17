@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 01:39:03 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/17 09:28:16 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/17 13:28:57 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ char	*expanding(char *cmd, int *j, t_env *en)
 	}
 	else
 	{
+
+		free(ex.value);
 		free(cmd);
 		cmd = ft_strjoin(ex.tmp, ex.new);
 	}
