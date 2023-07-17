@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:30 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 04:59:43 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/17 13:08:28 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_isalpha(int c)
 }
 int	ft_isnum(int c)
 {
-	return ((c >= '9' && c <= '9'));
+	return ((c >= '0' && c <= '9'));
 }
 
 int	ft_isalnum(int c)
