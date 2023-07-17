@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_excute_cd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:15:12 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/17 09:09:28 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/17 13:24:39 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	ft_cd_old_pwd(t_env *env)
 				return (1);
 			}
 			printf("%s\n", env->valu);
-			return (1);
+			return (0);
 		}
 		env = env->next;
 	}
@@ -98,13 +98,12 @@ int	ft_cd_execut(char *str, char *hom, char *old)
 	if (!str)
 	{
 		if(ft_cd_home(hom))
-		return (1);
+		return (free(old), 1);
 	}
 	else if (str[0] == '-' && str[1] == '\0')
 	{
 		if(ft_cd_old_pwd(g_v.env))
-		return (1);
-
+		return (free(old), 1);
 	}
 	else if (chdir(str) < 0)
 	{
@@ -136,7 +135,7 @@ void	ft_execut_cd(char *str, t_env *env)
 	// printf("--> old %s\n", old);
 	if (ft_cd_execut(str, hom, old))
 		return ;
-
+	// printf("-->> %p\n", old);
 	if (ft_check_getcwd())
 	{
 		free(old);
