@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:15:12 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/16 12:00:27 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/17 02:26:51 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ void	ft_execut_cd(char *str, t_env *env)
 {
 	char	*old;
 	char	*hom;
-
 	old = NULL;
 	hom = NULL;
 	while (env)
@@ -125,8 +124,7 @@ void	ft_execut_cd(char *str, t_env *env)
 	// printf("--> old %s\n", old);
 	if (ft_cd_execut(str, hom, old))
 		return ;
-	if(getcwd(NULL, 0))
-		g_v.pwd = getcwd(NULL, 0); // leakse
+
 	if (ft_check_getcwd())
 	{
 		free(old);

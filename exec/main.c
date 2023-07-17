@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/16 10:00:28 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/17 02:33:52 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,20 @@ void  hendl_ctr_c(int sig)
 		g_v.ex_s = 1;
 	}
 }
+
+void ft_pwd()
+{
+	char	*pwd;
+	pwd = NULL;
+
+	free(pwd);
+	pwd = getcwd(NULL, 0);
+	if(pwd)
+	{
+		free(g_v.pwd);
+		g_v.pwd = pwd;
+	}}
+
 void ll()
 {
 	system("leaks minishell");
@@ -39,8 +53,9 @@ int main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	// atexit(ll);
-	// if(isatty(STDIN_FILENO) == 0)
-	// 	return (0);
+	if(isatty(STDIN_FILENO) == 0)
+		return (0);
+	
 	rl_catch_signals = 0;
 	environment(env);
 	while(1337)
@@ -62,6 +77,7 @@ int main(int argc, char **argv, char **env)
 		// parsing(prompt, g_v.env);
 		free(prompt);
 		execution(tokens);
+		ft_pwd();
 		free_split_nodes(tokens);
 	}
 }
