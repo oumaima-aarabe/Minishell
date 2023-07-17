@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/17 05:01:22 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/17 08:02:20 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ typedef struct s_exv
 
 typedef struct s_quotes
 {
-	int word_index;
+	int i;
+	int j;
 	int	ins;
 	int ind;
+	int word_index;
 	int	changed;
 	int in_word;
 	int count;
-	int i;
-	int j;
 	int wc;
 	int z;
 	int print;

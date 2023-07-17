@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 08:19:19 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/17 05:29:06 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/17 08:34:11 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,31 +45,29 @@ char **splitget(int hr, t_splitnode *current)
 }
 t_splitnode   *remove_redirections(t_splitnode  *node, int hr)
 {
-    t_splitnode *current = node;
-    t_splitnode   *head = NULL;
-    t_splitnode   *tail = NULL;
-    t_splitnode   *new_node;
+    t_splitnode *cr;
+    t_splitnode   *head;
+    t_splitnode   *tail;
 
-    while (current != NULL) 
+    cr = node;
+    head = NULL;
+    tail = NULL;
+    while (cr != NULL) 
     {
-            new_node = create_new_node(splitget(hr, current), current->in, current->out); 
-            if (head == NULL) 
+            if (head == NULL)
             {
-                head = new_node;
+                head = create_new_node(splitget(hr, cr), cr->in, cr->out);
                 tail = head;
                 if (g_v.sig_flag)
-                {
-                    g_v.sig_flag = 0;
-                    return(head);
-                }
+                    return(g_v.sig_flag = 0, head);
             } 
             else 
             {
-                tail->next = new_node;
-                new_node->prev = tail;
-                tail = new_node;
+                tail->next = create_new_node(splitget(hr, cr), cr->in, cr->out);
+                (tail->next)->prev = tail;
+                tail = tail->next;
             }
-        current = current->next;
+        cr = cr->next;
     }
     return head;
 }
@@ -90,47 +88,36 @@ t_splitnode   *create_new_node(char   **splitdata, int in, int out)
 
 t_quote skip_red(t_quote cq, char **cmdl)
 {
-        if (!cq.ind && !cq.ins && !is_quote(cmdl[cq.i][cq.j])) 
+    if (!cq.ind && !cq.ins && !is_quote(cmdl[cq.i][cq.j])) 
+    {
+        if ((cmdl[cq.i][cq.j] == '<' && cmdl[cq.i][cq.j + 1] != '<') \
+        || (cmdl[cq.i][cq.j] == '>' && cmdl[cq.i][cq.j + 1] != '>'))
         {
-            if ((cmdl[cq.i][cq.j] == '<' && cmdl[cq.i][cq.j + 1] != '<') \
-            || (cmdl[cq.i][cq.j] == '>' && cmdl[cq.i][cq.j + 1] != '>'))
-            {
-                if (cmdl[cq.i][cq.j + 1])
-                cq.j +=   get_fl(&cmdl[cq.i][cq.j + 1]);
-                else if (cmdl[cq.i + 1])
-                cq.j = get_fl(cmdl[++(cq.i)]);
-                return cq;
-            }
-            else if (cmdl[cq.i][cq.j] == '>' && cmdl[cq.i][cq.j + 1] == '>')
-            {
-                if (cmdl[cq.i][cq.j + 2])
-                cq.j +=   get_fl(&cmdl[cq.i][cq.j + 2]) + 2;
-                else if (cmdl[cq.i + 1])
-                cq.j = get_fl(cmdl[++(cq.i)]);
-                return cq;
-            }
+            if (cmdl[cq.i][cq.j + 1])
+            cq.j +=   get_fl(&cmdl[cq.i][cq.j + 1]) + 1;
+            else if (cmdl[cq.i + 1])
+            cq.j = get_fl(cmdl[++(cq.i)]);
+            return cq;
         }
+        else if (cmdl[cq.i][cq.j] == '>' && cmdl[cq.i][cq.j + 1] == '>')
+        {
+            if (cmdl[cq.i][cq.j + 2])
+            cq.j +=   get_fl(&cmdl[cq.i][cq.j + 2]) + 2;
+            else if (cmdl[cq.i + 1])
+            cq.j = get_fl(cmdl[++(cq.i)]);
+            return cq;
+        }
+    }
+    if (cmdl[cq.i][cq.j])
+        cq.j++;
     return (cq);
 }
 
-t_quote _check_printable(t_quote cq, char *cmdl, int n)
-{
-    cq = check_quotes(cq, cq.j, cmdl);
-    if ((cq.ind || cq.ins) ||!is_redirection(cmdl[cq.j]))
-    {
-        cq.print = true;
-        if(n)
-        {   
-            cq.z = cq.i;
-            cq.count++;    
-        }  
-    }
-    return(cq);
-}
 int word_count(char **cmdl)
 {
-        t_quote cq;
-        ft_memset(&cq, 0, sizeof(t_quote));
+    t_quote cq;
+    
+    ft_memset(&cq, 0, sizeof(t_quote));
     if (cmdl)
     {
         while (cmdl[cq.i]) 
@@ -142,8 +129,6 @@ int word_count(char **cmdl)
                 if ((cq.ind || cq.ins) ||!is_redirection(cmdl[cq.i][cq.j]))
                     cq.print = true;
                 cq = skip_red(cq, cmdl);
-                if (cmdl[cq.i][cq.j])
-                    cq.j++;
             }
             if (cq.print)
             {
@@ -156,78 +141,48 @@ int word_count(char **cmdl)
     return (cq.wc);
 }
 
-/////////////////////////////////////////////////////////
-
+char    *fill_ns(t_quote *cq,char **cmdl)
+{
+    char *new_s;
+    new_s = NULL;
+    new_s = (char *)ft_calloc((cq->count + 1) , sizeof(char ));
+    if (!new_s)
+        return NULL;
+    cq->j = 0;
+    while (cq->j < cq->count)
+    {
+        new_s[cq->j] = cmdl[cq->z][cq->j];
+        cq->j++;
+    }
+    cq->print = false;
+    cq->count = 0;
+    return new_s;
+}
 char **newstring(char **cmdl, int wc)
 {
     char **new_s;
-    int i = 0;
-    int j;
-    int count = 0;
-    bool print = false;
-    int k = 0;
-    int z;
     t_quote cq;
 
-    new_s = (char **)ft_calloc((wc + 1) , sizeof(char *));
-    while (cmdl[i] && k < wc) 
-    {
-        j = 0;
         ft_memset(&cq, 0, sizeof(t_quote));
-        while (cmdl[i][j]) 
+    new_s = (char **)ft_calloc((wc + 1) , sizeof(char *));
+    while (cmdl[cq.i] && cq.length < wc) 
+    {
+        cq.j = 0;
+        while (cmdl[cq.i][cq.j]) 
         {
-            cq = check_quotes(cq,j, cmdl[i]);
-            if ((cq.ind || cq.ins) || !is_redirection(cmdl[i][j]))
+            cq = check_quotes(cq,cq.j, cmdl[cq.i]);
+            if ((cq.ind || cq.ins) || !is_redirection(cmdl[cq.i][cq.j]))
             {
-                print = true;
-                z = i;
-                count++;
+                cq.print = true;
+                cq.z = cq.i;
+                cq.count++;
             }
-            if (!cq.ind && !cq.ins && !is_quote(cmdl[i][j])) 
-            {
-                if (cmdl[i][j] == '<' && cmdl[i][j + 1] != '<')
-                {
-                    if (cmdl[i][j + 1])
-                    j +=   get_fl(&cmdl[i][j + 1]) + 1;
-                    else if (cmdl[i + 1])
-                    j = get_fl(cmdl[++i]);
-                    continue;
-                }
-                else if (cmdl[i][j] == '>' && cmdl[i][j + 1] != '>')
-                {
-                    if (cmdl[i][j + 1])
-                    j +=   get_fl(&cmdl[i][j + 1]) + 1;
-                    else if (cmdl[i + 1])
-                    j = get_fl(cmdl[++i]);
-                    continue;
-                }
-                else if (cmdl[i][j] == '>' && cmdl[i][j + 1] == '>')
-                {
-                    if (cmdl[i][j + 2])
-                    j +=   get_fl(&cmdl[i][j + 2]) + 2;
-                    else if (cmdl[i + 1])
-                    j = get_fl(cmdl[++i]);
-                    continue;
-                }
-            }
-            if (cmdl[i][j])
-                j++;
+            cq = skip_red(cq, cmdl);
         }
-        if (print)
-        {
-            new_s[k] = (char *)ft_calloc((count + 1) , sizeof(char ));
-            j = 0;
-            while (j < count)
-            {
-                new_s[k][j] = cmdl[z][j];
-                j++;
-            }
-            k++;
-            print = false;
-            count = 0;
-        }
-        i++;
+        if (cq.print)
+            new_s[cq.length++] = fill_ns(&cq, cmdl);
+        cq.i++;
     }
-        return new_s;
+    return new_s;
 }
 /////////////////////////////////////////////////////////

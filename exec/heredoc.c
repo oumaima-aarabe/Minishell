@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:08:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/17 06:51:32 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/17 07:22:41 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,6 @@ int wc_heredoc(char **cmdl)
 		}
 		hd.i++;
 	}
-	printf("wc : %d\n", hd.wc);
 	return (hd.wc);
 }
 
@@ -206,9 +205,7 @@ t_hd	check_printable(char **cmdl, t_quote cq, t_hd hd)
 				hd.j += get_fl(&cmdl[hd.i][hd.j + 2]) + 2;
 				else if (cmdl[hd.i + 1])
 				{
-					printf("b; %c\n", cmdl[hd.i][hd.j]);
 					hd.j = get_fl(cmdl[++hd.i]);
-					printf("a: %c\n", cmdl[hd.i][hd.j]);
 					hd.contin = hd.j;
 				}
 				continue;
@@ -242,8 +239,7 @@ char	*fill_ns_hd(char *cmdl, int count, t_quote cq, t_hd hd)
 				z = hd.contin;
 				hd.contin = 0;
 			}
-		new_s[j] = cmdl[z];
-		j++;
+		new_s[j++] = cmdl[z];
 		if (cmdl[z])
 			z++;
 	}

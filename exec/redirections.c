@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 10:54:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/17 06:18:18 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/17 07:22:32 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,6 @@ void	hr_loop(t_splitnode *c, t_quote cq, t_env *env, int *i)
 		cq = check_quotes(cq,cq.j, c->splitdata[*i]);
 		if (!cq.ind && !cq.ins && !is_quote(c->splitdata[*i][cq.j]))
 		{
-			printf("str : %s\n",&c->splitdata[*i][cq.j]);
 			if (c->splitdata[*i][cq.j] == '<' && c->splitdata[*i][cq.j + 1] != '<')
 			{
 				red_input(&c, i, &cq.j, env);
