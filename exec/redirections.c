@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 10:54:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/16 08:44:31 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/17 03:28:17 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,13 @@ int	get_fl( char *str)
 	length = 0;
 
 	ft_memset(&cq, 0, sizeof(t_quote));
-	while (str[length] != '\0')
+	while (str[length])
 	{
 		cq = check_quotes(cq, length, str);
 		if (!cq.ind && !cq.ins && (str[length] == '<' || str[length] == '>'))
 			break; // Stop at red operator
-		length++;
+		if (str[length])
+			length++;
 	}
 	return length;
 }
@@ -182,7 +183,7 @@ t_splitnode *handle_redirections(t_splitnode *node, t_env *env)
 				int j = 0;
 				while (current->splitdata[i][j] && !g_v.red_flag)
 				{
-					printf("===%s\n", current->splitdata[i] + j);
+					// printf("===%s\n", current->splitdata[i] + j);
 					cq = check_quotes(cq,j, current->splitdata[i]);
 					if (!cq.ind && !cq.ins && !is_quote(current->splitdata[i][j]))
 					{

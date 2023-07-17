@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:08:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/16 09:01:30 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/17 03:44:22 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_splitnode	*read_hd(t_splitnode *current, int *i, int *j, t_env *env)
 	int fd[2];
 	char *lmtr = gethd_redfilen(i, j, current->splitdata);
 	char *tmp = ft_strdup(lmtr);
-	printf("lmtr%s\n", tmp);
+	// printf("lmtr%s\n", tmp);
 	fflush(stdout);
 	int k;
 
@@ -134,7 +134,7 @@ t_splitnode *handle_heredoc(t_splitnode *node, t_env *env)
 
 t_hd	check_dprintable(char **cmdl, t_quote cq, t_hd hd)
 {
-	if (ft_strncmp("<<", &cmdl[hd.i][hd.j], 2))
+	if ((cq.ind || cq.ins) || ft_strncmp("<<", &cmdl[hd.i][hd.j], 2))
 		hd.print = true;
 	if (!cq.ind && !cq.ins && !is_quote(cmdl[hd.i][hd.j]))
 	{
@@ -147,10 +147,12 @@ t_hd	check_dprintable(char **cmdl, t_quote cq, t_hd hd)
 			return (hd);
 		}
 	}
-	if (is_quote(cmdl[hd.i][hd.j]))
-		cq = check_quotes(cq, hd.j, cmdl[hd.i]);
 	if (cmdl[hd.i][hd.j])
-		hd.j++;
+	{
+		if (is_quote(cmdl[hd.i][hd.j]))
+			cq = check_quotes(cq, hd.j, cmdl[hd.i]);
+		hd.j++;	
+	}
 	return (hd);
 }
 
@@ -168,7 +170,6 @@ int wc_heredoc(char **cmdl)
 		{
 			cq = check_quotes(cq,hd.j, cmdl[hd.i]);
 			hd = check_dprintable(cmdl, cq, hd);
-			cq = check_quotes(cq,hd.j, cmdl[hd.i]);
 		}
 		if (hd.print)
 		{
@@ -192,9 +193,13 @@ t_hd	check_printable(char **cmdl, t_quote cq, t_hd hd)
 {
 	while (cmdl[hd.i][hd.j])
 	{
+		printf("if printable : %c\n", cmdl[hd.i][hd.j]);
 		cq = check_quotes(cq,hd.j, cmdl[hd.i]);
 		if ((cq.ind || cq.ins) || strncmp("<<", &cmdl[hd.i][hd.j], 2))
+		{
+			printf("printable : %c\n", cmdl[hd.i][hd.j]);
 			hd = numerate(hd);
+		}
 		if (!cq.ind && !cq.ins && !is_quote(cmdl[hd.i][hd.j]))
 		{
 			if (cmdl[hd.i][hd.j] == '<' && cmdl[hd.i][hd.j + 1] == '<')
@@ -207,28 +212,32 @@ t_hd	check_printable(char **cmdl, t_quote cq, t_hd hd)
 			}
 		}
 		if (cmdl[hd.i][hd.j])
-		{
-			if (is_quote(cmdl[hd.i][hd.j]))
-				cq = check_quotes(cq, hd.j, cmdl[hd.i]);
 			hd.j++;
-		}
 	}
 	return(hd);
 }
 
-char	*fill_ns_hd(char *cmdl, int count)
+char	*fill_ns_hd(char *cmdl, int count, t_quote cq)
 {
 	char *new_s;
 	int j;
+	int z;
 	
 	j = 0;
+	z = 0;
 	new_s = (char *)ft_calloc((count + 1) , sizeof(char ));
 	if (!new_s)
 		return (NULL);
-	while (j < count)
+	while (j < count && cmdl[z])
 	{
-		new_s[j] = cmdl[j];
+		cq = check_quotes(cq, z, cmdl);
+		if ((!cq.ind && !cq.ins) && !strncmp("<<", &cmdl[z], 2))
+			if (cmdl[j + 2])
+				z += get_fl(&cmdl[z + 2]) + 2;			
+		new_s[j] = cmdl[z];
 		j++;
+		if (cmdl[z])
+			z++;
 	}
 	return (new_s);
 }
@@ -244,15 +253,12 @@ char **ns_heredoc(char **cmdl, int wc)
     {
         hd.j = 0;
         ft_memset(&cq, 0, sizeof(t_quote));
-        while (cmdl[hd.i][hd.j])
-        {
-			cq = check_quotes(cq,hd.j, cmdl[hd.i]);
-			hd = check_printable(cmdl, cq, hd);
-			cq = check_quotes(cq,hd.j, cmdl[hd.i]);
-        }
+		hd = check_printable(cmdl, cq, hd);
+		// cq = check_quotes(cq, hd.j, cmdl[hd.i]);
         if (hd.print)
 		{
-            new_s[hd.k++] = fill_ns_hd(cmdl[hd.z], hd.count);
+            new_s[hd.k++] = fill_ns_hd(cmdl[hd.z], hd.count, cq);
+			printf("new_s: %s, count : %d\n", new_s[hd.k - 1], hd.count);
 			hd.print = 0;
 			hd.count = 0;	
 		}
