@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/17 02:33:52 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/17 03:57:10 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void ft_pwd()
 	{
 		free(g_v.pwd);
 		g_v.pwd = pwd;
-	}}
+	}
+}
 
 void ll()
 {
@@ -55,7 +56,7 @@ int main(int argc, char **argv, char **env)
 	// atexit(ll);
 	if(isatty(STDIN_FILENO) == 0)
 		return (0);
-	
+
 	rl_catch_signals = 0;
 	environment(env);
 	while(1337)

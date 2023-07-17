@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:15:12 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/17 02:52:20 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/17 04:44:36 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,25 @@ void	ft_change_env(t_env *env, char *old)
 	free(old);
 }
 
-void	ft_cd_home(char *hom)
+int	ft_cd_home(char *hom)
 {
 	if (!hom)
 	{
 		ft_putstr_fd("minishell: cd: HOME not set\n", 2);
 		g_v.ex_s = 1;
+		return (1);
 	}
 	else if (chdir(hom) < 0)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);
 		g_v.ex_s = 1;
 		perror(hom);
+		return (1);
 	}
+	return (0);
 }
 
-void	ft_cd_old_pwd(t_env *env)
+int	ft_cd_old_pwd(t_env *env)
 {
 	while (env)
 	{
@@ -57,10 +60,10 @@ void	ft_cd_old_pwd(t_env *env)
 				ft_putstr_fd("minishell: cd: ", 2);
 				perror(env->valu);
 				g_v.ex_s = 1;
-				break ;
+				return (1);
 			}
 			printf("%s\n", env->valu);
-			break ;
+			return (1);
 		}
 		env = env->next;
 	}
@@ -68,7 +71,9 @@ void	ft_cd_old_pwd(t_env *env)
 	{
 		ft_putstr_fd("minishell: cd: OLDPWD not set\n", 2);
 		g_v.ex_s = 1;
+		return (1);
 	}
+	return (0);
 }
 
 int	ft_check_getcwd(void)
@@ -91,9 +96,16 @@ int	ft_check_getcwd(void)
 int	ft_cd_execut(char *str, char *hom, char *old)
 {
 	if (!str)
-		ft_cd_home(hom);
+	{
+		if(ft_cd_home(hom))
+		return (1);
+	}
 	else if (str[0] == '-' && str[1] == '\0')
-		ft_cd_old_pwd(g_v.env);
+	{
+		if(ft_cd_old_pwd(g_v.env))
+		return (1);
+
+	}
 	else if (chdir(str) < 0)
 	{
 		ft_putstr_fd("minishell: cd: ", 2);

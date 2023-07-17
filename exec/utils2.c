@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/16 05:08:11 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/17 04:13:39 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 int	ft_strlen(char *s)
 {
 	const char	*c;
-
+	if (!s)
+		return(0);
 	c = s;
 	while (*c)
 		c++;

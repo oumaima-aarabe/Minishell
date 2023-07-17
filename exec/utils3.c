@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 08:40:44 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/16 05:00:51 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/17 04:29:17 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ char	*ft_strdup(char *s1)
 	int		i;
 
 	i = 0;
+	if(!s1)
+		return (NULL);
 	sr = malloc((ft_strlen(s1) + 1));
 	if (!sr)
 		return (NULL);
