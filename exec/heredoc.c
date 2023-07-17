@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:08:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/17 03:47:17 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/17 04:07:03 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,12 @@ void	read_inhd(char *lmtr, int k, int fd, t_env *env)
 t_splitnode	*read_hd(t_splitnode *current, int *i, int *j, t_env *env)
 {
 	int fd[2];
-	char *lmtr = gethd_redfilen(i, j, current->splitdata);
-	char *tmp = ft_strdup(lmtr);
-	fflush(stdout);
+	char *lmtr;
+	char *tmp;
 	int k;
 
+	lmtr = gethd_redfilen(i, j, current->splitdata);
+	tmp = ft_strdup(lmtr);
 	lmtr = removequotes(lmtr);
 	k = ft_strcmp(lmtr, tmp);
 	if (pipe(fd) < 0)
@@ -83,44 +84,48 @@ t_splitnode	*read_hd(t_splitnode *current, int *i, int *j, t_env *env)
 	if (current->in != -1)
 		close(current->in);
 	if (g_v.sig_flag)
-	{
-		close(fd[0]);
-		return (current);
-	}
+		return (close(fd[0]), current);
 	current->in = fd[0];
 	return (current);
+}
+
+void	hh_loop(t_splitnode *c, t_env *env)
+{
+	int i;
+	int j;
+	t_quote cq;
+
+	i = 0;
+	while (c->splitdata[i])
+	{
+		j = 0;
+		ft_memset(&cq, 0, sizeof(t_quote));
+		while (c->splitdata[i][j])
+		{
+			cq = check_quotes(cq,j, c->splitdata[i]);
+			if (!cq.ind && !cq.ins && !is_quote(c->splitdata[i][j]))
+				if (c->splitdata[i][j] == '<' && c->splitdata[i][j + 1] == '<')
+				{	
+					c = read_hd(c, &i, &j, env);
+					continue ;
+				}
+			if (c->splitdata[i][j])
+				j++;
+		}
+		if (c->splitdata[i])
+			i++;
+	}
 }
 
 t_splitnode *handle_heredoc(t_splitnode *node, t_env *env)
 {
 	t_splitnode *c;
 	t_splitnode *trimmed;
-	t_quote		cq;
 
 	c = node;
 	while (c != NULL)
 	{
-		int i = 0;
-		while (c->splitdata[i])
-		{
-			int j = 0;
-			ft_memset(&cq, 0, sizeof(t_quote));
-			while (c->splitdata[i][j])
-			{
-				cq = check_quotes(cq,j, c->splitdata[i]);
-				if (!cq.ind && !cq.ins && !is_quote(c->splitdata[i][j]))
-					if (c->splitdata[i][j] == '<' && \
-					c->splitdata[i][j + 1] == '<')
-					{	
-						c = read_hd(c, &i, &j, env);
-						continue ;
-					}
-				if (c->splitdata[i][j])
-					j++;
-			}
-			if (c->splitdata[i])
-				i++;
-		}
+		hh_loop(c, env);
 		c = c->next;
 	}
 	trimmed = remove_redirections(node, 1);
