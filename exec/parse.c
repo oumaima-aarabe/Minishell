@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:46:07 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 06:05:47 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/18 12:36:17 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	**apply_ex_q(char **splitdata, t_env *en)
 			splitdata[spex.i] = spex.expanded;
 			if (check_for_space(spex.expanded))
 			{
-				spex.splitted = split_string(spex.expanded, cq);
+				spex.splitted = split_expanded(spex.expanded);
 				spex.k = ft_dstrlen(spex.splitted);
 				splitdata = ft_joindstrs_at(splitdata, \
 				spex.splitted, spex.i);

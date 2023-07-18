@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/18 08:32:31 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/18 12:52:29 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,6 @@ int	ft_execut_exit(char **cmd)
 
 int	ft_execut_bultins(char **cmd)
 {
-	if (!cmd)			//! by 0x5ABA;
-		return (0);		//! by 0x5ABA;
 	if (cmd && !ft_strcmp(cmd[0], "echo"))
 		return (ft_execut_echo(cmd, 1, 0, 1), 1);
 	if (cmd &&!ft_strcmp(cmd[0], "exit"))
@@ -118,9 +116,9 @@ int	ft_execut_bultins(char **cmd)
 		if (ft_execut_exit(cmd))
 			return (1);
 	}
-	g_v.ex_s = 0; //!red exit status doesnt work when used;
 	if (cmd)
 	{
+		g_v.ex_s = 0;
 		if (!ft_strcmp(cmd[0], "cd"))
 			return (ft_execut_cd(cmd[1], g_v.env), 1);
 		else if (!ft_strcmp(cmd[0], "pwd"))

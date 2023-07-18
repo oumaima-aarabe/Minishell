@@ -6,12 +6,11 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 07:37:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 07:39:07 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/18 12:36:10 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
-
 
 t_splitnode	*create_split_node(char   **splitdata)
 {
@@ -69,4 +68,16 @@ t_splitnode *splitdatalinkedlist(t_Node  *original_list)
 	ft_memset(&cq, 0, sizeof(t_quote));
 	head = split_loop(&tail, cq, current);
 	return (head);
+}
+
+char	**split_expanded(char *str)
+{
+	t_quote cq;
+	char **splitted;
+	
+	splitted = NULL;
+	ft_memset(&cq, 0, sizeof(t_quote));
+	cq.length = ft_strlen(str);
+	splitted = split_string(str, cq);
+	return (splitted);
 }
