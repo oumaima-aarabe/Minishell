@@ -6,12 +6,28 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/18 03:59:21 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/18 05:12:20 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
+char	**ft_get_path(t_env *env)
+{
+	char	**path;
+
+	path = NULL;
+	while (env)
+	{
+		if ((!ft_strcmp("PATH", env->key)))
+		{
+			path = ft_split(env->valu, ':');
+			return (path);
+		}
+		env = env->next;
+	}
+	return (path);
+}
 void	ft_exucve(char *cmd, char **arg, char **env)
 {
 	if (execve(cmd, arg, env) < 0)
@@ -21,6 +37,8 @@ void	ft_exucve(char *cmd, char **arg, char **env)
 		ft_putstr_fd("Minishell ", 2);
 		perror(cmd);
 		free(cmd);
+		if(ft_get_path(g_v.env) == NULL)
+			exit (127);
 		exit (errno);
 	}
 }
@@ -53,22 +71,6 @@ char	**ft_my_env(t_env *env, int i)
 	return (tab[i] = NULL, tab);
 }
 
-char	**ft_get_path(t_env *env)
-{
-	char	**path;
-
-	path = NULL;
-	while (env)
-	{
-		if ((!ft_strcmp("PATH", env->key)))
-		{
-			path = ft_split(env->valu, ':');
-			return (path);
-		}
-		env = env->next;
-	}
-	return (path);
-}
 
 int	ft_is_path(char *str)
 {
