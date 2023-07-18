@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 06:36:35 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:34:00 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (ft_strdup(s2));
 	if (!s1 || !s2)
 		return (NULL);
-	tab = (char *)ft_calloc(sizeof(char),\
-	 ((ft_strlen(s1) + ft_strlen(s2)) + 1));
+	tab = (char *)ft_calloc(sizeof(char), \
+		((ft_strlen(s1) + ft_strlen(s2)) + 1));
 	if (!tab)
 		return (NULL);
 	while (s1[index.i])

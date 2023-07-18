@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:49:15 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 09:08:15 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/18 14:24:53 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*ft_take_key(char *str, t_env *env, int j, int len)
 {
 	char	*tmp;
 
-	tmp = strndup(str + j, len);
+	tmp = ft_strndup(str + j, len);
 	while (env)
 	{
 		if (!ft_strncmp(tmp, env->key, len + 1))

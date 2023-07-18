@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 04:20:51 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 07:11:53 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/18 14:19:34 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*quotes_removed(int count, char *input)
 	int		i;
 	t_quote	check_q;
 
-	output = calloc(count + 1, sizeof(char)); // ! calloc akhra o mamprotectiach 
+	output = ft_calloc(count + 1, sizeof(char)); // ! ft_calloc akhra o mamprotectiach 
 	j = 0;
 	i = 0;
 	check_q = init_q();

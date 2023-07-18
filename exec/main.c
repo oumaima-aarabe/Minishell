@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 03:18:16 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/18 15:47:54 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,15 @@ void	ft_pwd(void)
 	}
 }
 
+void df()
+{
+	system("leaks minishell");
+}
 int	main(int argc, char **argv, char **env)
 {
 	char		*prompt;
 	t_splitnode	*tokens;
-
+// atexit(df);
 	tokens = NULL;
 	(void)argc;
 	(void)argv;

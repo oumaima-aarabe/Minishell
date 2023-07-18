@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 03:39:36 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 12:27:39 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:36:08 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ int	count_words(char *str, t_quote cq)
 
 char	*fill_array(char *str, t_quote cq)
 {
-	char *array;
+	char	*array;
 
-	array = (char *)ft_calloc((cq.i - cq.start + 1) , sizeof(char)); // ! ha wa7d calloc
+	array = (char *)ft_calloc((cq.i - cq.start + 1), sizeof(char));
 	if (!array)
 		return (NULL);
-	strncpy(array, &str[cq.start], cq.i - cq.start); // ! strncpy
+	strncpy(array, &str[cq.start], cq.i - cq.start);
 	return (array);
 }
 
@@ -81,7 +81,7 @@ char	**split_string(char *str, t_quote cq)
 	char	**words;
 
 	cq.count = count_words(str, cq);
-	words = (char **)calloc((cq.count + 1) , sizeof(char *)); // ! calloc
+	words = (char **)ft_calloc((cq.count + 1), sizeof(char *));
 	if (!words)
 		return (NULL);
 	while (cq.i < cq.length && (str[cq.i] == ' ' || str[cq.i] == '\t'))
@@ -89,4 +89,26 @@ char	**split_string(char *str, t_quote cq)
 	cq.start = cq.i;
 	words = split_string_loop(cq, str, words);
 	return (words);
+}
+
+char	*ft_strndup(char *s1, int len)
+{
+	char	*sr;
+	int		i;
+
+	i = 0;
+	sr = NULL;
+	if (s1 && len)
+	{
+		sr = malloc((len + 1));
+		if (!sr)
+			return (NULL);
+		while (s1[i] && len--)
+		{
+			sr[i] = s1[i];
+			i++;
+		}
+		sr[i] = '\0';
+	}
+	return (sr);
 }

@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 12:36:33 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/18 14:24:28 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,7 +279,7 @@ void	red_output(t_splitnode **node, int *i, int *j, t_env *env);
 t_quote	skip_red(t_quote cq, char **cmdl);
 t_hd	check_dprintable(char **cmdl, t_quote cq, t_hd hd);
 char	**split_expanded(char *str);
-
+char	*ft_strndup(char *s1, int len);
 
 
 #endif

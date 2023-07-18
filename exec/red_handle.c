@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 07:19:12 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 07:21:48 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:54:58 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	get_fl( char *str)
 	{
 		cq = check_quotes(cq, length, str);
 		if (!cq.ind && !cq.ins && (str[length] == '<' || str[length] == '>'))
-			break ;// Stop at red operator
+			break ;
 		if (str[length])
 			length++;
 	}
@@ -34,7 +34,7 @@ void	hr_loop(t_splitnode *c, t_quote cq, t_env *env, int *i)
 {
 	while (c->splitdata[*i][cq.j] && !g_v.red_flag)
 	{
-		cq = check_quotes(cq,cq.j, c->splitdata[*i]);
+		cq = check_quotes(cq, cq.j, c->splitdata[*i]);
 		if (!cq.ind && !cq.ins && !is_quote(c->splitdata[*i][cq.j]))
 		{
 			if (c->splitdata[*i][cq.j] == '<' && c->splitdata[*i][cq.j + 1] != '<')

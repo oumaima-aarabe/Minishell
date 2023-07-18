@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 07:32:30 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 07:36:24 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:41:39 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,32 +41,33 @@ t_hd	check_dprintable(char **cmdl, t_quote cq, t_hd hd)
 	return (hd);
 }
 
-char	*fill_ns(t_quote *cq,char **cmdl)
+char	*fill_ns(t_quote *cq, char **cmdl)
 {
 	char	*new_s;
 
 	new_s = NULL;
 	new_s = (char *)ft_calloc((cq->count + 1), sizeof(char ));
 	if (!new_s)
-		return NULL;
+		return (NULL);
 	cq->j = 0;
 	while (cq->j < cq->count)
 	{
 		new_s[cq->j] = cmdl[cq->z][cq->j];
 		cq->j++;
 	}
-	cq->print = false;
+	cq->print = 0;
 	cq->count = 0;
-	return new_s;
+	return (new_s);
 }
+
 char	**newstring(char **cmdl, int wc)
 {
 	char	**new_s;
 	t_quote	cq;
 
 	ft_memset(&cq, 0, sizeof(t_quote));
-	new_s = (char **)ft_calloc((wc + 1), sizeof(char *)); //! rotecti ft_calloc
-	while (cmdl[cq.i] && cq.length < wc)
+	new_s = (char **)ft_calloc((wc + 1), sizeof(char *));
+	while (new_s && cmdl[cq.i] && cq.length < wc)
 	{
 		cq.j = 0;
 		while (cmdl[cq.i][cq.j])

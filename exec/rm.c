@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 08:19:19 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 07:36:07 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:40:07 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	**splitget(int hr, t_splitnode *current)
 	return (splitdata);
 }
 
-t_splitnode	*remove_redirections(t_splitnode  *node, int hr)
+t_splitnode	*remove_redirections(t_splitnode *node, int hr)
 {
 	t_splitnode	*cr;
 	t_splitnode	*head;
@@ -71,7 +71,11 @@ t_splitnode	*remove_redirections(t_splitnode  *node, int hr)
 
 t_splitnode	*create_new_node(char **splitdata, int in, int out)
 {
-	t_splitnode   *new_split_node = calloc(1, sizeof(t_splitnode)); // ! hana tani 3la calooc bla protect
+	t_splitnode	*new_split_node;
+
+	new_split_node = ft_calloc(1, sizeof(t_splitnode));
+	if (!new_split_node)
+		return (NULL);
 	new_split_node->splitdata = splitdata;
 	new_split_node->prev = NULL;
 	new_split_node->next = NULL;
@@ -79,8 +83,6 @@ t_splitnode	*create_new_node(char **splitdata, int in, int out)
 	new_split_node->out = out;
 	return (new_split_node);
 }
-
-/////////////////////////////////////////////////////////
 
 t_quote	skip_red(t_quote cq, char **cmdl)
 {
@@ -90,17 +92,17 @@ t_quote	skip_red(t_quote cq, char **cmdl)
 		|| (cmdl[cq.i][cq.j] == '>' && cmdl[cq.i][cq.j + 1] != '>'))
 		{
 			if (cmdl[cq.i][cq.j + 1])
-			cq.j +=   get_fl(&cmdl[cq.i][cq.j + 1]) + 1;
+			cq.j += get_fl(&cmdl[cq.i][cq.j + 1]) + 1;
 			else if (cmdl[cq.i + 1])
-			cq.j = get_fl(cmdl[++(cq.i)]);
+			cq.j = get_fl(cmdl[++cq.i]);
 			return (cq);
 		}
 		else if (cmdl[cq.i][cq.j] == '>' && cmdl[cq.i][cq.j + 1] == '>')
 		{
 			if (cmdl[cq.i][cq.j + 2])
-			cq.j +=   get_fl(&cmdl[cq.i][cq.j + 2]) + 2;
+			cq.j += get_fl(&cmdl[cq.i][cq.j + 2]) + 2;
 			else if (cmdl[cq.i + 1])
-			cq.j = get_fl(cmdl[++(cq.i)]);
+			cq.j = get_fl(cmdl[++cq.i]);
 			return (cq);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:08:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 07:40:20 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/18 14:24:53 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ char	*gethd_redfilen(int *i, int *j, char **cmd_l)
 	if (cmd_l[*i][*j + 2])
 	{
 		file_len = get_fl(&cmd_l[*i][*j + 2]);
-		file_name = strndup(&cmd_l[*i][*j + 2], file_len);
+		file_name = ft_strndup(&cmd_l[*i][*j + 2], file_len);
 		*j += file_len;
 	}
 	else if (cmd_l[*i + 1] && ft_strlen(cmd_l[*i + 1]) > 0)
 	{
 		*j = 0;
 		file_len = get_fl(cmd_l[*i + 1]);
-		file_name = strndup(cmd_l[*i + 1], file_len);
+		file_name = ft_strndup(cmd_l[*i + 1], file_len);
 		*i += 1;
 		*j += file_len;
 	}
@@ -54,7 +54,7 @@ void	read_inhd(char *lmtr, int k, int fd, t_env *env)
 	while (1)
 	{
 		line = readline("$> ");
-		if (!line || !strcmp(line, lmtr))
+		if (!line || !ft_strcmp(line, lmtr))
 		{
 			free (line);
 			break ;

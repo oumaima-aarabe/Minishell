@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 06:04:12 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 06:37:44 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/18 15:33:09 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	compar(int a, int b)
 		return (0);
 	return (1);
 }
+
 char	*ft_strdup(char *s1)
 {
 	char	*sr;
@@ -68,6 +69,7 @@ char	*ft_strdup(char *s1)
 	}
 	return (sr);
 }
+
 int	ft_isalpha(int c)
 {
 	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));

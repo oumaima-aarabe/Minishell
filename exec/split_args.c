@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 09:33:01 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 03:44:38 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/18 15:37:03 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ t_Node	*createnode(char *data)
 {
 	t_Node	*newnode;
 
-	newnode = (t_Node *)malloc(sizeof(t_Node)); // ! ptrotecti malloc
+	newnode = (t_Node *)malloc(sizeof(t_Node));
+	if (!newnode)
+		return (NULL);
 	newnode->data = ft_strdup(data);
 	newnode->prev = NULL;
 	newnode->next = NULL;
