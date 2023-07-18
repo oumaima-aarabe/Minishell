@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:29 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/17 09:01:03 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/18 03:16:12 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,14 @@
 
 int	valid_quotes(char *line)
 {
-	int d;
-	int s;
+	int		d;
+	int		s;
+	t_quote	cq;
 
 	d = 0;
 	s = 0;
-	t_quote cq;
-
 	ft_memset(&cq, 0, sizeof(t_quote));
-	while(*line)
+	while (*line)
 	{
 		cq = check_quotes(cq, 0, line);
 		if (cq.changed == 2)
@@ -36,12 +35,12 @@ int	valid_quotes(char *line)
 
 int	check_pipe(char *line)
 {
-	t_quote cq;
+	t_quote	cq;
 
 	ft_memset(&cq, 0, sizeof(t_quote));
-    while (*line == ' ')
-            line++;
-	if(*line == '|')
+	while (*line == ' ')
+		line++;
+	if (*line == '|')
 		return (0);
 	while (*line)
 	{
@@ -63,9 +62,9 @@ int	check_pipe(char *line)
 	return (1);
 }
 
-int		check_red1(char *line)
+int	check_red1(char *line)
 {
-	t_quote cq;
+	t_quote	cq;
 
 	ft_memset(&cq, 0, sizeof(t_quote));
 	while (*line)
@@ -73,7 +72,7 @@ int		check_red1(char *line)
 		cq = check_quotes(cq, 0, line);
 		if (*line == '>' && !cq.ind && !cq.ins)
 		{
-			if(*( line + 1 ) == '>')
+			if (*(line + 1) == '>')
 				line += 2;
 			else
 				line++;
@@ -89,9 +88,9 @@ int		check_red1(char *line)
 	return (1);
 }
 
-int		check_red2(char *line)
+int	check_red2(char *line)
 {
-	t_quote cq;
+	t_quote	cq;
 
 	ft_memset(&cq, 0, sizeof(t_quote));
 	while (*line)
@@ -99,7 +98,7 @@ int		check_red2(char *line)
 		cq = check_quotes(cq, 0, line);
 		if (*line == '<' && !cq.ind && !cq.ins)
 		{
-			if(*( line + 1 ) == '<')
+			if (*(line + 1) == '<')
 				line += 2;
 			else
 				line++;

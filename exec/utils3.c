@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 08:40:44 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/17 09:22:42 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/18 03:54:49 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_putstr_fd(char *s, int fd)
 	while (s[i])
 		write(fd, &s[i++], 1);
 }
+
 void	ft_putendl_fd(char *s, int fd)
 {
 	int	i;
@@ -34,7 +35,7 @@ void	ft_putendl_fd(char *s, int fd)
 	write(fd, "\n", 1);
 }
 
-int	ft_strncmp( char *s1,  char *s2, size_t n)
+int	ft_strncmp( char *s1, char *s2, size_t n)
 {
 	size_t	i;
 

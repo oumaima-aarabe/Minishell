@@ -8,7 +8,9 @@
 
 
 //!strndup
-
+//!strcmp
+// !strncpy
+// !calloc
 /////////////////////////////////////////
 s
 Minishell ls: No such file or directory

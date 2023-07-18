@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:15:12 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/17 13:24:39 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/18 03:00:20 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,13 @@ int	ft_cd_execut(char *str, char *hom, char *old)
 {
 	if (!str)
 	{
-		if(ft_cd_home(hom))
-		return (free(old), 1);
+		if (ft_cd_home(hom))
+			return (free(old), 1);
 	}
 	else if (str[0] == '-' && str[1] == '\0')
 	{
-		if(ft_cd_old_pwd(g_v.env))
-		return (free(old), 1);
+		if (ft_cd_old_pwd(g_v.env))
+			return (free(old), 1);
 	}
 	else if (chdir(str) < 0)
 	{
@@ -120,6 +120,7 @@ void	ft_execut_cd(char *str, t_env *env)
 {
 	char	*old;
 	char	*hom;
+
 	old = NULL;
 	hom = NULL;
 	while (env)
@@ -132,10 +133,8 @@ void	ft_execut_cd(char *str, t_env *env)
 	}
 	if (!old)
 		old = getcwd(NULL, 0);
-	// printf("--> old %s\n", old);
 	if (ft_cd_execut(str, hom, old))
 		return ;
-	// printf("-->> %p\n", old);
 	if (ft_check_getcwd())
 	{
 		free(old);

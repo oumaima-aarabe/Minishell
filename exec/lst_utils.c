@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:51:59 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/15 11:12:14 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/18 03:16:35 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,13 @@ void	ft_lstclear(t_env **alist)
 	if (!alist)
 		return ;
 	nlist = *alist;
-
-		while (nlist)
-		{
-			clist = nlist;
-			nlist = nlist->next;
-			free(clist);
-		}
-		*alist = NULL;
+	while (nlist)
+	{
+		clist = nlist;
+		nlist = nlist->next;
+		free(clist);
+	}
+	*alist = NULL;
 }
 
 int	ft_lstsize(t_env *env)

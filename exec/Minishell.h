@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/17 09:12:02 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/18 03:22:56 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include <stdint.h>
 # include <errno.h>
 # include <stdbool.h>
-#include <sys/ioctl.h>
+# include <sys/ioctl.h>
 
 /////////////////////////////////3lachghenat///////////////////////////
 
@@ -47,26 +47,26 @@ typedef struct s_exv
 	char	*tmp;
 	char	*new;
 	char	*value;
-	char 	*expanded;
+	char	*expanded;
 	int		len;
 	int		pos;
 }	t_exv;
 
 typedef struct s_quotes
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 	int	ins;
-	int ind;
-	int word_index;
+	int	ind;
+	int	word_index;
 	int	changed;
-	int in_word;
-	int count;
-	int wc;
-	int z;
-	int print;
-	int start;
-	int length;
+	int	in_word;
+	int	count;
+	int	wc;
+	int	z;
+	int	print;
+	int	start;
+	int	length;
 }	t_quote;
 
 typedef struct s_env
@@ -84,16 +84,15 @@ typedef struct s_fds
 	int	fd_out;
 }	t_fds;
 
-
 typedef struct s_hd
 {
-	int i;
-    int j;
-    int count;
-    int print;
-    int k;
-    int z;
-	int wc;
+	int	i;
+	int	j;
+	int	count;
+	int	print;
+	int	k;
+	int	z;
+	int	wc;
 	int	contin;
 }	t_hd;
 
@@ -125,17 +124,15 @@ typedef struct splitnode {
 	int					flag;
 }	t_splitnode;
 
-
-
 typedef struct manp {
 	t_Node	*head;
-    t_Node	*tail;
+	t_Node	*tail;
 }	t_manp;
 
-int		check_red1(char *line);
-int		check_red2(char *line);
-int	check_pipe(char *line);
-int	valid_quotes(char *line);
+int				check_red1(char *line);
+int				check_red2(char *line);
+int				check_pipe(char *line);
+int				valid_quotes(char *line);
 
 void			ft_syntax_err(void);
 
@@ -165,7 +162,7 @@ t_splitnode		*handle_redirections(t_splitnode *node, t_env *env);
 t_splitnode		*create_new_node(char **splitdata, int in, int out);
 int				word_count(char **cmdl);
 char			**newstring(char **cmdl, int wc);
-t_splitnode   	*remove_redirections(t_splitnode  *node, int hr);
+t_splitnode		*remove_redirections(t_splitnode *node, int hr);
 bool			is_quote(char c);
 int				get_fl(char *str);
 bool			is_redirection(char ch);
@@ -182,11 +179,10 @@ char			*get_2redfilen(int *i, int *j, char **cmd_l, t_env *env);
 ////////////////////////////////////////////////////////////////
 ///////////////////////HEREDOC//////////////////////////////////
 
-t_splitnode	*read_hd(t_splitnode *current, int *i, int *j, t_env *env);
+t_splitnode		*read_hd(t_splitnode *current, int *i, int *j, t_env *env);
 t_splitnode		*handle_heredoc(t_splitnode *node, t_env *env);
 int				wc_heredoc(char **cmdl);
 char			**ns_heredoc(char **cmdl, int wc);
-
 
 ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
@@ -194,7 +190,7 @@ char			**ns_heredoc(char **cmdl, int wc);
 int				ft_strlen(char *str);
 char			*ft_substr(char *s, int start, int len);
 void			ft_putstr_fd(char *s, int fd);
-int				ft_strncmp( char *s1,  char *s2, size_t n);
+int				ft_strncmp( char *s1, char *s2, size_t n);
 char			*ft_strdup( char *s1);
 int				ft_strcmp(char *s1, char *s2);
 char			**ft_split(char *st, char c);
@@ -232,31 +228,24 @@ int				ft_execut_cmd(t_splitnode *cmd);
 int				ft_execut_bultins(char **cmd);
 int				ft_signe(char *st, char c);
 
-
-
-int 			ft_add_export(char *cmd);
+int				ft_add_export(char *cmd);
 void			ft_shelvl(t_env *env);
 void			environment(char **env);
-char 			*ft_take_key(char *str, t_env *env, int j, int len);
+char			*ft_take_key(char *str, t_env *env, int j, int len);
 
+t_quote			check_quotes(t_quote check_q, int j, char *cmd);
+t_quote			init_q(void);
+int				_dquotes(char *line, int index);
+int				_squotes(char *line, int index);
+void			ft_execut_cd(char *str, t_env *env);
+char			**ft_joindstrs_at(char **ds1, char **ds2, int at);
+int				ft_double_strlen(char **dstr);
+int				ft_invalid_export_unset(char *cmd, char *bult);
+void			ft_execut_export(char **cmd);
+void			*ft_memset(void *b, int c, size_t len);
+int				ft_isalpha(int c);
+int				ft_isalnum(int c);
 
-t_quote		check_quotes(t_quote check_q, int j, char *cmd);
-t_quote		init_q(void);
-int			_dquotes(char *line, int index);
-int			_squotes(char *line, int index);
-void ft_execut_cd(char *str, t_env *env);
-char    **ft_joindstrs_at(char **ds1, char **ds2, int at);
-int ft_double_strlen(char **dstr);
-int	ft_invalid_export_unset(char *cmd, char *bult);
-void  ft_execut_export(char **cmd);
-void	*ft_memset(void *b, int c, size_t len);
-int	ft_isalpha(int c);
-int	ft_isalnum(int c);
-
-void	read_inhd(char *lmtr, int k, int fd, t_env *env);
-
-
-
-
+void			read_inhd(char *lmtr, int k, int fd, t_env *env);
 
 #endif

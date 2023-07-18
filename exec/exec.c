@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/17 09:09:05 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/18 03:59:21 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ char	*is_valid_cmd(char **path, char *cmd)
 	i = 0;
 	while (path[i])
 	{
-		if (!cmd[0] || (cmd[0] == '.' ||( cmd[0] == '.' && cmd[1] == '.')))
+		if (!cmd[0] || (cmd[0] == '.' || (cmd[0] == '.' && cmd[1] == '.')))
 			return (ft_print_err(cmd, ": command not found\n"), exit(127), NULL);
 		test = ft_strjoin(ft_strdup("/"), ft_strdup(cmd));
 		ss = ft_strjoin(ft_strdup(path[i]), test);

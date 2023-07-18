@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:33 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/15 11:26:16 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/18 03:54:31 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,13 @@ char	*ft_strjoin(char *s1, char *s2)
 	t_hd	index;
 
 	ft_memset(&index, 0, sizeof(t_hd));
-	if(!s1 && s2)
+	if (!s1 && s2)
 	{
 		return (ft_strdup(s2));
 	}
 	if (!s1 || !s2)
 		return (NULL);
-	tab = (char *)calloc(sizeof(char) ,((ft_strlen(s1) + ft_strlen(s2)) + 1));
+	tab = (char *)calloc(sizeof(char), ((ft_strlen(s1) + ft_strlen(s2)) + 1)); // ! tani calloc
 	if (!tab)
 		return (NULL);
 	while (s1[index.i])
@@ -99,5 +99,5 @@ char	*ft_strjoin(char *s1, char *s2)
 	}
 	free(s1);
 	free(s2);
-	return  (tab);
+	return (tab);
 }

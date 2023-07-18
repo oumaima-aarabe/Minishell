@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:30 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/17 13:08:28 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/18 03:50:26 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	ft_isalpha(int c)
 {
 	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
 }
+
 int	ft_isnum(int c)
 {
 	return ((c >= '0' && c <= '9'));
@@ -23,7 +24,7 @@ int	ft_isnum(int c)
 
 int	ft_isalnum(int c)
 {
-	return(ft_isalpha(c) || ft_isnum(c));
+	return (ft_isalpha(c) || ft_isnum(c));
 }
 
 void	*ft_memset(void *b, int c, size_t len)
@@ -43,6 +44,7 @@ void	ft_bzero(void *s, size_t n)
 {
 	ft_memset(s, 0, n);
 }
+
 
 void	*ft_calloc(size_t count, size_t size)
 {

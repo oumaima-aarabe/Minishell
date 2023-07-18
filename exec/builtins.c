@@ -6,7 +6,7 @@
 /*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/17 11:12:33 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/18 03:56:36 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,14 +153,14 @@ int	ft_atoi_exit(char *str, int i)
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		if(d > d * 10 + str[i] - '0')
-				return(ft_print_err(str, \
+		if (d > d * 10 + str[i] - '0')
+			return (ft_print_err(str, \
 		" : numeric argument required\n"), exit(255), 1);
 		d = d * 10 + str[i] - '0';
 		i++;
 	}
 	if (str[i] != '\0')
-		return(ft_print_err(str, \
+		return (ft_print_err(str, \
 		" : numeric argument required\n"), exit(255), 1);
 	return ((int)(d * s));
 }

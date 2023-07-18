@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:49:15 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/17 09:08:52 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/18 02:57:54 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	environment(char **env)
 
 	i = 0;
 	j = 0;
-	
 	while (env[i])
 	{
 		j = ft_signe(env[i], '=');

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/17 09:33:32 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/18 03:18:16 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // t_gs	g_v;
 
-void  hendl_ctr_c(int sig)
+void	hendl_ctr_c(int sig)
 {
 	(void)sig;
 	if (waitpid(0, NULL, WNOHANG))
@@ -27,46 +27,40 @@ void  hendl_ctr_c(int sig)
 	}
 }
 
-void ft_pwd()
+void	ft_pwd(void)
 {
 	char	*pwd;
-	pwd = NULL;
 
+	pwd = NULL;
 	free(pwd);
 	pwd = getcwd(NULL, 0);
-	if(pwd)
+	if (pwd)
 	{
 		free(g_v.pwd);
 		g_v.pwd = pwd;
 	}
 }
 
-void ll()
+int	main(int argc, char **argv, char **env)
 {
-	system("leaks minishell");
-}
-int main(int argc, char **argv, char **env)
-{
-	char *prompt;
-	t_splitnode *tokens;
+	char		*prompt;
+	t_splitnode	*tokens;
 
 	tokens = NULL;
 	(void)argc;
 	(void)argv;
-	// atexit(ll);
-	if(isatty(STDIN_FILENO) == 0)
+	if (isatty(STDIN_FILENO) == 0)
 		return (0);
-
 	rl_catch_signals = 0;
 	environment(env);
-	while(1337)
+	while (1337)
 	{
 		prompt = NULL;
 		signal(SIGINT, hendl_ctr_c);
 		signal(SIGQUIT, SIG_IGN);
 		prompt = readline("Minishell -> ");
 		if (!prompt)
-			return(printf("exit\n"), g_v.ex_s);
+			return (printf("exit\n"), g_v.ex_s);
 		if (prompt[0])
 		{
 			add_history(prompt);
@@ -74,14 +68,13 @@ int main(int argc, char **argv, char **env)
 			{
 				free(prompt);
 				ft_syntax_err();
-				continue;
+				continue ;
 			}
 			tokens = parsing(prompt, g_v.env);
-			// parsing(prompt, g_v.env);
 			execution(tokens);
 			ft_pwd();
-			free_split_nodes(tokens);	
+			free_split_nodes(tokens);
 		}
-			free(prompt);
+		free (prompt);
 	}
 }
