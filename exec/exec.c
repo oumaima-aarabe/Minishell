@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/18 06:10:28 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/18 23:29:04 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ char	**ft_get_path(t_env *env)
 	return (path);
 }
 
+
+
 void	ft_exucve(char *cmd, char **arg, char **env)
 {
 	if (execve(cmd, arg, env) < 0)
@@ -38,9 +40,13 @@ void	ft_exucve(char *cmd, char **arg, char **env)
 		ft_putstr_fd("Minishell ", 2);
 		perror(cmd);
 		free(cmd);
-		if (ft_get_path(g_v.env) == NULL)
-			exit (127);
-		exit (errno);
+		if (errno == 2)
+			exit(127);
+		else if (errno == 130)
+			exit(1);
+		else if (errno == 13 || errno == 20)
+			exit(126);
+		exit(errno);
 	}
 }
 
