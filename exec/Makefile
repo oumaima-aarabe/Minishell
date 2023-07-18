@@ -6,7 +6,7 @@
 #    By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/15 15:19:53 by azarda            #+#    #+#              #
-#    Updated: 2023/07/17 09:30:24 by ouaarabe         ###   ########.fr        #
+#    Updated: 2023/07/18 09:09:40 by ouaarabe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,13 +19,14 @@ CC = cc
 
 READLINE = $(shell brew --prefix readline)
 
-FLAGS = -Wall -Werror -Wextra  -I$(READLINE)/include #-g -fsanitize=address
+FLAGS = -Wall -Werror -Wextra  -I$(READLINE)/include -g -fsanitize=address
 
 
 
 SRC =	obj/ft_error.c\
 		obj/split_args.c\
 		obj/split_tokens.c\
+		obj/new_list.c\
 		obj/parse.c\
 		obj/utils1.c\
 		obj/utils2.c\
@@ -45,6 +46,13 @@ SRC =	obj/ft_error.c\
 		obj/expand.c\
 		obj/double_split.c\
 		obj/ft_export.c\
+		obj/ft_export2.c\
+		obj/ft__execution.c\
+		obj/red_handle.c\
+		obj/rm_utils.c\
+		obj/heredoc_rm.c\
+		obj/utils4.c\
+		obj/exec_2.c\
 		obj/heredoc.c\
 		obj/rm.c
 

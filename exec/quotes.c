@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 04:20:51 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 03:24:39 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/18 07:11:53 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,8 @@ char	*removequotes(char *input)
 		return (quotes_removed(count, input));
 	}
 	return (input);
+}
+bool	is_quote(char c)
+{
+	return (c == '\'' || c == '\"');
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:49:15 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 02:57:54 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/18 09:08:15 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*ft_take_key(char *str, t_env *env, int j, int len)
 	tmp = strndup(str + j, len);
 	while (env)
 	{
-		if (!ft_strncmp(tmp, env->key, len))
+		if (!ft_strncmp(tmp, env->key, len + 1))
 		{
 			if (env->valu)
 				return (free(tmp), ft_strdup(env->valu));
@@ -84,4 +84,23 @@ char	*ft_take_key(char *str, t_env *env, int j, int len)
 		env = env->next;
 	}
 	return (free(tmp), ft_strdup(""));
+}
+
+void	ft_execut_env(t_env *env, char **cmd)
+{
+	if (cmd[1])
+	{
+		if (cmd[1][0] == '-')
+			ft_print_err(cmd[0], ": Does not take options\n");
+		else
+			ft_print_err(cmd[0], ": Does not take arguments\n");
+		g_v.ex_s = 1;
+		return ;
+	}
+	while (env)
+	{
+		if (env->valu)
+			printf("%s=%s\n", env->key, env->valu);
+		env = env->next;
+	}
 }

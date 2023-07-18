@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 03:22:56 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/18 09:48:54 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_hd
 	int	z;
 	int	wc;
 	int	contin;
+	int indx;
 }	t_hd;
 
 typedef struct s_gs
@@ -239,7 +240,7 @@ int				_dquotes(char *line, int index);
 int				_squotes(char *line, int index);
 void			ft_execut_cd(char *str, t_env *env);
 char			**ft_joindstrs_at(char **ds1, char **ds2, int at);
-int				ft_double_strlen(char **dstr);
+int				ft_dstrlen(char **dstr);
 int				ft_invalid_export_unset(char *cmd, char *bult);
 void			ft_execut_export(char **cmd);
 void			*ft_memset(void *b, int c, size_t len);
@@ -247,5 +248,37 @@ int				ft_isalpha(int c);
 int				ft_isalnum(int c);
 
 void			read_inhd(char *lmtr, int k, int fd, t_env *env);
+void	ft_free_plus(char *s1, char *s2, void *s3);
+void	ft_remov_lis(char *cmd);
+void	ft_execut_env(t_env *env, char **cmd);
+int	ft_atoi_exit(char *str, int i);
+
+
+char	*is_valid_cmd(char **path, char *cmd);
+char	*ft_prepar_path(char *cmd);
+char	**ft_get_path(t_env *env);
+char	*is_path_exec(char *cmd);
+char	**ft_my_env(t_env *env, int i);
+
+void	ft_exucve(char *cmd, char **arg, char **env);
+int	compar(int a, int b);
+int	ft_check_old_env(char *cmd);
+int	ft_check_add_export(char **cmd, int i);
+t_env	*ft_sort_export(t_env *tmp);
+int	ft_isnum(int c);
+int	ft_cd_execut(char *str, char *hom, char *old);
+int	ft_check_getcwd(void);
+void	ft_change_env(t_env *env, char *old);
+int	fork_execut(t_splitnode *ptr, t_fds pipe, t_env *env);
+int	ft_one_cmd(t_splitnode *cmd, t_env *env, int fd_in, int fd_out);
+
+
+void	red_input(t_splitnode **node, int *i, int *j, t_env *env);
+void	red_append(t_splitnode **node, int *i, int *j, t_env *env);
+void	red_output(t_splitnode **node, int *i, int *j, t_env *env);
+t_quote	skip_red(t_quote cq, char **cmdl);
+t_hd	check_dprintable(char **cmdl, t_quote cq, t_hd hd);
+
+
 
 #endif

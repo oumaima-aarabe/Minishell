@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:30 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 03:50:26 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/18 06:37:47 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
-
-int	ft_isalpha(int c)
-{
-	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
-}
-
-int	ft_isnum(int c)
-{
-	return ((c >= '0' && c <= '9'));
-}
 
 int	ft_isalnum(int c)
 {
@@ -44,7 +34,6 @@ void	ft_bzero(void *s, size_t n)
 {
 	ft_memset(s, 0, n);
 }
-
 
 void	*ft_calloc(size_t count, size_t size)
 {

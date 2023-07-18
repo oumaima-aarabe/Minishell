@@ -3,37 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 10:54:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 04:07:41 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/18 08:16:48 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
-
-bool	is_quote(char c)
-{
-	return (c == '\'' || c == '\"');
-}
-
-int	get_fl( char *str)
-{
-	int		length;
-	t_quote	cq;
-
-	length = 0;
-	ft_memset(&cq, 0, sizeof(t_quote));
-	while (str[length])
-	{
-		cq = check_quotes(cq, length, str);
-		if (!cq.ind && !cq.ins && (str[length] == '<' || str[length] == '>'))
-			break ;// Stop at red operator
-		if (str[length])
-			length++;
-	}
-	return (length);
-}
 
 char	*get_1redfilen(int *i, int *j, char **cmd_l, t_env *env)
 {
@@ -103,6 +80,7 @@ void	red_append(t_splitnode **node, int *i, int *j, t_env *env)
 				perror(appfile);
 				g_v.red_flag = 1;
 				(*node)->out = -2;
+				g_v.ex_s = 1;
 			}
 		}
 		else
@@ -130,6 +108,7 @@ void	red_input(t_splitnode **node, int *i, int *j, t_env *env)
 				perror(infile);
 				g_v.red_flag = 1;
 				(*node)->in = -2;
+				g_v.ex_s = 1;
 			}
 		}
 		else
@@ -157,6 +136,7 @@ void	red_output(t_splitnode **node, int *i, int *j, t_env *env)
 				perror(outfile);
 				g_v.red_flag = 1;
 				(*node)->out = -2;
+				g_v.ex_s = 1;
 			}
 		}
 		else
@@ -169,59 +149,4 @@ void	red_output(t_splitnode **node, int *i, int *j, t_env *env)
 	}
 }
 
-void	hr_loop(t_splitnode *c, t_quote cq, t_env *env, int *i)
-{
-	while (c->splitdata[*i][cq.j] && !g_v.red_flag)
-	{
-		cq = check_quotes(cq,cq.j, c->splitdata[*i]);
-		if (!cq.ind && !cq.ins && !is_quote(c->splitdata[*i][cq.j]))
-		{
-			if (c->splitdata[*i][cq.j] == '<' && c->splitdata[*i][cq.j + 1] != '<')
-			{
-				red_input(&c, i, &cq.j, env);
-				continue ;
-			}
-			else if (c->splitdata[*i][cq.j] == '>' && c->splitdata[*i][cq.j + 1] != '>')
-			{
-				red_output(&c, i, &cq.j, env);
-				continue ;
-			}
-			else if (c->splitdata[*i][cq.j] == '>' && c->splitdata[*i][cq.j + 1] == '>')
-			{
-				red_append(&c, i, &cq.j, env);
-				continue ;
-			}
-		}
-			cq.j++;
-	}
-}
 
-t_splitnode	*handle_redirections(t_splitnode *node, t_env *env)
-{
-	t_splitnode	*current;
-	t_splitnode	*trimmed;
-	t_quote		cq;
-	int			i;
-
-	current = node;
-	trimmed = NULL;
-	while (current != NULL)
-	{
-		g_v.red_flag = 0;
-		i = 0;
-		if (current->splitdata)
-		{
-			while (current->splitdata[i] && !g_v.red_flag)
-			{
-				ft_memset(&cq, 0, sizeof(t_quote));
-				hr_loop(current, cq, env, &i);
-				i++;
-			}
-		}
-		current = current->next;
-	}
-	trimmed = remove_redirections(node, 0);
-	free_split_nodes(node);
-	return (trimmed);
-}
-/////////////////////////////////////////////////////////

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 03:39:36 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 03:49:57 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/18 07:39:14 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*fill_array(char *str, t_quote cq)
 {
 	char *array;
 
-	array = (char *)calloc((cq.i - cq.start + 1) , sizeof(char)); // ! ha wa7d calloc
+	array = (char *)ft_calloc((cq.i - cq.start + 1) , sizeof(char)); // ! ha wa7d calloc
 	if (!array)
 		return (NULL);
 	strncpy(array, &str[cq.start], cq.i - cq.start); // ! strncpy
@@ -89,58 +89,4 @@ char	**split_string(char *str, t_quote cq)
 	cq.start = cq.i;
 	words = split_string_loop(cq, str, words);
 	return (words);
-}
-
-t_splitnode	*create_split_node(char   **splitdata)
-{
-	t_splitnode	*new_split_node = calloc(1, sizeof(t_splitnode)); // !calloc o mamprotectiach
-	new_split_node->splitdata = splitdata;
-	new_split_node->prev = NULL;
-	new_split_node->next = NULL;
-	new_split_node->in = -1;
-	new_split_node->out = -1;
-	return (new_split_node);
-}
-
-
-t_splitnode	*split_loop(t_splitnode **tail, t_quote cq, t_Node *current)
-{
-	t_splitnode	*head;
-	char		**splitdata;
-
-	head = NULL;
-	while (current != NULL)
-	{
-		cq.length = ft_strlen(current->data);
-		splitdata = split_string(current->data, cq);
-		t_splitnode	*new_node = create_split_node(splitdata);
-		if (head == NULL)
-		{
-			head = new_node;
-			(*tail) = head;
-		}
-		else
-		{
-			(*tail)->next = new_node;
-			new_node->prev = (*tail);
-			(*tail) = new_node;
-		}
-		current = current->next;
-	}
-	return head;
-}
-
-t_splitnode *splitdatalinkedlist(t_Node  *original_list)
-{
-	t_splitnode	*head;
-	t_splitnode	*tail;
-	t_Node		*current;
-	t_quote		cq;
-
-	current = original_list;
-	head = NULL;
-	tail = NULL;
-	ft_memset(&cq, 0, sizeof(t_quote));
-	head = split_loop(&tail, cq, current);
-	return (head);
 }

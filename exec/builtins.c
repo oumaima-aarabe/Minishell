@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 16:32:26 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/18 03:56:36 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/18 08:32:31 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,42 +64,6 @@ int	ft_execut_pwd(char *cmd, t_env *env)
 	return (0);
 }
 
-void	ft_free_plus(char *s1, char *s2, void *s3)
-{
-	free(s1);
-	free(s2);
-	free(s3);
-}
-
-void	ft_remov_lis(char *cmd)
-{
-	t_env	*tmp_env;
-	t_env	*prev;
-
-	tmp_env = g_v.env;
-	prev = NULL;
-	while (tmp_env)
-	{
-		if (!ft_strcmp(tmp_env->key, cmd))
-		{
-			if (!prev)
-			{
-				prev = tmp_env->next;
-				g_v.env = prev;
-				ft_free_plus(tmp_env->key, tmp_env->valu, tmp_env);
-			}
-			else
-			{
-				prev->next = tmp_env->next;
-				ft_free_plus(tmp_env->key, tmp_env->valu, tmp_env);
-			}
-			return ;
-		}
-		prev = tmp_env;
-		tmp_env = tmp_env->next;
-	}
-}
-
 void	ft_execut_unset(char **cmd)
 {
 	int	i;
@@ -115,54 +79,6 @@ void	ft_execut_unset(char **cmd)
 		ft_remov_lis (cmd[i]);
 		i++;
 	}
-}
-
-void	ft_execut_env(t_env *env, char **cmd)
-{
-	if (cmd[1])
-	{
-		if (cmd[1][0] == '-')
-			ft_print_err(cmd[0], ": Does not take options\n");
-		else
-			ft_print_err(cmd[0], ": Does not take arguments\n");
-		g_v.ex_s = 1;
-		return ;
-	}
-	while (env)
-	{
-		if (env->valu)
-			printf("%s=%s\n", env->key, env->valu);
-		env = env->next;
-	}
-}
-
-int	ft_atoi_exit(char *str, int i)
-{
-	int		s;
-	long	d;
-
-	s = 1;
-	d = 0;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			s = -1;
-		i++;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		if (d > d * 10 + str[i] - '0')
-			return (ft_print_err(str, \
-		" : numeric argument required\n"), exit(255), 1);
-		d = d * 10 + str[i] - '0';
-		i++;
-	}
-	if (str[i] != '\0')
-		return (ft_print_err(str, \
-		" : numeric argument required\n"), exit(255), 1);
-	return ((int)(d * s));
 }
 
 int	ft_execut_exit(char **cmd)
@@ -193,6 +109,8 @@ int	ft_execut_exit(char **cmd)
 
 int	ft_execut_bultins(char **cmd)
 {
+	if (!cmd)			//! by 0x5ABA;
+		return (0);		//! by 0x5ABA;
 	if (cmd && !ft_strcmp(cmd[0], "echo"))
 		return (ft_execut_echo(cmd, 1, 0, 1), 1);
 	if (cmd &&!ft_strcmp(cmd[0], "exit"))
@@ -200,7 +118,7 @@ int	ft_execut_bultins(char **cmd)
 		if (ft_execut_exit(cmd))
 			return (1);
 	}
-	g_v.ex_s = 0;
+	g_v.ex_s = 0; //!red exit status doesnt work when used;
 	if (cmd)
 	{
 		if (!ft_strcmp(cmd[0], "cd"))

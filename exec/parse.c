@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 22:46:07 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 03:24:07 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/18 06:05:47 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	**apply_ex_q(char **splitdata, t_env *en)
 			if (check_for_space(spex.expanded))
 			{
 				spex.splitted = split_string(spex.expanded, cq);
-				spex.k = ft_double_strlen(spex.splitted);
+				spex.k = ft_dstrlen(spex.splitted);
 				splitdata = ft_joindstrs_at(splitdata, \
 				spex.splitted, spex.i);
 				spex.i += spex.k;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 01:39:03 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 03:59:56 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/18 06:24:40 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,12 @@ char	*expanding(char *cmd, int *j, t_env *en)
 	ex.new = ft_substr(cmd, *j + ex.len + 1, \
 	ft_strlen(cmd) - (*j + ex.len + 1));
 	ex.value = ft_take_key(cmd, en, *j + 1, ex.len);
-	if (ft_strlen(ex.value))
+	ex.pos = ft_strlen(ex.value);
+	if (ex.pos)
 	{
-		int	k = ft_strlen(ex.value);
 		ex.expanded = ft_strjoin(ex.value, ex.new);
 		free(cmd);
 		cmd = ft_strjoin(ex.tmp, ex.expanded);
-		*j += k;
 	}
 	else
 	{
@@ -50,28 +49,26 @@ char	*expanding(char *cmd, int *j, t_env *en)
 		free(cmd);
 		cmd = ft_strjoin(ex.tmp, ex.new);
 	}
-	return (cmd);
+	return (*j += ex.pos, cmd);
 }
 
 char	*ft_expand(char *cmd, t_env *en)
 {
-	int		j;
-	t_quote	check_q;
+	t_quote	cq;
 
-	j = 0;
-	check_q = init_q();
+	ft_memset(&cq, 0, sizeof(t_quote));
 	if (cmd)
 	{
-		while (cmd[j])
+		while (cmd[cq.j])
 		{
-			check_q = check_quotes(check_q, j, cmd);
-			if (!check_q.ins && (cmd[j] == '$' && cmd[j + 1] == '?'))
-				cmd = expandinterog(cmd, j);
-			else if (!check_q.ins && cmd[j] == '$' && \
-			cmd[j + 1] && (ft_isalpha(cmd[j + 1]) || cmd[j + 1] == '_'))
-				cmd = expanding(cmd, &j, en);
-			else if (cmd[j])
-				j++;
+			cq = check_quotes(cq, cq.j, cmd);
+			if (!cq.ins && (cmd[cq.j] == '$' && cmd[cq.j + 1] == '?'))
+				cmd = expandinterog(cmd, cq.j);
+			else if (!cq.ins && cmd[cq.j] == '$' && cmd[cq.j + 1] && \
+			(ft_isalpha(cmd[cq.j + 1]) || cmd[cq.j + 1] == '_'))
+				cmd = expanding(cmd, &cq.j, en);
+			else if (cmd[cq.j])
+				cq.j++;
 		}
 	}
 	return (cmd);

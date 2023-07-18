@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/18 05:12:20 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/18 06:10:28 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ char	**ft_get_path(t_env *env)
 	}
 	return (path);
 }
+
 void	ft_exucve(char *cmd, char **arg, char **env)
 {
 	if (execve(cmd, arg, env) < 0)
@@ -37,7 +38,7 @@ void	ft_exucve(char *cmd, char **arg, char **env)
 		ft_putstr_fd("Minishell ", 2);
 		perror(cmd);
 		free(cmd);
-		if(ft_get_path(g_v.env) == NULL)
+		if (ft_get_path(g_v.env) == NULL)
 			exit (127);
 		exit (errno);
 	}
@@ -70,7 +71,6 @@ char	**ft_my_env(t_env *env, int i)
 	ft_lstclear(&env);
 	return (tab[i] = NULL, tab);
 }
-
 
 int	ft_is_path(char *str)
 {
@@ -113,78 +113,4 @@ char	*is_path_exec(char *cmd)
 		return (ss);
 	}
 	return (NULL);
-}
-
-char	*is_valid_cmd(char **path, char *cmd)
-{
-	int		i;
-	char	*test;
-	char	*ss;
-
-	i = 0;
-	while (path[i])
-	{
-		if (!cmd[0] || (cmd[0] == '.' || (cmd[0] == '.' && cmd[1] == '.')))
-			return (ft_print_err(cmd, ": command not found\n"), exit(127), NULL);
-		test = ft_strjoin(ft_strdup("/"), ft_strdup(cmd));
-		ss = ft_strjoin(ft_strdup(path[i]), test);
-		if (!(access(ss, F_OK)))
-			return (ss);
-		else
-		{
-			free(ss);
-			ss = NULL;
-			i++;
-		}
-		if (!path[i])
-			return (ft_print_err(cmd, ": command not found\n"), exit(127), NULL);
-	}
-	ft_free_(path);
-	return (NULL);
-}
-
-char	*ft_prepar_path(char *cmd)
-{
-	char	**path;
-	char	*ss;
-
-	ss = NULL;
-	path = ft_get_path(g_v.env);
-	if (!path)
-		ss = ft_strdup(cmd);
-	if (is_path_exec(cmd))
-	{
-		if (path)
-			ft_free_(path);
-		return (is_path_exec(cmd));
-	}
-	else if (path)
-	{
-		return (is_valid_cmd(path, cmd));
-	}
-	return (ss);
-}
-
-void	ft_exec(char **cmd, t_env *env)
-{
-	char	*ss;
-	char	**my_env;
-	t_env	*en_new;
-
-	ss = NULL;
-	if (!cmd)
-		exit(0);
-	en_new = duplicate_linked_list(env);
-	my_env = ft_my_env(en_new, 0);
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	if (cmd[0] != NULL)
-	{
-		ss = ft_prepar_path(cmd[0]);
-		if (ss)
-			ft_exucve(ss, cmd, my_env);
-		free(ss);
-		ss = NULL;
-	}
-	ft_free_(my_env);
 }
