@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:38:46 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 06:06:01 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/19 05:30:24 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,14 @@ char	**ft_joindstrs_at(char **ds1, char **ds2, int at)
 	free(ds1);
 	free(ds2);
 	return (words);
+}
+
+int	is_out_red(char *str)
+{
+	return (*str == '>' && *(str + 1) != '>');
+}
+
+int	is_isspace(char c)
+{
+	return (c == ' ' || (c >= 9 && c <= 13));
 }

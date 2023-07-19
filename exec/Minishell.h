@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/19 03:33:03 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/19 05:26:50 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # include <stdbool.h>
 # include <sys/ioctl.h>
 
-/////////////////////////////////3lachghenat///////////////////////////
+/////////////////////////////////structs///////////////////////////
 
 typedef struct s_spex
 {
@@ -94,8 +94,8 @@ typedef struct s_hd
 	int	z;
 	int	wc;
 	int	contin;
-	int indx;
-	int p;
+	int	indx;
+	int	p;
 }	t_hd;
 
 typedef struct s_gs
@@ -169,7 +169,6 @@ bool			is_quote(char c);
 int				get_fl(char *str);
 bool			is_redirection(char ch);
 
-// void		parsing(char *prompt, t_env *env);
 t_splitnode		*parsing(char *prompt, t_env *env);
 void			hendl_ctr_c(int sig);
 void			*ft_calloc(size_t count, size_t size);
@@ -214,7 +213,8 @@ int				ft_lstsize(t_env *env);
 char			*removequotes(char	*input);
 char			*ft_expand(char *cmd, t_env *en);
 
-//---------------------------------------------------------------//
+////////////////////////////////////////////////////////////////
+////////////////////////////exec////////////////////////////////
 
 void			execution(t_splitnode *cmd);
 void			ft_putstr_fd(char *s, int fd);
@@ -249,39 +249,42 @@ int				ft_isalpha(int c);
 int				ft_isalnum(int c);
 
 void			read_inhd(char *lmtr, int k, int fd, t_env *env);
-void	ft_free_plus(char *s1, char *s2, void *s3);
-void	ft_remov_lis(char *cmd);
-void	ft_execut_env(t_env *env, char **cmd);
-int	ft_atoi_exit(char *str, int i);
+void			ft_free_plus(char *s1, char *s2, void *s3);
+void			ft_remov_lis(char *cmd);
+void			ft_execut_env(t_env *env, char **cmd);
+int				ft_atoi_exit(char *str, int i);
 
+char			*is_valid_cmd(char **path, char *cmd);
+char			*ft_prepar_path(char *cmd);
+char			**ft_get_path(t_env *env);
+char			*is_path_exec(char *cmd);
+char			**ft_my_env(t_env *env, int i);
 
-char	*is_valid_cmd(char **path, char *cmd);
-char	*ft_prepar_path(char *cmd);
-char	**ft_get_path(t_env *env);
-char	*is_path_exec(char *cmd);
-char	**ft_my_env(t_env *env, int i);
+void			ft_exucve(char *cmd, char **arg, char **env);
+int				compar(int a, int b);
+int				ft_check_old_env(char *cmd);
+int				ft_check_add_export(char **cmd, int i);
+t_env			*ft_sort_export(t_env *tmp);
+int				ft_isnum(int c);
+int				ft_cd_execut(char *str, char *hom, char *old);
+int				ft_check_getcwd(void);
+void			ft_change_env(t_env *env, char *old);
+int				fork_execut(t_splitnode *ptr, t_fds pipe, t_env *env);
+int				ft_one_cmd(t_splitnode *cmd, t_env *env, int fd_in, int fd_out);
 
-void	ft_exucve(char *cmd, char **arg, char **env);
-int	compar(int a, int b);
-int	ft_check_old_env(char *cmd);
-int	ft_check_add_export(char **cmd, int i);
-t_env	*ft_sort_export(t_env *tmp);
-int	ft_isnum(int c);
-int	ft_cd_execut(char *str, char *hom, char *old);
-int	ft_check_getcwd(void);
-void	ft_change_env(t_env *env, char *old);
-int	fork_execut(t_splitnode *ptr, t_fds pipe, t_env *env);
-int	ft_one_cmd(t_splitnode *cmd, t_env *env, int fd_in, int fd_out);
-
-
-void	red_input(t_splitnode **node, int *i, int *j, t_env *env);
-void	red_append(t_splitnode **node, int *i, int *j, t_env *env);
-void	red_output(t_splitnode **node, int *i, int *j, t_env *env);
-t_quote	skip_red(t_quote cq, char **cmdl);
-t_hd	check_dprintable(char **cmdl, t_quote cq, t_hd hd);
-char	**split_expanded(char *str);
-char	*ft_strndup(char *s1, int len);
-char	*fill_ns_hd(char *cmdl, int count, t_quote cq, t_hd hd);
-
+void			red_input(t_splitnode **node, int *i, int *j, t_env *env);
+void			red_append(t_splitnode **node, int *i, int *j, t_env *env);
+void			red_output(t_splitnode **node, int *i, int *j, t_env *env);
+t_quote			skip_red(t_quote cq, char **cmdl);
+t_hd			check_dprintable(char **cmdl, t_quote cq, t_hd hd);
+char			**split_expanded(char *str);
+char			*ft_strndup(char *s1, int len);
+char			*fill_ns_hd(char *cmdl, int count, t_quote cq, t_hd hd);
+t_hd			set_on_new_s(char **cmdl, t_quote cq, t_hd hd, char ***new_s);
+int				valid_syntax(char *line);
+void			ft_pwd(void);
+int				is_out_red(char *str);
+char			*ft_strncpy(char *dest, char *src, unsigned int n);
+int				is_isspace(char c);
 
 #endif

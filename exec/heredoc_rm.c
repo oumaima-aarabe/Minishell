@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 07:16:37 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/19 03:52:02 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/19 04:42:34 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,6 @@ t_hd	numerate(t_hd hd)
 	hd.z = hd.i;
 	hd.print = 1;
 	hd.count++;
-	return (hd);
-}
-t_hd	set_on_new_s(char **cmdl, t_quote cq, t_hd hd, char ***new_s)
-{
-	if (hd.print)
-	{
-		(*new_s)[hd.k++] = fill_ns_hd(cmdl[hd.z], hd.count, cq, hd);
-		hd.print = 0;
-		hd.count = 0;
-	}
-	hd.j = get_fl(cmdl[++hd.i]);
-	hd.contin = hd.j;
-	hd.indx = hd.i;
 	return (hd);
 }
 
@@ -71,7 +58,6 @@ int	wc_heredoc(char **cmdl)
 		{
 			cq = check_quotes(cq, hd. j, cmdl[hd.i]);
 			hd = check_dprintable(cmdl, cq, hd);
-			
 		}
 		if (hd.print)
 		{
@@ -100,7 +86,7 @@ char	*fill_ns_hd(char *cmdl, int count, t_quote cq, t_hd hd)
 		if ((!cq.ind && !cq.ins) && !strncmp("<<", &cmdl[z], 2))
 			if (cmdl[j + 2])
 				z += get_fl(&cmdl[z + 2]) + 2;
-		if (hd.contin  && hd.z == hd.indx)
+		if (hd.contin && hd.z == hd.indx)
 		{
 				z = hd.contin;
 				hd.contin = 0;

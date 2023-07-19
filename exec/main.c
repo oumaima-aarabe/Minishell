@@ -6,13 +6,11 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 21:14:49 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 15:47:54 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/19 05:31:18 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
-
-// t_gs	g_v;
 
 void	hendl_ctr_c(int sig)
 {
@@ -41,15 +39,11 @@ void	ft_pwd(void)
 	}
 }
 
-void df()
-{
-	system("leaks minishell");
-}
 int	main(int argc, char **argv, char **env)
 {
 	char		*prompt;
 	t_splitnode	*tokens;
-// atexit(df);
+
 	tokens = NULL;
 	(void)argc;
 	(void)argv;
@@ -66,19 +60,8 @@ int	main(int argc, char **argv, char **env)
 		if (!prompt)
 			return (printf("exit\n"), g_v.ex_s);
 		if (prompt[0])
-		{
-			add_history(prompt);
-			if (!valid_quotes(prompt) || !check_pipe(prompt) || !check_red1(prompt) || !check_red2(prompt))
-			{
-				free(prompt);
-				ft_syntax_err();
+			if (!valid_syntax(prompt))
 				continue ;
-			}
-			tokens = parsing(prompt, g_v.env);
-			execution(tokens);
-			ft_pwd();
-			free_split_nodes(tokens);
-		}
 		free (prompt);
 	}
 }

@@ -1,8 +1,0 @@
-{
-	"files.associations": {
-		"__threading_support": "c",
-		"cerrno": "c",
-		"locale": "c",
-		"cstdio": "c"
-	}
-}

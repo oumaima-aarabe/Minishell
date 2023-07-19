@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 03:39:36 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 15:36:08 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/19 05:30:11 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,14 @@ int	count_words(char *str, t_quote cq)
 {
 	while (cq.i < cq.length)
 	{
-		if ((str[cq.i] == ' ' || str[cq.i] == '\t') && \
-		!cq.in_word && (!cq.ins || !cq.ind))
+		if (is_isspace(str[cq.i]) && !cq.in_word && (!cq.ins || !cq.ind))
 		{
 			cq.i++;
 			continue ;
 		}
-		if ((str[cq.i] == '"' && !cq.ins) || \
-		(str[cq.i] == '\'' && !cq.ind))
+		if ((str[cq.i] == '"' && !cq.ins) || (str[cq.i] == '\'' && !cq.ind))
 			cq = check_quotes(cq, cq.i, str);
-		else if ((str[cq.i] == ' ' || str[cq.i] == '\t') && \
-		(!cq.ins && !cq.ind))
+		else if (is_isspace(str[cq.i]) && (!cq.ins && !cq.ind))
 		{
 			cq.in_word = 0;
 			cq.count++;
@@ -47,7 +44,7 @@ char	*fill_array(char *str, t_quote cq)
 	array = (char *)ft_calloc((cq.i - cq.start + 1), sizeof(char));
 	if (!array)
 		return (NULL);
-	strncpy(array, &str[cq.start], cq.i - cq.start);
+	ft_strncpy(array, &str[cq.start], cq.i - cq.start);
 	return (array);
 }
 
@@ -55,8 +52,7 @@ char	**split_string_loop(t_quote cq, char *str, char **words)
 {
 	while (cq.i <= cq.length && cq.word_index < cq.count)
 	{
-		if ((str[cq.i] == ' ' || str[cq.i] == '\t' || \
-		str[cq.i] == '\0') && (!cq.ins && !cq.ind))
+		if ((is_isspace(str[cq.i]) || str[cq.i] == '\0') && (!cq.ins && !cq.ind))
 		{
 			if (cq.in_word)
 			{
@@ -84,7 +80,7 @@ char	**split_string(char *str, t_quote cq)
 	words = (char **)ft_calloc((cq.count + 1), sizeof(char *));
 	if (!words)
 		return (NULL);
-	while (cq.i < cq.length && (str[cq.i] == ' ' || str[cq.i] == '\t'))
+	while (cq.i < cq.length && is_isspace(str[cq.i]))
 		cq.i++;
 	cq.start = cq.i;
 	words = split_string_loop(cq, str, words);

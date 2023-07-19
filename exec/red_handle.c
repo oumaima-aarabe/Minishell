@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 07:19:12 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 15:54:58 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/19 05:13:07 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,48 +37,51 @@ void	hr_loop(t_splitnode *c, t_quote cq, t_env *env, int *i)
 		cq = check_quotes(cq, cq.j, c->splitdata[*i]);
 		if (!cq.ind && !cq.ins && !is_quote(c->splitdata[*i][cq.j]))
 		{
-			if (c->splitdata[*i][cq.j] == '<' && c->splitdata[*i][cq.j + 1] != '<')
+			if (c->splitdata[*i][cq.j] == '<' && \
+			c->splitdata[*i][cq.j + 1] != '<')
 			{
 				red_input(&c, i, &cq.j, env);
 				continue ;
 			}
-			else if (c->splitdata[*i][cq.j] == '>' && c->splitdata[*i][cq.j + 1] != '>')
+			else if (is_out_red(c->splitdata[*i] + cq.j))
 			{
 				red_output(&c, i, &cq.j, env);
 				continue ;
 			}
-			else if (c->splitdata[*i][cq.j] == '>' && c->splitdata[*i][cq.j + 1] == '>')
+			else if (c->splitdata[*i][cq.j] == '>' && \
+			c->splitdata[*i][cq.j + 1] == '>')
 			{
 				red_append(&c, i, &cq.j, env);
 				continue ;
 			}
 		}
-			cq.j++;
+		cq.j++;
 	}
 }
 
 void	hh_loop(t_splitnode *c, t_env *env)
 {
 	int		i;
-	int		j;
 	t_quote	cq;
 
 	i = 0;
 	while (c->splitdata[i])
 	{
-		j = 0;
 		ft_memset(&cq, 0, sizeof(t_quote));
-		while (c->splitdata[i][j])
+		while (c->splitdata[i][cq.j])
 		{
-			cq = check_quotes(cq, j, c->splitdata[i]);
-			if (!cq.ind && !cq.ins && !is_quote(c->splitdata[i][j]))
-				if (c->splitdata[i][j] == '<' && c->splitdata[i][j + 1] == '<')
+			cq = check_quotes(cq, cq.j, c->splitdata[i]);
+			if (!cq.ind && !cq.ins && !is_quote(c->splitdata[i][cq.j]))
+			{
+				if (c->splitdata[i][cq.j] == '<' && \
+				c->splitdata[i][cq.j + 1] == '<')
 				{
-					c = read_hd(c, &i, &j, env);
+					c = read_hd(c, &i, &cq.j, env);
 					continue ;
 				}
-			if (c->splitdata[i][j])
-				j++;
+			}
+			if (c->splitdata[i][cq.j])
+				cq.j++;
 		}
 		if (c->splitdata[i])
 			i++;

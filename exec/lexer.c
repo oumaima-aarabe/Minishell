@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:29 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 03:16:12 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/19 05:00:25 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,25 @@ int	check_red2(char *line)
 		}
 		line++;
 	}
+	return (1);
+}
+
+int	valid_syntax(char *prompt)
+{
+	t_splitnode	*tokens;
+
+	tokens = NULL;
+	add_history(prompt);
+	if (!valid_quotes(prompt) || !check_pipe(prompt) || \
+	!check_red1(prompt) || !check_red2(prompt))
+	{
+		free(prompt);
+		ft_syntax_err();
+		return (0);
+	}
+	tokens = parsing(prompt, g_v.env);
+	execution(tokens);
+	ft_pwd();
+	free_split_nodes(tokens);
 	return (1);
 }

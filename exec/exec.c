@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 23:34:37 by azarda            #+#    #+#             */
-/*   Updated: 2023/07/19 01:18:55 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/19 04:27:55 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ char	**ft_get_path(t_env *env)
 	}
 	return (path);
 }
-
-
 
 void	ft_exucve(char *cmd, char **arg, char **env)
 {

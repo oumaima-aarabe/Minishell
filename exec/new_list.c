@@ -6,18 +6,18 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 07:37:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 12:36:10 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/19 04:42:39 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minishell.h"
 
-t_splitnode	*create_split_node(char   **splitdata)
+t_splitnode	*create_split_node(char **splitdata)
 {
 	t_splitnode	*new_split_node;
 
 	new_split_node = ft_calloc(1, sizeof(t_splitnode));
-	if(!new_split_node)
+	if (!new_split_node)
 		return (NULL);
 	new_split_node->splitdata = splitdata;
 	new_split_node->prev = NULL;
@@ -27,18 +27,18 @@ t_splitnode	*create_split_node(char   **splitdata)
 	return (new_split_node);
 }
 
-
 t_splitnode	*split_loop(t_splitnode **tail, t_quote cq, t_Node *current)
 {
 	t_splitnode	*head;
 	char		**splitdata;
+	t_splitnode	*new_node;
 
 	head = NULL;
 	while (current != NULL)
 	{
 		cq.length = ft_strlen(current->data);
 		splitdata = split_string(current->data, cq);
-		t_splitnode	*new_node = create_split_node(splitdata);
+		new_node = create_split_node(splitdata);
 		if (head == NULL)
 		{
 			head = new_node;
@@ -52,10 +52,10 @@ t_splitnode	*split_loop(t_splitnode **tail, t_quote cq, t_Node *current)
 		}
 		current = current->next;
 	}
-	return head;
+	return (head);
 }
 
-t_splitnode *splitdatalinkedlist(t_Node  *original_list)
+t_splitnode	*splitdatalinkedlist(t_Node *original_list)
 {
 	t_splitnode	*head;
 	t_splitnode	*tail;
@@ -72,12 +72,26 @@ t_splitnode *splitdatalinkedlist(t_Node  *original_list)
 
 char	**split_expanded(char *str)
 {
-	t_quote cq;
-	char **splitted;
-	
+	t_quote	cq;
+	char	**splitted;
+
 	splitted = NULL;
 	ft_memset(&cq, 0, sizeof(t_quote));
 	cq.length = ft_strlen(str);
 	splitted = split_string(str, cq);
 	return (splitted);
+}
+
+t_hd	set_on_new_s(char **cmdl, t_quote cq, t_hd hd, char ***new_s)
+{
+	if (hd.print)
+	{
+		(*new_s)[hd.k++] = fill_ns_hd(cmdl[hd.z], hd.count, cq, hd);
+		hd.print = 0;
+		hd.count = 0;
+	}
+	hd.j = get_fl(cmdl[++hd.i]);
+	hd.contin = hd.j;
+	hd.indx = hd.i;
+	return (hd);
 }
