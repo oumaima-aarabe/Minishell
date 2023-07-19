@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 14:24:28 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/19 03:33:03 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct s_hd
 	int	wc;
 	int	contin;
 	int indx;
+	int p;
 }	t_hd;
 
 typedef struct s_gs
@@ -280,6 +281,7 @@ t_quote	skip_red(t_quote cq, char **cmdl);
 t_hd	check_dprintable(char **cmdl, t_quote cq, t_hd hd);
 char	**split_expanded(char *str);
 char	*ft_strndup(char *s1, int len);
+char	*fill_ns_hd(char *cmdl, int count, t_quote cq, t_hd hd);
 
 
 #endif

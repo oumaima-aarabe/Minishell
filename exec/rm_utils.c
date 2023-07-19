@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 07:32:30 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 15:41:39 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/19 03:50:07 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,21 @@ bool	is_redirection(char ch)
 {
 	return (ch == '<' || ch == '>');
 }
+t_hd	new_wc(char **cmdl, t_hd hd)
+{
+	if(hd.print)
+	{
+		hd.wc++;
+		hd.print = 0;
+	}
+	hd.j = get_fl(cmdl[++hd.i]);
+	return(hd);
+}
 
 t_hd	check_dprintable(char **cmdl, t_quote cq, t_hd hd)
 {
 	if ((cq.ind || cq.ins) || ft_strncmp("<<", &cmdl[hd.i][hd.j], 2))
-		hd.print = true;
+		hd.print = 1;
 	if (!cq.ind && !cq.ins && !is_quote(cmdl[hd.i][hd.j]))
 	{
 		if (cmdl[hd.i][hd.j] == '<' && cmdl[hd.i][hd.j + 1] == '<')
@@ -28,7 +38,7 @@ t_hd	check_dprintable(char **cmdl, t_quote cq, t_hd hd)
 			if (cmdl[hd.i][hd.j + 2])
 				hd.j += get_fl(&cmdl[hd.i][hd.j + 2]) + 2;
 			else if (cmdl[hd.i + 1])
-				hd.j = get_fl(cmdl[++hd.i]);
+				hd = new_wc(cmdl, hd);
 			return (hd);
 		}
 	}

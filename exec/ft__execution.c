@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 07:13:45 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/18 07:22:07 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/19 01:25:04 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	execution(t_splitnode *cmd)
 {
 	int	statu;
 
+	// printf("exec:%s\n", cmd->splitdata[0]);
 	if (!cmd)
 		return ;
 	if (cmd && !cmd->next)
