@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 03:39:36 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/19 05:30:11 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/19 05:34:22 by azarda           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ char	**split_string_loop(t_quote cq, char *str, char **words)
 {
 	while (cq.i <= cq.length && cq.word_index < cq.count)
 	{
-		if ((is_isspace(str[cq.i]) || str[cq.i] == '\0') && (!cq.ins && !cq.ind))
+		if ((is_isspace(str[cq.i]) || \
+		str[cq.i] == '\0') && (!cq.ins && !cq.ind))
 		{
 			if (cq.in_word)
 			{
