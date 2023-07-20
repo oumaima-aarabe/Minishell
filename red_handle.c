@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 07:19:12 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/19 05:13:07 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/19 06:08:04 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,14 @@ void	hh_loop(t_splitnode *c, t_env *env)
 				c->splitdata[i][cq.j + 1] == '<')
 				{
 					c = read_hd(c, &i, &cq.j, env);
+					if (g_v.sig_flag)
+						return ;
 					continue ;
 				}
 			}
-			if (c->splitdata[i][cq.j])
-				cq.j++;
+			is_str(c->splitdata[i] + cq.j, &(cq.j));
 		}
-		if (c->splitdata[i])
-			i++;
+		is_str(c->splitdata[i], &i);
 	}
 }
 
@@ -97,6 +97,8 @@ t_splitnode	*handle_heredoc(t_splitnode *node, t_env *env)
 	while (c != NULL)
 	{
 		hh_loop(c, env);
+		if (g_v.sig_flag)
+			return (g_v.sig_flag = 0, free_split_nodes(node), NULL);
 		c = c->next;
 	}
 	trimmed = remove_redirections(node, 1);

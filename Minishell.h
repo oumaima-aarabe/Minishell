@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: azarda <azarda@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/24 02:31:42 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/19 05:37:01 by azarda           ###   ########.fr       */
+/*   Updated: 2023/07/19 06:08:23 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,5 +286,6 @@ void			ft_pwd(void);
 int				is_out_red(char *str);
 char			*ft_strncpy(char *dest, char *src, unsigned int n);
 int				is_isspace(char c);
+void			is_str(char *str, int *i);
 
 #endif

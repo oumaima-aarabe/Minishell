@@ -6,7 +6,7 @@
 /*   By: ouaarabe <ouaarabe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 02:38:46 by ouaarabe          #+#    #+#             */
-/*   Updated: 2023/07/19 05:30:24 by ouaarabe         ###   ########.fr       */
+/*   Updated: 2023/07/19 06:08:26 by ouaarabe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,10 @@ int	is_out_red(char *str)
 int	is_isspace(char c)
 {
 	return (c == ' ' || (c >= 9 && c <= 13));
+}
+
+void	is_str(char *str, int *i)
+{
+	if (*str)
+		(*i)++;
 }
