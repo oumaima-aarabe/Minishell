@@ -1,3 +1,24 @@
+# minishell
+
+42 project, recoding our own little bash. A program capable of parsing a prompt and launching executables with arguments, along with a few built-in functions.
+
+<p align="center">
+  <img src="https://i.imgur.com/En13A7p.png" width="100%" />
+</p>
+
+## Final grade : 101/115
+
+### How to use it
+
+Using ``make`` will create the ``minishell`` executable.
+
+Simply run it with :
+
+```
+./minishell
+```
+
+Environment variables are handled, like ``$HOME``, including the return code ``$?``
 Project 42 involves rewriting a personal bash script—an application designed to parse prompts, launch executables with arguments, and include a selection of built-in functions.
 
 
