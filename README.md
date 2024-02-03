@@ -18,20 +18,14 @@ Simply run it with :
 ./minishell
 ```
 
-Environment variables are handled, like ``$HOME``, including the return code ``$?``
-Project 42 involves rewriting a personal bash script—an application designed to parse prompts, launch executables with arguments, and include a selection of built-in functions.
+### Available options
 
+Minishell runs executables from an absolute, relative or environment PATH (``/bin/ls`` or ``ls``), including arguments or options. ``'`` and ``"`` work the same as bash, except for multiline commands.
 
-Minishell offers the following features:
+You can use redirections ``>`` ``>>`` ``<`` and pipes ``|``.
 
-Executables can be run from an absolute, relative, or environment PATH (/bin/ls or ls) with support for arguments or options. Both single (') and double (") quotes function similarly to bash, except for multiline commands.
+Environment variables are handled, like ``$HOME``, including the return code ``$?``.
 
-Commands can be separated by space. Redirections (> >> <) and pipes (|) are supported.
+Finally, you can use ``Ctrl-C`` to interrupt and ``Ctrl-\`` to quit a program, as well as ``Ctrl-D`` to throw an EOF, same as in bash.
 
-Environment variables, such as $HOME, and the return code ($?) are handled seamlessly.
-
-Interrupting a program is possible using Ctrl-C, quitting with Ctrl-, and triggering an EOF with Ctrl-D, similar to bash.
-
-The inclusion of heredoc allows for convenient input stream redirection.
-
-Several functions are 'built-in,' meaning the executables are recoded directly. This includes echo, pwd, cd, env, export, unset, and exit.
+A few of the functions are "built-in", meaning we don't call the executable, we re-coded them directly. It's the case for ``echo``, ``pwd``, ``cd``, ``env``, ``export``, ``unset`` and ``exit``.
