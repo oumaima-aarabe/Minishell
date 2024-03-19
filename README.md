@@ -19,7 +19,7 @@ To run Minishell on your local machine, follow these steps:
 
 1. Clone this repository to your local machine:
    ```bash
-   git clone https://github.com/your_username/minishell.git
+   git clone git@github.com:oumaima-aarabe/Minishell.git
 
 2. Using ``make`` will create the ``minishell`` executable.
 
