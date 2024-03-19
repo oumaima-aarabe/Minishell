@@ -4,7 +4,7 @@
 Welcome to Minishell, a simple Unix shell implementation written in C. Minishell provides a command-line interface for users to interact with the operating system, executing commands and managing processes.
 42 project, recoding our own little bash. A program capable of parsing a prompt and launching executables with arguments, along with a few built-in functions.
 
-## Final grade : 101/115
+## Final grade : 101/125
 
 ## Features
 - **Command Execution**: Minishell can execute external commands and display their output to the user.
