@@ -15,6 +15,33 @@ Welcome to Minishell, a simple Unix shell implementation written in C. Minishell
 - **Signal Handling**: Minishell handles signals such as SIGINT (Ctrl+C) and SIGQUIT (Ctrl+\) to ensure proper termination of processes.
 
 ## Getting Started
+
+
+### Requirements
+
+To build and run Minishell on macOS, you need the following dependencies installed on your machine:
+
+- **GNU Readline**: Provides the library for command-line editing.
+
+### Installing Dependencies on macOS
+
+For macOS, you can use Homebrew to install the necessary packages:
+
+1. **Install Homebrew** (if not already installed):
+    ```bash
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    ```
+
+2. **Install Readline**:
+    ```bash
+    brew install readline
+    ```
+
+### Setting Up the Project
+
+
+Ensure you have these dependencies installed before building and running Minishell.
+
 To run Minishell on your local machine, follow these steps:
 
 1. Clone this repository to your local machine:
@@ -29,7 +56,7 @@ To run Minishell on your local machine, follow these steps:
 ./minishell
 ```
 
-### Available options
+## Available options
 
 Minishell runs executables from an absolute, relative or environment PATH (``/bin/ls`` or ``ls``), including arguments or options. ``'`` and ``"`` work the same as bash, except for multiline commands.
 
