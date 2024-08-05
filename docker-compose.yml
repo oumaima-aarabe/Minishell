@@ -1,0 +1,9 @@
+services:
+  minishell:
+    image: gcc:10-bookworm
+    container_name: minishell
+    working_dir: /app
+    command: ./minishell
+    volumes:
+      - .:/app
+    tty: true
