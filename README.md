@@ -52,9 +52,10 @@ To run Minishell on your local machine, follow these steps:
 
 3. Simply run it with :
 
-```
+```bash
 ./minishell
-```
+````
+
 
 ## Available options
 
